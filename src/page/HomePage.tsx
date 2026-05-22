@@ -1,4 +1,7 @@
+import ConsultantCard from "../component/consultant/ConsultantCard";
+import useSharePointRootFolderQuery from "../hook/useSharePointRootFolderQuery";
 import useSharePointStaffListQuery from "../hook/useSharePointStaffListQuery";
+import { consultantJoinToRootFolderFileList } from "../utility/sharePoint";
 
 function HomePage() {
   const {
@@ -17,24 +20,46 @@ function HomePage() {
     error: errorRootFolder,
   } = useSharePointRootFolderQuery();
 
-  if (isLoadingStaffList) return <div>Loading...</div>;
-  if (isErrorStaffList) return <div>error: {errorStaffList.message}</div>;
-  if (!isSuccessStaffList) return <div>Failed to query for staff list</div>;
+  const errorStyleClassName = "flex items-center justify-center flex-1";
 
-  if (isLoadingRootFolder) return <div>Loading...</div>;
-  if (isErrorRootFolder) return <div>error: {errorRootFolder.message}</div>;
-  if (!isSuccessRootFolder) return <div>Failed to query the root folder</div>;
+  if (isLoadingStaffList)
+    return <div className={errorStyleClassName}>Loading...</div>;
+  if (isErrorStaffList)
+    return (
+      <div className={errorStyleClassName}>error: {errorStaffList.message}</div>
+    );
+  if (!isSuccessStaffList)
+    return (
+      <div className={errorStyleClassName}>Failed to query for staff list</div>
+    );
 
-  const consultantList = consultantListJoinWithRootFolderList(
+  if (isLoadingRootFolder)
+    return <div className={errorStyleClassName}>Loading...</div>;
+  if (isErrorRootFolder)
+    return (
+      <div className={errorStyleClassName}>
+        error: {errorRootFolder.message}
+      </div>
+    );
+  if (!isSuccessRootFolder)
+    return (
+      <div className={errorStyleClassName}>Failed to query the root folder</div>
+    );
+
+  const consultantList = consultantJoinToRootFolderFileList(
     staffList.consultants,
     rootFolder,
   );
 
   const consultantCards = consultantList.map((c) => (
-    <ConsultantCardContainer consultant={c} key={c.folderId} />
+    <ConsultantCard consultant={c} key={c.folderId} />
   ));
 
-  return <main className="grow p-6 container mx-auto"></main>;
+  return (
+    <main className="flex w-full h-full justify-center p-6">
+      <ul className="flex-1 space-y-16">{consultantCards}</ul>
+    </main>
+  );
 }
 
 export default HomePage;

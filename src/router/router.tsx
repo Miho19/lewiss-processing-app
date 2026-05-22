@@ -21,7 +21,7 @@ export const projectRoute = createRoute({
   component: () => <ProjectPage />,
 });
 
-const routeTree = rootRoute.addChildren([homeRoute]);
+const routeTree = rootRoute.addChildren([homeRoute, projectRoute]);
 const router = createRouter({ routeTree });
 
 declare module "@tanstack/react-router" {
