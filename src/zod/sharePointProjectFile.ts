@@ -60,7 +60,7 @@ export type SharePointRoomType = {
   createdAt: string;
   brief: SharePointBriefType;
   treatment: SharePointTreatmentType;
-  windows: Window[];
+  windows: SharePointWindowType[];
   curtains: string[] | null;
 };
 
