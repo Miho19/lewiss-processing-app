@@ -10,7 +10,7 @@ function CustomerCard(props: Props) {
     <section className="flex w-full flex-col space-y-3 shadow-md p-6 border border-black/5 pb-6 md:w-xl">
       <div className="flex w-full pb-6 border-b border-black/15 justify-between">
         <p className="text-black font-semibold text-lg">{projectFile.name}</p>
-        <p className="text-black">{projectFile.reference}</p>
+        <p className="text-black text-sm">Reference: {projectFile.reference}</p>
       </div>
 
       <div className="text-sm">
@@ -20,7 +20,7 @@ function CustomerCard(props: Props) {
         </p>
       </div>
 
-      <div className="flex w-full justify-between text-md">
+      <div className="flex w-full justify-between text-sm">
         <p>{projectFile.email}</p>
         <p>{projectFile.phone}</p>
       </div>

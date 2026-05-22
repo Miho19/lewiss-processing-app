@@ -1,4 +1,5 @@
 import CustomerCard from "../component/customer/CustomerCard";
+import RoomCardList from "../component/project/room/RoomCardList";
 import useSharePointProjectFileQuery from "../hook/useSharePointProjectFileQuery";
 import { projectRoute } from "../router/router";
 
@@ -19,8 +20,9 @@ function ProjectPage() {
     );
 
   return (
-    <main className="flex w-full h-full justify-center p-6">
+    <main className="flex flex-col w-full h-full items-center p-6 space-y-6">
       <CustomerCard projectFile={data} />
+      <RoomCardList projectFile={data} />
     </main>
   );
 }
