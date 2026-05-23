@@ -3,6 +3,7 @@ import {
   sharePointFilterFolderItemListForJSONFiles,
   type ConsultantTypeWithFolderId,
 } from "../../utility/sharePoint";
+import Loading from "../loading/Loading";
 import ConsultantCardFileListElement from "./ConsultantCardFileListElement";
 
 type Props = {
@@ -23,7 +24,7 @@ function ConsultantCardFileList(props: Props) {
 
   const errorStyleClassNames = "flex flex-1 justify-center items-center";
 
-  if (isLoading) return <div className={errorStyleClassNames}>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (isError)
     return <div className={errorStyleClassNames}>error: {error.message}</div>;
   if (!isSuccess)

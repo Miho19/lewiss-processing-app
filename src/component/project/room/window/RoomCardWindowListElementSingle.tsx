@@ -27,7 +27,7 @@ function RoomCardWindowListElementSingle(props: Props) {
   const blindCountString = getBlindCountType(window);
 
   return (
-    <li className="flex flex-col w-full pb-6 border border-black/5 shadow-md space-y-3 p-3">
+    <li className="flex flex-col w-full pb-6 border border-black/15 shadow-md space-y-3 p-3">
       <div className="flex w-full justify-between border-b border-black/5 pb-3">
         <p className="text-md">{window.name}</p>
         <p className="text-sm text-gray-500 italic">{blindCountString}</p>

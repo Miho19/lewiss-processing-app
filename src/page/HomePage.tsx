@@ -1,4 +1,5 @@
 import ConsultantCard from "../component/consultant/ConsultantCard";
+import Loading from "../component/loading/Loading";
 import useSharePointRootFolderQuery from "../hook/useSharePointRootFolderQuery";
 import useSharePointStaffListQuery from "../hook/useSharePointStaffListQuery";
 import { consultantJoinToRootFolderFileList } from "../utility/sharePoint";
@@ -22,8 +23,7 @@ function HomePage() {
 
   const errorStyleClassName = "flex items-center justify-center flex-1";
 
-  if (isLoadingStaffList)
-    return <div className={errorStyleClassName}>Loading...</div>;
+  if (isLoadingStaffList) return <Loading />;
   if (isErrorStaffList)
     return (
       <div className={errorStyleClassName}>error: {errorStaffList.message}</div>
@@ -33,8 +33,7 @@ function HomePage() {
       <div className={errorStyleClassName}>Failed to query for staff list</div>
     );
 
-  if (isLoadingRootFolder)
-    return <div className={errorStyleClassName}>Loading...</div>;
+  if (isLoadingRootFolder) return <Loading />;
   if (isErrorRootFolder)
     return (
       <div className={errorStyleClassName}>

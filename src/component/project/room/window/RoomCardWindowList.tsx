@@ -13,7 +13,7 @@ function RoomCardWindowList(props: Props) {
   ));
 
   return (
-    <ul className="flex flex-col space-y-6 w-full">
+    <ul className="flex flex-col space-y-6 w-full overflow-y-auto">
       {roomCardWindowListElements}
     </ul>
   );

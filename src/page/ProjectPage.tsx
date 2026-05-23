@@ -1,4 +1,5 @@
 import CustomerCard from "../component/customer/CustomerCard";
+import Loading from "../component/loading/Loading";
 import RoomCardList from "../component/project/room/RoomCardList";
 import useSharePointProjectFileQuery from "../hook/useSharePointProjectFileQuery";
 import { projectRoute } from "../router/router";
@@ -11,7 +12,7 @@ function ProjectPage() {
 
   const errorStyleClassName = "flex items-center justify-center flex-1";
 
-  if (isLoading) return <div className={errorStyleClassName}>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (isError)
     return <div className={errorStyleClassName}>error: {error.message}</div>;
   if (!isSuccess)
@@ -20,7 +21,7 @@ function ProjectPage() {
     );
 
   return (
-    <main className="flex flex-col w-full h-full items-center p-6 space-y-6">
+    <main className="flex flex-col w-full h-full items-center p-6 space-y-6 overflow-y-auto">
       <CustomerCard projectFile={data} />
       <RoomCardList projectFile={data} />
     </main>
