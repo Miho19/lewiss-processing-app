@@ -8,8 +8,6 @@ function RoomCardWindowList(props: Props) {
   const { room } = props;
   const windows = room.windows;
 
-  console.log(windows);
-
   const roomCardWindowListElements = windows.map((window) => (
     <RoomCardWindowListElement key={window.id} window={window} />
   ));
