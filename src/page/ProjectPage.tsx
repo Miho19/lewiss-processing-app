@@ -21,7 +21,7 @@ function ProjectPage() {
     );
 
   return (
-    <main className="flex flex-col w-full h-full items-center p-6 space-y-6 overflow-y-auto">
+    <main className="flex flex-col flex-1 overflow-y-auto p-6 items-center space-y-6">
       <CustomerCard projectFile={data} />
       <RoomCardList projectFile={data} />
     </main>

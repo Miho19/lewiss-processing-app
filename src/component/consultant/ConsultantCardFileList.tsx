@@ -43,9 +43,9 @@ function ConsultantCardFileList(props: Props) {
 
   return (
     <section
-      className={`flex w-full overflow-hidden transition-all duration-200 ease-in-out ${isExpanded ? `max-h-125` : `max-h-0`}`}
+      className={`grid transition-all duration-200 ease-in-out ${isExpanded ? `grid-rows-[1fr] opacity-100 pointer-events-auto` : `grid-rows-[0fr] opacity-0 pointer-events-none`}`}
     >
-      <ul className="flex w-full flex-col space-y-6 overflow-y-scroll p-6">
+      <ul className="flex w-full flex-col space-y-6 p-6 overflow-hidden">
         {fileListElements}
       </ul>
     </section>

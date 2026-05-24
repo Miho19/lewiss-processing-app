@@ -17,17 +17,20 @@ function RoomCard(props: Props) {
   }
 
   return (
-    <li className="flex w-full flex-col space-y-3 shadow-md p-6 border border-black/15 pb-6">
+    <li className="flex flex-col space-y-3 shadow-md p-6 border border-black/15 pb-6">
       <RoomCardHeader
         room={room}
         isExpanded={isExpanded}
         toggleExpanded={toggleExpanded}
       />
+
       <div
-        className={`flex flex-col space-y-3 w-full overflow-hidden transition-all duration-200 ease-in-out ${isExpanded ? `max-h-125` : `max-h-0`}`}
+        className={`grid transition-all duration-200 ease-in-out ${isExpanded ? `grid-rows-[1fr] opacity-100 pointer-events-auto` : `grid-rows-[0fr] opacity-0 pointer-events-none`}`}
       >
-        <RoomCardWindowList room={room} />
-        <RoomCardTreatment room={room} />
+        <div className="flex flex-col w-full h-full overflow-hidden">
+          <RoomCardWindowList room={room} />
+          <RoomCardTreatment room={room} />
+        </div>
       </div>
     </li>
   );
