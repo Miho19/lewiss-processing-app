@@ -72,8 +72,8 @@ export type SharePointBriefType = {
 };
 
 export type SharePointTreatmentType = {
-  insideLayer?: SharePointInsideLayerType;
-  outsideLayer?: SharePointOutsideLayerType;
+  insideLayer: SharePointInsideLayerType;
+  outsideLayer: SharePointOutsideLayerType;
   outsideLayerRear: string | null;
   appliedEdit: string | null;
   notes: string;
@@ -93,18 +93,12 @@ export type SharePointInsideLayerType = {
 export type SharePointSpecType = {
   blindType: string;
   fabric: SharePointFabricType;
-  rollDirection: string;
   bracketColour: string;
-  bottomRailType: string;
-  bottomRailColour: string;
-  chainColour: string;
   controlSide: string;
   motorisation: string | null;
   pelmetType: string | null;
   customColour: boolean;
-  inlineBracket: boolean;
-  intermediateBracket: boolean;
-  combaBracket: boolean;
+  sideChannels: boolean;
   remoteQty: number;
   usbCableQty: number;
   smartLinkHubQty: number;
@@ -128,17 +122,23 @@ export type SharePointOutsideLayerType = {
 };
 
 export type SharePointSpec2Type = {
-  operation: string;
-  faceFabric: SharePointFaceFabricType;
-  liningColour?: string;
-  cordColour?: string;
-  chainColour: string | null;
-  chainSize: string | null;
-  blindSurchargeAmount: number;
-  blindSurchargeDescription: string;
+  blindType: string;
+  fabric: SharePointFabricType;
+  rollDirection: string;
+  bracketColour: string;
+  bottomRailType: string;
+  bottomRailColour: string;
+  chainColour: string;
+  controlSide: string;
+  motorisation: string;
+  pelmetType: string | null;
+  customColour: boolean;
+  inlineBracket: boolean;
+  intermediateBracket: boolean;
+  combaBracket: boolean;
   remoteQty: number;
-  chargerQty: number;
-  smartLinkQty: number;
+  usbCableQty: number;
+  smartLinkHubQty: number;
 };
 
 export type SharePointFaceFabricType = {
