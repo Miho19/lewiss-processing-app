@@ -1,9 +1,9 @@
-import type { SharePointSpecType } from "../../../../zod/sharePointProjectFile";
+import type { SharePointSpecType } from "../../../../../zod/sharePointProjectFile";
 
 type Props = {
   spec: SharePointSpecType;
 };
-function RoomCardTreatmentKineticsCellular10mm(props: Props) {
+function RoomCardTreatmentKineticsCellular(props: Props) {
   const { spec } = props;
 
   const operation =
@@ -33,4 +33,4 @@ function RoomCardTreatmentKineticsCellular10mm(props: Props) {
   );
 }
 
-export default RoomCardTreatmentKineticsCellular10mm;
+export default RoomCardTreatmentKineticsCellular;
