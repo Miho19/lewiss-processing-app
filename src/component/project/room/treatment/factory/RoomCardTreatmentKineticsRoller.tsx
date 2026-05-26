@@ -8,7 +8,9 @@ function RoomCardTreatmentKineticsRoller(props: Props) {
   const { spec } = props;
 
   const operation =
-    spec.motorisation.length === 0 ? spec.chainColour : spec.motorisation;
+    typeof spec.motorisation !== "undefined"
+      ? spec.chainColour
+      : spec.motorisation;
 
   return (
     <div className="grid grid-cols-[160px_1fr] gap-x-4 gap-y-4 align-middle">

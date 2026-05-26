@@ -1,4 +1,4 @@
-import type { SharePointWindowType } from "../../../../zod/sharePointProjectFile";
+import type { SharePointWindowType } from "../../../../../zod/sharePointProjectFile";
 
 type Props = {
   window: SharePointWindowType;
@@ -10,7 +10,8 @@ function RoomCardWindowOutsideMeasurement(props: Props) {
   if (
     typeof window.blindLeft === "undefined" ||
     typeof window.blindRight === "undefined" ||
-    typeof window.blindAbove === "undefined"
+    typeof window.blindAbove === "undefined" ||
+    typeof window.blindUnderhang === "undefined"
   ) {
     return <></>;
   }
@@ -19,7 +20,7 @@ function RoomCardWindowOutsideMeasurement(props: Props) {
     window.internalWidth + window.blindLeft + window.blindRight;
 
   const height = Math.max(window.internalHeightL, window.internalHeightR);
-  const outsideHeight = height + window.blindAbove;
+  const outsideHeight = height + window.blindAbove + window.blindUnderhang;
 
   return (
     <div className="flex flex-col w-full space-y-1 border-b border-black/5 pb-3">

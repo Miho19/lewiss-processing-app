@@ -1,4 +1,4 @@
-import type { SharePointRoomType } from "../../../../zod/sharePointProjectFile";
+import type { SharePointRoomType } from "../../../../../zod/sharePointProjectFile";
 import RoomCardWindowListElement from "./RoomCardWindowListElement";
 
 type Props = {

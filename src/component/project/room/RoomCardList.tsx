@@ -12,7 +12,7 @@ function RoomCardList(props: Props) {
     <RoomCard room={room} key={room.id} />
   ));
 
-  return <ul className="flex flex-col w-full">{roomCards}</ul>;
+  return <ul className="flex flex-col w-full space-y-6">{roomCards}</ul>;
 }
 
 export default RoomCardList;

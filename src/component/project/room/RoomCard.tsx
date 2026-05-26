@@ -1,8 +1,8 @@
 import { useState } from "react";
 import type { SharePointRoomType } from "../../../zod/sharePointProjectFile";
 import RoomCardHeader from "./RoomCardHeader";
-import RoomCardWindowList from "./window/RoomCardWindowList";
 import RoomCardTreatment from "./treatment/RoomCardTreatment";
+import RoomCardWindowList from "./window/list/RoomCardWindowList";
 
 type Props = {
   room: SharePointRoomType;
