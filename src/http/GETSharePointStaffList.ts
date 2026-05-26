@@ -37,7 +37,7 @@ async function GETSharePointStaffList(
     };
   } catch (error) {
     if (error instanceof Error) console.error(error.message);
-    throw new Error("Failed to fetch SharePoint staff list");
+    throw new Error("Failed to fetch SharePoint staff list", { cause: error });
   }
 }
 

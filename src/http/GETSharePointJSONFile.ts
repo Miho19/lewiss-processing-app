@@ -32,7 +32,7 @@ async function GETSharePointJSONFile(
     return jsonBody;
   } catch (error) {
     if (error instanceof Error) console.error(error.message);
-    throw new Error("Failed to fetch staff folder");
+    throw new Error("Failed to fetch staff folder", { cause: error });
   }
 }
 

@@ -37,7 +37,7 @@ async function GETSharePointFolder(
     return jsonBody.children;
   } catch (error) {
     if (error instanceof Error) console.error(error.message);
-    throw new Error("Failed to fetch SharePoint folder");
+    throw new Error("Failed to fetch SharePoint folder", { cause: error });
   }
 }
 
