@@ -55,8 +55,8 @@ function HomePage() {
   ));
 
   return (
-    <main className="flex-1 overflow-y-auto p-6">
-      <ul className="flex-1 space-y-16">{consultantCards}</ul>
+    <main className="flex-1 p-6 space-y-12 pt-30">
+      <ul className="flex flex-col w-full space-y-12">{consultantCards}</ul>
     </main>
   );
 }

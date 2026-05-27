@@ -14,8 +14,6 @@ type Props = {
   ) => void;
 };
 
-// can make this dry by passing in fit for measurement...
-
 function RoomCardWindowListElement(props: Props) {
   const { window } = props;
 

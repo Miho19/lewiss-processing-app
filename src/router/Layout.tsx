@@ -1,12 +1,10 @@
 import { Outlet } from "@tanstack/react-router";
-import Sidebar from "../component/sidebar/Sidebar";
+import Navbar from "../component/sidebar/Navbar";
 
 function Layout() {
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="w-full">
-        <Sidebar />
-      </header>
+      <Navbar />
       <Outlet />
     </div>
   );

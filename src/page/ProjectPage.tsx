@@ -20,6 +20,8 @@ export type onChangeHandlerProjectFormDataCheckboxParameterType = {
 
 export type projectFormDataType = Record<string, WindowMeasurement>;
 
+// TODO 27/05/2026, switch to context to avoid the prop drilling
+
 function ProjectPage() {
   const { projectId } = projectRoute.useParams();
   const [projectFormData, setProjectFormData] = useState<projectFormDataType>(
@@ -29,7 +31,6 @@ function ProjectPage() {
   const { data, isSuccess, isLoading, isError, error } =
     useSharePointProjectFileQuery(projectId);
 
-  // maybe there is a better way to do this, smells funny
   useEffect(() => {
     if (!isSuccess) return;
 
@@ -62,6 +63,7 @@ function ProjectPage() {
 
   function onSubmitHandler(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
+    console.log(projectFormData);
   }
 
   function onChangeHandlerprojectFormDataCheckbox(
@@ -78,12 +80,21 @@ function ProjectPage() {
   }
 
   return (
-    <main className="flex flex-col flex-1 overflow-y-auto p-6 items-center space-y-6">
+    <main className="flex-1 p-6 space-y-12 pt-30">
       <CustomerCard projectFile={data} />
       <form
-        className="flex w-full flex-col space-y-6 items-start"
+        className="flex w-full flex-col space-y-6 relative"
         onSubmit={onSubmitHandler}
       >
+        <div className="fixed right-6 top-18 z-100">
+          <button
+            type="submit"
+            className="w-26 flex ml-auto justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#1D1D1D] hover:bg-[#393939] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1D1D1D] hover:-translate-y-1 transition-all duration-100 ease-in-out cursor-pointer"
+          >
+            Submit
+          </button>
+        </div>
+
         <RoomCardList
           projectFile={data}
           onChangeHandlerProjectFormDataCheckBox={
@@ -91,13 +102,6 @@ function ProjectPage() {
           }
           projectFormData={projectFormData}
         />
-
-        <button
-          type="submit"
-          className="px-6 py-3 border-2 border-green-500 ml-auto cursor-pointer hover:border-green-700 transition-all duration-100 ease-in-out hover:scale-105"
-        >
-          Submit
-        </button>
       </form>
     </main>
   );
