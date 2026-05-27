@@ -69,8 +69,13 @@ function RoomCardWindowInsideMeasurement(props: Props) {
     });
   }
 
+  const htmlId = `${window.id} inside`;
+
   return (
-    <div className="flex flex-col w-full space-y-1 border-b border-black/5 pb-3">
+    <label
+      htmlFor={htmlId}
+      className="flex flex-col w-full space-y-1 border-b border-black/5 py-3 group hover:-translate-y-4 transition-all duration-100 ease-in-out cursor-pointer"
+    >
       <p className="w-full text-end text-sm text-gray-500 italic">
         {getWindowBlindCountString(window.blindCount)}
       </p>
@@ -79,19 +84,18 @@ function RoomCardWindowInsideMeasurement(props: Props) {
         {getInsideMeasurementDisplay(window)}
         <RoomCardWindowMeasurementControl window={window} />
       </div>
-      <label>
-        <input
-          id={window.id}
-          type="checkbox"
-          className="w-5 h-5 border border-black/25 rounded-full checked:bg-black cursor-pointer"
-          checked={
-            projectFormData[window.id].selected &&
-            projectFormData[window.id].fit === "inside"
-          }
-          onChange={onChangeHandler}
-        />
-      </label>
-    </div>
+
+      <input
+        id={htmlId}
+        type="checkbox"
+        className="w-5 h-5 border border-black/25 rounded-full checked:bg-black cursor-pointer ml-auto accent-black"
+        checked={
+          projectFormData[window.id].selected &&
+          projectFormData[window.id].fit === "inside"
+        }
+        onChange={onChangeHandler}
+      />
+    </label>
   );
 }
 
