@@ -1,0 +1,114 @@
+import type {
+  projectFormDataType,
+  WindowMeasurement,
+} from "../page/ProjectPage";
+import type {
+  SharePointInsideLayerType,
+  SharePointOutsideLayerType,
+  SharePointProjectFileType,
+  SharePointRoomType,
+  SharePointSpec2Type,
+  SharePointSpecType,
+  SharePointWindowType,
+} from "../zod/sharePointProjectFile";
+
+function filterSelectedWindows(
+  formData: projectFormDataType,
+): WindowMeasurement[] {
+  const filteredWindows: WindowMeasurement[] = [];
+
+  Object.entries(formData).forEach(([Key, value]) => {
+    if (!value.selected) return;
+    filteredWindows.push(value);
+  });
+
+  return [...filteredWindows];
+}
+
+type BlindCountStringType = "single" | "dual" | "butting" | "invalid";
+
+type joinedWindowType = {
+  windowId: string;
+  roomId: string;
+  blindCountString: BlindCountStringType;
+  fit: "inside" | "outside";
+  width: number[];
+  height: number;
+  treatment: SharePointInsideLayerType | SharePointOutsideLayerType;
+};
+
+function getRoomAndWindowFromProjectFileByWindowId(
+  projectFile: SharePointProjectFileType,
+  roomId: string,
+  windowId: string,
+): [SharePointRoomType, SharePointWindowType] {
+  if (typeof projectFile === "undefined" || !roomId || !windowId)
+    throw new Error("Parameters are missing");
+
+  const room = projectFile.project.rooms.find((room) => room.id === roomId);
+  if (!room) throw new Error("Room not found");
+
+  const window = room.windows.find((window) => window.id === windowId);
+  if (!window) throw new Error("Window not found");
+
+  return [{ ...room }, { ...window }];
+}
+
+function joinTreatment(
+  projectFile: SharePointProjectFileType,
+  filteredList: WindowMeasurement[],
+) {
+  const joinedList = filteredList.map((window) => {
+    const [projectRoom, projectWindow] =
+      getRoomAndWindowFromProjectFileByWindowId(
+        projectFile,
+        window.roomId,
+        window.id,
+      );
+
+    const blindCountString = getWindowBlindCountString(
+      window.fit === "inside"
+        ? projectWindow.blindCount
+        : projectWindow.outsideBlindCount,
+    );
+
+    const treatment =
+      window.fit === "inside"
+        ? projectRoom.treatment.insideLayer
+        : projectRoom.treatment.outsideLayer;
+
+    const newEntry: joinedWindowType = {
+      windowId: window.id,
+      roomId: window.roomId,
+      blindCountString: blindCountString,
+      fit: window.fit,
+      width: [],
+      height: 0,
+      treatment: treatment,
+    };
+  });
+  // each room --> lets create a new object, contain window name,id, width, height, fit, treatment
+
+  return [...joinedList];
+}
+
+function getWindowBlindCountString(
+  blindCount: string | number,
+): BlindCountStringType {
+  if (
+    typeof blindCount === "string" &&
+    (blindCount as string).localeCompare("dual", undefined, {
+      sensitivity: "base",
+    }) === 0
+  ) {
+    return "dual";
+  }
+
+  if (blindCount === 1) return "single";
+
+  if (blindCount === 2) return "butting";
+
+  return "invalid";
+}
+
+export { filterSelectedWindows, joinTreatment, getWindowBlindCountString };

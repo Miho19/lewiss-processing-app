@@ -4,8 +4,12 @@ import Loading from "../component/loading/Loading";
 import RoomCardList from "../component/project/room/RoomCardList";
 import useSharePointProjectFileQuery from "../hook/useSharePointProjectFileQuery";
 import { projectRoute } from "../router/router";
+import {
+  filterSelectedWindows,
+  joinTreatment,
+} from "../utility/processProject";
 
-type WindowMeasurement = {
+export type WindowMeasurement = {
   id: string;
   roomId: string;
   fit: "inside" | "outside";
@@ -63,7 +67,12 @@ function ProjectPage() {
 
   function onSubmitHandler(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(projectFormData);
+    if (typeof data === "undefined") return;
+
+    const selectedWindows = filterSelectedWindows(projectFormData);
+
+    const joinedSelectedWindows = joinTreatment(data, selectedWindows);
+    console.log(joinedSelectedWindows);
   }
 
   function onChangeHandlerprojectFormDataCheckbox(

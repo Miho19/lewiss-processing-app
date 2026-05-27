@@ -4,8 +4,8 @@ import type {
   projectFormDataType,
 } from "../../../../../page/ProjectPage";
 import type { SharePointWindowType } from "../../../../../zod/sharePointProjectFile";
-import { getWindowBlindCountString } from "../../../../../utility/roomCardMeasurement";
 import RoomCardWindowMeasurementControl from "../common/RoomCardWindowMeasurementControl";
+import { getWindowBlindCountString } from "../../../../../utility/processProject";
 
 type Props = {
   window: SharePointWindowType;
@@ -156,7 +156,9 @@ function RoomCardWindowMeasurement(props: Props) {
       className="flex flex-col w-full space-y-1 border-b border-black/5 py-3 group hover:-translate-y-4 transition-all duration-100 ease-in-out cursor-pointer"
     >
       <p className="w-full text-end text-sm text-gray-500 italic">
-        {getWindowBlindCountString(window.blindCount)}
+        {getWindowBlindCountString(
+          fit === "inside" ? window.blindCount : window.outsideBlindCount,
+        )}
       </p>
       <div className="grid grid-cols-[50px_1fr] gap-x-4 gap-y-1 align-middle">
         <p className="text-sm text-gray-500">
