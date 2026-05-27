@@ -5,7 +5,12 @@ import type {
 } from "../../../../../page/ProjectPage";
 import type { SharePointWindowType } from "../../../../../zod/sharePointProjectFile";
 import RoomCardWindowMeasurementControl from "../common/RoomCardWindowMeasurementControl";
-import { getWindowBlindCountString } from "../../../../../utility/processProject";
+import {
+  getWindowBlindCountString,
+  getWindowHeight,
+  getWindowWidth,
+  type WindowFitType,
+} from "../../../../../utility/processProject";
 
 type Props = {
   window: SharePointWindowType;
@@ -14,11 +19,15 @@ type Props = {
     window: onChangeHandlerProjectFormDataCheckboxParameterType,
   ) => void;
 
-  fit: "inside" | "outside";
+  fit: WindowFitType;
 };
 
 function getMeasurementDisplayInside(window: SharePointWindowType) {
-  const height = Math.max(window.internalHeightL, window.internalHeightR);
+  const height = getWindowHeight(window, "inside");
+  const widthArray = getWindowWidth(window, "inside");
+
+  if (widthArray[0] === 0 || height === 0) return <p>Invalid measurements</p>;
+
   const blindCount = window.blindCount;
 
   if (
@@ -30,16 +39,13 @@ function getMeasurementDisplayInside(window: SharePointWindowType) {
   ) {
     return (
       <p className="text-sm">
-        {window.internalWidth}mm x {height}mm
+        {widthArray[0]}mm x {height}mm
       </p>
     );
   }
 
   if (blindCount === 2) {
-    if (typeof window.blindLeftWidth === "undefined")
-      return <p>Blind left width measurement missing</p>;
-    const blindLeftWidth = parseInt(window.blindLeftWidth);
-
+    const [blindLeftWidth, blindRightWidth] = widthArray;
     return (
       <p className="text-sm flex space-x-3">
         <span>
@@ -47,7 +53,7 @@ function getMeasurementDisplayInside(window: SharePointWindowType) {
         </span>
         <span>|</span>
         <span>
-          {window.internalWidth - blindLeftWidth}mm x {height}mm
+          {blindRightWidth}mm x {height}mm
         </span>
       </p>
     );
@@ -57,24 +63,12 @@ function getMeasurementDisplayInside(window: SharePointWindowType) {
 }
 
 function getMeasurementDisplayOutside(window: SharePointWindowType) {
-  if (
-    typeof window.blindLeft === "undefined" ||
-    typeof window.blindRight === "undefined" ||
-    typeof window.blindAbove === "undefined" ||
-    typeof window.blindUnderhang === "undefined" ||
-    typeof window.outsideBlindLeftWidth === "undefined"
-  ) {
-    return <></>;
-  }
+  const height = getWindowHeight(window, "outside");
+  const widthArray = getWindowWidth(window, "outside");
 
-  const height =
-    Math.max(window.internalHeightL, window.internalHeightR) +
-    window.blindAbove +
-    window.blindUnderhang;
+  if (widthArray[0] === 0 || height === 0) return <p>Invalid measurements</p>;
 
-  const width = window.internalWidth + window.blindLeft + window.blindRight;
-
-  const blindCount = window.blindCount;
+  const blindCount = window.outsideBlindCount;
 
   if (
     (typeof blindCount === "string" &&
@@ -85,28 +79,22 @@ function getMeasurementDisplayOutside(window: SharePointWindowType) {
   ) {
     return (
       <p className="text-sm">
-        {width}mm x {height}mm
+        {widthArray[0]}mm x {height}mm
       </p>
     );
   }
 
   if (blindCount === 2) {
-    let outsideBlindLeftWidth;
-
-    try {
-      outsideBlindLeftWidth = parseInt(window.outsideBlindLeftWidth);
-    } catch (error) {
-      return <>Invalid outside blind left width</>;
-    }
+    const [outsideBlindLeft, outsideBlindRight] = widthArray;
 
     return (
       <p className="text-sm flex space-x-3">
         <span>
-          {outsideBlindLeftWidth}mm x {height}mm
+          {outsideBlindLeft}mm x {height}mm
         </span>
         <span>|</span>
         <span>
-          {width - outsideBlindLeftWidth}mm x {height}mm
+          {outsideBlindRight}mm x {height}mm
         </span>
       </p>
     );
@@ -117,7 +105,7 @@ function getMeasurementDisplayOutside(window: SharePointWindowType) {
 
 function getMeasurementDisplay(
   window: SharePointWindowType,
-  fit: "inside" | "outside",
+  fit: WindowFitType,
 ) {
   switch (fit) {
     case "inside":

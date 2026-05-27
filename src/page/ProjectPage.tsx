@@ -1,4 +1,4 @@
-import { useEffect, useState, type ChangeEvent, type SubmitEvent } from "react";
+import { useEffect, useState, type SubmitEvent } from "react";
 import CustomerCard from "../component/customer/CustomerCard";
 import Loading from "../component/loading/Loading";
 import RoomCardList from "../component/project/room/RoomCardList";
@@ -7,18 +7,13 @@ import { projectRoute } from "../router/router";
 import {
   filterSelectedWindows,
   joinTreatment,
+  type WindowFitType,
+  type WindowMeasurement,
 } from "../utility/processProject";
-
-export type WindowMeasurement = {
-  id: string;
-  roomId: string;
-  fit: "inside" | "outside";
-  selected: boolean;
-};
 
 export type onChangeHandlerProjectFormDataCheckboxParameterType = {
   id: string;
-  fit: "inside" | "outside";
+  fit: WindowFitType;
   isChecked: boolean;
 };
 
@@ -69,7 +64,9 @@ function ProjectPage() {
     event.preventDefault();
     if (typeof data === "undefined") return;
 
+    // potential to give feedback here instead of returning nothing
     const selectedWindows = filterSelectedWindows(projectFormData);
+    if (selectedWindows.length === 0) return;
 
     const joinedSelectedWindows = joinTreatment(data, selectedWindows);
     console.log(joinedSelectedWindows);

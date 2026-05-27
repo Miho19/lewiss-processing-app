@@ -8,7 +8,9 @@
 
 - [x] **[Display Project file]** - Customer Information
 - [ ] **[Display Project file]** - Booking Information
-- [ ] **[Display Project file]** - Room - Window - Treatment
+- [x] **[Display Project file]** - Room - Window - Treatment
+
+- [x] **[project window]** - display number of windows selected for a given room
 
 ## Palette
 
