@@ -3,8 +3,8 @@ import type {
   onChangeHandlerProjectFormDataCheckboxParameterType,
   projectFormDataType,
 } from "../../../../../page/ProjectPage";
-import { getWindowBlindCountString } from "../../../../../utility/roomCardMeasurement";
 import type { SharePointWindowType } from "../../../../../zod/sharePointProjectFile";
+import { getWindowBlindCountString } from "../../../../../utility/roomCardMeasurement";
 import RoomCardWindowMeasurementControl from "../common/RoomCardWindowMeasurementControl";
 
 type Props = {
@@ -13,9 +13,11 @@ type Props = {
   onChangeHandlerProjectFormDataCheckBox: (
     window: onChangeHandlerProjectFormDataCheckboxParameterType,
   ) => void;
+
+  fit: "inside" | "outside";
 };
 
-function getInsideMeasurementDisplay(window: SharePointWindowType) {
+function getMeasurementDisplayInside(window: SharePointWindowType) {
   const height = Math.max(window.internalHeightL, window.internalHeightR);
   const blindCount = window.blindCount;
 
@@ -54,9 +56,86 @@ function getInsideMeasurementDisplay(window: SharePointWindowType) {
   return <p>Invalid blind count</p>;
 }
 
-function RoomCardWindowInsideMeasurement(props: Props) {
-  const { window, projectFormData, onChangeHandlerProjectFormDataCheckBox } =
-    props;
+function getMeasurementDisplayOutside(window: SharePointWindowType) {
+  if (
+    typeof window.blindLeft === "undefined" ||
+    typeof window.blindRight === "undefined" ||
+    typeof window.blindAbove === "undefined" ||
+    typeof window.blindUnderhang === "undefined" ||
+    typeof window.outsideBlindLeftWidth === "undefined"
+  ) {
+    return <></>;
+  }
+
+  const height =
+    Math.max(window.internalHeightL, window.internalHeightR) +
+    window.blindAbove +
+    window.blindUnderhang;
+
+  const width = window.internalWidth + window.blindLeft + window.blindRight;
+
+  const blindCount = window.blindCount;
+
+  if (
+    (typeof blindCount === "string" &&
+      (blindCount as string).localeCompare("dual", undefined, {
+        sensitivity: "base",
+      }) === 0) ||
+    blindCount === 1
+  ) {
+    return (
+      <p className="text-sm">
+        {width}mm x {height}mm
+      </p>
+    );
+  }
+
+  if (blindCount === 2) {
+    let outsideBlindLeftWidth;
+
+    try {
+      outsideBlindLeftWidth = parseInt(window.outsideBlindLeftWidth);
+    } catch (error) {
+      return <>Invalid outside blind left width</>;
+    }
+
+    return (
+      <p className="text-sm flex space-x-3">
+        <span>
+          {outsideBlindLeftWidth}mm x {height}mm
+        </span>
+        <span>|</span>
+        <span>
+          {width - outsideBlindLeftWidth}mm x {height}mm
+        </span>
+      </p>
+    );
+  }
+
+  return <p>Invalid blind count</p>;
+}
+
+function getMeasurementDisplay(
+  window: SharePointWindowType,
+  fit: "inside" | "outside",
+) {
+  switch (fit) {
+    case "inside":
+      return getMeasurementDisplayInside(window);
+    case "outside":
+      return getMeasurementDisplayOutside(window);
+    default:
+      return <p>Fit style is not valid</p>;
+  }
+}
+
+function RoomCardWindowMeasurement(props: Props) {
+  const {
+    window,
+    projectFormData,
+    onChangeHandlerProjectFormDataCheckBox,
+    fit,
+  } = props;
 
   if (!projectFormData[window.id]) return <></>;
 
@@ -64,12 +143,12 @@ function RoomCardWindowInsideMeasurement(props: Props) {
     event.stopPropagation();
     onChangeHandlerProjectFormDataCheckBox({
       id: window.id,
-      fit: "inside",
+      fit: fit,
       isChecked: event.target.checked,
     });
   }
 
-  const htmlId = `${window.id} inside`;
+  const htmlId = `${window.id} ${fit}`;
 
   return (
     <label
@@ -80,8 +159,10 @@ function RoomCardWindowInsideMeasurement(props: Props) {
         {getWindowBlindCountString(window.blindCount)}
       </p>
       <div className="grid grid-cols-[50px_1fr] gap-x-4 gap-y-1 align-middle">
-        <p className="text-sm text-gray-500">Inside</p>
-        {getInsideMeasurementDisplay(window)}
+        <p className="text-sm text-gray-500">
+          {fit.charAt(0).toUpperCase() + fit.slice(1)}
+        </p>
+        {getMeasurementDisplay(window, fit)}
         <RoomCardWindowMeasurementControl window={window} />
       </div>
 
@@ -91,7 +172,7 @@ function RoomCardWindowInsideMeasurement(props: Props) {
         className="w-5 h-5 border border-black/25 rounded-full checked:bg-black cursor-pointer ml-auto accent-black"
         checked={
           projectFormData[window.id].selected &&
-          projectFormData[window.id].fit === "inside"
+          projectFormData[window.id].fit === fit
         }
         onChange={onChangeHandler}
       />
@@ -99,4 +180,4 @@ function RoomCardWindowInsideMeasurement(props: Props) {
   );
 }
 
-export default RoomCardWindowInsideMeasurement;
+export default RoomCardWindowMeasurement;

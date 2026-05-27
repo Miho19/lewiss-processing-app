@@ -4,8 +4,7 @@ import type {
 } from "../../../../../page/ProjectPage";
 import type { SharePointWindowType } from "../../../../../zod/sharePointProjectFile";
 import RoomCardWindowMeasurementExtra from "../common/RoomCardWindowMeasurementsExtra";
-import RoomCardWindowInsideMeasurement from "../inside/RoomCardWindowInsideMeasurement";
-import RoomCardWindowOutsideMeasurement from "../outside/RoomCardWindowOutsideMeasurement";
+import RoomCardWindowMeasurement from "../measurement/RoomCardWindowMeasurement";
 
 type Props = {
   window: SharePointWindowType;
@@ -27,8 +26,8 @@ function RoomCardWindowListElement(props: Props) {
         <p className="text-xs text-gray-500 italic">{window.id}</p>
       </div>
 
-      <RoomCardWindowInsideMeasurement {...props} />
-      <RoomCardWindowOutsideMeasurement {...props} />
+      <RoomCardWindowMeasurement {...props} fit="inside" />
+      <RoomCardWindowMeasurement {...props} fit="outside" />
 
       <RoomCardWindowMeasurementExtra window={window} />
     </li>
