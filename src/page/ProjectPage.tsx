@@ -12,6 +12,12 @@ type WindowMeasurement = {
   selected: boolean;
 };
 
+export type onChangeHandlerProjectFormDataCheckboxParameterType = {
+  id: string;
+  fit: "inside" | "outside";
+  isChecked: boolean;
+};
+
 export type projectFormDataType = Record<string, WindowMeasurement>;
 
 function ProjectPage() {
@@ -54,17 +60,21 @@ function ProjectPage() {
       <div className={errorStyleClassName}>Failed to fetch project file</div>
     );
 
-  function toggleWindowMeasurement(id: string, fit: "inside" | "outside") {
-    setProjectFormData((prev) => ({
-      ...prev,
-      [id]: { ...prev[id], fit: fit, selected: !prev[id].selected },
-    }));
-
-    console.log(projectFormData);
-  }
-
   function onSubmitHandler(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
+  }
+
+  function onChangeHandlerprojectFormDataCheckbox(
+    window: onChangeHandlerProjectFormDataCheckboxParameterType,
+  ) {
+    setProjectFormData((prev) => ({
+      ...prev,
+      [window.id]: {
+        ...prev[window.id],
+        fit: window.fit,
+        selected: window.isChecked,
+      },
+    }));
   }
 
   return (
@@ -76,7 +86,9 @@ function ProjectPage() {
       >
         <RoomCardList
           projectFile={data}
-          toggleProjectFormDataCheckBox={toggleWindowMeasurement}
+          onChangeHandlerProjectFormDataCheckBox={
+            onChangeHandlerprojectFormDataCheckbox
+          }
           projectFormData={projectFormData}
         />
 

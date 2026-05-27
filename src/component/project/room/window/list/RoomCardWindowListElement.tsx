@@ -1,4 +1,7 @@
-import type { projectFormDataType } from "../../../../../page/ProjectPage";
+import type {
+  onChangeHandlerProjectFormDataCheckboxParameterType,
+  projectFormDataType,
+} from "../../../../../page/ProjectPage";
 import type { SharePointWindowType } from "../../../../../zod/sharePointProjectFile";
 import RoomCardWindowMeasurementExtra from "../common/RoomCardWindowMeasurementsExtra";
 import RoomCardWindowInsideMeasurement from "../inside/RoomCardWindowInsideMeasurement";
@@ -7,11 +10,12 @@ import RoomCardWindowOutsideMeasurement from "../outside/RoomCardWindowOutsideMe
 type Props = {
   window: SharePointWindowType;
   projectFormData: projectFormDataType;
-  toggleProjectFormDataCheckBox: (
-    id: string,
-    fit: "inside" | "outside",
+  onChangeHandlerProjectFormDataCheckBox: (
+    window: onChangeHandlerProjectFormDataCheckboxParameterType,
   ) => void;
 };
+
+// can make this dry by passing in fit for measurement...
 
 function RoomCardWindowListElement(props: Props) {
   const { window } = props;

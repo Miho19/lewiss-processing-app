@@ -1,13 +1,15 @@
-import type { projectFormDataType } from "../../../../../page/ProjectPage";
+import type {
+  onChangeHandlerProjectFormDataCheckboxParameterType,
+  projectFormDataType,
+} from "../../../../../page/ProjectPage";
 import type { SharePointRoomType } from "../../../../../zod/sharePointProjectFile";
 import RoomCardWindowListElement from "./RoomCardWindowListElement";
 
 type Props = {
   room: SharePointRoomType;
   projectFormData: projectFormDataType;
-  toggleProjectFormDataCheckBox: (
-    id: string,
-    fit: "inside" | "outside",
+  onChangeHandlerProjectFormDataCheckBox: (
+    window: onChangeHandlerProjectFormDataCheckboxParameterType,
   ) => void;
 };
 function RoomCardWindowList(props: Props) {

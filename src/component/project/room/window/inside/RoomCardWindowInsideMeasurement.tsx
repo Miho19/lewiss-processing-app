@@ -1,5 +1,8 @@
 import type { ChangeEvent } from "react";
-import type { projectFormDataType } from "../../../../../page/ProjectPage";
+import type {
+  onChangeHandlerProjectFormDataCheckboxParameterType,
+  projectFormDataType,
+} from "../../../../../page/ProjectPage";
 import { getWindowBlindCountString } from "../../../../../utility/roomCardMeasurement";
 import type { SharePointWindowType } from "../../../../../zod/sharePointProjectFile";
 import RoomCardWindowMeasurementControl from "../common/RoomCardWindowMeasurementControl";
@@ -7,9 +10,8 @@ import RoomCardWindowMeasurementControl from "../common/RoomCardWindowMeasuremen
 type Props = {
   window: SharePointWindowType;
   projectFormData: projectFormDataType;
-  toggleProjectFormDataCheckBox: (
-    id: string,
-    fit: "inside" | "outside",
+  onChangeHandlerProjectFormDataCheckBox: (
+    window: onChangeHandlerProjectFormDataCheckboxParameterType,
   ) => void;
 };
 
@@ -53,14 +55,18 @@ function getInsideMeasurementDisplay(window: SharePointWindowType) {
 }
 
 function RoomCardWindowInsideMeasurement(props: Props) {
-  const { window, projectFormData, toggleProjectFormDataCheckBox } = props;
+  const { window, projectFormData, onChangeHandlerProjectFormDataCheckBox } =
+    props;
 
   if (!projectFormData[window.id]) return <></>;
 
   function onChangeHandler(event: ChangeEvent<HTMLInputElement>) {
-    console.log("hello");
     event.stopPropagation();
-    toggleProjectFormDataCheckBox(window.id, "inside");
+    onChangeHandlerProjectFormDataCheckBox({
+      id: window.id,
+      fit: "inside",
+      isChecked: event.target.checked,
+    });
   }
 
   return (
@@ -78,7 +84,10 @@ function RoomCardWindowInsideMeasurement(props: Props) {
           id={window.id}
           type="checkbox"
           className="w-5 h-5 border border-black/25 rounded-full checked:bg-black cursor-pointer"
-          checked={projectFormData[window.id].selected}
+          checked={
+            projectFormData[window.id].selected &&
+            projectFormData[window.id].fit === "inside"
+          }
           onChange={onChangeHandler}
         />
       </label>
