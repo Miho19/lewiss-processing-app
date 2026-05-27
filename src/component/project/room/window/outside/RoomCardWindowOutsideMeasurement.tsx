@@ -1,9 +1,15 @@
+import type { projectFormDataType } from "../../../../../page/ProjectPage";
 import { getWindowBlindCountString } from "../../../../../utility/roomCardMeasurement";
 import type { SharePointWindowType } from "../../../../../zod/sharePointProjectFile";
 import RoomCardWindowMeasurementControl from "../common/RoomCardWindowMeasurementControl";
 
 type Props = {
   window: SharePointWindowType;
+  projectFormData: projectFormDataType;
+  toggleProjectFormDataCheckBox: (
+    id: string,
+    fit: "inside" | "outside",
+  ) => void;
 };
 
 // note, copy of function in inside variant of this, we can make this DRY later

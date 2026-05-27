@@ -1,9 +1,16 @@
+import type { ChangeEvent } from "react";
+import type { projectFormDataType } from "../../../../../page/ProjectPage";
 import { getWindowBlindCountString } from "../../../../../utility/roomCardMeasurement";
 import type { SharePointWindowType } from "../../../../../zod/sharePointProjectFile";
 import RoomCardWindowMeasurementControl from "../common/RoomCardWindowMeasurementControl";
 
 type Props = {
   window: SharePointWindowType;
+  projectFormData: projectFormDataType;
+  toggleProjectFormDataCheckBox: (
+    id: string,
+    fit: "inside" | "outside",
+  ) => void;
 };
 
 function getInsideMeasurementDisplay(window: SharePointWindowType) {
@@ -46,7 +53,15 @@ function getInsideMeasurementDisplay(window: SharePointWindowType) {
 }
 
 function RoomCardWindowInsideMeasurement(props: Props) {
-  const { window } = props;
+  const { window, projectFormData, toggleProjectFormDataCheckBox } = props;
+
+  if (!projectFormData[window.id]) return <></>;
+
+  function onChangeHandler(event: ChangeEvent<HTMLInputElement>) {
+    console.log("hello");
+    event.stopPropagation();
+    toggleProjectFormDataCheckBox(window.id, "inside");
+  }
 
   return (
     <div className="flex flex-col w-full space-y-1 border-b border-black/5 pb-3">
@@ -58,6 +73,15 @@ function RoomCardWindowInsideMeasurement(props: Props) {
         {getInsideMeasurementDisplay(window)}
         <RoomCardWindowMeasurementControl window={window} />
       </div>
+      <label>
+        <input
+          id={window.id}
+          type="checkbox"
+          className="w-5 h-5 border border-black/25 rounded-full checked:bg-black cursor-pointer"
+          checked={projectFormData[window.id].selected}
+          onChange={onChangeHandler}
+        />
+      </label>
     </div>
   );
 }

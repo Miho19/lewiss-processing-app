@@ -1,3 +1,4 @@
+import type { projectFormDataType } from "../../../../../page/ProjectPage";
 import type { SharePointWindowType } from "../../../../../zod/sharePointProjectFile";
 import RoomCardWindowMeasurementExtra from "../common/RoomCardWindowMeasurementsExtra";
 import RoomCardWindowInsideMeasurement from "../inside/RoomCardWindowInsideMeasurement";
@@ -5,6 +6,11 @@ import RoomCardWindowOutsideMeasurement from "../outside/RoomCardWindowOutsideMe
 
 type Props = {
   window: SharePointWindowType;
+  projectFormData: projectFormDataType;
+  toggleProjectFormDataCheckBox: (
+    id: string,
+    fit: "inside" | "outside",
+  ) => void;
 };
 
 function RoomCardWindowListElement(props: Props) {
@@ -17,8 +23,8 @@ function RoomCardWindowListElement(props: Props) {
         <p className="text-xs text-gray-500 italic">{window.id}</p>
       </div>
 
-      <RoomCardWindowInsideMeasurement window={window} />
-      <RoomCardWindowOutsideMeasurement window={window} />
+      <RoomCardWindowInsideMeasurement {...props} />
+      <RoomCardWindowOutsideMeasurement {...props} />
 
       <RoomCardWindowMeasurementExtra window={window} />
     </li>
