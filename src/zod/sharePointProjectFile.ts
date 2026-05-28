@@ -96,7 +96,7 @@ export type SharePointInsideLayerType = {
 };
 
 export type SharePointSpecType = {
-  blindType: string;
+  blindType: BlindType;
   fabric: SharePointFabricType;
   bracketColour: string;
   controlSide: string;
@@ -127,7 +127,7 @@ export type SharePointOutsideLayerType = {
 };
 
 export type SharePointSpec2Type = {
-  blindType: string;
+  blindType: BlindType;
   fabric: SharePointFabricType;
   rollDirection: string;
   bracketColour: string;
@@ -272,6 +272,18 @@ export const sharePointProductIdToProcessTypeRecord: SharePointProductIdToProces
     "sunscreen-roller": createRollerBlindDocument,
     "blockout-roller": createRollerBlindDocument,
   };
+
+export type BlindType =
+  | "Kinetics Sunscreen Roller Blind"
+  | "Kinetics Blockout Roller Blind"
+  | "Kinetics Light Filtering Roller Blind"
+  | "Kinetics 10mm Cellular Blind"
+  | "Kinetics 20mm Cellular Blind"
+  | "Kinetics Mikronwood 50mm Venetian"
+  | "Lewis's 25mm Aluminium Venetian"
+  | "Lewis's 50mm Phoenixwood Venetian"
+  | "Santa Fe Normandy Shutter"
+  | "Santa Fe Waterproof Woodlore Plus Shutter";
 
 // export const productIdToBlindTypeRecord: SharePointProductIdDictionaryType = {
 //   "cellular-blind": [

@@ -2,7 +2,6 @@ import type { projectFormDataType } from "../page/ProjectPage";
 import type {
   SharePointInsideLayerType,
   SharePointOutsideLayerType,
-  SharePointProductId,
   SharePointProjectFileType,
   SharePointRoomType,
   SharePointWindowType,
@@ -38,7 +37,7 @@ function filterSelectedWindows(
 ): WindowMeasurement[] {
   const filteredWindows: WindowMeasurement[] = [];
 
-  Object.entries(formData).forEach(([_, value]) => {
+  Object.entries(formData).forEach(([, value]) => {
     if (!value.selected) return;
     filteredWindows.push(value);
   });
@@ -101,8 +100,6 @@ function joinTreatment(
   return [...joinedList];
 }
 
-function getWindowProductId(window: SharePointWindowType) {}
-
 function getWindowBlindCountString(
   blindCount: string | number,
 ): WindowBlindCountStringType {
@@ -156,6 +153,7 @@ function _getWindowWidthInside(window: SharePointWindowType): number[] {
     const blindLeftWidth = parseInt(window.blindLeftWidth);
     return [blindLeftWidth, window.internalWidth - blindLeftWidth];
   } catch (error) {
+    console.error(error);
     return [0];
   }
 }
@@ -191,6 +189,7 @@ function _getWindowWidthOutside(window: SharePointWindowType): number[] {
     const outsideBlindLeftWidth = parseInt(window.outsideBlindLeftWidth);
     return [outsideBlindLeftWidth, width - outsideBlindLeftWidth];
   } catch (error) {
+    console.error(error);
     return [0];
   }
 }
@@ -230,4 +229,5 @@ export {
   getWindowBlindCountString,
   getWindowWidth,
   getWindowHeight,
+  getRoomAndWindowFromProjectFileByWindowId,
 };

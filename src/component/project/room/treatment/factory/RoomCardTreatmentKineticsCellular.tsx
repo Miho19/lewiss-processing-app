@@ -1,3 +1,7 @@
+import {
+  getKineticsCellularOperationString,
+  getKineticsCellularSideChannelColour,
+} from "../../../../../utility/kinetics/kineticsCellular";
 import type { SharePointSpecType } from "../../../../../zod/sharePointProjectFile";
 
 type Props = {
@@ -6,15 +10,9 @@ type Props = {
 function RoomCardTreatmentKineticsCellular(props: Props) {
   const { spec } = props;
 
-  const operation =
-    typeof spec.motorisation === "undefined" ? "Cord" : "Lithium-ion";
+  const operation = getKineticsCellularOperationString(spec);
 
-  let sideChannelsColour = "None";
-
-  if (spec.sideChannels) {
-    sideChannelsColour = "White";
-    if (spec.customColour) sideChannelsColour = "Custom";
-  }
+  const sideChannelColour = getKineticsCellularSideChannelColour(spec);
 
   return (
     <div className="grid grid-cols-[160px_1fr] gap-x-4 gap-y-4 align-middle">
@@ -28,7 +26,7 @@ function RoomCardTreatmentKineticsCellular(props: Props) {
       <span>{spec.bracketColour}</span>
 
       <span className="text-sm text-gray-500">Side Channel Colour</span>
-      <span>{sideChannelsColour}</span>
+      <span>{sideChannelColour}</span>
     </div>
   );
 }
