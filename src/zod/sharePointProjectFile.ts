@@ -263,7 +263,7 @@ type SharePointProductIdToProcessTypeRecordType = Record<
   (
     projectFile: SharePointProjectFileType,
     windowJoined: WindowMeasurementJoined[],
-  ) => TDocumentDefinitions
+  ) => Promise<TDocumentDefinitions>
 >;
 
 export const sharePointProductIdToProcessTypeRecord: SharePointProductIdToProcessTypeRecordType =

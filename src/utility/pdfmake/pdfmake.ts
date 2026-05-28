@@ -20,10 +20,10 @@ import type {
 // @ts-ignore
 (<any>pdfmake).vfs = pdfFonts.pdfMake ? pdfFonts.vfs : pdfFonts;
 
-function getOrderPDF(
+async function getOrderPDF(
   projectFile: SharePointProjectFileType,
   joinedSelectedWindows: WindowMeasurementJoined[],
-): TDocumentDefinitions[] {
+): Promise<TDocumentDefinitions[]> {
   if (
     typeof projectFile === "undefined" ||
     typeof joinedSelectedWindows === "undefined" ||
@@ -34,23 +34,26 @@ function getOrderPDF(
   const productIdToWindowMeasurementRecord =
     getProductIdToWindowMeasurementRecord(joinedSelectedWindows);
 
-  return generateProcessPDF(projectFile, productIdToWindowMeasurementRecord);
+  return await generateProcessPDF(
+    projectFile,
+    productIdToWindowMeasurementRecord,
+  );
 }
 
-function generateProcessPDF(
+async function generateProcessPDF(
   projectFile: SharePointProjectFileType,
   productIdToWindowMeasurementRecord: SharePointProductIdToWindowMeasurementJoinedRecordType,
-): TDocumentDefinitions[] {
-  const generatedPDFs: TDocumentDefinitions[] = [];
-
-  (
+): Promise<TDocumentDefinitions[]> {
+  const promises = (
     Object.keys(productIdToWindowMeasurementRecord) as SharePointProductId[]
-  ).forEach((key) => {
+  ).map(async (key) => {
     const windowMeasurements = productIdToWindowMeasurementRecord[key];
     const createPDFFunction = sharePointProductIdToProcessTypeRecord[key];
-
-    generatedPDFs.push(createPDFFunction(projectFile, windowMeasurements));
+    const createdPDF = await createPDFFunction(projectFile, windowMeasurements);
+    return createdPDF;
   });
+
+  const generatedPDFs: TDocumentDefinitions[] = await Promise.all(promises);
 
   return generatedPDFs;
 }
@@ -96,4 +99,8 @@ function getProductIdToWindowMeasurementRecord(
   return productIdToWindowMeasurementRecord;
 }
 
-export { getOrderPDF, createDocument };
+function openPDFDocument(document: TDocumentDefinitions) {
+  pdfmake.createPdf(document).open();
+}
+
+export { getOrderPDF, createDocument, openPDFDocument };

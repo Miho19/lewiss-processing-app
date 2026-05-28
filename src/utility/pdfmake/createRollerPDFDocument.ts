@@ -6,8 +6,10 @@ import { createDocument } from "./pdfmake";
 function createRollerBlindDocument(
   projectFile: SharePointProjectFileType,
   windowJoined: WindowMeasurementJoined[],
-): TDocumentDefinitions {
-  return createDocument(projectFile, "blockout-roller");
+): Promise<TDocumentDefinitions> {
+  return new Promise((resolve, reject) => {
+    resolve(createDocument(projectFile, "blockout-roller"));
+  });
 }
 
 export default createRollerBlindDocument;
