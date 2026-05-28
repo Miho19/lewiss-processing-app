@@ -84,7 +84,7 @@ export type SharePointTreatmentType = {
 };
 
 export type SharePointInsideLayerType = {
-  productId: string;
+  productId: SharePointProductId;
   length: string | null;
   isExisting: boolean;
   spec: SharePointSpecType;
@@ -115,7 +115,7 @@ export type SharePointFabricType = {
 };
 
 export type SharePointOutsideLayerType = {
-  productId: string;
+  productId: SharePointProductId;
   length: string | null;
   isExisting: boolean;
   spec: SharePointSpec2Type;
@@ -242,3 +242,33 @@ export type SharePointWindowType = {
   // blind2Type: string;
   // blind2Fabric: string;
 };
+
+type SharePointProductId =
+  | "cellular-blind"
+  | "sunscreen-roller"
+  | "blockout-roller";
+
+type SharePointProductIdDictionaryType = Record<SharePointProductId, string[]>;
+
+export const productIdToBlindTypeRecord: SharePointProductIdDictionaryType = {
+  "cellular-blind": [
+    "Kinetics 10mm Cellular Blind",
+    "Kinetics 20mm Cellular Blind",
+  ],
+  "blockout-roller": [
+    "Kinetics Blockout Roller Blind",
+    "Kinetics Light Filtering Roller Blind",
+  ],
+  "sunscreen-roller": ["Kinetics Sunscreen Roller Blind"],
+};
+
+//   "Kinetics Sunscreen Roller Blind"             → "Sunscreen Roller"
+//   "Kinetics Blockout Roller Blind"              → "Blockout Roller"
+//   "Kinetics Light Filtering Roller Blind"       → "Light Filter Roller"
+//   "Kinetics 10mm Cellular Blind"                → "10mm Cellular"
+//   "Kinetics 20mm Cellular Blind"                → "20mm Cellular"
+//   "Kinetics Mikronwood 50mm Venetian"           → "Mikronwood 50mm Venetian"
+//   "Lewis's 25mm Aluminium Venetian"             → "25mm Aluminium Venetian"
+//   "Lewis's 50mm Phoenixwood Venetian"           → "50mm Phoenixwood Venetian"
+//   "Santa Fe Normandy Shutter"                   → "Normandy Shutter"
+//   "Santa Fe Waterproof Woodlore Plus Shutter"   → "Waterproof Woodlore Plus Shutter"

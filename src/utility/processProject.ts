@@ -20,7 +20,7 @@ export type WindowMeasurement = {
   selected: boolean;
 };
 
-type joinedWindowType = {
+export type WindowMeasurementJoinedWithTreatment = {
   windowId: string;
   roomId: string;
   blindCountString: WindowBlindCountStringType;
@@ -85,7 +85,7 @@ function joinTreatment(
         ? projectRoom.treatment.insideLayer
         : projectRoom.treatment.outsideLayer;
 
-    const newEntry: joinedWindowType = {
+    const newEntry: WindowMeasurementJoinedWithTreatment = {
       windowId: window.id,
       roomId: window.roomId,
       blindCountString: blindCountString,
