@@ -1,4 +1,9 @@
-import type { Column, Content, TDocumentDefinitions } from "pdfmake/interfaces";
+import type {
+  Column,
+  Content,
+  ContentImage,
+  TDocumentDefinitions,
+} from "pdfmake/interfaces";
 import type { SharePointProjectFileType } from "../../zod/sharePointProjectFile";
 import type { WindowMeasurementJoined } from "../processProject";
 import { createDocument } from "./pdfmake";
@@ -19,16 +24,18 @@ async function createCellularBlindDocument(
 }
 
 async function createWindowWareHeader() {
-  const logoBase64String = "data:image/png;base64," + windowWareLogoBase64;
+  const image: ContentImage = {
+    image: "data:image/png;base64," + windowWareLogoBase64,
+    width: 100,
+  };
 
-  const header: Content[] = [
+  const content: Content[] = [
     {
-      width: "*",
-      text: " ",
+      columns: [{ width: "*", text: " " }, image],
     },
   ];
 
-  return column;
+  return content;
 }
 
 export default createCellularBlindDocument;
