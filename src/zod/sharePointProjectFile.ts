@@ -1,3 +1,8 @@
+import type { TDocumentDefinitions } from "pdfmake/interfaces";
+import type { WindowMeasurementJoined } from "../utility/processProject";
+import createRollerBlindDocument from "../utility/pdfmake/createRollerPDFDocument";
+import createCellularBlindDocument from "../utility/pdfmake/createCellularPDFDocument";
+
 export type SharePointProjectFileType = {
   id: number;
   name: string;
@@ -243,24 +248,42 @@ export type SharePointWindowType = {
   // blind2Fabric: string;
 };
 
-type SharePointProductId =
+export type SharePointProductId =
   | "cellular-blind"
   | "sunscreen-roller"
   | "blockout-roller";
 
-type SharePointProductIdDictionaryType = Record<SharePointProductId, string[]>;
+export type SharePointProductIdToWindowMeasurementJoinedRecordType = Record<
+  SharePointProductId,
+  WindowMeasurementJoined[]
+>;
 
-export const productIdToBlindTypeRecord: SharePointProductIdDictionaryType = {
-  "cellular-blind": [
-    "Kinetics 10mm Cellular Blind",
-    "Kinetics 20mm Cellular Blind",
-  ],
-  "blockout-roller": [
-    "Kinetics Blockout Roller Blind",
-    "Kinetics Light Filtering Roller Blind",
-  ],
-  "sunscreen-roller": ["Kinetics Sunscreen Roller Blind"],
-};
+type SharePointProductIdToProcessTypeRecordType = Record<
+  SharePointProductId,
+  (
+    projectFile: SharePointProjectFileType,
+    windowJoined: WindowMeasurementJoined[],
+  ) => TDocumentDefinitions
+>;
+
+export const sharePointProductIdToProcessTypeRecord: SharePointProductIdToProcessTypeRecordType =
+  {
+    "cellular-blind": createCellularBlindDocument,
+    "sunscreen-roller": createRollerBlindDocument,
+    "blockout-roller": createRollerBlindDocument,
+  };
+
+// export const productIdToBlindTypeRecord: SharePointProductIdDictionaryType = {
+//   "cellular-blind": [
+//     "Kinetics 10mm Cellular Blind",
+//     "Kinetics 20mm Cellular Blind",
+//   ],
+//   "blockout-roller": [
+//     "Kinetics Blockout Roller Blind",
+//     "Kinetics Light Filtering Roller Blind",
+//   ],
+//   "sunscreen-roller": ["Kinetics Sunscreen Roller Blind"],
+// };
 
 //   "Kinetics Sunscreen Roller Blind"             → "Sunscreen Roller"
 //   "Kinetics Blockout Roller Blind"              → "Blockout Roller"

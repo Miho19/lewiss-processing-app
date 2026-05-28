@@ -2,6 +2,7 @@ import type { projectFormDataType } from "../page/ProjectPage";
 import type {
   SharePointInsideLayerType,
   SharePointOutsideLayerType,
+  SharePointProductId,
   SharePointProjectFileType,
   SharePointRoomType,
   SharePointWindowType,
@@ -20,7 +21,7 @@ export type WindowMeasurement = {
   selected: boolean;
 };
 
-export type WindowMeasurementJoinedWithTreatment = {
+export type WindowMeasurementJoined = {
   windowId: string;
   roomId: string;
   blindCountString: WindowBlindCountStringType;
@@ -85,7 +86,7 @@ function joinTreatment(
         ? projectRoom.treatment.insideLayer
         : projectRoom.treatment.outsideLayer;
 
-    const newEntry: WindowMeasurementJoinedWithTreatment = {
+    const newEntry: WindowMeasurementJoined = {
       windowId: window.id,
       roomId: window.roomId,
       blindCountString: blindCountString,
@@ -99,6 +100,8 @@ function joinTreatment(
   });
   return [...joinedList];
 }
+
+function getWindowProductId(window: SharePointWindowType) {}
 
 function getWindowBlindCountString(
   blindCount: string | number,

@@ -9,7 +9,9 @@ import {
   joinTreatment,
   type WindowFitType,
   type WindowMeasurement,
+  type WindowMeasurementJoined,
 } from "../utility/processProject";
+import { getOrderPDF } from "../utility/pdfmake/pdfmake";
 
 export type onChangeHandlerProjectFormDataCheckboxParameterType = {
   id: string;
@@ -68,8 +70,12 @@ function ProjectPage() {
     const selectedWindows = filterSelectedWindows(projectFormData);
     if (selectedWindows.length === 0) return;
 
-    const joinedSelectedWindows = joinTreatment(data, selectedWindows);
-    console.log(joinedSelectedWindows);
+    const joinedSelectedWindows: WindowMeasurementJoined[] = joinTreatment(
+      data,
+      selectedWindows,
+    );
+
+    const pdfDocuments = getOrderPDF(data, joinedSelectedWindows);
   }
 
   function onChangeHandlerprojectFormDataCheckbox(
