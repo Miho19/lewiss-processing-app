@@ -74,6 +74,7 @@ function createDocument(
   const document: TDocumentDefinitions = {
     content: [],
     info: metaData,
+    pageOrientation: "landscape",
   };
 
   return document;
