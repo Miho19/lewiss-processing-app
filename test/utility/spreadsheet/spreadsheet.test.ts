@@ -1,17 +1,5 @@
-function excelRowStringToCommaSeperatedString(str: string) {
-  if (!str || str.length === 0) return "";
-  return "[" + str.trim().replace(/\t/g, ",") + "],";
-}
-
-function excelTableStringToStringArray(strArray: string[]) {
-  let result: string = "";
-
-  strArray.forEach((str) => {
-    result += excelRowStringToCommaSeperatedString(str);
-  });
-
-  return result;
-}
+import { test } from "vitest";
+import { excelTableStringToStringArray } from "../../../src/utility/pricing/spreadsheet";
 
 const priceArrayString = [
   "157	157	169	185	199	216	231	246	259	273	287	302	314	331	344	358	372	389	404	422	438	452	466	479	493	508	521	540	572	606	637	666	697",
@@ -50,4 +38,8 @@ const priceArrayString = [
   "411	411	459	562	639	720	765	844	946	996	1073	1177	1183	1197																			",
 ];
 
-export { excelTableStringToStringArray };
+test("spreadsheet function", () => {
+  const result = excelTableStringToStringArray(priceArrayString);
+
+  console.log(result);
+});
