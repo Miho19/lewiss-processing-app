@@ -1,12 +1,17 @@
 import type { Content } from "pdfmake";
-import type { KineticsCellularTableEntry } from "./createCellularPDFDocument";
+import type { KineticsCellularTableEntry } from "../kinetics/createCellularPDFDocument";
 import type { ContentTable } from "pdfmake/interfaces";
 
 type TableEntry = KineticsCellularTableEntry;
 
 // will go into a common file
 function convertTableEntryToStringArray(tableEntry: TableEntry) {
-  return Object.keys(tableEntry);
+  return Object.keys(tableEntry).map((column) => {
+    const columnSplitCapitalised = column
+      .split(" ")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1));
+    return columnSplitCapitalised.join(" ");
+  });
 }
 
 function generateTableHeader(tableEntry: TableEntry) {

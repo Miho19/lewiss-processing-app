@@ -1,7 +1,7 @@
 import type { TDocumentDefinitions } from "pdfmake/interfaces";
 import type { WindowMeasurementJoined } from "../utility/processProject";
-import createRollerBlindDocument from "../utility/pdfmake/createRollerPDFDocument";
-import createCellularBlindDocument from "../utility/pdfmake/createCellularPDFDocument";
+import createCellularBlindDocument from "../utility/kinetics/createCellularPDFDocument";
+import createRollerBlindDocument from "../utility/kinetics/createRollerPDFDocument";
 
 export type SharePointProjectFileType = {
   id: number;

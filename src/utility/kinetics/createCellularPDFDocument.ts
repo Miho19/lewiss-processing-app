@@ -7,21 +7,24 @@ import type {
 } from "pdfmake/interfaces";
 import type {
   SharePointProjectFileType,
+  SharePointRoomType,
   SharePointSpecType,
+  SharePointWindowType,
 } from "../../zod/sharePointProjectFile";
 import {
   getRoomAndWindowFromProjectFileByWindowId,
+  type WindowBlindCountStringType,
   type WindowMeasurementJoined,
 } from "../processProject";
-import { createDocument } from "./pdfmake";
+import { createDocument } from "../pdfmake/pdfmake";
 import getImageAsBase64 from "../getBase64Image";
 
 import windowWareLogo from "../../asset/Windoware-Logo-1.png";
-import { createTable, generateTableEntryList } from "./commonFunction";
+import { createTable, generateTableEntryList } from "../pdfmake/commonFunction";
 import {
   getKineticsCellularOperationString,
   getKineticsCellularSideChannelColour,
-} from "../kinetics/kineticsCellular";
+} from "./kineticsCellular";
 
 async function createCellularBlindDocument(
   projectFile: SharePointProjectFileType,
@@ -57,6 +60,7 @@ async function createCellularBlindDocument(
   return document;
 }
 
+// common function
 async function createWindowWareHeader() {
   const windowWareLogoAsBase64: string = await getImageAsBase64(windowWareLogo);
 
@@ -74,6 +78,7 @@ async function createWindowWareHeader() {
   return content;
 }
 
+// to common
 function createOrderTitleString(numberOfBlinds: number) {
   if (numberOfBlinds === 0) return undefined;
 
@@ -90,6 +95,7 @@ function createOrderTitleString(numberOfBlinds: number) {
   return content;
 }
 
+// to common
 function createCustomerInformation(
   name: string,
   reference: string,
@@ -143,39 +149,39 @@ function createCustomerInformation(
 }
 
 export type KineticsCellularTableEntry = {
-  "Blind Index": number;
+  "blind index": number;
   location: string;
   width: number;
-  Height: number;
-  Fit: string;
-  "Comb Size": string;
-  Fabric: string;
-  Operation: string;
-  "Operation Side": string;
-  "Headrail Colour": string;
-  "Side Channel Colour": string;
-  Butting: "Yes" | "No";
-  Remote: number;
-  "Remote Channel": number;
-  Price: number;
+  height: number;
+  fit: string;
+  "comb size": string;
+  fabric: string;
+  operation: string;
+  "operation side": string;
+  "headrail colour": string;
+  "side channel colour": string;
+  butting: string;
+  remote: number;
+  "remote channel": number;
+  price: number;
 };
 
 const defaultKineticsCellularTableEntry: KineticsCellularTableEntry = {
-  "Blind Index": 0,
+  "blind index": 0,
   location: "",
   width: 0,
-  Height: 0,
-  Fit: "",
-  "Comb Size": "",
-  Fabric: "",
-  Operation: "",
-  "Operation Side": "",
-  "Headrail Colour": "",
-  "Side Channel Colour": "",
-  Butting: "Yes",
-  Remote: 0,
-  "Remote Channel": 0,
-  Price: 0,
+  height: 0,
+  fit: "",
+  "comb size": "",
+  fabric: "",
+  operation: "",
+  "operation side": "",
+  "headrail colour": "",
+  "side channel colour": "",
+  butting: "",
+  remote: 0,
+  "remote channel": 0,
+  price: 0,
 };
 
 function getCombSize(window: WindowMeasurementJoined) {
@@ -189,7 +195,138 @@ function getCombSize(window: WindowMeasurementJoined) {
   }
 }
 
-// go into common file
+// END go into common file
+
+function getNewEntryKineticsCellularBlind(
+  windowJoined: WindowMeasurementJoined,
+  blindIndex: number,
+  projectRoom: SharePointRoomType,
+  projectWindow: SharePointWindowType,
+  entries: KineticsCellularTableEntry[],
+) {
+  const location = `${projectRoom.name} - ${projectWindow.name}`;
+
+  const combSize = getCombSize(windowJoined);
+
+  const operation = getKineticsCellularOperationString(
+    windowJoined.treatment.spec as SharePointSpecType,
+  );
+
+  const sideChannelColour = getKineticsCellularSideChannelColour(
+    windowJoined.treatment.spec as SharePointSpecType,
+  );
+
+  const remoteChannelObject = getRemoteAndChannel(
+    location,
+    windowJoined.treatment.spec as SharePointSpecType,
+    entries,
+  );
+
+  const buttingString = getButtingString(
+    windowJoined.blindCountString,
+    blindIndex,
+    "LHS",
+  );
+
+  const newEntry: KineticsCellularTableEntry = {
+    "blind index": blindIndex,
+    location: location,
+    width: windowJoined.width[0],
+    height: windowJoined.height,
+    fit: windowJoined.fit.charAt(0).toUpperCase() + windowJoined.fit.slice(1),
+    "comb size": combSize,
+    fabric: windowJoined.treatment.spec.fabric.name,
+    operation: operation,
+    "operation side": projectWindow.controlSide,
+    "headrail colour": "White",
+    "side channel colour": sideChannelColour,
+    butting: buttingString,
+    remote: remoteChannelObject.remote,
+    "remote channel": remoteChannelObject.channel,
+    price: 0,
+  };
+
+  return newEntry;
+}
+
+function getBlindIndex(entries: KineticsCellularTableEntry[]): number {
+  if (entries.length === 0) return 1;
+  const currentMax = entries.reduce(
+    (max, entry) => (entry["blind index"] > max ? entry["blind index"] : max),
+    -1,
+  );
+  return currentMax + 1;
+}
+
+type RemoteChannelObjectType = {
+  remote: number;
+  channel: number;
+};
+
+function getMaxRemote(entries: KineticsCellularTableEntry[]) {
+  return entries.reduce(
+    (max, curr) => (curr.remote > max ? curr.remote : max),
+    0,
+  );
+}
+
+function getMaxChannel(entries: KineticsCellularTableEntry[]) {
+  return entries.reduce(
+    (max, curr) =>
+      curr["remote channel"] > max ? curr["remote channel"] : max,
+    0,
+  );
+}
+
+function getRemoteAndChannel(
+  location: string,
+  spec: SharePointSpecType,
+  entries: KineticsCellularTableEntry[],
+): RemoteChannelObjectType {
+  const operation = getKineticsCellularOperationString(spec);
+  if (operation !== "Lithium-ion") return { remote: 0, channel: 0 };
+
+  const roomName = location.split("-")[0].trim();
+
+  const filtered = entries.filter(
+    (e) =>
+      e.location.split("-")[0].trim() === roomName &&
+      e.operation === "Lithium-ion",
+  );
+
+  if (filtered.length === 0)
+    return { remote: getMaxRemote(entries) + 1, channel: 1 };
+
+  const maxChannel = getMaxChannel(filtered);
+
+  return { remote: filtered[0].remote, channel: maxChannel + 1 };
+}
+
+function getButtingString(
+  blindCountString: WindowBlindCountStringType,
+  blindIndex: number,
+  side: "LHS" | "RHS",
+) {
+  return blindCountString === "butting" ? `${side} of #${blindIndex}` : "No";
+}
+
+function generateButtingBlindRHS(
+  windowJoined: WindowMeasurementJoined,
+  entry: KineticsCellularTableEntry,
+) {
+  const buttingBlind: KineticsCellularTableEntry = {
+    ...entry,
+    width: windowJoined.width[1],
+    butting: getButtingString(
+      windowJoined.blindCountString,
+      entry["blind index"],
+      "RHS",
+    ),
+    "remote channel": entry["remote channel"] + 1,
+  };
+
+  return buttingBlind;
+}
 
 function generateKineticsCellularTableEntries(
   projectFile: SharePointProjectFileType,
@@ -198,7 +335,7 @@ function generateKineticsCellularTableEntries(
   // using forEach instead of map because if the blind is butting or dual we want to add two entries
   const entries: KineticsCellularTableEntry[] = [];
 
-  windowJoined.forEach((w, index) => {
+  windowJoined.forEach((w) => {
     const [projectRoom, projectWindow] =
       getRoomAndWindowFromProjectFileByWindowId(
         projectFile,
@@ -206,49 +343,25 @@ function generateKineticsCellularTableEntries(
         w.windowId,
       );
 
-    const location = `${projectRoom.name} - ${projectWindow.name}`;
+    const blindIndex = getBlindIndex(entries);
 
-    const combSize = getCombSize(w);
-    // legacy fault, spec2 shouldn't exist...
-    const operation = getKineticsCellularOperationString(
-      w.treatment.spec as SharePointSpecType,
+    const newEntry = getNewEntryKineticsCellularBlind(
+      w,
+      blindIndex,
+      projectRoom,
+      projectWindow,
+      entries,
     );
-
-    const sideChannelColour = getKineticsCellularSideChannelColour(
-      w.treatment.spec as SharePointSpecType,
-    );
-
-    const butting = w.blindCountString === "butting" ? "Yes" : "No";
-
-    const newEntry: KineticsCellularTableEntry = {
-      "Blind Index": index + 1,
-      location: location,
-      width: w.width[0],
-      Height: w.height,
-      Fit: w.fit,
-      "Comb Size": combSize,
-      Fabric: w.treatment.spec.fabric.name,
-      Operation: operation,
-      "Operation Side": projectWindow.controlSide,
-      "Headrail Colour": "White",
-      "Side Channel Colour": sideChannelColour,
-      Butting: butting,
-      Remote: 0,
-      "Remote Channel": 0,
-      Price: 0,
-    };
-
-    // how do we handle dual blinds?
 
     entries.push(newEntry);
 
-    if (w.width.length === 1 && butting === "No") return;
+    if (newEntry.butting === "No") return;
 
-    const buttingBlind = { ...newEntry, width: w.width[1] };
+    const buttingBlind = generateButtingBlindRHS(w, newEntry);
     entries.push(buttingBlind);
   });
 
-  return entries;
+  return [...entries];
 }
 
 function createBlindInformationTable(
