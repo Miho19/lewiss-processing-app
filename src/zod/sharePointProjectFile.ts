@@ -1,7 +1,7 @@
 import type { TDocumentDefinitions } from "pdfmake/interfaces";
 import type { WindowMeasurementJoined } from "../utility/processProject";
-import createCellularBlindDocument from "../utility/kinetics/createCellularPDFDocument";
-import createRollerBlindDocument from "../utility/kinetics/createRollerPDFDocument";
+import createCellularBlindDocument from "../utility/kinetics/cellular/createCellularPDFDocument";
+import createRollerBlindDocument from "../utility/kinetics/roller/createRollerPDFDocument";
 
 export type SharePointProjectFileType = {
   id: number;
@@ -101,7 +101,6 @@ export type SharePointSpecType = {
   bracketColour: string;
   controlSide: string;
   motorisation: string | null;
-  pelmetType: string | null;
   customColour: boolean;
   sideChannels: boolean;
   remoteQty: number;

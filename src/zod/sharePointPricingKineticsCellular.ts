@@ -2,7 +2,7 @@ export type SharePointKineticsCellularPricingType = {
   productId: string;
   blockoutMultiplier: number;
   sideChannelCustomColourSurcharge: number;
-  sideChannelCostPerMetreWidth: number;
+  sideChannelCostPerMetreHeight: number;
   headRailCustomColourSurcharge: number;
   motorisation: Motorisation;
   blind: Blind;

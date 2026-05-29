@@ -2,7 +2,7 @@
   "productId": "cellular-blind",
   "blockoutMultiplier": 1.15,
   "sideChannelCustomColourSurcharge": 103,
-  "sideChannelCostPerMetreWidth": 125,
+  "sideChannelCostPerMetreHeight": 125,
   "headRailCustomColourSurcharge": 103,
   "motorisation": { "Lithium-ion": 150 },
   "blind": {

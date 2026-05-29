@@ -1,4 +1,4 @@
-import type { SharePointSpecType } from "../../zod/sharePointProjectFile";
+import type { SharePointSpecType } from "../../../zod/sharePointProjectFile";
 
 function getKineticsCellularOperationString(spec: SharePointSpecType) {
   return typeof spec.motorisation === "undefined" ? "Cord" : "Lithium-ion";

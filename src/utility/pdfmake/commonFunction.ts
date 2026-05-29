@@ -1,5 +1,5 @@
 import type { Content } from "pdfmake";
-import type { KineticsCellularTableEntry } from "../kinetics/createCellularPDFDocument";
+import type { KineticsCellularTableEntry } from "../kinetics/cellular/createCellularPDFDocument";
 import type { ContentTable } from "pdfmake/interfaces";
 
 type TableEntry = KineticsCellularTableEntry;
