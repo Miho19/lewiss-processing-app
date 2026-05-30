@@ -3,6 +3,7 @@ import type {
   Content,
   ContentImage,
   ContentStack,
+  ContentTable,
   TDocumentDefinitions,
 } from "pdfmake/interfaces";
 import type {
@@ -19,15 +20,18 @@ import {
 import { createDocument } from "../../pdfmake/pdfmake";
 import getImageAsBase64 from "../../getBase64Image";
 
-import windowWareLogo from "../../asset/Windoware-Logo-1.png";
+import windowWareLogo from "../../../asset/Windoware-Logo-1.png";
+
 import {
   createTable,
   generateTableEntryList,
 } from "../../pdfmake/commonFunction";
 import {
+  getKineticsCellularFabricOpacity,
   getKineticsCellularOperationString,
   getKineticsCellularSideChannelColour,
 } from "./kineticsCellular";
+import { getKineticsCellularBlindCostAsync } from "./kineticsCellularPricing";
 
 async function createCellularBlindDocument(
   projectFile: SharePointProjectFileType,
@@ -53,10 +57,11 @@ async function createCellularBlindDocument(
 
   content.push(customerInformation);
 
-  const blindInformation = createBlindInformationTable(
+  const blindInformation = await createBlindInformationTable(
     projectFile,
     windowJoined,
   );
+
   content.push(blindInformation);
 
   document.content = [...content];
@@ -200,7 +205,7 @@ function getCombSize(window: WindowMeasurementJoined) {
 
 // END go into common file
 
-function getNewEntryKineticsCellularBlind(
+async function getNewEntryKineticsCellularBlindAsync(
   windowJoined: WindowMeasurementJoined,
   blindIndex: number,
   projectRoom: SharePointRoomType,
@@ -209,17 +214,30 @@ function getNewEntryKineticsCellularBlind(
 ) {
   const location = `${projectRoom.name} - ${projectWindow.name}`;
 
+  const width = windowJoined.width[0];
+  const height = windowJoined.height;
+
+  const fit =
+    windowJoined.fit.charAt(0).toUpperCase() + windowJoined.fit.slice(1);
+
   const combSize = getCombSize(windowJoined);
+
+  const fabric = windowJoined.treatment.spec.fabric.name;
 
   const operation = getKineticsCellularOperationString(
     windowJoined.treatment.spec as SharePointSpecType,
   );
 
+  const operationSide = projectWindow.controlSide;
+
+  // hardcoded until we fix headrail colour issues from pricing
+  const headrailColour = "White";
+
   const sideChannelColour = getKineticsCellularSideChannelColour(
     windowJoined.treatment.spec as SharePointSpecType,
   );
 
-  const remoteChannelObject = getRemoteAndChannel(
+  const { remote, channel } = getRemoteAndChannel(
     location,
     windowJoined.treatment.spec as SharePointSpecType,
     entries,
@@ -231,22 +249,35 @@ function getNewEntryKineticsCellularBlind(
     "LHS",
   );
 
+  const opacity = getKineticsCellularFabricOpacity(
+    windowJoined.treatment.spec as SharePointSpecType,
+  );
+
+  const costOfBlind = await getKineticsCellularBlindCostAsync(
+    width,
+    height,
+    opacity,
+    operation,
+    headrailColour,
+    sideChannelColour,
+  );
+
   const newEntry: KineticsCellularTableEntry = {
     "blind index": blindIndex,
     location: location,
-    width: windowJoined.width[0],
-    height: windowJoined.height,
-    fit: windowJoined.fit.charAt(0).toUpperCase() + windowJoined.fit.slice(1),
+    width: width,
+    height: height,
+    fit: fit,
     "comb size": combSize,
-    fabric: windowJoined.treatment.spec.fabric.name,
+    fabric: fabric,
     operation: operation,
-    "operation side": projectWindow.controlSide,
-    "headrail colour": "White",
+    "operation side": operationSide,
+    "headrail colour": headrailColour,
     "side channel colour": sideChannelColour,
     butting: buttingString,
-    remote: remoteChannelObject.remote,
-    "remote channel": remoteChannelObject.channel,
-    price: 0,
+    remote: remote,
+    "remote channel": channel,
+    price: costOfBlind,
   };
 
   return newEntry;
@@ -331,14 +362,14 @@ function generateButtingBlindRHS(
   return buttingBlind;
 }
 
-function generateKineticsCellularTableEntries(
+async function generateKineticsCellularTableEntriesAsync(
   projectFile: SharePointProjectFileType,
   windowJoined: WindowMeasurementJoined[],
 ) {
   // using forEach instead of map because if the blind is butting or dual we want to add two entries
   const entries: KineticsCellularTableEntry[] = [];
 
-  windowJoined.forEach((w) => {
+  for (const w of windowJoined) {
     const [projectRoom, projectWindow] =
       getRoomAndWindowFromProjectFileByWindowId(
         projectFile,
@@ -348,7 +379,7 @@ function generateKineticsCellularTableEntries(
 
     const blindIndex = getBlindIndex(entries);
 
-    const newEntry = getNewEntryKineticsCellularBlind(
+    const newEntry = await getNewEntryKineticsCellularBlindAsync(
       w,
       blindIndex,
       projectRoom,
@@ -357,27 +388,25 @@ function generateKineticsCellularTableEntries(
     );
 
     entries.push(newEntry);
-
-    if (newEntry.butting === "No") return;
+    if (newEntry.butting === "No") continue;
 
     const buttingBlind = generateButtingBlindRHS(w, newEntry);
     entries.push(buttingBlind);
-  });
+  }
 
   return [...entries];
 }
 
-function createBlindInformationTable(
+async function createBlindInformationTable(
   projectFile: SharePointProjectFileType,
   windowJoined: WindowMeasurementJoined[],
-) {
+): Promise<ContentTable> {
   const kineticsCellularEntries: KineticsCellularTableEntry[] =
-    generateKineticsCellularTableEntries(projectFile, windowJoined);
+    await generateKineticsCellularTableEntriesAsync(projectFile, windowJoined);
 
   const tableEntries = generateTableEntryList(kineticsCellularEntries);
 
   const table = createTable(defaultKineticsCellularTableEntry);
-
   table.table.body.push(...tableEntries);
 
   return table;

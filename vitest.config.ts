@@ -6,5 +6,6 @@ export default defineConfig({
   test: {
     // configuration options
     globals: true, // Optional: allows use of 'describe', 'it', 'expect' without importing
+    environment: "happy-dom",
   },
 });

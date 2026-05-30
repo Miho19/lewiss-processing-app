@@ -1,4 +1,8 @@
+import GETSharePointPricingSchedule from "../../../http/GETSharePointPricingSchedule";
 import type { SharePointKineticsCellularPricingType } from "../../../zod/sharePointPricingKineticsCellular";
+import { queryClient } from "../../../http/queryClient";
+
+// import kineticsCellularPricingSchedule from "../../../../test/utility/kinetics/cellular/kinetics-cellular-pricing-example.json";
 
 function roundMeasurementUp(num: number) {
   return Math.ceil(num / 100) * 100;
@@ -7,9 +11,16 @@ function roundMeasurementUp(num: number) {
 function getKineticsCellularFabricCost(
   width: number,
   height: number,
-  opacity: "Translucent" | "Blockout",
+  opacity: string,
   pricingSchedule: SharePointKineticsCellularPricingType,
 ): number {
+  const opacityOptions = ["Translucent", "Blockout"];
+
+  const foundOpacity = opacityOptions.find(
+    (o) => o.localeCompare(opacity, undefined, { sensitivity: "base" }) === 0,
+  );
+  if (typeof foundOpacity === "undefined") return 0;
+
   const multiplier =
     opacity === "Translucent" ? 1 : pricingSchedule.blockoutMultiplier;
 
@@ -101,9 +112,68 @@ function getKineticsCellularSideChannelCost(
   return heightAdjusted * costPerMetreHeight + customSurcharge;
 }
 
+async function getKineticsCellularPricingSchedule(): Promise<
+  SharePointKineticsCellularPricingType | undefined
+> {
+  try {
+    const pricingSchedule = await queryClient.ensureQueryData({
+      queryKey: ["kinetics cellular pricing schedule"],
+      queryFn: () => GETSharePointPricingSchedule("cellular-blind"),
+    });
+
+    return pricingSchedule;
+  } catch (error) {
+    console.error(
+      "Failed to fetch kinetics cellular pricing schedule: " + error,
+    );
+
+    return undefined;
+  }
+}
+
+async function getKineticsCellularBlindCostAsync(
+  width: number,
+  height: number,
+  opacity: string,
+  operation: string,
+  headrailColour: string,
+  sideChannelColour: string,
+) {
+  const pricingSchedule: SharePointKineticsCellularPricingType | undefined =
+    await getKineticsCellularPricingSchedule();
+
+  if (typeof pricingSchedule === "undefined") return 0;
+
+  const fabricCost = getKineticsCellularFabricCost(
+    width,
+    height,
+    opacity,
+    pricingSchedule,
+  );
+  const controlCost = getKineticsCellularControlCost(
+    operation,
+    pricingSchedule,
+  );
+
+  const headrailCost = getKineticsCellularHeadrailCost(
+    headrailColour,
+    pricingSchedule,
+  );
+
+  const sideChannelCost = getKineticsCellularSideChannelCost(
+    height,
+    sideChannelColour,
+    pricingSchedule,
+  );
+
+  // if we want to apply the wholesale rate, we do so here
+  return fabricCost + controlCost + headrailCost + sideChannelCost;
+}
+
 export {
   getKineticsCellularFabricCost,
   getKineticsCellularControlCost,
   getKineticsCellularHeadrailCost,
   getKineticsCellularSideChannelCost,
+  getKineticsCellularBlindCostAsync,
 };
