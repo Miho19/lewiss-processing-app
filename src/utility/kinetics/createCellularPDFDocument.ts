@@ -29,7 +29,7 @@ import {
 async function createCellularBlindDocument(
   projectFile: SharePointProjectFileType,
   windowJoined: WindowMeasurementJoined[],
-): Promise<TDocumentDefinitions> {
+): Promise<TDocumentDefinitions[]> {
   const document = createDocument(projectFile, "cellular-blind");
   const content: Content[] = [];
 
@@ -57,7 +57,7 @@ async function createCellularBlindDocument(
   content.push(blindInformation);
 
   document.content = [...content];
-  return document;
+  return [document];
 }
 
 // common function
@@ -235,7 +235,7 @@ function getNewEntryKineticsCellularBlind(
     height: windowJoined.height,
     fit: windowJoined.fit.charAt(0).toUpperCase() + windowJoined.fit.slice(1),
     "comb size": combSize,
-    fabric: windowJoined.treatment.spec.fabric.name,
+    fabric: windowJoined.treatment.spec?.fabric?.name ?? "",
     operation: operation,
     "operation side": projectWindow.controlSide,
     "headrail colour": "White",

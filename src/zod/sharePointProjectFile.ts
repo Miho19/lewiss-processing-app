@@ -77,8 +77,8 @@ export type SharePointBriefType = {
 };
 
 export type SharePointTreatmentType = {
-  insideLayer: SharePointInsideLayerType;
-  outsideLayer: SharePointOutsideLayerType;
+  insideLayer: SharePointInsideLayerType | null;
+  outsideLayer: SharePointOutsideLayerType | null;
   outsideLayerRear: string | null;
   appliedEdit: string | null;
   notes: string;
@@ -128,7 +128,7 @@ export type SharePointOutsideLayerType = {
 
 export type SharePointSpec2Type = {
   blindType: BlindType;
-  fabric: SharePointFabricType;
+  fabric: SharePointFabricType | null;
   rollDirection: string;
   bracketColour: string;
   bottomRailType: string;

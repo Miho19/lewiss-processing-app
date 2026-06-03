@@ -8,9 +8,9 @@ function RoomCardTreatmentKineticsRoller(props: Props) {
   const { spec } = props;
 
   const operation =
-    typeof spec.motorisation !== "undefined"
-      ? spec.chainColour
-      : spec.motorisation;
+    spec.motorisation === null ? spec.chainColour : spec.motorisation;
+
+  if (spec.fabric === null) return <p>Fabric information is missing</p>;
 
   return (
     <div className="grid grid-cols-[160px_1fr] gap-x-4 gap-y-4 align-middle">

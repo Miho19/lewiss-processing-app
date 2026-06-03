@@ -53,7 +53,9 @@ async function generateProcessPDF(
     return createdPDF;
   });
 
-  const generatedPDFs: TDocumentDefinitions[] = await Promise.all(promises);
+  const generatedPDFs: TDocumentDefinitions[] = await Promise.all([
+    ...promises,
+  ]);
 
   return generatedPDFs;
 }

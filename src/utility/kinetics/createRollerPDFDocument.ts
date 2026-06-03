@@ -3,13 +3,23 @@ import type { SharePointProjectFileType } from "../../zod/sharePointProjectFile"
 import type { WindowMeasurementJoined } from "../processProject";
 import { createDocument } from "../pdfmake/pdfmake";
 
-function createRollerBlindDocument(
+async function createSunscreenRollerBlindDocument(
   projectFile: SharePointProjectFileType,
   windowJoined: WindowMeasurementJoined[],
-): Promise<TDocumentDefinitions> {
-  return new Promise((resolve, reject) => {
-    resolve(createDocument(projectFile, "blockout-roller"));
-  });
+) {}
+
+async function createBlockoutRollerBlindDocument(
+  projectFile: SharePointProjectFileType,
+  windowJoined: WindowMeasurementJoined[],
+) {}
+
+async function createRollerBlindDocument(
+  projectFile: SharePointProjectFileType,
+  windowJoined: WindowMeasurementJoined[],
+): Promise<TDocumentDefinitions[]> {
+  console.log(windowJoined);
+
+  return await [createDocument(projectFile, "blockout-roller")];
 }
 
 export default createRollerBlindDocument;
