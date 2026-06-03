@@ -1,7 +1,10 @@
 import type { TDocumentDefinitions } from "pdfmake/interfaces";
 import type { WindowMeasurementJoined } from "../utility/processProject";
 import createCellularBlindDocument from "../utility/kinetics/createCellularPDFDocument";
-import createRollerBlindDocument from "../utility/kinetics/createRollerPDFDocument";
+import {
+  createBlockoutRollerBlindDocument,
+  createSunscreenRollerBlindDocument,
+} from "../utility/kinetics/createRollerPDFDocument";
 
 export type SharePointProjectFileType = {
   id: number;
@@ -263,14 +266,14 @@ type SharePointProductIdToProcessTypeRecordType = Record<
   (
     projectFile: SharePointProjectFileType,
     windowJoined: WindowMeasurementJoined[],
-  ) => Promise<TDocumentDefinitions>
+  ) => Promise<TDocumentDefinitions[]>
 >;
 
 export const sharePointProductIdToProcessTypeRecord: SharePointProductIdToProcessTypeRecordType =
   {
     "cellular-blind": createCellularBlindDocument,
-    "sunscreen-roller": createRollerBlindDocument,
-    "blockout-roller": createRollerBlindDocument,
+    "sunscreen-roller": createSunscreenRollerBlindDocument,
+    "blockout-roller": createBlockoutRollerBlindDocument,
   };
 
 export type BlindType =
