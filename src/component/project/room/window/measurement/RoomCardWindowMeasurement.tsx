@@ -26,8 +26,6 @@ function getMeasurementDisplayInside(window: SharePointWindowType) {
   const height = getWindowHeight(window, "inside");
   const widthArray = getWindowWidth(window, "inside");
 
-  if (widthArray[0] === 0 || height === 0) return <p>Invalid measurements</p>;
-
   const blindCount = window.blindCount;
 
   if (
@@ -65,8 +63,6 @@ function getMeasurementDisplayInside(window: SharePointWindowType) {
 function getMeasurementDisplayOutside(window: SharePointWindowType) {
   const height = getWindowHeight(window, "outside");
   const widthArray = getWindowWidth(window, "outside");
-
-  if (widthArray[0] === 0 || height === 0) return <p>Invalid measurements</p>;
 
   const blindCount = window.outsideBlindCount;
 
@@ -117,6 +113,23 @@ function getMeasurementDisplay(
   }
 }
 
+function isAbleToDisplayMeasurement(
+  window: SharePointWindowType,
+  fit: WindowFitType,
+): boolean {
+  const widthArray = getWindowWidth(window, fit);
+
+  if (widthArray.length === 0) return false;
+  if (widthArray[0] === 0) return false;
+
+  const height = getWindowHeight(window, fit);
+  if (height === 0) return false;
+
+  // probably should check blindcount string here
+
+  return true;
+}
+
 function RoomCardWindowMeasurement(props: Props) {
   const {
     window,
@@ -126,6 +139,8 @@ function RoomCardWindowMeasurement(props: Props) {
   } = props;
 
   if (!projectFormData[window.id]) return <></>;
+
+  if (!isAbleToDisplayMeasurement(window, fit)) return <></>;
 
   function onChangeHandler(event: ChangeEvent<HTMLInputElement>) {
     event.stopPropagation();

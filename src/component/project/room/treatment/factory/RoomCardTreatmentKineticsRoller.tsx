@@ -10,7 +10,7 @@ function RoomCardTreatmentKineticsRoller(props: Props) {
 
   const operation = getKineticsRollerOperationString(spec);
 
-  if (typeof spec.fabric === "undefined")
+  if (typeof spec.fabric === "undefined" || spec.fabric === null)
     return <p>Fabric information is missing</p>;
 
   return (

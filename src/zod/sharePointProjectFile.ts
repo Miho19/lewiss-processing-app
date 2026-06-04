@@ -256,6 +256,8 @@ export type SharePointProductId =
   | "sunscreen-roller"
   | "blockout-roller";
 
+export type ProcessTitleType = SharePointProductId | "light-filtering-roller";
+
 export type SharePointProductIdToWindowMeasurementJoinedRecordType = Record<
   SharePointProductId,
   WindowMeasurementJoined[]
@@ -276,17 +278,23 @@ export const sharePointProductIdToProcessTypeRecord: SharePointProductIdToProces
     "blockout-roller": createBlockoutRollerBlindDocument,
   };
 
-export type BlindType =
+export type KineticsRollerBlindType =
   | "Kinetics Sunscreen Roller Blind"
   | "Kinetics Blockout Roller Blind"
-  | "Kinetics Light Filtering Roller Blind"
+  | "Kinetics Light Filtering Roller Blind";
+
+export type KineticsCellularBlindType =
   | "Kinetics 10mm Cellular Blind"
-  | "Kinetics 20mm Cellular Blind"
+  | "Kinetics 20mm Cellular Blind";
+
+export type BlindType =
   | "Kinetics Mikronwood 50mm Venetian"
   | "Lewis's 25mm Aluminium Venetian"
   | "Lewis's 50mm Phoenixwood Venetian"
   | "Santa Fe Normandy Shutter"
-  | "Santa Fe Waterproof Woodlore Plus Shutter";
+  | "Santa Fe Waterproof Woodlore Plus Shutter"
+  | KineticsRollerBlindType
+  | KineticsCellularBlindType;
 
 // export const productIdToBlindTypeRecord: SharePointProductIdDictionaryType = {
 //   "cellular-blind": [

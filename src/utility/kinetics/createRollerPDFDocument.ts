@@ -1,6 +1,11 @@
-import type { Content, TDocumentDefinitions } from "pdfmake/interfaces";
 import type {
-  SharePointProductId,
+  Content,
+  ContentText,
+  TDocumentDefinitions,
+} from "pdfmake/interfaces";
+import type {
+  KineticsRollerBlindType,
+  ProcessTitleType,
   SharePointProjectFileType,
   SharePointRoomType,
   SharePointSpec2Type,
@@ -20,20 +25,21 @@ import {
 import { createTable, generateTableEntryList } from "../pdfmake/commonFunction";
 import { getKineticsRollerOperationString } from "./kineticsRoller";
 
-async function createSunscreenRollerBlindDocument(
+async function createRollerBlindDocument(
   projectFile: SharePointProjectFileType,
   windowJoined: WindowMeasurementJoined[],
-): Promise<TDocumentDefinitions[]> {
-  if (windowJoined.length === 0) return [];
+  processTitle: ProcessTitleType,
+): Promise<TDocumentDefinitions | undefined> {
+  if (windowJoined.length === 0) return undefined;
 
-  const document = createDocument(projectFile, "sunscreen-roller");
+  const document = createDocument(projectFile, processTitle);
 
   const content: Content[] = [];
   const windowWareHeader = await createWindowWareHeader();
   content.push(windowWareHeader);
 
-  const title = createOrderTitlStringRoller("Sunscreen", windowJoined.length);
-  if (typeof title === "undefined") throw new Error("number of blinds is zero");
+  const title = createOrderTitleStringRoller(processTitle, windowJoined.length);
+  if (typeof title === "undefined") return undefined;
   content.push(title);
 
   const customerInformation = createCustomerInformation(
@@ -52,27 +58,127 @@ async function createSunscreenRollerBlindDocument(
   content.push(blindInformation);
 
   document.content = [...content];
-  return [document];
+
+  return document;
+}
+
+async function createSunscreenRollerBlindDocument(
+  projectFile: SharePointProjectFileType,
+  windowJoined: WindowMeasurementJoined[],
+): Promise<TDocumentDefinitions[]> {
+  const sunscreenDocument = await createRollerBlindDocument(
+    projectFile,
+    windowJoined,
+    "sunscreen-roller",
+  );
+  if (typeof sunscreenDocument === "undefined") return [];
+
+  return [sunscreenDocument];
+}
+
+type BlockoutRollerBlindTypeToWindowJoinedRecordType = Record<
+  KineticsRollerBlindType,
+  WindowMeasurementJoined[]
+>;
+
+function seperateBlockoutAndLightFilteringWindowMeasurementJoined(
+  windowJoined: WindowMeasurementJoined[],
+) {
+  const splitWindowJoinedRecord: BlockoutRollerBlindTypeToWindowJoinedRecordType =
+    {
+      "Kinetics Blockout Roller Blind": [],
+      "Kinetics Light Filtering Roller Blind": [],
+      "Kinetics Sunscreen Roller Blind": [],
+    };
+
+  Object.entries(splitWindowJoinedRecord).forEach(([key, value]) => {
+    const filteredList = windowJoined.filter(
+      (w) =>
+        w.treatment.spec.blindType.localeCompare(key, undefined, {
+          sensitivity: "base",
+        }) === 0,
+    );
+
+    value.push(...filteredList);
+  });
+
+  return splitWindowJoinedRecord;
 }
 
 async function createBlockoutRollerBlindDocument(
   projectFile: SharePointProjectFileType,
   windowJoined: WindowMeasurementJoined[],
 ): Promise<TDocumentDefinitions[]> {
-  console.log(windowJoined);
-  return await [createDocument(projectFile, "blockout-roller")];
+  const documentOutput = [];
+
+  const windowJoinedSplitRecord: BlockoutRollerBlindTypeToWindowJoinedRecordType =
+    seperateBlockoutAndLightFilteringWindowMeasurementJoined(windowJoined);
+
+  const blockoutWindowJoined =
+    windowJoinedSplitRecord["Kinetics Blockout Roller Blind"];
+
+  if (blockoutWindowJoined.length > 0) {
+    const blockoutDocument = await _createBlockoutRollerDocument(
+      projectFile,
+      blockoutWindowJoined,
+    );
+
+    if (typeof blockoutDocument !== "undefined")
+      documentOutput.push(...blockoutDocument);
+  }
+
+  const lightFilteringWindowJoined =
+    windowJoinedSplitRecord["Kinetics Light Filtering Roller Blind"];
+
+  if (lightFilteringWindowJoined.length > 0) {
+    const lightfilteringDocument = await _createLightFilteringRollerDocument(
+      projectFile,
+      lightFilteringWindowJoined,
+    );
+    if (typeof lightfilteringDocument !== "undefined")
+      documentOutput.push(...lightfilteringDocument);
+  }
+
+  return documentOutput;
 }
 
-function createOrderTitlStringRoller(
-  product: "Sunscreen" | "Blockout" | "Light-filtering",
-  numberOfBlinds: number,
+async function _createBlockoutRollerDocument(
+  projectFile: SharePointProjectFileType,
+  windowJoined: WindowMeasurementJoined[],
+): Promise<TDocumentDefinitions[]> {
+  const blockoutDocument = await createRollerBlindDocument(
+    projectFile,
+    windowJoined,
+    "blockout-roller",
+  );
+  if (typeof blockoutDocument === "undefined") return [];
+
+  return [blockoutDocument];
+}
+async function _createLightFilteringRollerDocument(
+  projectFile: SharePointProjectFileType,
+  windowJoined: WindowMeasurementJoined[],
 ) {
+  const lightFilteringDocument = await createRollerBlindDocument(
+    projectFile,
+    windowJoined,
+    "light-filtering-roller",
+  );
+  if (typeof lightFilteringDocument === "undefined") return [];
+
+  return [lightFilteringDocument];
+}
+
+function createOrderTitleStringRoller(
+  product: ProcessTitleType,
+  numberOfBlinds: number,
+): ContentText | undefined {
   if (numberOfBlinds === 0) return undefined;
 
   const blindText = numberOfBlinds > 1 ? "blinds" : "blind";
 
   const content: Content = {
-    text: `Lewis's order for custom-made kinetics ${product} roller ${blindText}`.toUpperCase(),
+    text: `Lewis's order for custom-made kinetics ${product} ${blindText}`.toUpperCase(),
     bold: true,
     marginBottom: 14,
   };
@@ -149,8 +255,6 @@ async function getNewEntryKineticsRollerBlind(
   const bracket = `${spec.bracketColour}`;
 
   const pelmet = typeof spec.pelmetType === "undefined" ? "" : spec.pelmetType;
-
-  console.log(spec.motorisation);
 
   const { remote, channel } = getRemoteAndChannel(
     location,

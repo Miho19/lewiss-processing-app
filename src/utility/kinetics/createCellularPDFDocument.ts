@@ -1,6 +1,7 @@
 import type {
   Column,
   Content,
+  ContentColumns,
   ContentImage,
   ContentStack,
   TDocumentDefinitions,
@@ -104,7 +105,7 @@ export function createCustomerInformation(
   name: string,
   reference: string,
   consultant: string,
-) {
+): ContentColumns {
   const leftStack1: ContentStack = {
     stack: [{ text: "Client", marginBottom: 4 }, { text: "Reference" }],
   };

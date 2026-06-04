@@ -5,6 +5,7 @@
 
 import {
   sharePointProductIdToProcessTypeRecord,
+  type ProcessTitleType,
   type SharePointProductId,
   type SharePointProductIdToWindowMeasurementJoinedRecordType,
   type SharePointProjectFileType,
@@ -63,7 +64,7 @@ async function generateProcessPDF(
 
 function createDocument(
   projectFile: SharePointProjectFileType,
-  processType: SharePointProductId,
+  processType: ProcessTitleType,
 ) {
   const { name, reference, salesConsultant } = projectFile;
 
