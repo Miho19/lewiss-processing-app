@@ -76,20 +76,19 @@ async function createSunscreenRollerBlindDocument(
   return [sunscreenDocument];
 }
 
-type BlockoutRollerBlindTypeToWindowJoinedRecordType = Record<
+type partitionedKineticsRollerRecordType = Record<
   KineticsRollerBlindType,
   WindowMeasurementJoined[]
 >;
 
-function seperateBlockoutAndLightFilteringWindowMeasurementJoined(
+function partitionWindowJoinedIntoKineticsRollerTypes(
   windowJoined: WindowMeasurementJoined[],
 ) {
-  const splitWindowJoinedRecord: BlockoutRollerBlindTypeToWindowJoinedRecordType =
-    {
-      "Kinetics Blockout Roller Blind": [],
-      "Kinetics Light Filtering Roller Blind": [],
-      "Kinetics Sunscreen Roller Blind": [],
-    };
+  const splitWindowJoinedRecord: partitionedKineticsRollerRecordType = {
+    "Kinetics Blockout Roller Blind": [],
+    "Kinetics Light Filtering Roller Blind": [],
+    "Kinetics Sunscreen Roller Blind": [],
+  };
 
   Object.entries(splitWindowJoinedRecord).forEach(([key, value]) => {
     const filteredList = windowJoined.filter(
@@ -111,8 +110,8 @@ async function createBlockoutRollerBlindDocument(
 ): Promise<TDocumentDefinitions[]> {
   const documentOutput = [];
 
-  const windowJoinedSplitRecord: BlockoutRollerBlindTypeToWindowJoinedRecordType =
-    seperateBlockoutAndLightFilteringWindowMeasurementJoined(windowJoined);
+  const windowJoinedSplitRecord: partitionedKineticsRollerRecordType =
+    partitionWindowJoinedIntoKineticsRollerTypes(windowJoined);
 
   const blockoutWindowJoined =
     windowJoinedSplitRecord["Kinetics Blockout Roller Blind"];

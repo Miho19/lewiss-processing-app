@@ -14,4 +14,6 @@ function getKineticsRollerOperationString(spec: SharePointSpec2Type) {
   return spec.motorisation;
 }
 
+function getKineticsRollerCost() {}
+
 export { getKineticsRollerOperationString };
