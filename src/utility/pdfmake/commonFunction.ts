@@ -1,8 +1,9 @@
 import type { Content } from "pdfmake";
 import type { KineticsCellularTableEntry } from "../kinetics/cellular/createCellularPDFDocument";
 import type { ContentTable } from "pdfmake/interfaces";
+import type { KineticsRollerTableEntry } from "../kinetics/createRollerPDFDocument";
 
-type TableEntry = KineticsCellularTableEntry;
+export type TableEntry = KineticsCellularTableEntry | KineticsRollerTableEntry;
 
 // will go into a common file
 function convertTableEntryToStringArray(tableEntry: TableEntry) {
@@ -18,7 +19,12 @@ function generateTableHeader(tableEntry: TableEntry) {
   const columnStringArray = convertTableEntryToStringArray(tableEntry);
 
   const tableHeaderArray: Content[] = columnStringArray.map((column) => {
-    return { text: column, alignment: "center", verticalAlignment: "middle" };
+    return {
+      text: column,
+      alignment: "center",
+      verticalAlignment: "middle",
+      fontSize: 10,
+    };
   });
 
   return tableHeaderArray;
@@ -60,7 +66,25 @@ function createTable(tableEntry: TableEntry): ContentTable {
 function generateTableEntryList(tableEntry: TableEntry[]): Content[][] {
   const entries: Content[][] = tableEntry.map((entry) => {
     return Object.values(entry).map((value) => {
-      return { text: value, alignment: "center", verticalAlignment: "middle" };
+      let adjustedValue: string | number;
+
+      try {
+        const parsedInt = parseInt(value as string);
+        if (parsedInt === 0) {
+          adjustedValue = " ";
+        } else {
+          adjustedValue = value;
+        }
+      } catch (error) {
+        adjustedValue = value;
+      }
+
+      return {
+        text: adjustedValue,
+        alignment: "center",
+        verticalAlignment: "middle",
+        fontSize: 10,
+      };
     });
   });
 

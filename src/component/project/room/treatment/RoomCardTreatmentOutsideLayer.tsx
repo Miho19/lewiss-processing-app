@@ -8,6 +8,8 @@ type Props = {
 function RoomCardTreatmentOutsideLayer(props: Props) {
   const { treatment } = props;
 
+  if (treatment.outsideLayer === null) return <></>;
+
   return (
     <div className="flex flex-col w-full pb-6 border border-black/15 shadow-md space-y-6 p-3">
       <div className="flex w-full justify-between border-b border-black/5 pb-3">

@@ -1,0 +1,59 @@
+{
+  "productId": "blockout-roller",
+  "operation": {
+    "chain": {
+      "fastRise": {
+        "base": 21,
+        "colours": [
+          { "name": "White Metal", "perM": 17 },
+          { "name": "Black Metal", "perM": 17 },
+          { "name": "Stainless Steel", "perM": 17 }
+        ]
+      }
+    },
+    "motorisation": {
+      "Lithium-ion": {
+        "base": 196,
+        "id": "103171"
+      },
+      "Hardwired Smart Home": {
+        "base": 196,
+        "id": "103189"
+      },
+      "Hardwired WiFi Remote Control": {
+        "base": 196,
+        "id": "103186"
+      }
+    }
+  },
+
+  "bottonRail": {
+    "fabricInsert": {
+      "perWidthMetre": 13
+    },
+    "deluxe": {
+      "perWidthMetre": 13
+    },
+    "customColour": 51.5
+  },
+  "bracket": {
+    "combo": 54.0
+  },
+  "pelmet": {
+    "customColour": 103,
+    "width": {
+      "start": 1,
+      "end": 5.5,
+      "increment": 0.25
+    },
+    "110mm Pelmet": {
+      "inside": [],
+      "outside": []
+    },
+
+    "160mm Pelmet": {
+      "inside": [],
+      "outside": []
+    }
+  }
+}

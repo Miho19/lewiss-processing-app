@@ -85,6 +85,8 @@ function joinTreatment(
         ? projectRoom.treatment.insideLayer
         : projectRoom.treatment.outsideLayer;
 
+    if (typeof treatment === "undefined" || treatment === null) return;
+
     const newEntry: WindowMeasurementJoined = {
       windowId: window.id,
       roomId: window.roomId,

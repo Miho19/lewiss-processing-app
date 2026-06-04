@@ -1,3 +1,4 @@
+import { getKineticsRollerOperationString } from "../../../../../utility/kinetics/kineticsRoller";
 import type { SharePointSpec2Type } from "../../../../../zod/sharePointProjectFile";
 
 type Props = {
@@ -7,10 +8,10 @@ type Props = {
 function RoomCardTreatmentKineticsRoller(props: Props) {
   const { spec } = props;
 
-  const operation =
-    typeof spec.motorisation !== "undefined"
-      ? spec.chainColour
-      : spec.motorisation;
+  const operation = getKineticsRollerOperationString(spec);
+
+  if (typeof spec.fabric === "undefined" || spec.fabric === null)
+    return <p>Fabric information is missing</p>;
 
   return (
     <div className="grid grid-cols-[160px_1fr] gap-x-4 gap-y-4 align-middle">

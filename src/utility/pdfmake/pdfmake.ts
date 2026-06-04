@@ -5,6 +5,7 @@
 
 import {
   sharePointProductIdToProcessTypeRecord,
+  type ProcessTitleType,
   type SharePointProductId,
   type SharePointProductIdToWindowMeasurementJoinedRecordType,
   type SharePointProjectFileType,
@@ -48,19 +49,22 @@ async function generateProcessPDF(
     Object.keys(productIdToWindowMeasurementRecord) as SharePointProductId[]
   ).map(async (key) => {
     const windowMeasurements = productIdToWindowMeasurementRecord[key];
+
+    if (windowMeasurements.length === 0) return [];
+
     const createPDFFunction = sharePointProductIdToProcessTypeRecord[key];
     const createdPDF = await createPDFFunction(projectFile, windowMeasurements);
     return createdPDF;
   });
 
-  const generatedPDFs: TDocumentDefinitions[] = await Promise.all(promises);
+  const generatedPDFs: TDocumentDefinitions[][] = await Promise.all(promises);
 
-  return generatedPDFs;
+  return generatedPDFs.flat();
 }
 
 function createDocument(
   projectFile: SharePointProjectFileType,
-  processType: SharePointProductId,
+  processType: ProcessTitleType,
 ) {
   const { name, reference, salesConsultant } = projectFile;
 

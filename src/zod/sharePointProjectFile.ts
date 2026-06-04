@@ -1,7 +1,10 @@
 import type { TDocumentDefinitions } from "pdfmake/interfaces";
 import type { WindowMeasurementJoined } from "../utility/processProject";
 import createCellularBlindDocument from "../utility/kinetics/cellular/createCellularPDFDocument";
-import createRollerBlindDocument from "../utility/kinetics/roller/createRollerPDFDocument";
+import {
+  createBlockoutRollerBlindDocument,
+  createSunscreenRollerBlindDocument,
+} from "../utility/kinetics/roller/createRollerPDFDocument";
 
 export type SharePointProjectFileType = {
   id: number;
@@ -77,8 +80,8 @@ export type SharePointBriefType = {
 };
 
 export type SharePointTreatmentType = {
-  insideLayer: SharePointInsideLayerType;
-  outsideLayer: SharePointOutsideLayerType;
+  insideLayer: SharePointInsideLayerType | null;
+  outsideLayer: SharePointOutsideLayerType | null;
   outsideLayerRear: string | null;
   appliedEdit: string | null;
   notes: string;
@@ -127,15 +130,15 @@ export type SharePointOutsideLayerType = {
 
 export type SharePointSpec2Type = {
   blindType: BlindType;
-  fabric: SharePointFabricType;
+  fabric?: SharePointFabricType;
   rollDirection: string;
   bracketColour: string;
   bottomRailType: string;
   bottomRailColour: string;
   chainColour: string;
   controlSide: string;
-  motorisation: string;
-  pelmetType: string | null;
+  motorisation?: string;
+  pelmetType?: string;
   customColour: boolean;
   inlineBracket: boolean;
   intermediateBracket: boolean;
@@ -252,6 +255,8 @@ export type SharePointProductId =
   | "sunscreen-roller"
   | "blockout-roller";
 
+export type ProcessTitleType = SharePointProductId | "light-filtering-roller";
+
 export type SharePointProductIdToWindowMeasurementJoinedRecordType = Record<
   SharePointProductId,
   WindowMeasurementJoined[]
@@ -262,27 +267,33 @@ type SharePointProductIdToProcessTypeRecordType = Record<
   (
     projectFile: SharePointProjectFileType,
     windowJoined: WindowMeasurementJoined[],
-  ) => Promise<TDocumentDefinitions>
+  ) => Promise<TDocumentDefinitions[]>
 >;
 
 export const sharePointProductIdToProcessTypeRecord: SharePointProductIdToProcessTypeRecordType =
   {
     "cellular-blind": createCellularBlindDocument,
-    "sunscreen-roller": createRollerBlindDocument,
-    "blockout-roller": createRollerBlindDocument,
+    "sunscreen-roller": createSunscreenRollerBlindDocument,
+    "blockout-roller": createBlockoutRollerBlindDocument,
   };
 
-export type BlindType =
+export type KineticsRollerBlindType =
   | "Kinetics Sunscreen Roller Blind"
   | "Kinetics Blockout Roller Blind"
-  | "Kinetics Light Filtering Roller Blind"
+  | "Kinetics Light Filtering Roller Blind";
+
+export type KineticsCellularBlindType =
   | "Kinetics 10mm Cellular Blind"
-  | "Kinetics 20mm Cellular Blind"
+  | "Kinetics 20mm Cellular Blind";
+
+export type BlindType =
   | "Kinetics Mikronwood 50mm Venetian"
   | "Lewis's 25mm Aluminium Venetian"
   | "Lewis's 50mm Phoenixwood Venetian"
   | "Santa Fe Normandy Shutter"
-  | "Santa Fe Waterproof Woodlore Plus Shutter";
+  | "Santa Fe Waterproof Woodlore Plus Shutter"
+  | KineticsRollerBlindType
+  | KineticsCellularBlindType;
 
 // export const productIdToBlindTypeRecord: SharePointProductIdDictionaryType = {
 //   "cellular-blind": [
