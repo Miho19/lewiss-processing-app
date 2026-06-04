@@ -48,6 +48,9 @@ async function generateProcessPDF(
     Object.keys(productIdToWindowMeasurementRecord) as SharePointProductId[]
   ).map(async (key) => {
     const windowMeasurements = productIdToWindowMeasurementRecord[key];
+
+    if (windowMeasurements.length === 0) return [];
+
     const createPDFFunction = sharePointProductIdToProcessTypeRecord[key];
     const createdPDF = await createPDFFunction(projectFile, windowMeasurements);
     return createdPDF;

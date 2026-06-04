@@ -61,7 +61,7 @@ async function createCellularBlindDocument(
 }
 
 // common function
-async function createWindowWareHeader() {
+export async function createWindowWareHeader() {
   const windowWareLogoAsBase64: string = await getImageAsBase64(windowWareLogo);
 
   const image: ContentImage = {
@@ -78,7 +78,6 @@ async function createWindowWareHeader() {
   return content;
 }
 
-// to common
 function createOrderTitleString(numberOfBlinds: number) {
   if (numberOfBlinds === 0) return undefined;
 
@@ -96,7 +95,7 @@ function createOrderTitleString(numberOfBlinds: number) {
 }
 
 // to common
-function createCustomerInformation(
+export function createCustomerInformation(
   name: string,
   reference: string,
   consultant: string,

@@ -1,8 +1,9 @@
 import type { Content } from "pdfmake";
 import type { KineticsCellularTableEntry } from "../kinetics/createCellularPDFDocument";
 import type { ContentTable } from "pdfmake/interfaces";
+import type { KineticsRollerTableEntry } from "../kinetics/createRollerPDFDocument";
 
-type TableEntry = KineticsCellularTableEntry;
+type TableEntry = KineticsCellularTableEntry | KineticsRollerTableEntry;
 
 // will go into a common file
 function convertTableEntryToStringArray(tableEntry: TableEntry) {
