@@ -3,7 +3,7 @@ import type { KineticsCellularTableEntry } from "../kinetics/createCellularPDFDo
 import type { ContentTable } from "pdfmake/interfaces";
 import type { KineticsRollerTableEntry } from "../kinetics/createRollerPDFDocument";
 
-type TableEntry = KineticsCellularTableEntry | KineticsRollerTableEntry;
+export type TableEntry = KineticsCellularTableEntry | KineticsRollerTableEntry;
 
 // will go into a common file
 function convertTableEntryToStringArray(tableEntry: TableEntry) {
@@ -61,7 +61,24 @@ function createTable(tableEntry: TableEntry): ContentTable {
 function generateTableEntryList(tableEntry: TableEntry[]): Content[][] {
   const entries: Content[][] = tableEntry.map((entry) => {
     return Object.values(entry).map((value) => {
-      return { text: value, alignment: "center", verticalAlignment: "middle" };
+      let adjustedValue: string | number;
+
+      try {
+        const parsedInt = parseInt(value as string);
+        if (parsedInt === 0) {
+          adjustedValue = " ";
+        } else {
+          adjustedValue = value;
+        }
+      } catch (error) {
+        adjustedValue = value;
+      }
+
+      return {
+        text: adjustedValue,
+        alignment: "center",
+        verticalAlignment: "middle",
+      };
     });
   });
 

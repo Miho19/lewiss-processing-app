@@ -131,15 +131,15 @@ export type SharePointOutsideLayerType = {
 
 export type SharePointSpec2Type = {
   blindType: BlindType;
-  fabric: SharePointFabricType | null;
+  fabric?: SharePointFabricType;
   rollDirection: string;
   bracketColour: string;
   bottomRailType: string;
   bottomRailColour: string;
   chainColour: string;
   controlSide: string;
-  motorisation: string;
-  pelmetType: string | null;
+  motorisation?: string;
+  pelmetType?: string;
   customColour: boolean;
   inlineBracket: boolean;
   intermediateBracket: boolean;

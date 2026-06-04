@@ -8,6 +8,7 @@ import type {
 import type {
   SharePointProjectFileType,
   SharePointRoomType,
+  SharePointSpec2Type,
   SharePointSpecType,
   SharePointWindowType,
 } from "../../zod/sharePointProjectFile";
@@ -20,7 +21,11 @@ import { createDocument } from "../pdfmake/pdfmake";
 import getImageAsBase64 from "../getBase64Image";
 
 import windowWareLogo from "../../asset/Windoware-Logo-1.png";
-import { createTable, generateTableEntryList } from "../pdfmake/commonFunction";
+import {
+  createTable,
+  generateTableEntryList,
+  type TableEntry,
+} from "../pdfmake/commonFunction";
 import {
   getKineticsCellularOperationString,
   getKineticsCellularSideChannelColour,
@@ -155,8 +160,8 @@ export type KineticsCellularTableEntry = {
   fit: string;
   "comb size": string;
   fabric: string;
-  operation: string;
-  "operation side": string;
+  control: string;
+  "control side": string;
   "headrail colour": string;
   "side channel colour": string;
   butting: string;
@@ -173,8 +178,8 @@ const defaultKineticsCellularTableEntry: KineticsCellularTableEntry = {
   fit: "",
   "comb size": "",
   fabric: "",
-  operation: "",
-  "operation side": "",
+  control: "",
+  "control side": "",
   "headrail colour": "",
   "side channel colour": "",
   butting: "",
@@ -217,7 +222,7 @@ function getNewEntryKineticsCellularBlind(
 
   const remoteChannelObject = getRemoteAndChannel(
     location,
-    windowJoined.treatment.spec as SharePointSpecType,
+    windowJoined.treatment.spec.motorisation ?? "cord",
     entries,
   );
 
@@ -235,8 +240,8 @@ function getNewEntryKineticsCellularBlind(
     fit: windowJoined.fit.charAt(0).toUpperCase() + windowJoined.fit.slice(1),
     "comb size": combSize,
     fabric: windowJoined.treatment.spec?.fabric?.name ?? "",
-    operation: operation,
-    "operation side": projectWindow.controlSide,
+    control: operation,
+    "control side": projectWindow.controlSide,
     "headrail colour": "White",
     "side channel colour": sideChannelColour,
     butting: buttingString,
@@ -248,7 +253,7 @@ function getNewEntryKineticsCellularBlind(
   return newEntry;
 }
 
-function getBlindIndex(entries: KineticsCellularTableEntry[]): number {
+export function getBlindIndex(entries: TableEntry[]): number {
   if (entries.length === 0) return 1;
   const currentMax = entries.reduce(
     (max, entry) => (entry["blind index"] > max ? entry["blind index"] : max),
@@ -262,14 +267,14 @@ type RemoteChannelObjectType = {
   channel: number;
 };
 
-function getMaxRemote(entries: KineticsCellularTableEntry[]) {
+function getMaxRemote(entries: TableEntry[]) {
   return entries.reduce(
     (max, curr) => (curr.remote > max ? curr.remote : max),
     0,
   );
 }
 
-function getMaxChannel(entries: KineticsCellularTableEntry[]) {
+function getMaxChannel(entries: TableEntry[]) {
   return entries.reduce(
     (max, curr) =>
       curr["remote channel"] > max ? curr["remote channel"] : max,
@@ -277,12 +282,11 @@ function getMaxChannel(entries: KineticsCellularTableEntry[]) {
   );
 }
 
-function getRemoteAndChannel(
+export function getRemoteAndChannel(
   location: string,
-  spec: SharePointSpecType,
-  entries: KineticsCellularTableEntry[],
+  operation: string,
+  entries: TableEntry[],
 ): RemoteChannelObjectType {
-  const operation = getKineticsCellularOperationString(spec);
   if (operation !== "Lithium-ion") return { remote: 0, channel: 0 };
 
   const roomName = location.split("-")[0].trim();
@@ -290,7 +294,7 @@ function getRemoteAndChannel(
   const filtered = entries.filter(
     (e) =>
       e.location.split("-")[0].trim() === roomName &&
-      e.operation === "Lithium-ion",
+      e.control === "Lithium-ion",
   );
 
   if (filtered.length === 0)

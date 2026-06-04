@@ -14,8 +14,10 @@ import { createDocument } from "../pdfmake/pdfmake";
 import {
   createCustomerInformation,
   createWindowWareHeader,
+  getBlindIndex,
+  getRemoteAndChannel,
 } from "./createCellularPDFDocument";
-import { createTable } from "../pdfmake/commonFunction";
+import { createTable, generateTableEntryList } from "../pdfmake/commonFunction";
 import { getKineticsRollerOperationString } from "./kineticsRoller";
 
 async function createSunscreenRollerBlindDocument(
@@ -86,15 +88,15 @@ export type KineticsRollerTableEntry = {
   fit: string;
   roll: string;
   fabric: string;
-  operation: string;
-  "operation side": string;
+  control: string;
+  "control side": string;
   "bottom rail": string;
   bracket: string;
   pelmet: string;
   butting: string;
   remote: number;
   "remote channel": number;
-  price: number;
+  price: string;
 };
 
 const defaultKineticsRollerTableEntry: KineticsRollerTableEntry = {
@@ -105,27 +107,16 @@ const defaultKineticsRollerTableEntry: KineticsRollerTableEntry = {
   fit: "",
   roll: "",
   fabric: "",
-  operation: "",
-  "operation side": "",
+  control: "",
+  "control side": "",
   "bottom rail": "",
   bracket: "",
   pelmet: "",
   butting: "",
   remote: 0,
   "remote channel": 0,
-  price: 0,
+  price: "",
 };
-
-function getBlindIndex(entries: KineticsRollerTableEntry[]): number {
-  if (entries.length === 0) return 1;
-  const currentMax = entries.reduce(
-    (max, entry) => (entry["blind index"] > max ? entry["blind index"] : max),
-    -1,
-  );
-  return currentMax + 1;
-}
-
-function getOperationString() {}
 
 async function getNewEntryKineticsRollerBlind(
   windowJoined: WindowMeasurementJoined,
@@ -148,9 +139,23 @@ async function getNewEntryKineticsRollerBlind(
 
   const fabric = spec.fabric?.name ?? "Missing Fabric";
 
-  const operationString = getKineticsRollerOperationString(
-    projectWindow.controlLength,
-    spec,
+  let operationString = getKineticsRollerOperationString(spec);
+  if (operationString.toLowerCase().includes("chain"))
+    operationString = operationString + ` ${projectWindow.controlLength}mm`;
+
+  const bottomRail = `${spec.bottomRailType} - ${spec.bottomRailColour}`;
+  const operationSide = projectWindow.controlSide;
+
+  const bracket = `${spec.bracketColour}`;
+
+  const pelmet = typeof spec.pelmetType === "undefined" ? "" : spec.pelmetType;
+
+  console.log(spec.motorisation);
+
+  const { remote, channel } = getRemoteAndChannel(
+    location,
+    operationString,
+    entries,
   );
 
   const newEntry: KineticsRollerTableEntry = {
@@ -161,15 +166,15 @@ async function getNewEntryKineticsRollerBlind(
     fit: fit,
     roll: roll,
     fabric: fabric,
-    operation: operationString,
-    "operation side": "",
-    "bottom rail": "",
-    bracket: "",
-    pelmet: "",
-    butting: "",
-    remote: 0,
-    "remote channel": 0,
-    price: 0,
+    control: operationString,
+    "control side": operationSide,
+    "bottom rail": bottomRail,
+    bracket: bracket,
+    pelmet: pelmet,
+    butting: " ",
+    remote: remote,
+    "remote channel": channel,
+    price: " ",
   };
 
   return newEntry;
@@ -210,13 +215,14 @@ async function createBlindInformationTable(
   windowJoined: WindowMeasurementJoined[],
 ) {
   // const kineticsCellularEntries: KineticsRollerTableEntry[] =
-  await generateKineticsRollerTableEntries(projectFile, windowJoined);
+  const kineticsRollerEntries: KineticsRollerTableEntry[] =
+    await generateKineticsRollerTableEntries(projectFile, windowJoined);
 
-  // const tableEntries = generateTableEntryList(kineticsCellularEntries);
+  const tableEntries = generateTableEntryList(kineticsRollerEntries);
 
   const table = createTable(defaultKineticsRollerTableEntry);
 
-  // table.table.body.push(...tableEntries);
+  table.table.body.push(...tableEntries);
 
   return table;
 }

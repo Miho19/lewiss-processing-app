@@ -1,15 +1,17 @@
 import type { SharePointSpec2Type } from "../../zod/sharePointProjectFile";
 
-function getKineticsRollerOperationString(
-  controlLength: number | string,
-  spec: SharePointSpec2Type,
-) {
+function getKineticsRollerOperationString(spec: SharePointSpec2Type) {
   const chainColour = spec.chainColour;
-  const chainOperationString = `${chainColour} ${controlLength}mm`;
+  const chainOperationString = `Chain - ${chainColour}`;
 
-  return typeof spec.motorisation === "undefined"
-    ? chainOperationString
-    : "Lithium-ion";
+  if (typeof spec.motorisation === "undefined" || spec.motorisation === null)
+    return chainOperationString;
+
+  const motorisation = spec.motorisation.trim().toLowerCase();
+
+  if (motorisation.includes("lithium")) return "Lithium-ion";
+
+  return spec.motorisation;
 }
 
 export { getKineticsRollerOperationString };
