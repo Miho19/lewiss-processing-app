@@ -135,7 +135,7 @@ async function getNewEntryKineticsRollerBlind(
 
   const spec = windowJoined.treatment.spec as SharePointSpec2Type;
 
-  const roll = spec.rollDirection;
+  const roll = spec.rollDirection.replace("Roll", "");
 
   const fabric = spec.fabric?.name ?? "Missing Fabric";
 

@@ -19,7 +19,12 @@ function generateTableHeader(tableEntry: TableEntry) {
   const columnStringArray = convertTableEntryToStringArray(tableEntry);
 
   const tableHeaderArray: Content[] = columnStringArray.map((column) => {
-    return { text: column, alignment: "center", verticalAlignment: "middle" };
+    return {
+      text: column,
+      alignment: "center",
+      verticalAlignment: "middle",
+      fontSize: 10,
+    };
   });
 
   return tableHeaderArray;
@@ -78,6 +83,7 @@ function generateTableEntryList(tableEntry: TableEntry[]): Content[][] {
         text: adjustedValue,
         alignment: "center",
         verticalAlignment: "middle",
+        fontSize: 10,
       };
     });
   });
