@@ -11,15 +11,11 @@ import {
   type SharePointProjectFileType,
 } from "../../zod/sharePointProjectFile";
 import type { WindowMeasurementJoined } from "../processProject";
-import pdfmake from "pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
+
 import type {
   TDocumentDefinitions,
   TDocumentInformation,
 } from "pdfmake/interfaces";
-
-// @ts-ignore
-(<any>pdfmake).vfs = pdfFonts.pdfMake ? pdfFonts.vfs : pdfFonts;
 
 async function getOrderPDF(
   projectFile: SharePointProjectFileType,
@@ -104,8 +100,13 @@ function getProductIdToWindowMeasurementRecord(
   return productIdToWindowMeasurementRecord;
 }
 
-function openPDFDocument(document: TDocumentDefinitions) {
+async function openPDFDocumentAsync(document: TDocumentDefinitions) {
+  const pdfmake = (await import("pdfmake/build/pdfmake")).default;
+  const pdfFonts = (await import("pdfmake/build/vfs_fonts")).default;
+
+  pdfmake.addVirtualFileSystem(pdfFonts);
+
   pdfmake.createPdf(document).open();
 }
 
-export { getOrderPDF, createDocument, openPDFDocument };
+export { getOrderPDF, createDocument, openPDFDocumentAsync };

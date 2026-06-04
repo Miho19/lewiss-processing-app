@@ -16,17 +16,17 @@ import {
   type WindowMeasurementJoined,
 } from "../../processProject";
 import { createDocument } from "../../pdfmake/pdfmake";
+import { getKineticsRollerOperationString } from "./kineticsRoller";
+import {
+  createTable,
+  generateTableEntryList,
+} from "../../pdfmake/commonFunction";
 import {
   createCustomerInformation,
   createWindowWareHeader,
   getBlindIndex,
   getRemoteAndChannel,
-} from "../cellular/createCellularPDFDocument";
-import { getKineticsRollerOperationString } from "../kineticsRoller";
-import {
-  createTable,
-  generateTableEntryList,
-} from "../../pdfmake/commonFunction";
+} from "../common";
 
 async function createRollerBlindDocument(
   projectFile: SharePointProjectFileType,
@@ -320,7 +320,6 @@ async function createBlindInformationTable(
   projectFile: SharePointProjectFileType,
   windowJoined: WindowMeasurementJoined[],
 ) {
-  // const kineticsCellularEntries: KineticsRollerTableEntry[] =
   const kineticsRollerEntries: KineticsRollerTableEntry[] =
     await generateKineticsRollerTableEntries(projectFile, windowJoined);
 

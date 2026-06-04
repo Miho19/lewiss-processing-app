@@ -11,7 +11,7 @@ import {
   type WindowMeasurement,
   type WindowMeasurementJoined,
 } from "../utility/processProject";
-import { getOrderPDF, openPDFDocument } from "../utility/pdfmake/pdfmake";
+import { getOrderPDF, openPDFDocumentAsync } from "../utility/pdfmake/pdfmake";
 
 export type onChangeHandlerProjectFormDataCheckboxParameterType = {
   id: string;
@@ -77,7 +77,7 @@ function ProjectPage() {
 
     getOrderPDF(data, joinedSelectedWindows)
       .then((pdfDocuments) => {
-        openPDFDocument(pdfDocuments[0]);
+        openPDFDocumentAsync(pdfDocuments[0]);
       })
       .catch((error) => console.error(error));
   }

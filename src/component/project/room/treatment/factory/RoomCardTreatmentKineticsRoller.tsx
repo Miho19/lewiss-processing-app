@@ -1,4 +1,4 @@
-import { getKineticsRollerOperationString } from "../../../../../utility/kinetics/kineticsRoller";
+import { getKineticsRollerOperationString } from "../../../../../utility/kinetics/roller/kineticsRoller";
 import type { SharePointSpec2Type } from "../../../../../zod/sharePointProjectFile";
 
 type Props = {

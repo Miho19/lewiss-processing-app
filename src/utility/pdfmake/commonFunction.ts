@@ -1,7 +1,7 @@
 import type { Content } from "pdfmake";
 import type { KineticsCellularTableEntry } from "../kinetics/cellular/createCellularPDFDocument";
 import type { ContentTable } from "pdfmake/interfaces";
-import type { KineticsRollerTableEntry } from "../kinetics/createRollerPDFDocument";
+import type { KineticsRollerTableEntry } from "../kinetics/roller/createRollerPDFDocument";
 
 export type TableEntry = KineticsCellularTableEntry | KineticsRollerTableEntry;
 
@@ -75,7 +75,7 @@ function generateTableEntryList(tableEntry: TableEntry[]): Content[][] {
         } else {
           adjustedValue = value;
         }
-      } catch (error) {
+      } catch {
         adjustedValue = value;
       }
 

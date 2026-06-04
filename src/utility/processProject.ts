@@ -65,7 +65,7 @@ function getRoomAndWindowFromProjectFileByWindowId(
 function joinTreatment(
   projectFile: SharePointProjectFileType,
   filteredList: WindowMeasurement[],
-) {
+): WindowMeasurementJoined[] {
   const joinedList = filteredList.map((window) => {
     const [projectRoom, projectWindow] =
       getRoomAndWindowFromProjectFileByWindowId(
@@ -85,7 +85,7 @@ function joinTreatment(
         ? projectRoom.treatment.insideLayer
         : projectRoom.treatment.outsideLayer;
 
-    if (typeof treatment === "undefined" || treatment === null) return;
+    if (typeof treatment === "undefined" || treatment === null) return [];
 
     const newEntry: WindowMeasurementJoined = {
       windowId: window.id,
@@ -99,7 +99,8 @@ function joinTreatment(
 
     return newEntry;
   });
-  return [...joinedList];
+
+  return joinedList.flat();
 }
 
 function getWindowBlindCountString(
