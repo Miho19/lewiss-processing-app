@@ -15,7 +15,21 @@ describe("Kinetics Cellular Pricing", () => {
       number,
       "Translucent" | "Blockout",
       number,
-    ][] = [[1200, 900, "Translucent", 376]];
+    ][] = [
+      [1200, 900, "Translucent", 376],
+      [1986, 988, "Translucent", 595],
+      [-1000, 988, "Translucent", 0],
+      [1000, -988, "Translucent", 0],
+      [240, 900, "Translucent", 191],
+      [300, 3600, "Translucent", 411],
+      [3499, 1999, "Translucent", 1718],
+      [0, 0, "Blockout", 0],
+      [-1, 0, "Blockout", 0],
+      [0, -1, "Blockout", 0],
+      [-1, -1, "Blockout", 0],
+      [1200, 900, "Blockout", 432.4],
+      [0, 0, "Translucent", 0],
+    ];
 
     it.each(fabricPricingExamples)(
       "",

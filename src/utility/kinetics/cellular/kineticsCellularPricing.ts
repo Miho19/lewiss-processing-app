@@ -14,7 +14,7 @@ function getKineticsCellularFabricCost(
   opacity: string,
   pricingSchedule: SharePointKineticsCellularPricingType,
 ): number {
-  const opacityOptions = ["Translucent", "Blockout"];
+  const opacityOptions = pricingSchedule.fabric.opacity;
 
   const foundOpacity = opacityOptions.find(
     (o) => o.localeCompare(opacity, undefined, { sensitivity: "base" }) === 0,
@@ -176,4 +176,5 @@ export {
   getKineticsCellularHeadrailCost,
   getKineticsCellularSideChannelCost,
   getKineticsCellularBlindCostAsync,
+  roundMeasurementUp,
 };

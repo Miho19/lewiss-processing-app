@@ -10,7 +10,7 @@
   },
 
   "fabric": {
-    "opacity": ["Translucent"],
+    "opacity": ["Translucent", "Blockout"],
     "blindType": [
       "Kinetics 10mm Cellular Blind",
       "Kinetics 20mm Cellular Blind"

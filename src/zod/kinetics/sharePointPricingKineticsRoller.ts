@@ -57,3 +57,8 @@ type FabricPricingType = {
   widthHeader: number[];
   data: number[][];
 };
+
+export type KineticsRollerFabricOpacityType =
+  | "sunscreen"
+  | "blockout"
+  | "light-filtering";

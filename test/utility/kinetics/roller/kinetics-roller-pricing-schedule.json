@@ -27,12 +27,14 @@
     }
   },
 
-  "bottonRail": {
+  "bottomRail": {
     "fabricInsert": {
-      "perWidthMetre": 13
+      "name": "fabricInsert",
+      "perM": 13
     },
     "deluxe": {
-      "perWidthMetre": 13
+      "name": "deluxe",
+      "perM": 13
     },
     "customColour": 51.5
   },
