@@ -21,7 +21,7 @@ type FastRise = {
   colours: PerMCost[];
 };
 
-type PerMCost = { name: string; perM: number };
+export type PerMCost = { name: string; perM: number };
 
 type Motorisation = {
   "Lithium-ion": MotorisationBase;
@@ -44,11 +44,14 @@ type Bracket = {
 type Pelmet = {
   customColour: number;
   width: number[];
-  "110mm Pelmet": PelmetPricing;
-  "160mm Pelmet": PelmetPricing;
+  cost: PelmetPricing[];
 };
 
-type PelmetPricing = { inside: number[]; outside: number[] };
+export type PelmetPricing = {
+  name: string;
+  inside: number[];
+  outside: number[];
+};
 
 type FabricPricingType = {
   opacity: string[];

@@ -4,6 +4,8 @@ import { KineticsRollerFabricOpacityType } from "../../../../src/zod/kinetics/sh
 import {
   getKineticsRollerFabricCost,
   getKineticsRollerControlCost,
+  getKineticsRollerBottomRailCost,
+  getKineticsRollerPelmetCost,
 } from "../../../../src/utility/kinetics/roller/kineticsRollerPricing";
 
 describe("Kinetics Roller Pricing", () => {
@@ -80,5 +82,53 @@ describe("Kinetics Roller Pricing", () => {
     );
   });
 
-  describe("getKineticsRollerBottomRailCost", () => {});
+  describe("getKineticsRollerBottomRailCost", () => {
+    const exampleInput: [number, string, string, number][] = [
+      [1200, "flat", "black", 0],
+      [1200, "deluxe", "black", 15.6],
+      [1200, "de", "black", 0],
+    ];
+
+    it.each(exampleInput)(
+      "should given %i, %s - %s return %i",
+      (width, bottomRailType, bottomRailColour, expected) => {
+        expect(
+          getKineticsRollerBottomRailCost(
+            width,
+            bottomRailType,
+            bottomRailColour,
+            kineticsRollerPricingExample,
+          ),
+        ).toBe(expected);
+      },
+    );
+  });
+
+  describe("getKineticsRollerPelmetCost", () => {
+    const exampleInput: [number, string, number | undefined][] = [
+      [1200, "110 I/S", 56.25],
+      [0, "110 I/S", undefined],
+      [1200, "", undefined],
+      [1200, "", undefined],
+      [1200, "\t\t", undefined],
+      [-1, "110 I/S", undefined],
+      [1260, "110 I/S", 67.5],
+      [1000, "110 I/S", 45],
+      [240, "110 I/S", 45],
+      [5000, "110 I/S", 225],
+    ];
+
+    it.each(exampleInput)(
+      "should given %i %s return %i",
+      (width, pelmet, expected) => {
+        expect(
+          getKineticsRollerPelmetCost(
+            width,
+            pelmet,
+            kineticsRollerPricingExample,
+          ),
+        ).toBe(expected);
+      },
+    );
+  });
 });
