@@ -1,6 +1,6 @@
 import type { SharePointProductId } from "../zod/sharePointProjectFile";
 import kineticsCellularPricingSchedule from "../../test/utility/kinetics/cellular/kinetics-cellular-pricing-example.json";
-import type { SharePointKineticsCellularPricingType } from "../zod/sharePointPricingKineticsCellular";
+import type { SharePointKineticsCellularPricingType } from "../zod/kinetics/sharePointPricingKineticsCellular";
 
 function GETSharePointPricingScheduleEndpoint() {
   return new URL(

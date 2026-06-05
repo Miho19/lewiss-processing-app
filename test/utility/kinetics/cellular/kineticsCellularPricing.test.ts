@@ -38,8 +38,14 @@ describe("Kinetics Cellular Pricing", () => {
       ["", 0],
       [" ", 0],
       ["cord", 0],
-      ["lithium-ion", kineticsPricingExample.motorisation["Lithium-ion"]],
-      ["LITHium-ion", kineticsPricingExample.motorisation["Lithium-ion"]],
+      [
+        "lithium-ion",
+        kineticsPricingExample.operation.motorisation["Lithium-ion"].base,
+      ],
+      [
+        "LITHium-ion",
+        kineticsPricingExample.operation.motorisation["Lithium-ion"].base,
+      ],
     ];
 
     it.each(controlInputExamples)(

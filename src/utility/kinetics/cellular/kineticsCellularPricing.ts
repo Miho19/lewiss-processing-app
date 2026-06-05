@@ -1,5 +1,5 @@
 import GETSharePointPricingSchedule from "../../../http/GETSharePointPricingSchedule";
-import type { SharePointKineticsCellularPricingType } from "../../../zod/sharePointPricingKineticsCellular";
+import type { SharePointKineticsCellularPricingType } from "../../../zod/kinetics/sharePointPricingKineticsCellular";
 import { queryClient } from "../../../http/queryClient";
 
 // import kineticsCellularPricingSchedule from "../../../../test/utility/kinetics/cellular/kinetics-cellular-pricing-example.json";
@@ -25,20 +25,20 @@ function getKineticsCellularFabricCost(
     opacity === "Translucent" ? 1 : pricingSchedule.blockoutMultiplier;
 
   const widthAdjusted = roundMeasurementUp(width);
-  const widthIndex = pricingSchedule.blind.widthHeader.findIndex(
+  const widthIndex = pricingSchedule.fabric.widthHeader.findIndex(
     (w) => w === widthAdjusted || w === width,
   );
 
   if (widthIndex === -1) return 0.0;
 
   const heightAdjusted = roundMeasurementUp(height);
-  const heightIndex = pricingSchedule.blind.heightHeader.findIndex(
+  const heightIndex = pricingSchedule.fabric.heightHeader.findIndex(
     (h) => h === heightAdjusted || h === height,
   );
 
   if (heightIndex === -1) return 0.0;
 
-  const price = pricingSchedule.blind.data[heightIndex][widthIndex];
+  const price = pricingSchedule.fabric.data[heightIndex][widthIndex];
 
   return price * multiplier;
 }
@@ -53,7 +53,7 @@ function getKineticsCellularControlCost(
   )
     return 0;
 
-  return pricingSchedule.motorisation["Lithium-ion"];
+  return pricingSchedule.operation.motorisation["Lithium-ion"].base;
 }
 
 // this function is sort of incorrect currently 30/05/2026 due to cellular blinds
