@@ -1,6 +1,8 @@
 import GETSharePointPricingSchedule from "../../../http/GETSharePointPricingSchedule";
 import type { SharePointKineticsCellularPricingType } from "../../../zod/kinetics/sharePointPricingKineticsCellular";
 import { queryClient } from "../../../http/queryClient";
+import type { BlindType } from "../../../zod/sharePointProjectFile";
+import { getPricingScheduleAsync } from "../common";
 
 // import kineticsCellularPricingSchedule from "../../../../test/utility/kinetics/cellular/kinetics-cellular-pricing-example.json";
 
@@ -112,25 +114,6 @@ function getKineticsCellularSideChannelCost(
   return heightAdjusted * costPerMetreHeight + customSurcharge;
 }
 
-async function getKineticsCellularPricingSchedule(): Promise<
-  SharePointKineticsCellularPricingType | undefined
-> {
-  try {
-    const pricingSchedule = await queryClient.ensureQueryData({
-      queryKey: ["kinetics cellular pricing schedule"],
-      queryFn: () => GETSharePointPricingSchedule("cellular-blind"),
-    });
-
-    return pricingSchedule;
-  } catch (error) {
-    console.error(
-      "Failed to fetch kinetics cellular pricing schedule: " + error,
-    );
-
-    return undefined;
-  }
-}
-
 async function getKineticsCellularBlindCostAsync(
   width: number,
   height: number,
@@ -138,11 +121,14 @@ async function getKineticsCellularBlindCostAsync(
   control: string,
   headrailColour: string,
   sideChannelColour: string,
-) {
-  const pricingSchedule: SharePointKineticsCellularPricingType | undefined =
-    await getKineticsCellularPricingSchedule();
+  blindType: BlindType,
+): Promise<number> {
+  const pricingSchedule = (await getPricingScheduleAsync(
+    blindType,
+  )) as SharePointKineticsCellularPricingType;
 
   if (typeof pricingSchedule === "undefined") return 0;
+  if (pricingSchedule.productId !== "cellular-blind") return 0;
 
   const fabricCost = getKineticsCellularFabricCost(
     width,

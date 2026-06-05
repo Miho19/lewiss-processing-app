@@ -1,4 +1,4 @@
-import type { SharePointProductId } from "../zod/sharePointProjectFile";
+import type { BlindType } from "../zod/sharePointProjectFile";
 import kineticsCellularPricingSchedule from "../../test/utility/kinetics/cellular/kinetics-cellular-pricing-example.json";
 import type { SharePointKineticsCellularPricingType } from "../zod/kinetics/sharePointPricingKineticsCellular";
 
@@ -21,8 +21,10 @@ function GETSharePointJSONFileFetchOptions(fileId: string): RequestInit {
 
 type PricingScheduleType = SharePointKineticsCellularPricingType;
 
+// we will use fixed names for the files
+
 export async function GETSharePointPricingSchedule(
-  productId: SharePointProductId,
+  blindType: BlindType,
   endpoint: URL = GETSharePointPricingScheduleEndpoint(),
 ): Promise<PricingScheduleType> {
   try {

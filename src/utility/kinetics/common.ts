@@ -8,6 +8,10 @@ import type {
 import getImageAsBase64 from "../getBase64Image";
 import windowWareLogo from "../../asset/Windoware-Logo-1.png";
 import type { TableEntry } from "../pdfmake/commonFunction";
+import type { BlindType } from "../../zod/sharePointProjectFile";
+import type { PricingScheduleType } from "../../zod/kinetics/common";
+import GETSharePointPricingSchedule from "../../http/GETSharePointPricingSchedule";
+import { queryClient } from "../../http/queryClient";
 
 export function createCustomerInformation(
   name: string,
@@ -129,4 +133,22 @@ export function getBlindIndex(entries: TableEntry[]): number {
     -1,
   );
   return currentMax + 1;
+}
+
+export async function getPricingScheduleAsync(
+  blindType: BlindType,
+): Promise<PricingScheduleType | undefined> {
+  try {
+    const pricingSchedule = await queryClient.ensureQueryData({
+      queryKey: ["kinetics cellular pricing schedule"],
+      queryFn: () => GETSharePointPricingSchedule(blindType),
+    });
+    return pricingSchedule;
+  } catch (error) {
+    console.error(
+      "Failed to fetch kinetics cellular pricing schedule: " + error,
+    );
+
+    return undefined;
+  }
 }

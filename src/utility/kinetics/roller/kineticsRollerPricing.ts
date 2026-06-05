@@ -1,3 +1,5 @@
+import GETSharePointPricingSchedule from "../../../http/GETSharePointPricingSchedule";
+import { queryClient } from "../../../http/queryClient";
 import type {
   PelmetPricing,
   PerMCost,
@@ -279,9 +281,26 @@ function _getKineticsRollerPelmetCostGetWidthIndex(
   return index;
 }
 
+async function getKineticsRollerBlindCostAsync(
+  width: number,
+  height: number,
+  opacity: string,
+  fabricMultiplier: number,
+  control: string,
+  controlLength: string,
+  bottomRailType: string,
+  bottomRailColour: string,
+  pelmet: string,
+): Promise<number> {
+  /// get schedule first
+
+  return 0;
+}
+
 export {
   getKineticsRollerFabricCost,
   getKineticsRollerControlCost,
   getKineticsRollerBottomRailCost,
   getKineticsRollerPelmetCost,
+  getKineticsRollerBlindCostAsync,
 };
