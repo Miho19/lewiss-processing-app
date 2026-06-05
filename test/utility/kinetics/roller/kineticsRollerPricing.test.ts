@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vitest";
 import kineticsRollerPricingExample from "./kinetics-roller-pricing-schedule.json";
 import { KineticsRollerFabricOpacityType } from "../../../../src/zod/kinetics/sharePointPricingKineticsRoller";
-import { getKineticsRollerFabricCost } from "../../../../src/utility/kinetics/roller/kineticsRollerPricing";
+import {
+  getKineticsRollerFabricCost,
+  getKineticsRollerControlCost,
+} from "../../../../src/utility/kinetics/roller/kineticsRollerPricing";
 
 describe("Kinetics Roller Pricing", () => {
   describe("getKineticsRollerFabricCost", () => {
@@ -35,6 +38,41 @@ describe("Kinetics Roller Pricing", () => {
             height,
             opacity,
             1,
+            kineticsRollerPricingExample,
+          ),
+        ).toBe(expected);
+      },
+    );
+  });
+
+  describe("getKineticsRollerControlCost", () => {
+    const exampleInput: [string, string, number | undefined][] = [
+      ["Chain - White", "1000", 21],
+      ["Chain - White", "2000", 21],
+      ["Chain - White", "10000000", undefined],
+      ["Chain - White", "0", undefined],
+      ["Chain - Black", "0", undefined],
+      ["Chain - Nickel", "750mm", 21],
+      ["Chain - Nickel", "750", 21],
+      ["Chain - Black Metal", "1200", 20.4],
+      ["Chain - Black Metal", "1200mm", 20.4],
+      ["Lithium-ion", "1200mm", 165],
+      ["Lithium-ion", "0mm", 165],
+      ["Lithium-ion", "-1mm", 165],
+      ["Lithium-ion", "1000000mm", 165],
+      ["Lithiu-ion", "1000000mm", undefined],
+      ["Lith-ion", "1000000mm", undefined],
+      ["Hardwired Smart Home", "1000000mm", 196],
+      ["Hardwired WiFi Remote Control", "1000000mm", 196],
+    ];
+
+    it.each(exampleInput)(
+      "should given the inputs %s, %s return %i",
+      (control, controlLength, expected) => {
+        expect(
+          getKineticsRollerControlCost(
+            control,
+            controlLength,
             kineticsRollerPricingExample,
           ),
         ).toBe(expected);

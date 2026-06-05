@@ -248,9 +248,10 @@ async function getNewEntryKineticsRollerBlind(
 
   const fabric = spec.fabric?.name ?? "Missing Fabric";
 
-  let controlString = getKineticsRollerControlString(spec);
-  if (controlString.toLowerCase().includes("chain"))
-    controlString = controlString + ` ${projectWindow.controlLength}mm`;
+  const controlString = getKineticsRollerControlString(spec);
+  const controlLength = projectWindow.controlLength;
+
+  const controlOutputString = `${controlString} ${controlString.toLowerCase().includes("chain") && controlLength + `mm`}`;
 
   const bottomRail = `${spec.bottomRailType} - ${spec.bottomRailColour}`;
   const controlSide = projectWindow.controlSide;
@@ -273,7 +274,7 @@ async function getNewEntryKineticsRollerBlind(
     fit: fit,
     roll: roll,
     fabric: fabric,
-    control: controlString,
+    control: controlOutputString,
     "control side": controlSide,
     "bottom rail": bottomRail,
     bracket: bracket,

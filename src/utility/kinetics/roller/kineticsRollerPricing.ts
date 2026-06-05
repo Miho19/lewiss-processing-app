@@ -35,6 +35,70 @@ function getKineticsRollerFabricCost(
   return fabricCost * fabricMultiplier;
 }
 
-function getKineticsRollerControlCost() {}
+function getKineticsRollerControlCost(
+  control: string,
+  controlLength: string,
+  pricingSchedule: SharePointKineticsRollerPricingType,
+): number | undefined {
+  if (control.toLowerCase().includes("chain"))
+    return _getKineticsRollerCostChain(control, controlLength, pricingSchedule);
 
-export { getKineticsRollerFabricCost };
+  return _getKineticsRollerCostMotorisation(control, pricingSchedule);
+}
+
+function _getKineticsRollerCostChain(
+  control: string,
+  controlLength: string,
+  pricingSchedule: SharePointKineticsRollerPricingType,
+): number | undefined {
+  let parsedControlLength: number = 0;
+
+  try {
+    parsedControlLength = parseInt(controlLength);
+  } catch {
+    return undefined;
+  }
+
+  if (parsedControlLength <= 0) return undefined;
+
+  if (parsedControlLength > 4000) return undefined;
+
+  const base = pricingSchedule.control.chain.fastRise.base;
+  const surchargeColours = pricingSchedule.control.chain.fastRise.colours;
+  const controlColour = control.split("-")[1].trim();
+
+  const surchargeColour = surchargeColours.find(
+    (c) =>
+      c.name.localeCompare(controlColour, undefined, {
+        sensitivity: "base",
+      }) === 0,
+  );
+
+  if (typeof surchargeColour === "undefined") return base;
+
+  const perMetreCost = surchargeColour.perM;
+
+  return (parsedControlLength / 1000) * perMetreCost;
+}
+
+function _getKineticsRollerCostMotorisation(
+  control: string,
+
+  pricingSchedule: SharePointKineticsRollerPricingType,
+): number | undefined {
+  const validOptions = Object.keys(pricingSchedule.control.motorisation);
+
+  const foundOption: string | undefined = validOptions.find(
+    (m) => m.localeCompare(control, undefined, { sensitivity: "base" }) === 0,
+  );
+  if (typeof foundOption === "undefined") return undefined;
+
+  const motorisationObject =
+    pricingSchedule.control.motorisation[
+      foundOption as keyof typeof pricingSchedule.control.motorisation
+    ];
+
+  return motorisationObject.base;
+}
+
+export { getKineticsRollerFabricCost, getKineticsRollerControlCost };
