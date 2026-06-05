@@ -1,11 +1,11 @@
 import type { SharePointSpec2Type } from "../../../zod/sharePointProjectFile";
 
-function getKineticsRollerOperationString(spec: SharePointSpec2Type) {
+function getKineticsRollerControlString(spec: SharePointSpec2Type) {
   const chainColour = spec.chainColour;
-  const chainOperationString = `Chain - ${chainColour}`;
+  const chainOutputString = `Chain - ${chainColour}`;
 
   if (typeof spec.motorisation === "undefined" || spec.motorisation === null)
-    return chainOperationString;
+    return chainOutputString;
 
   const motorisation = spec.motorisation.trim().toLowerCase();
 
@@ -14,4 +14,4 @@ function getKineticsRollerOperationString(spec: SharePointSpec2Type) {
   return spec.motorisation;
 }
 
-export { getKineticsRollerOperationString };
+export { getKineticsRollerControlString };

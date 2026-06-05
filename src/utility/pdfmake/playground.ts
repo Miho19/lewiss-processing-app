@@ -64,10 +64,8 @@ const customerInformation = {
   marginBottom: 14,
 };
 
-// location, width, height, fit, comb size, fabric, operation, operation side, headrail colour, size channel colour, butting, remote, remote channel, pricing
-
 const columnString =
-  "#, location, width, height, fit, comb size, fabric, operation, operation side, headrail colour, side Channel colour, butting, remote, remote channel, pricing";
+  "#, location, width, height, fit, comb size, fabric, control, control side, headrail colour, side Channel colour, butting, remote, remote channel, pricing";
 const columns = columnString.split(",");
 
 const x = columns.map((w) => {

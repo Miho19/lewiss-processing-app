@@ -53,7 +53,7 @@ function getKineticsCellularControlCost(
   )
     return 0;
 
-  return pricingSchedule.operation.motorisation["Lithium-ion"].base;
+  return pricingSchedule.control.motorisation["Lithium-ion"].base;
 }
 
 // this function is sort of incorrect currently 30/05/2026 due to cellular blinds
@@ -135,7 +135,7 @@ async function getKineticsCellularBlindCostAsync(
   width: number,
   height: number,
   opacity: string,
-  operation: string,
+  control: string,
   headrailColour: string,
   sideChannelColour: string,
 ) {
@@ -150,10 +150,7 @@ async function getKineticsCellularBlindCostAsync(
     opacity,
     pricingSchedule,
   );
-  const controlCost = getKineticsCellularControlCost(
-    operation,
-    pricingSchedule,
-  );
+  const controlCost = getKineticsCellularControlCost(control, pricingSchedule);
 
   const headrailCost = getKineticsCellularHeadrailCost(
     headrailColour,

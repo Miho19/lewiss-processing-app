@@ -1,4 +1,4 @@
-import { getKineticsRollerOperationString } from "../../../../../utility/kinetics/roller/kineticsRoller";
+import { getKineticsRollerControlString } from "../../../../../utility/kinetics/roller/kineticsRoller";
 import type { SharePointSpec2Type } from "../../../../../zod/sharePointProjectFile";
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 function RoomCardTreatmentKineticsRoller(props: Props) {
   const { spec } = props;
 
-  const operation = getKineticsRollerOperationString(spec);
+  const control = getKineticsRollerControlString(spec);
 
   if (typeof spec.fabric === "undefined" || spec.fabric === null)
     return <p>Fabric information is missing</p>;
@@ -29,8 +29,8 @@ function RoomCardTreatmentKineticsRoller(props: Props) {
       <span className="text-sm text-gray-500">Bracket</span>
       <span className="">{spec.bracketColour}</span>
 
-      <span className="text-sm text-gray-500">Operation</span>
-      <span className="">{operation}</span>
+      <span className="text-sm text-gray-500">Control</span>
+      <span className="">{control}</span>
 
       {spec.pelmetType && (
         <>

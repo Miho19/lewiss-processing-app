@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 import kineticsRollerPricingExample from "./kinetics-roller-pricing-schedule.json";
 import { KineticsRollerFabricOpacityType } from "../../../../src/zod/kinetics/sharePointPricingKineticsRoller";
-import { getKineticsRollerFabricPrice } from "../../../../src/utility/kinetics/roller/kineticsRollerPricing";
+import { getKineticsRollerFabricCost } from "../../../../src/utility/kinetics/roller/kineticsRollerPricing";
 
 describe("Kinetics Roller Pricing", () => {
-  describe("getKineticsRollerFabricPrice", () => {
+  describe("getKineticsRollerFabricCost", () => {
     const exampleInput: [
       number,
       number,
@@ -30,7 +30,7 @@ describe("Kinetics Roller Pricing", () => {
       "should given %i, %i, %s multilplier 1.0 return %i",
       (width, height, opacity, expected) => {
         expect(
-          getKineticsRollerFabricPrice(
+          getKineticsRollerFabricCost(
             width,
             height,
             opacity,

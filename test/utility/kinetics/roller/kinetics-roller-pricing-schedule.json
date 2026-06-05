@@ -1,6 +1,6 @@
 {
   "productId": "blockout-roller",
-  "operation": {
+  "control": {
     "chain": {
       "fastRise": {
         "base": 21,

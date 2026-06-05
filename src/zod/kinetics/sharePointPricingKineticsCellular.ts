@@ -4,20 +4,20 @@ export type SharePointKineticsCellularPricingType = {
   sideChannelCustomColourSurcharge: number;
   sideChannelCostPerMetreHeight: number;
   headRailCustomColourSurcharge: number;
-  operation: Operation;
+  control: Control;
   fabric: FabricPricingType;
 };
 
-type Operation = {
-  cord: OperationBase;
+type Control = {
+  cord: ControlBase;
   motorisation: Motorisation;
 };
 
 type Motorisation = {
-  "Lithium-ion": OperationBase;
+  "Lithium-ion": ControlBase;
 };
 
-type OperationBase = { base: number; id: string };
+type ControlBase = { base: number; id: string };
 
 type FabricPricingType = {
   opacity: string[];

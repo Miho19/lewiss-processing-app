@@ -1,5 +1,5 @@
 import {
-  getKineticsCellularOperationString,
+  getKineticsCellularControlString,
   getKineticsCellularSideChannelColour,
 } from "../../../../../utility/kinetics/cellular/kineticsCellular";
 import type { SharePointSpecType } from "../../../../../zod/sharePointProjectFile";
@@ -10,7 +10,7 @@ type Props = {
 function RoomCardTreatmentKineticsCellular(props: Props) {
   const { spec } = props;
 
-  const operation = getKineticsCellularOperationString(spec);
+  const control = getKineticsCellularControlString(spec);
 
   const sideChannelColour = getKineticsCellularSideChannelColour(spec);
 
@@ -19,8 +19,8 @@ function RoomCardTreatmentKineticsCellular(props: Props) {
       <span className="text-sm text-gray-500">Fabric</span>
       <span className="">{spec.fabric.name}</span>
 
-      <span className="text-sm text-gray-500">Operation</span>
-      <span>{operation}</span>
+      <span className="text-sm text-gray-500">Control</span>
+      <span>{control}</span>
 
       <span className="text-sm text-gray-500">Headrail Colour</span>
       <span>{spec.bracketColour}</span>

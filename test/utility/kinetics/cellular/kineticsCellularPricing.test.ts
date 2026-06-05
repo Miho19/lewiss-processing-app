@@ -54,11 +54,11 @@ describe("Kinetics Cellular Pricing", () => {
       ["cord", 0],
       [
         "lithium-ion",
-        kineticsPricingExample.operation.motorisation["Lithium-ion"].base,
+        kineticsPricingExample.control.motorisation["Lithium-ion"].base,
       ],
       [
         "LITHium-ion",
-        kineticsPricingExample.operation.motorisation["Lithium-ion"].base,
+        kineticsPricingExample.control.motorisation["Lithium-ion"].base,
       ],
     ];
 

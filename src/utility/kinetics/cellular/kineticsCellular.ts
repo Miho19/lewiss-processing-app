@@ -1,6 +1,6 @@
 import type { SharePointSpecType } from "../../../zod/sharePointProjectFile";
 
-function getKineticsCellularOperationString(spec: SharePointSpecType) {
+function getKineticsCellularControlString(spec: SharePointSpecType) {
   return typeof spec.motorisation === "undefined" || spec.motorisation === null
     ? "Cord"
     : "Lithium-ion";
@@ -30,7 +30,7 @@ function getKineticsCellularFabricOpacity(spec: SharePointSpecType): string {
 }
 
 export {
-  getKineticsCellularOperationString,
+  getKineticsCellularControlString,
   getKineticsCellularSideChannelColour,
   getKineticsCellularFabricOpacity,
 };

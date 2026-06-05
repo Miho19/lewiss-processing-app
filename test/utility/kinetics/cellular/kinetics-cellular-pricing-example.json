@@ -4,7 +4,7 @@
   "sideChannelCustomColourSurcharge": 103,
   "sideChannelCostPerMetreHeight": 125,
   "headRailCustomColourSurcharge": 103,
-  "operation": {
+  "control": {
     "cord": { "base": 0, "id": "0" },
     "motorisation": { "Lithium-ion": { "base": 150, "id": "103175" } }
   },

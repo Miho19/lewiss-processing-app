@@ -16,7 +16,7 @@ import {
   type WindowMeasurementJoined,
 } from "../../processProject";
 import { createDocument } from "../../pdfmake/pdfmake";
-import { getKineticsRollerOperationString } from "./kineticsRoller";
+
 import {
   createTable,
   generateTableEntryList,
@@ -27,6 +27,7 @@ import {
   getBlindIndex,
   getRemoteAndChannel,
 } from "../common";
+import { getKineticsRollerControlString } from "./kineticsRoller";
 
 async function createRollerBlindDocument(
   projectFile: SharePointProjectFileType,
@@ -247,12 +248,12 @@ async function getNewEntryKineticsRollerBlind(
 
   const fabric = spec.fabric?.name ?? "Missing Fabric";
 
-  let operationString = getKineticsRollerOperationString(spec);
-  if (operationString.toLowerCase().includes("chain"))
-    operationString = operationString + ` ${projectWindow.controlLength}mm`;
+  let controlString = getKineticsRollerControlString(spec);
+  if (controlString.toLowerCase().includes("chain"))
+    controlString = controlString + ` ${projectWindow.controlLength}mm`;
 
   const bottomRail = `${spec.bottomRailType} - ${spec.bottomRailColour}`;
-  const operationSide = projectWindow.controlSide;
+  const controlSide = projectWindow.controlSide;
 
   const bracket = `${spec.bracketColour}`;
 
@@ -260,7 +261,7 @@ async function getNewEntryKineticsRollerBlind(
 
   const { remote, channel } = getRemoteAndChannel(
     location,
-    operationString,
+    controlString,
     entries,
   );
 
@@ -272,8 +273,8 @@ async function getNewEntryKineticsRollerBlind(
     fit: fit,
     roll: roll,
     fabric: fabric,
-    control: operationString,
-    "control side": operationSide,
+    control: controlString,
+    "control side": controlSide,
     "bottom rail": bottomRail,
     bracket: bracket,
     pelmet: pelmet,

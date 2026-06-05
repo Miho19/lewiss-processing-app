@@ -21,8 +21,8 @@ import {
   generateTableEntryList,
 } from "../../pdfmake/commonFunction";
 import {
+  getKineticsCellularControlString,
   getKineticsCellularFabricOpacity,
-  getKineticsCellularOperationString,
   getKineticsCellularSideChannelColour,
 } from "./kineticsCellular";
 import { getKineticsCellularBlindCostAsync } from "./kineticsCellularPricing";
@@ -150,11 +150,11 @@ async function getNewEntryKineticsCellularBlindAsync(
 
   const fabric = windowJoined.treatment.spec.fabric?.name ?? "";
 
-  const operation = getKineticsCellularOperationString(
+  const control = getKineticsCellularControlString(
     windowJoined.treatment.spec as SharePointSpecType,
   );
 
-  const operationSide = projectWindow.controlSide;
+  const controlSide = projectWindow.controlSide;
 
   // hardcoded until we fix headrail colour issues from pricing
   const headrailColour = "White";
@@ -183,7 +183,7 @@ async function getNewEntryKineticsCellularBlindAsync(
     width,
     height,
     opacity,
-    operation,
+    control,
     headrailColour,
     sideChannelColour,
   );
@@ -196,8 +196,8 @@ async function getNewEntryKineticsCellularBlindAsync(
     fit: fit,
     "comb size": combSize,
     fabric: fabric,
-    control: operation,
-    "control side": operationSide,
+    control: control,
+    "control side": controlSide,
     "headrail colour": headrailColour,
     "side channel colour": sideChannelColour,
     butting: buttingString,
@@ -221,6 +221,9 @@ function generateButtingBlindRHS(
   windowJoined: WindowMeasurementJoined,
   entry: KineticsCellularTableEntry,
 ) {
+  const remoteChannel =
+    entry["remote channel"] > 0 ? entry["remote channel"] + 1 : 0;
+
   const buttingBlind: KineticsCellularTableEntry = {
     ...entry,
     width: windowJoined.width[1],
@@ -229,7 +232,7 @@ function generateButtingBlindRHS(
       entry["blind index"],
       "RHS",
     ),
-    "remote channel": entry["remote channel"] + 1,
+    "remote channel": remoteChannel,
   };
 
   return buttingBlind;

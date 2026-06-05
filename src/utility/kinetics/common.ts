@@ -100,10 +100,11 @@ function getMaxChannel(entries: TableEntry[]) {
 
 export function getRemoteAndChannel(
   location: string,
-  operation: string,
+  control: string,
   entries: TableEntry[],
 ): RemoteChannelObjectType {
-  if (operation !== "Lithium-ion") return { remote: 0, channel: 0 };
+  // to make it more general, need an array of known motor items that remotes are allowed for
+  if (control !== "Lithium-ion") return { remote: 0, channel: 0 };
 
   const roomName = location.split("-")[0].trim();
 

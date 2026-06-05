@@ -1,13 +1,13 @@
 export type SharePointKineticsRollerPricingType = {
   productId: string;
-  operation: Operation;
+  control: Control;
   bottomRail: BottomRail;
   bracket: Bracket;
   pelmet: Pelmet;
   fabric: FabricPricingType;
 };
 
-type Operation = {
+type Control = {
   chain: Chain;
   motorisation: Motorisation;
 };

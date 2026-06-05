@@ -1,7 +1,7 @@
 import type { SharePointKineticsRollerPricingType } from "../../../zod/kinetics/sharePointPricingKineticsRoller";
 import { roundMeasurementUp } from "../cellular/kineticsCellularPricing";
 
-function getKineticsRollerFabricPrice(
+function getKineticsRollerFabricCost(
   width: number,
   height: number,
   opacity: string,
@@ -35,4 +35,6 @@ function getKineticsRollerFabricPrice(
   return fabricCost * fabricMultiplier;
 }
 
-export { getKineticsRollerFabricPrice };
+function getKineticsRollerControlCost() {}
+
+export { getKineticsRollerFabricCost };
