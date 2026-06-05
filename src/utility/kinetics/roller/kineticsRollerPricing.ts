@@ -7,28 +7,28 @@ function getKineticsRollerFabricCost(
   opacity: string,
   fabricMultiplier: number,
   pricingSchedule: SharePointKineticsRollerPricingType,
-): number {
-  if (width <= 0 || height <= 0 || fabricMultiplier <= 0) return 0;
+): number | undefined {
+  if (width <= 0 || height <= 0 || fabricMultiplier <= 0) return undefined;
 
   const opacityOptions = pricingSchedule.fabric.opacity;
   const foundOpacity = opacityOptions.find(
     (o) => o.localeCompare(opacity, undefined, { sensitivity: "base" }) === 0,
   );
-  if (typeof foundOpacity === "undefined") return 0;
+  if (typeof foundOpacity === "undefined") return undefined;
 
   const widthAdjusted = roundMeasurementUp(width);
   const widthIndex = pricingSchedule.fabric.widthHeader.findIndex(
     (w) => w === widthAdjusted || w === width,
   );
 
-  if (widthIndex === -1) return 0;
+  if (widthIndex === -1) return undefined;
 
   const heightAdjusted = roundMeasurementUp(height);
   const heightIndex = pricingSchedule.fabric.heightHeader.findIndex(
     (h) => h === heightAdjusted || h === height,
   );
 
-  if (heightIndex === -1) return 0;
+  if (heightIndex === -1) return undefined;
 
   const fabricCost = pricingSchedule.fabric.data[heightIndex][widthIndex];
 
@@ -99,6 +99,10 @@ function _getKineticsRollerCostMotorisation(
     ];
 
   return motorisationObject.base;
+}
+
+function getKineticsRollerBottomRailCost(): number | undefined {
+  return 0;
 }
 
 export { getKineticsRollerFabricCost, getKineticsRollerControlCost };
