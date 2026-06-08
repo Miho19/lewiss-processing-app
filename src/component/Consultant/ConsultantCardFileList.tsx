@@ -1,7 +1,7 @@
 import useSharePointFolderQuery from "../../hook/useSharePointFolderQuery";
-import type { ConsultantFolder } from "../../type/sharePoint/consultant";
-import { filterFolderItemList } from "../../utility/sharePoint/projectFile";
-import Loading from "../loading/Loading";
+import type { ConsultantFolder } from "../../type/sharePoint/consultantType";
+import { filterFolderItemList } from "../../utility/sharePoint/folderUtility";
+import Loading from "../Loading/Loading";
 import ConsultantCardFileListElement from "./ConsultantCardFileListElement";
 
 type Props = {

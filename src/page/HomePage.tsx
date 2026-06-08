@@ -1,5 +1,5 @@
-import ConsultantCard from "../component/consultant/ConsultantCard";
-import Loading from "../component/loading/Loading";
+import ConsultantCard from "../component/Consultant/ConsultantCard";
+import Loading from "../component/Loading/Loading";
 import useSharePointRootFolderQuery from "../hook/useSharePointRootFolderQuery";
 import useSharePointStaffListQuery from "../hook/useSharePointStaffListQuery";
 import { getConsultantFolder } from "../utility/sharePoint/consultant";

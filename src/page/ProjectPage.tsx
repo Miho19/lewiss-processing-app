@@ -1,7 +1,7 @@
 import { useEffect, useState, type SubmitEvent } from "react";
-import CustomerCard from "../component/customer/CustomerCard";
-import Loading from "../component/loading/Loading";
-import RoomCardList from "../component/project/room/RoomCardList";
+import CustomerCard from "../component/Customer/CustomerCard";
+import Loading from "../component/Loading/Loading";
+import RoomCardList from "../component/Project/room/RoomCardList";
 import useSharePointProjectFileQuery from "../hook/useSharePointProjectFileQuery";
 import { projectRoute } from "../router/router";
 import {

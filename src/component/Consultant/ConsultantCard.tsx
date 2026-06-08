@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ConsultantCardHeader from "./ConsultantCardHeader";
 import ConsultantCardFileList from "./ConsultantCardFileList";
-import type { ConsultantFolder } from "../../type/sharePoint/consultant";
+import type { ConsultantFolder } from "../../type/sharePoint/consultantType";
 
 type Props = {
   consultant: ConsultantFolder;

@@ -1,5 +1,5 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/16/solid";
-import type { ConsultantFolder } from "../../type/sharePoint/consultant";
+import type { ConsultantFolder } from "../../type/sharePoint/consultantType";
 
 type Props = {
   consultant: ConsultantFolder;

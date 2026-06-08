@@ -42,7 +42,7 @@ function createTable(tableEntry: TableEntry): ContentTable {
       body: [tableHeaderArray],
     },
     layout: {
-      paddingBottom: (rowIndex) => {
+      paddingBottom: () => {
         return 2;
       },
 

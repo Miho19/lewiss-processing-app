@@ -1,4 +1,4 @@
-import type { ConsultantFolder } from "../../type/sharePoint/consultant";
+import type { ConsultantFolder } from "../../type/sharePoint/consultantType";
 import type { SharePointFolderListItem } from "../../type/sharePoint/folderType";
 import type { Consultant } from "../../type/sharePointStaffList";
 

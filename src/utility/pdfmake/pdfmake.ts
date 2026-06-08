@@ -58,28 +58,6 @@ async function generateProcessPDF(
   return generatedPDFs.flat();
 }
 
-function createDocument(
-  projectFile: SharePointProjectFileType,
-  processType: ProcessTitleType,
-) {
-  const { name, reference, salesConsultant } = projectFile;
-
-  const title = [name, reference, processType].join("-");
-
-  const metaData: TDocumentInformation = {
-    title: title,
-    author: salesConsultant,
-    creator: "lewiss-processing",
-  };
-  const document: TDocumentDefinitions = {
-    content: [],
-    info: metaData,
-    pageOrientation: "landscape",
-  };
-
-  return document;
-}
-
 function getProductIdToWindowMeasurementRecord(
   windowJoined: WindowMeasurementJoined[],
 ): SharePointProductIdToWindowMeasurementJoinedRecordType {
@@ -98,15 +76,6 @@ function getProductIdToWindowMeasurementRecord(
   });
 
   return productIdToWindowMeasurementRecord;
-}
-
-async function openPDFDocumentAsync(document: TDocumentDefinitions) {
-  const pdfmake = (await import("pdfmake/build/pdfmake")).default;
-  const pdfFonts = (await import("pdfmake/build/vfs_fonts")).default;
-
-  pdfmake.addVirtualFileSystem(pdfFonts);
-
-  pdfmake.createPdf(document).open();
 }
 
 export { getOrderPDF, createDocument, openPDFDocumentAsync };
