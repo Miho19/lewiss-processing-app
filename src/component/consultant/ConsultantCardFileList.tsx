@@ -1,13 +1,11 @@
 import useSharePointFolderQuery from "../../hook/useSharePointFolderQuery";
-import {
-  sharePointFilterFolderItemListForJSONFiles,
-  type ConsultantTypeWithFolderId,
-} from "../../utility/sharePoint";
+import type { ConsultantFolder } from "../../type/sharePoint/consultant";
+import { filterFolderItemList } from "../../utility/sharePoint/projectFile";
 import Loading from "../loading/Loading";
 import ConsultantCardFileListElement from "./ConsultantCardFileListElement";
 
 type Props = {
-  consultant: ConsultantTypeWithFolderId;
+  consultant: ConsultantFolder;
   isExpanded: boolean;
 };
 
@@ -34,8 +32,7 @@ function ConsultantCardFileList(props: Props) {
       </div>
     );
 
-  const filteredForJSONProjectFilesList =
-    sharePointFilterFolderItemListForJSONFiles(fileList);
+  const filteredForJSONProjectFilesList = filterFolderItemList(fileList);
 
   const fileListElements = filteredForJSONProjectFilesList.map((file) => (
     <ConsultantCardFileListElement file={file} key={file.id} />
@@ -53,5 +50,3 @@ function ConsultantCardFileList(props: Props) {
 }
 
 export default ConsultantCardFileList;
-
-//https://flyonui.com/docs/components/collapse/

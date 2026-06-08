@@ -3,7 +3,7 @@ function excelRowStringToCommaSeperatedString(str: string) {
   return "[" + str.trim().replace(/\t/g, ",") + "],";
 }
 
-function excelTableStringToStringArray(strArray: string[]) {
+export function excelTableStringToStringArray(strArray: string[]) {
   let result: string = "";
 
   strArray.forEach((str) => {
@@ -12,5 +12,3 @@ function excelTableStringToStringArray(strArray: string[]) {
 
   return result;
 }
-
-export { excelTableStringToStringArray };

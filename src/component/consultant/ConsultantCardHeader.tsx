@@ -1,8 +1,8 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/16/solid";
-import type { ConsultantTypeWithFolderId } from "../../utility/sharePoint";
+import type { ConsultantFolder } from "../../type/sharePoint/consultant";
 
 type Props = {
-  consultant: ConsultantTypeWithFolderId;
+  consultant: ConsultantFolder;
   toggleFileList: () => void;
   isExpanded: boolean;
 };

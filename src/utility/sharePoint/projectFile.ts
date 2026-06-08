@@ -1,4 +1,5 @@
 import type { SharePointFolderListItem } from "../../type/sharePoint/folderType";
+import type { ProjectFileName } from "../../type/sharePoint/projectFileType";
 
 export function filterFolderItemList(
   folderItemList: SharePointFolderListItem[],
@@ -6,6 +7,10 @@ export function filterFolderItemList(
   const filteredList = folderItemList.filter((file) => {
     if (!file.isFile) return false;
     if (!isfileJSON(file)) return false;
+    const fileNameObject = destructureProjectFileName(file.name);
+    if (typeof fileNameObject === "undefined") return false;
+
+    return true;
   });
 
   return filteredList;
@@ -17,8 +22,8 @@ function isfileJSON(file: SharePointFolderListItem) {
 
 export function destructureProjectFileName(
   fileName: string,
-): JSONProjectFileNameType | undefined {
-  if (typeof fileName === "undefined" || !fileName) return undefined;
+): ProjectFileName | undefined {
+  if (!fileName || typeof fileName === "undefined") return undefined;
   const base = fileName.slice(0, -5);
   const m = base.match(/^([A-Za-z]+)-(\d{5,6})-(\d{8})$/);
   if (!m) return undefined;

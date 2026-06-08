@@ -1,5 +1,5 @@
 import { it } from "vitest";
-import { excelTableStringToStringArray } from "../../../../src/utility/spreadsheet/spreadsheet";
+import { excelTableStringToStringArray } from "../../../src/utility/excel/excel";
 
 it.skip("just works", () => {
   const strArr = [

@@ -1,17 +1,17 @@
 import { Link } from "@tanstack/react-router";
-import type { SharePointFolderItemListType } from "../../type/sharePointFolder";
+import type { SharePointFolderListItem } from "../../type/sharePoint/folderType";
+import { destructureProjectFileName } from "../../utility/sharePoint/projectFile";
 import {
   displayDate,
   isoUTCOffsetToNZDateTimeObject,
-  sharePointDestructureJSONProjectFileName,
-} from "../../utility/sharePoint";
+} from "../../utility/date/dateUtility";
 
 type Props = {
-  file: SharePointFolderItemListType;
+  file: SharePointFolderListItem;
 };
 function ConsultantCardFileListElement(props: Props) {
   const { file } = props;
-  const fileNameObject = sharePointDestructureJSONProjectFileName(file.name);
+  const fileNameObject = destructureProjectFileName(file.name);
   if (typeof fileNameObject === "undefined") return <></>;
 
   return (

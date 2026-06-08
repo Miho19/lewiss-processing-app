@@ -1,10 +1,10 @@
 import { useState } from "react";
-import type { ConsultantTypeWithFolderId } from "../../utility/sharePoint";
 import ConsultantCardHeader from "./ConsultantCardHeader";
 import ConsultantCardFileList from "./ConsultantCardFileList";
+import type { ConsultantFolder } from "../../type/sharePoint/consultant";
 
 type Props = {
-  consultant: ConsultantTypeWithFolderId;
+  consultant: ConsultantFolder;
 };
 
 function ConsultantCard(props: Props) {
