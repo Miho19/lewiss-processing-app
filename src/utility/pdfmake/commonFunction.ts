@@ -23,7 +23,8 @@ function generateTableHeader(tableEntry: TableEntry) {
       text: column,
       alignment: "center",
       verticalAlignment: "middle",
-      fontSize: 10,
+      fontSize: 8,
+      bold: true,
     };
   });
 
@@ -41,13 +42,12 @@ function createTable(tableEntry: TableEntry): ContentTable {
     },
     layout: {
       paddingBottom: (rowIndex) => {
-        if (rowIndex === 0) return 5;
-        return 5;
+        return 2;
       },
 
       paddingTop: (rowIndex) => {
-        if (rowIndex === 1) return 15;
-        return 5;
+        if (rowIndex === 1) return 5;
+        return 1;
       },
 
       hLineWidth: () => {
@@ -83,7 +83,7 @@ function generateTableEntryList(tableEntry: TableEntry[]): Content[][] {
         text: adjustedValue,
         alignment: "center",
         verticalAlignment: "middle",
-        fontSize: 10,
+        fontSize: 8,
       };
     });
   });
