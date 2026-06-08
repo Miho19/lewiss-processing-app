@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { SharePointRoomType } from "../../../zod/sharePointProjectFile";
+import type { SharePointRoomType } from "../../../type/sharePointProjectFile";
 import RoomCardHeader from "./RoomCardHeader";
 import RoomCardTreatment from "./treatment/RoomCardTreatment";
 import RoomCardWindowList from "./window/list/RoomCardWindowList";

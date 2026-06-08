@@ -1,4 +1,4 @@
-import type { SharePointRoomType } from "../../../../zod/sharePointProjectFile";
+import type { SharePointRoomType } from "../../../../type/sharePointProjectFile";
 import RoomCardTreatmentInsideLayer from "./RoomCardTreatmentInsideLayer";
 import RoomCardTreatmentOutsideLayer from "./RoomCardTreatmentOutsideLayer";
 

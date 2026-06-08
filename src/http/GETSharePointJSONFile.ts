@@ -1,5 +1,5 @@
-import type { SharePointJSONFileItemType } from "../zod/sharePointJSONFile";
-import type { SharePointProjectFileType } from "../zod/sharePointProjectFile";
+import type { SharePointJSONFileItemType } from "../type/sharePointJSONFile";
+import type { SharePointProjectFileType } from "../type/sharePointProjectFile";
 
 function GETSharePointJSONFileEndpoint() {
   return new URL(

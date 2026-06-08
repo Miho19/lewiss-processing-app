@@ -9,7 +9,7 @@ import {
   type SharePointProductId,
   type SharePointProductIdToWindowMeasurementJoinedRecordType,
   type SharePointProjectFileType,
-} from "../../zod/sharePointProjectFile";
+} from "../../type/sharePointProjectFile";
 import type { WindowMeasurementJoined } from "../processProject";
 
 import type {

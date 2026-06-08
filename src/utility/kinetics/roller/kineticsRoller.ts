@@ -1,8 +1,8 @@
-import type { KineticsRollerFabricOpacityType } from "../../../zod/kinetics/sharePointPricingKineticsRoller";
+import type { KineticsRollerFabricOpacityType } from "../../../type/kinetics/sharePointPricingKineticsRoller";
 import type {
   BlindType,
   SharePointSpec2Type,
-} from "../../../zod/sharePointProjectFile";
+} from "../../../type/sharePointProjectFile";
 
 function getKineticsRollerControlString(spec: SharePointSpec2Type) {
   const chainColour = spec.chainColour;

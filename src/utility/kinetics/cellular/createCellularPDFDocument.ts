@@ -8,7 +8,7 @@ import type {
   SharePointRoomType,
   SharePointSpecType,
   SharePointWindowType,
-} from "../../../zod/sharePointProjectFile";
+} from "../../../type/sharePointProjectFile";
 import {
   getRoomAndWindowFromProjectFileByWindowId,
   type WindowBlindCountStringType,

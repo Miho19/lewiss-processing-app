@@ -2,7 +2,7 @@ import ConsultantCard from "../component/consultant/ConsultantCard";
 import Loading from "../component/loading/Loading";
 import useSharePointRootFolderQuery from "../hook/useSharePointRootFolderQuery";
 import useSharePointStaffListQuery from "../hook/useSharePointStaffListQuery";
-import { consultantJoinToRootFolderFileList } from "../utility/sharePoint";
+import { getConsultantFolder } from "../utility/sharePoint/consultant";
 
 function HomePage() {
   const {
@@ -45,10 +45,7 @@ function HomePage() {
       <div className={errorStyleClassName}>Failed to query the root folder</div>
     );
 
-  const consultantList = consultantJoinToRootFolderFileList(
-    staffList.consultants,
-    rootFolder,
-  );
+  const consultantList = getConsultantFolder(staffList.consultants, rootFolder);
 
   const consultantCards = consultantList.map((c) => (
     <ConsultantCard consultant={c} key={c.folderId} />

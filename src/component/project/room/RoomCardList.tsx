@@ -2,7 +2,7 @@ import type {
   onChangeHandlerProjectFormDataCheckboxParameterType,
   projectFormDataType,
 } from "../../../page/ProjectPage";
-import type { SharePointProjectFileType } from "../../../zod/sharePointProjectFile";
+import type { SharePointProjectFileType } from "../../../type/sharePointProjectFile";
 import RoomCard from "./RoomCard";
 
 type Props = {

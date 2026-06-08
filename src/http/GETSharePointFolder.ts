@@ -1,7 +1,7 @@
 import type {
   GETSharePointFolderResponseType,
   SharePointFolderItemListType,
-} from "../zod/sharePointFolder";
+} from "../type/sharePointFolder";
 
 function GETSharePointFolderEndpoint() {
   return new URL(

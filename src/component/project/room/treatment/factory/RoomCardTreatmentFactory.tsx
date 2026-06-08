@@ -1,7 +1,7 @@
 import type {
   SharePointSpec2Type,
   SharePointSpecType,
-} from "../../../../../zod/sharePointProjectFile";
+} from "../../../../../type/sharePointProjectFile";
 import RoomCardTreatmentKineticsCellular from "./RoomCardTreatmentKineticsCellular";
 import RoomCardTreatmentKineticsRoller from "./RoomCardTreatmentKineticsRoller";
 

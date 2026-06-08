@@ -1,4 +1,4 @@
-import type { SharePointWindowType } from "../../../../../zod/sharePointProjectFile";
+import type { SharePointWindowType } from "../../../../../type/sharePointProjectFile";
 
 type Props = {
   window: SharePointWindowType;

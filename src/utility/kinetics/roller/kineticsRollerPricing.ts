@@ -2,11 +2,11 @@ import type {
   KineticsRollerFabricOpacityType,
   PerMCost,
   SharePointKineticsRollerPricingType,
-} from "../../../zod/kinetics/sharePointPricingKineticsRoller";
+} from "../../../type/kinetics/sharePointPricingKineticsRoller";
 import type {
   BlindType,
   ProcessTitleType,
-} from "../../../zod/sharePointProjectFile";
+} from "../../../type/sharePointProjectFile";
 import type { TableEntry } from "../../pdfmake/commonFunction";
 import { roundMeasurementUp } from "../cellular/kineticsCellularPricing";
 import {

@@ -2,7 +2,7 @@ import {
   getKineticsCellularControlString,
   getKineticsCellularSideChannelColour,
 } from "../../../../../utility/kinetics/cellular/kineticsCellular";
-import type { SharePointSpecType } from "../../../../../zod/sharePointProjectFile";
+import type { SharePointSpecType } from "../../../../../type/sharePointProjectFile";
 
 type Props = {
   spec: SharePointSpecType;

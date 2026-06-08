@@ -1,10 +1,10 @@
 import GETSharePointPricingSchedule from "../../../http/GETSharePointPricingSchedule";
-import type { SharePointKineticsCellularPricingType } from "../../../zod/kinetics/sharePointPricingKineticsCellular";
+import type { SharePointKineticsCellularPricingType } from "../../../type/kinetics/sharePointPricingKineticsCellular";
 import { queryClient } from "../../../http/queryClient";
 import type {
   BlindType,
   ProcessTitleType,
-} from "../../../zod/sharePointProjectFile";
+} from "../../../type/sharePointProjectFile";
 import { getPricingScheduleAsync } from "../common";
 import type { TableEntry } from "../../pdfmake/commonFunction";
 

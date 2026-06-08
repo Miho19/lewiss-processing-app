@@ -1,5 +1,5 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/16/solid";
-import type { SharePointRoomType } from "../../../zod/sharePointProjectFile";
+import type { SharePointRoomType } from "../../../type/sharePointProjectFile";
 
 type Props = {
   room: SharePointRoomType;

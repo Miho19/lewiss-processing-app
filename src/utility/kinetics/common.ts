@@ -5,14 +5,14 @@ import type {
   ContentImage,
   ContentStack,
 } from "pdfmake/interfaces";
-import getImageAsBase64 from "../getBase64Image";
+import getImageAsBase64 from "../image/imageUtility";
 import windowWareLogo from "../../asset/Windoware-Logo-1.png";
 import type { TableEntry } from "../pdfmake/commonFunction";
 import type {
   BlindType,
   ProcessTitleType,
-} from "../../zod/sharePointProjectFile";
-import type { PricingScheduleType } from "../../zod/kinetics/common";
+} from "../../type/sharePointProjectFile";
+import type { PricingScheduleType } from "../../type/kinetics/common";
 import GETSharePointPricingSchedule from "../../http/GETSharePointPricingSchedule";
 import { queryClient } from "../../http/queryClient";
 import { getKineticsRollerAdditionalProductArrayAsync } from "./roller/kineticsRollerPricing";

@@ -2,7 +2,7 @@ import {
   getKineticsRollerControlString,
   getKineticsRollerFabricOpacity,
 } from "../../../../../utility/kinetics/roller/kineticsRoller";
-import type { SharePointSpec2Type } from "../../../../../zod/sharePointProjectFile";
+import type { SharePointSpec2Type } from "../../../../../type/sharePointProjectFile";
 
 type Props = {
   spec: SharePointSpec2Type;

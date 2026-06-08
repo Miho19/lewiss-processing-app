@@ -1,4 +1,4 @@
-import type { SharePointSpecType } from "../../../zod/sharePointProjectFile";
+import type { SharePointSpecType } from "../../../type/sharePointProjectFile";
 
 function getKineticsCellularControlString(spec: SharePointSpecType) {
   return typeof spec.motorisation === "undefined" || spec.motorisation === null

@@ -2,7 +2,7 @@ import type {
   ConsultantsType,
   GETSharePointStaffListResponseBody,
   MeasurersType,
-} from "../zod/sharePointStaffList";
+} from "../type/sharePointStaffList";
 
 function GETSharePointStaffListEndpoint() {
   return new URL(

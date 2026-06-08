@@ -1,4 +1,4 @@
-import type { SharePointTreatmentType } from "../../../../zod/sharePointProjectFile";
+import type { SharePointTreatmentType } from "../../../../type/sharePointProjectFile";
 import RoomCardTreatmentFactory from "./factory/RoomCardTreatmentFactory";
 
 type Props = {

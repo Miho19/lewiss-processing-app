@@ -1,4 +1,4 @@
-import type { SharePointProjectFileType } from "../../zod/sharePointProjectFile";
+import type { SharePointProjectFileType } from "../../type/sharePointProjectFile";
 
 type Props = {
   projectFile: SharePointProjectFileType;

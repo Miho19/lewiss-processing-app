@@ -13,7 +13,7 @@ import type {
   SharePointRoomType,
   SharePointSpec2Type,
   SharePointWindowType,
-} from "../../../zod/sharePointProjectFile";
+} from "../../../type/sharePointProjectFile";
 import {
   getRoomAndWindowFromProjectFileByWindowId,
   type WindowMeasurementJoined,

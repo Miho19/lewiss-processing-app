@@ -1,8 +1,8 @@
-import type { BlindType } from "../zod/sharePointProjectFile";
+import type { BlindType } from "../type/sharePointProjectFile";
 import kineticsCellularPricingSchedule from "../../test/utility/kinetics/cellular/kinetics-cellular-pricing-example.json";
-import type { SharePointKineticsCellularPricingType } from "../zod/kinetics/sharePointPricingKineticsCellular";
-import type { SharePointKineticsRollerPricingType } from "../zod/kinetics/sharePointPricingKineticsRoller";
-import type { SharePointJSONFileItemType } from "../zod/sharePointJSONFile";
+import type { SharePointKineticsCellularPricingType } from "../type/kinetics/sharePointPricingKineticsCellular";
+import type { SharePointKineticsRollerPricingType } from "../type/kinetics/sharePointPricingKineticsRoller";
+import type { SharePointJSONFileItemType } from "../type/sharePointJSONFile";
 
 function GETSharePointPricingScheduleEndpoint() {
   return new URL(

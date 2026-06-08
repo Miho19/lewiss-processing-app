@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import type { SharePointFolderItemListType } from "../../zod/sharePointFolder";
+import type { SharePointFolderItemListType } from "../../type/sharePointFolder";
 import {
   displayDate,
   isoUTCOffsetToNZDateTimeObject,

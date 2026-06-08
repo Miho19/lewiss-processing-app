@@ -3,7 +3,7 @@ import type {
   onChangeHandlerProjectFormDataCheckboxParameterType,
   projectFormDataType,
 } from "../../../../../page/ProjectPage";
-import type { SharePointWindowType } from "../../../../../zod/sharePointProjectFile";
+import type { SharePointWindowType } from "../../../../../type/sharePointProjectFile";
 import RoomCardWindowMeasurementControl from "../common/RoomCardWindowMeasurementControl";
 import {
   getWindowBlindCountString,

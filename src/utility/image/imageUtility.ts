@@ -1,4 +1,4 @@
-async function getImageAsBase64(path: string): Promise<string> {
+async function getImageAsBase64Async(path: string): Promise<string> {
   try {
     const fileBlob = await fetchFileBlobAsync(path);
 
@@ -28,4 +28,4 @@ function convertFileToBase64(fileBlob: Blob): Promise<string> {
   });
 }
 
-export default getImageAsBase64;
+export default getImageAsBase64Async;

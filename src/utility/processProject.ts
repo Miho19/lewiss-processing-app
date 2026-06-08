@@ -5,7 +5,7 @@ import type {
   SharePointProjectFileType,
   SharePointRoomType,
   SharePointWindowType,
-} from "../zod/sharePointProjectFile";
+} from "../type/sharePointProjectFile";
 
 export type WindowBlindCountStringType =
   | "single"
