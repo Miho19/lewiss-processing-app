@@ -343,7 +343,7 @@ async function getKineticsRollerBlindCostAsync(
   return fabricCost + controlCost + bottomRailCost + pelmetCost;
 }
 
-// motor options, smartlink, usb + remote
+// smartlink, usb + remote
 
 async function getKineticsRollerAdditionalProductArrayAsync(
   tableEntries: TableEntry[],
@@ -366,6 +366,8 @@ async function getKineticsRollerAdditionalProductArrayAsync(
 
 // its probably better to do this the other way --> loop through entires first to get a list of all operations
 // we just use a map ... 8/06/2026
+//
+
 export function _getKineticsRollerMotorCostProductArray(
   tableEntries: TableEntry[],
   pricingSchedule: SharePointKineticsRollerPricingType,
