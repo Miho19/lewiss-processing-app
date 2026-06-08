@@ -14,7 +14,6 @@ import {
   mapProcessTitleToBlindType,
   type WorksheetCostObjectAdditionalProductType,
 } from "../common";
-import type { KineticsRollerTableEntry } from "./createRollerPDFDocument";
 import { getKineticsRollerFabricOpacity } from "./kineticsRoller";
 
 function getKineticsRollerFabricCost(
@@ -365,13 +364,41 @@ async function getKineticsRollerAdditionalProductArrayAsync(
   return [...motorProducts];
 }
 
+// its probably better to do this the other way --> loop through entires first to get a list of all operations
+// we just use a map ... 8/06/2026
 export function _getKineticsRollerMotorCostProductArray(
   tableEntries: TableEntry[],
   pricingSchedule: SharePointKineticsRollerPricingType,
 ): WorksheetCostObjectAdditionalProductType[] {
-  const validOptions = Object.keys(pricingSchedule.control.motorisation);
+  const motorProducts: WorksheetCostObjectAdditionalProductType[] = Object.keys(
+    pricingSchedule.control.motorisation,
+  ).map((k) => {
+    return { name: k, cost: 0, quantity: 0 };
+  });
 
-  return [];
+  motorProducts.forEach((product) => {
+    const filter = tableEntries.filter(
+      (e) =>
+        e.control.localeCompare(product.name, undefined, {
+          sensitivity: "base",
+        }) === 0,
+    );
+
+    product.quantity = filter.length;
+
+    const motorisationObject =
+      pricingSchedule.control.motorisation[
+        product.name as keyof typeof pricingSchedule.control.motorisation
+      ];
+
+    product.cost = motorisationObject.base;
+  });
+
+  const filteredMotorProducts = motorProducts.filter(
+    (product) => product.quantity > 0,
+  );
+
+  return [...filteredMotorProducts];
 }
 
 export {
