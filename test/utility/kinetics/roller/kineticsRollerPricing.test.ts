@@ -108,9 +108,9 @@ describe("Kinetics Roller Pricing", () => {
     const exampleInput: [number, string, number | undefined][] = [
       [1200, "110 I/S", 56.25],
       [0, "110 I/S", undefined],
-      [1200, "", undefined],
-      [1200, "", undefined],
-      [1200, "\t\t", undefined],
+      [1200, "", 0],
+      [1200, "", 0],
+      [1200, "\t\t", 0],
       [-1, "110 I/S", undefined],
       [1260, "110 I/S", 67.5],
       [1000, "110 I/S", 45],

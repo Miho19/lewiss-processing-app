@@ -191,7 +191,7 @@ function getKineticsRollerPelmetCost(
   pelmet: string,
   pricingSchedule: SharePointKineticsRollerPricingType,
 ): number | undefined {
-  if (width <= 0 || width > 5000) return 0;
+  if (width <= 0 || width > 5000) return undefined;
   if (pelmet === null || pelmet.trim().length === 0) return 0;
 
   const pelmetCostArray = _getKineticsRollerPelmetCostGetPelmetCostArray(
@@ -362,13 +362,15 @@ async function getKineticsRollerAdditionalProductArrayAsync(
 
   if (typeof pricingSchedule === "undefined") return [];
 
-  return [motorProducts];
+  return [...motorProducts];
 }
 
-function _getKineticsRollerMotorCostProductArray(
+export function _getKineticsRollerMotorCostProductArray(
   tableEntries: TableEntry[],
   pricingSchedule: SharePointKineticsRollerPricingType,
 ): WorksheetCostObjectAdditionalProductType[] {
+  const validOptions = Object.keys(pricingSchedule.control.motorisation);
+
   return [];
 }
 
