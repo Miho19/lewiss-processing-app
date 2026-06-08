@@ -28,6 +28,7 @@ import {
   getRemoteAndChannel,
 } from "../common";
 import { getKineticsRollerControlString } from "./kineticsRoller";
+import { getKineticsRollerBlindCostAsync } from "./kineticsRollerPricing";
 
 async function createRollerBlindDocument(
   projectFile: SharePointProjectFileType,
@@ -246,14 +247,18 @@ async function getNewEntryKineticsRollerBlind(
 
   const roll = spec.rollDirection.replace("Roll", "");
 
-  const fabric = spec.fabric?.name ?? "Missing Fabric";
+  const fabric = spec.fabric?.name ?? "";
+  const fabricMultiplier = spec.fabric?.multiplier ?? 0;
 
   const controlString = getKineticsRollerControlString(spec);
   const controlLength = projectWindow.controlLength;
 
   const controlOutputString = `${controlString} ${controlString.toLowerCase().includes("chain") && controlLength + `mm`}`;
 
-  const bottomRail = `${spec.bottomRailType} - ${spec.bottomRailColour}`;
+  const bottomRailType = spec.bottomRailType;
+  const bottomRailColour = spec.bottomRailColour;
+
+  const bottomRail = `${bottomRailType} - ${bottomRailColour}`;
   const controlSide = projectWindow.controlSide;
 
   const bracket = `${spec.bracketColour}`;
@@ -264,6 +269,20 @@ async function getNewEntryKineticsRollerBlind(
     location,
     controlString,
     entries,
+  );
+
+  const blindType = windowJoined.treatment.spec.blindType;
+
+  const price = await getKineticsRollerBlindCostAsync(
+    width,
+    height,
+    fabricMultiplier,
+    controlString,
+    controlLength,
+    bottomRailType,
+    bottomRailColour,
+    pelmet,
+    blindType,
   );
 
   const newEntry: KineticsRollerTableEntry = {
@@ -279,10 +298,10 @@ async function getNewEntryKineticsRollerBlind(
     "bottom rail": bottomRail,
     bracket: bracket,
     pelmet: pelmet,
-    butting: " ",
+    butting: "No",
     remote: remote,
     "remote channel": channel,
-    price: " ",
+    price: price.toFixed(2),
   };
 
   return newEntry;

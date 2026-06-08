@@ -1,16 +1,17 @@
-import GETSharePointPricingSchedule from "../../../http/GETSharePointPricingSchedule";
-import { queryClient } from "../../../http/queryClient";
 import type {
-  PelmetPricing,
+  KineticsRollerFabricOpacityType,
   PerMCost,
   SharePointKineticsRollerPricingType,
 } from "../../../zod/kinetics/sharePointPricingKineticsRoller";
+import type { BlindType } from "../../../zod/sharePointProjectFile";
 import { roundMeasurementUp } from "../cellular/kineticsCellularPricing";
+import { getPricingScheduleAsync } from "../common";
+import { getKineticsRollerFabricOpacity } from "./kineticsRoller";
 
 function getKineticsRollerFabricCost(
   width: number,
   height: number,
-  opacity: string,
+  opacity: KineticsRollerFabricOpacityType,
   fabricMultiplier: number,
   pricingSchedule: SharePointKineticsRollerPricingType,
 ): number | undefined {
@@ -182,8 +183,8 @@ function getKineticsRollerPelmetCost(
   pelmet: string,
   pricingSchedule: SharePointKineticsRollerPricingType,
 ): number | undefined {
-  if (width <= 0 || width > 5000) return undefined;
-  if (pelmet.trim().length === 0) return undefined;
+  if (width <= 0 || width > 5000) return 0;
+  if (pelmet === null || pelmet.trim().length === 0) return 0;
 
   const pelmetCostArray = _getKineticsRollerPelmetCostGetPelmetCostArray(
     pelmet,
@@ -284,17 +285,59 @@ function _getKineticsRollerPelmetCostGetWidthIndex(
 async function getKineticsRollerBlindCostAsync(
   width: number,
   height: number,
-  opacity: string,
   fabricMultiplier: number,
   control: string,
   controlLength: string,
   bottomRailType: string,
   bottomRailColour: string,
   pelmet: string,
+  blindType: BlindType,
 ): Promise<number> {
-  /// get schedule first
+  const pricingSchedule = (await getPricingScheduleAsync(
+    blindType,
+  )) as SharePointKineticsRollerPricingType;
+  if (typeof pricingSchedule === "undefined") return 0;
 
-  return 0;
+  const opacity = getKineticsRollerFabricOpacity(blindType);
+  if (typeof opacity === "undefined") return 0;
+
+  // instead of returning zero here, we can display errors to the user in the future
+  const fabricCost = getKineticsRollerFabricCost(
+    width,
+    height,
+    opacity,
+    fabricMultiplier,
+    pricingSchedule,
+  );
+  if (typeof fabricCost === "undefined") return 0;
+
+  const controlCost = getKineticsRollerControlCost(
+    control,
+    controlLength,
+    pricingSchedule,
+  );
+  if (typeof controlCost === "undefined") return 0;
+
+  const bottomRailCost = getKineticsRollerBottomRailCost(
+    width,
+    bottomRailType,
+    bottomRailColour,
+    pricingSchedule,
+  );
+  if (typeof bottomRailCost === "undefined") return 0;
+
+  const pelmetCost = getKineticsRollerPelmetCost(
+    width,
+    pelmet,
+    pricingSchedule,
+  );
+  if (typeof pelmetCost === "undefined") return 0;
+
+  console.log(
+    `fabric: ${fabricCost} control: ${controlCost} bottomrail: ${bottomRailCost} pelmet: ${pelmetCost}`,
+  );
+
+  return fabricCost + controlCost + bottomRailCost + pelmetCost;
 }
 
 export {

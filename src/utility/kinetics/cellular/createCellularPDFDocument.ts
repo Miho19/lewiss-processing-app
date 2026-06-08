@@ -179,6 +179,8 @@ async function getNewEntryKineticsCellularBlindAsync(
     windowJoined.treatment.spec as SharePointSpecType,
   );
 
+  const blindType = windowJoined.treatment.spec.blindType;
+
   const costOfBlind = await getKineticsCellularBlindCostAsync(
     width,
     height,
@@ -186,6 +188,7 @@ async function getNewEntryKineticsCellularBlindAsync(
     control,
     headrailColour,
     sideChannelColour,
+    blindType,
   );
 
   const newEntry: KineticsCellularTableEntry = {

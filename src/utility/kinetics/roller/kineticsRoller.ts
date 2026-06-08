@@ -1,4 +1,8 @@
-import type { SharePointSpec2Type } from "../../../zod/sharePointProjectFile";
+import type { KineticsRollerFabricOpacityType } from "../../../zod/kinetics/sharePointPricingKineticsRoller";
+import type {
+  BlindType,
+  SharePointSpec2Type,
+} from "../../../zod/sharePointProjectFile";
 
 function getKineticsRollerControlString(spec: SharePointSpec2Type) {
   const chainColour = spec.chainColour;
@@ -14,4 +18,19 @@ function getKineticsRollerControlString(spec: SharePointSpec2Type) {
   return spec.motorisation;
 }
 
-export { getKineticsRollerControlString };
+function getKineticsRollerFabricOpacity(
+  blindType: BlindType,
+): KineticsRollerFabricOpacityType | undefined {
+  switch (blindType) {
+    case "Kinetics Blockout Roller Blind":
+      return "blockout";
+    case "Kinetics Light Filtering Roller Blind":
+      return "light-filtering";
+    case "Kinetics Sunscreen Roller Blind":
+      return "sunscreen";
+    default:
+      return undefined;
+  }
+}
+
+export { getKineticsRollerControlString, getKineticsRollerFabricOpacity };

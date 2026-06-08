@@ -2,6 +2,7 @@ import type { BlindType } from "../zod/sharePointProjectFile";
 import kineticsCellularPricingSchedule from "../../test/utility/kinetics/cellular/kinetics-cellular-pricing-example.json";
 import type { SharePointKineticsCellularPricingType } from "../zod/kinetics/sharePointPricingKineticsCellular";
 import type { SharePointKineticsRollerPricingType } from "../zod/kinetics/sharePointPricingKineticsRoller";
+import type { SharePointJSONFileItemType } from "../zod/sharePointJSONFile";
 
 function GETSharePointPricingScheduleEndpoint() {
   return new URL(
@@ -51,10 +52,19 @@ export async function GETSharePointPricingSchedule(
     if (typeof sharePointItemId === "undefined")
       throw new Error(`Could not fetch pricing schedule for ${blindType}`);
 
-    return kineticsCellularPricingSchedule;
+    const fetchOptions = GETSharePointJSONFileFetchOptions(sharePointItemId);
+
+    const response: Response = await fetch(endpoint, fetchOptions);
+    if (!response.ok) throw new Error("Unexpected server response");
+    const jsonBody: SharePointJSONFileItemType = await response.json();
+
+    const jsonContent = JSON.parse(jsonBody.content);
+
+    // we are going to use ZOD here
+    return jsonContent;
   } catch (error) {
     if (error instanceof Error) console.error(error.message);
-    throw new Error("Failed to fetch staff folder", { cause: error });
+    throw new Error("Failed to fetch pricing schedule", { cause: error });
   }
 }
 

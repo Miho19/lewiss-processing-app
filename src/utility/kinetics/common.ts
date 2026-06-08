@@ -140,14 +140,12 @@ export async function getPricingScheduleAsync(
 ): Promise<PricingScheduleType | undefined> {
   try {
     const pricingSchedule = await queryClient.ensureQueryData({
-      queryKey: ["kinetics cellular pricing schedule"],
+      queryKey: [`pricing schedule ${blindType}`],
       queryFn: () => GETSharePointPricingSchedule(blindType),
     });
     return pricingSchedule;
   } catch (error) {
-    console.error(
-      "Failed to fetch kinetics cellular pricing schedule: " + error,
-    );
+    console.error(`Failed to fetch ${blindType} pricing schedule ${error}`);
 
     return undefined;
   }
