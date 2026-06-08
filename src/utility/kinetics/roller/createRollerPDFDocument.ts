@@ -1,5 +1,8 @@
 import type {
+  Column,
   Content,
+  ContentColumns,
+  ContentStack,
   ContentText,
   TDocumentDefinitions,
 } from "pdfmake/interfaces";
@@ -18,6 +21,7 @@ import {
 import { createDocument } from "../../pdfmake/pdfmake";
 
 import {
+  createBlindSubTotalCostColumn,
   createTable,
   generateTableEntryList,
 } from "../../pdfmake/commonFunction";
@@ -26,6 +30,8 @@ import {
   createWindowWareHeader,
   getBlindIndex,
   getRemoteAndChannel,
+  getWorksheetCostObjectAsync,
+  type WorksheetCostObjectType,
 } from "../common";
 import { getKineticsRollerControlString } from "./kineticsRoller";
 import { getKineticsRollerBlindCostAsync } from "./kineticsRollerPricing";
@@ -55,12 +61,21 @@ async function createRollerBlindDocument(
 
   content.push(customerInformation);
 
-  const blindInformation = await createBlindInformationTable(
-    projectFile,
-    windowJoined,
-  );
+  const kineticsRollerEntries: KineticsRollerTableEntry[] =
+    await generateKineticsRollerTableEntriesAsync(projectFile, windowJoined);
+
+  const blindInformation = createBlindInformationTable(kineticsRollerEntries);
 
   content.push(blindInformation);
+
+  const kineticsRollerWorksheetCostObject = await getWorksheetCostObjectAsync(
+    kineticsRollerEntries,
+    processTitle,
+  );
+
+  const costTotal = createCostTotalColumn(kineticsRollerWorksheetCostObject);
+
+  content.push(costTotal);
 
   document.content = [...content];
 
@@ -307,7 +322,7 @@ async function getNewEntryKineticsRollerBlind(
   return newEntry;
 }
 
-async function generateKineticsRollerTableEntries(
+async function generateKineticsRollerTableEntriesAsync(
   projectFile: SharePointProjectFileType,
   windowJoined: WindowMeasurementJoined[],
 ): Promise<KineticsRollerTableEntry[]> {
@@ -337,13 +352,9 @@ async function generateKineticsRollerTableEntries(
   return entries;
 }
 
-async function createBlindInformationTable(
-  projectFile: SharePointProjectFileType,
-  windowJoined: WindowMeasurementJoined[],
+function createBlindInformationTable(
+  kineticsRollerEntries: KineticsRollerTableEntry[],
 ) {
-  const kineticsRollerEntries: KineticsRollerTableEntry[] =
-    await generateKineticsRollerTableEntries(projectFile, windowJoined);
-
   const tableEntries = generateTableEntryList(kineticsRollerEntries);
 
   const table = createTable(defaultKineticsRollerTableEntry);
@@ -351,6 +362,41 @@ async function createBlindInformationTable(
   table.table.body.push(...tableEntries);
 
   return table;
+}
+
+/**
+ *
+ * @param kineticsRollerEntries
+ *
+ * @returns
+ *
+ *
+ * blind subtotal
+ * Lithium / hardwired smart home / hardwired WiFi Remote Control
+ * usb charger
+ * usb remote
+ * smartlink
+ *
+ *
+ */
+function createCostTotalColumn(
+  worksheetCostObject: WorksheetCostObjectType,
+): Column[] {
+  const blindSubtotalColumn =
+    createBlindSubTotalCostColumn(worksheetCostObject);
+
+  const stack: Content[] = [blindSubtotalColumn];
+
+  const content: Content[] = [
+    {
+      columns: [
+        { width: "*", text: " " },
+        { width: "auto", stack: stack },
+      ],
+    },
+  ];
+
+  return content;
 }
 
 export {

@@ -1,4 +1,7 @@
-import { getKineticsRollerControlString } from "../../../../../utility/kinetics/roller/kineticsRoller";
+import {
+  getKineticsRollerControlString,
+  getKineticsRollerFabricOpacity,
+} from "../../../../../utility/kinetics/roller/kineticsRoller";
 import type { SharePointSpec2Type } from "../../../../../zod/sharePointProjectFile";
 
 type Props = {
@@ -13,10 +16,19 @@ function RoomCardTreatmentKineticsRoller(props: Props) {
   if (typeof spec.fabric === "undefined" || spec.fabric === null)
     return <p>Fabric information is missing</p>;
 
+  let fabricOpacity = getKineticsRollerFabricOpacity(spec.blindType);
+  if (typeof fabricOpacity === "undefined")
+    return <p>Fabric information is missing</p>;
+
+  fabricOpacity =
+    fabricOpacity?.charAt(0).toUpperCase() + fabricOpacity.slice(1);
+
+  const fabric = `${spec.fabric.name} - ${fabricOpacity}`;
+
   return (
     <div className="grid grid-cols-[160px_1fr] gap-x-4 gap-y-4 align-middle">
       <span className="text-sm text-gray-500">Fabric</span>
-      <span className="">{spec.fabric.name}</span>
+      <span className="">{fabric}</span>
 
       <span className="text-sm text-gray-500">Roll</span>
       <span className="">{spec.rollDirection}</span>

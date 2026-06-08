@@ -6,7 +6,7 @@ import type {
 
 function getKineticsRollerControlString(spec: SharePointSpec2Type) {
   const chainColour = spec.chainColour;
-  const chainOutputString = `Chain - ${chainColour}`;
+  const chainOutputString = `Chain FastRise - ${chainColour}`;
 
   if (typeof spec.motorisation === "undefined" || spec.motorisation === null)
     return chainOutputString;

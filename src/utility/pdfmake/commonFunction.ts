@@ -1,7 +1,8 @@
 import type { Content } from "pdfmake";
 import type { KineticsCellularTableEntry } from "../kinetics/cellular/createCellularPDFDocument";
-import type { ContentTable } from "pdfmake/interfaces";
+import type { Column, ContentTable } from "pdfmake/interfaces";
 import type { KineticsRollerTableEntry } from "../kinetics/roller/createRollerPDFDocument";
+import type { WorksheetCostObjectType } from "../kinetics/common";
 
 export type TableEntry = KineticsCellularTableEntry | KineticsRollerTableEntry;
 
@@ -58,6 +59,7 @@ function createTable(tableEntry: TableEntry): ContentTable {
         return 1;
       },
     },
+    marginBottom: 14,
   };
 
   return table;
@@ -89,6 +91,32 @@ function generateTableEntryList(tableEntry: TableEntry[]): Content[][] {
   });
 
   return entries;
+}
+
+export function createBlindSubTotalCostColumn(
+  worksheetCostObject: WorksheetCostObjectType,
+): Content {
+  const blindSubtotalText: Column = {
+    text: "Blind Subtotal",
+    width: "auto",
+    alignment: "left",
+    noWrap: true,
+  };
+
+  const blindSubtotalCost = worksheetCostObject.blindSubTotal;
+
+  const costText: Column = {
+    text: blindSubtotalCost.toFixed(2),
+    width: "*",
+    alignment: "right",
+    noWrap: true,
+  };
+
+  const column = {
+    columns: [blindSubtotalText, { text: " ", width: "*" }, costText],
+  };
+
+  return column;
 }
 
 export { createTable, generateTableEntryList };

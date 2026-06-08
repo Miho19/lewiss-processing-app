@@ -3,9 +3,18 @@ import type {
   PerMCost,
   SharePointKineticsRollerPricingType,
 } from "../../../zod/kinetics/sharePointPricingKineticsRoller";
-import type { BlindType } from "../../../zod/sharePointProjectFile";
+import type {
+  BlindType,
+  ProcessTitleType,
+} from "../../../zod/sharePointProjectFile";
+import type { TableEntry } from "../../pdfmake/commonFunction";
 import { roundMeasurementUp } from "../cellular/kineticsCellularPricing";
-import { getPricingScheduleAsync } from "../common";
+import {
+  getPricingScheduleAsync,
+  mapProcessTitleToBlindType,
+  type WorksheetCostObjectAdditionalProductType,
+} from "../common";
+import type { KineticsRollerTableEntry } from "./createRollerPDFDocument";
 import { getKineticsRollerFabricOpacity } from "./kineticsRoller";
 
 function getKineticsRollerFabricCost(
@@ -90,7 +99,6 @@ function _getKineticsRollerCostChain(
 
 function _getKineticsRollerCostMotorisation(
   control: string,
-
   pricingSchedule: SharePointKineticsRollerPricingType,
 ): number | undefined {
   const validOptions = Object.keys(pricingSchedule.control.motorisation);
@@ -333,11 +341,35 @@ async function getKineticsRollerBlindCostAsync(
   );
   if (typeof pelmetCost === "undefined") return 0;
 
-  console.log(
-    `fabric: ${fabricCost} control: ${controlCost} bottomrail: ${bottomRailCost} pelmet: ${pelmetCost}`,
-  );
-
   return fabricCost + controlCost + bottomRailCost + pelmetCost;
+}
+
+// motor options, smartlink, usb + remote
+
+async function getKineticsRollerAdditionalProductArrayAsync(
+  tableEntries: TableEntry[],
+  processTitle: ProcessTitleType,
+): Promise<WorksheetCostObjectAdditionalProductType[]> {
+  const blindType = mapProcessTitleToBlindType(processTitle);
+  if (typeof blindType === "undefined") return [];
+
+  const pricingSchedule = (await getPricingScheduleAsync(
+    blindType,
+  )) as SharePointKineticsRollerPricingType;
+
+  const motorProducts: WorksheetCostObjectAdditionalProductType[] =
+    _getKineticsRollerMotorCostProductArray(tableEntries, pricingSchedule);
+
+  if (typeof pricingSchedule === "undefined") return [];
+
+  return [motorProducts];
+}
+
+function _getKineticsRollerMotorCostProductArray(
+  tableEntries: TableEntry[],
+  pricingSchedule: SharePointKineticsRollerPricingType,
+): WorksheetCostObjectAdditionalProductType[] {
+  return [];
 }
 
 export {
@@ -346,4 +378,5 @@ export {
   getKineticsRollerBottomRailCost,
   getKineticsRollerPelmetCost,
   getKineticsRollerBlindCostAsync,
+  getKineticsRollerAdditionalProductArrayAsync,
 };

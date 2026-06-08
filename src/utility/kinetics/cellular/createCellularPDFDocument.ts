@@ -99,7 +99,7 @@ export type KineticsCellularTableEntry = {
   butting: string;
   remote: number;
   "remote channel": number;
-  price: number;
+  price: string;
 };
 
 const defaultKineticsCellularTableEntry: KineticsCellularTableEntry = {
@@ -117,7 +117,7 @@ const defaultKineticsCellularTableEntry: KineticsCellularTableEntry = {
   butting: "",
   remote: 0,
   "remote channel": 0,
-  price: 0,
+  price: "",
 };
 
 function getCombSize(window: WindowMeasurementJoined) {
@@ -206,7 +206,7 @@ async function getNewEntryKineticsCellularBlindAsync(
     butting: buttingString,
     remote: remote,
     "remote channel": channel,
-    price: costOfBlind,
+    price: costOfBlind.toFixed(2),
   };
 
   return newEntry;

@@ -8,10 +8,15 @@ import type {
 import getImageAsBase64 from "../getBase64Image";
 import windowWareLogo from "../../asset/Windoware-Logo-1.png";
 import type { TableEntry } from "../pdfmake/commonFunction";
-import type { BlindType } from "../../zod/sharePointProjectFile";
+import type {
+  BlindType,
+  ProcessTitleType,
+} from "../../zod/sharePointProjectFile";
 import type { PricingScheduleType } from "../../zod/kinetics/common";
 import GETSharePointPricingSchedule from "../../http/GETSharePointPricingSchedule";
 import { queryClient } from "../../http/queryClient";
+import { getKineticsRollerAdditionalProductArrayAsync } from "./roller/kineticsRollerPricing";
+import { getKineticsCellularAdditionalProductArrayAsync } from "./cellular/kineticsCellularPricing";
 
 export function createCustomerInformation(
   name: string,
@@ -148,5 +153,111 @@ export async function getPricingScheduleAsync(
     console.error(`Failed to fetch ${blindType} pricing schedule ${error}`);
 
     return undefined;
+  }
+}
+
+export type WorksheetCostObjectAdditionalProductType = {
+  name: string;
+  cost: number;
+  quantity: number;
+};
+
+export type WorksheetCostObjectType = {
+  blindSubTotal: number;
+  additional: WorksheetCostObjectAdditionalProductType[];
+  gst: number;
+  total: number;
+};
+
+export async function getWorksheetCostObjectAsync(
+  tableEntries: TableEntry[],
+  processTitle: ProcessTitleType,
+): Promise<WorksheetCostObjectType> {
+  const blindSubTotal = getBlindSubTotal(tableEntries);
+
+  const additionalArray = await getAdditionalProductArray(
+    tableEntries,
+    processTitle,
+  );
+
+  const gst = getGST(blindSubTotal, additionalArray);
+
+  const total = getTotal(blindSubTotal, additionalArray, gst);
+
+  const costObjcet: WorksheetCostObjectType = {
+    blindSubTotal: blindSubTotal,
+    additional: [...additionalArray],
+    gst: gst,
+    total: total,
+  };
+
+  return costObjcet;
+}
+
+function getBlindSubTotal(tableEntries: TableEntry[]): number {
+  try {
+    const blindSubTotal = tableEntries.reduce(
+      (acc, entry) => parseInt(entry.price) + acc,
+      0,
+    );
+    return blindSubTotal;
+  } catch {
+    return 0;
+  }
+}
+
+// potential to just use record <processTitle, func>
+async function getAdditionalProductArray(
+  tableEntries: TableEntry[],
+  processTitle: ProcessTitleType,
+): Promise<WorksheetCostObjectAdditionalProductType[]> {
+  switch (processTitle) {
+    case "blockout-roller":
+    case "light-filtering-roller":
+    case "sunscreen-roller":
+      return await getKineticsRollerAdditionalProductArrayAsync(
+        tableEntries,
+        processTitle,
+      );
+    case "cellular-blind":
+      return await getKineticsCellularAdditionalProductArrayAsync(
+        tableEntries,
+        processTitle,
+      );
+    default:
+      return [];
+  }
+}
+
+function getGST(
+  blindSubTotal: number,
+  additionalProductArray: WorksheetCostObjectAdditionalProductType[],
+): number {
+  return 0;
+}
+
+function getTotal(
+  blindSubTotal: number,
+  additionalProductArray: WorksheetCostObjectAdditionalProductType[],
+  gst: number,
+): number {
+  return 0;
+}
+
+// top level common function, all products are likely to use this...
+export function mapProcessTitleToBlindType(
+  processTitle: ProcessTitleType,
+): BlindType | undefined {
+  switch (processTitle) {
+    case "blockout-roller":
+      return "Kinetics Blockout Roller Blind";
+    case "light-filtering-roller":
+      return "Kinetics Light Filtering Roller Blind";
+    case "sunscreen-roller":
+      return "Kinetics Sunscreen Roller Blind";
+    case "cellular-blind":
+      return "Kinetics 10mm Cellular Blind";
+    default:
+      return undefined;
   }
 }
