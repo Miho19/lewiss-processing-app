@@ -1,17 +1,17 @@
 import type { TDocumentDefinitions } from "pdfmake/interfaces";
-import type { ProductId } from "../sharePoint/project/productType";
-import type { ProjectFile } from "../sharePoint/project/projectType";
-import type { WindowMeasurementProcessed } from "./windowMeasurementType";
+import type { ProductId } from "./productType";
+import type { WindowSelectDetailed } from "./windowSelectType";
+import type { ProjectFile } from "../sharePoint/project/projectFileType";
 
 export type SharePointProductIdToWindowMeasurementJoinedRecordType = Record<
   ProductId,
-  WindowMeasurementProcessed[]
+  WindowSelectDetailed[]
 >;
 
 export type ProductIdToCreatePDFDocumentFunction = Record<
   ProductId,
   (
     projectFile: ProjectFile,
-    windows: WindowMeasurementProcessed[],
+    windowList: WindowSelectDetailed[],
   ) => Promise<TDocumentDefinitions[]>
 >;

@@ -2,7 +2,7 @@ import type {
   KineticsRollerFabricOpacityType,
   PerMCost,
   SharePointKineticsRollerPricingType,
-} from "../../../type/kinetics/sharePointPricingKineticsRoller";
+} from "../../../type/kinetics/kineticsRollerType";
 import type {
   BlindType,
   ProcessTitleType,

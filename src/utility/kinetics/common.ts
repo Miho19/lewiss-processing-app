@@ -12,7 +12,7 @@ import type {
   BlindType,
   ProcessTitleType,
 } from "../../type/sharePointProjectFile";
-import type { PricingScheduleType } from "../../type/kinetics/common";
+import type { PricingScheduleType } from "../../type/kinetics/kineticsType";
 import GETSharePointPricingSchedule from "../../http/GETSharePointPricingSchedule";
 import { queryClient } from "../../http/queryClient";
 import { getKineticsRollerAdditionalProductArrayAsync } from "./roller/kineticsRollerPricing";

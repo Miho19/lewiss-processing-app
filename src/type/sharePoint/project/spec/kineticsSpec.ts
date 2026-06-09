@@ -1,5 +1,5 @@
-import type { BlindType } from "../productType";
-import type { Fabric } from "../projectType";
+import type { BlindType } from "../../../process/productType";
+import type { Fabric } from "../projectFileType";
 
 export type KineticsRollerSpec = {
   blindType: BlindType;

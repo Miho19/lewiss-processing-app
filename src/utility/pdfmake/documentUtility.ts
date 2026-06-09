@@ -2,8 +2,8 @@ import type {
   TDocumentDefinitions,
   TDocumentInformation,
 } from "pdfmake/interfaces";
-import type { ProcessName } from "../../type/sharePoint/project/productType";
-import type { ProjectFile } from "../../type/sharePoint/project/projectType";
+import type { ProcessName } from "../../type/process/productType";
+import type { ProjectFile } from "../../type/sharePoint/project/projectFileType";
 
 export function createDocument(
   projectFile: ProjectFile,

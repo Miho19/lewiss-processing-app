@@ -1,5 +1,5 @@
-import type { SharePointFolderListItem } from "../../type/sharePoint/folderType";
-import type { ProjectFileName } from "../../type/sharePoint/projectFileType";
+import type { SharePointFolderListItem } from "../../type/sharePoint/folder/folderType";
+import type { ProjectFileName } from "../../type/sharePoint/project/projectFileType";
 
 export function filterFolderItemList(
   folderItemList: SharePointFolderListItem[],

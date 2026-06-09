@@ -1,4 +1,4 @@
-import type { KineticsRollerFabricOpacityType } from "../../../type/kinetics/sharePointPricingKineticsRoller";
+import type { KineticsRollerFabricOpacityType } from "../../../type/kinetics/kineticsRollerType";
 import type {
   BlindType,
   SharePointSpec2Type,

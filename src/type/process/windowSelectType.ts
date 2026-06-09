@@ -1,11 +1,11 @@
 import type {
   InsideLayer,
   OutsideLayer,
-} from "../sharePoint/project/projectType";
+} from "../sharePoint/project/projectFileType";
 
 export type Fit = "inside" | "outside";
 
-export type WindowMeasurement = {
+export type WindowSelect = {
   id: string;
   roomId: string;
   fit: Fit;
@@ -14,7 +14,7 @@ export type WindowMeasurement = {
 
 export type BlindCount = "single" | "dual" | "butting" | "invalid";
 
-export type WindowMeasurementProcessed = {
+export type WindowSelectDetailed = {
   windowId: string;
   roomId: string;
   blindCountString: BlindCount;

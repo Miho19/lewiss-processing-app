@@ -1,10 +1,10 @@
-export type SharePointKineticsRollerPricingType = {
+export type KineticsRollerPricingSchedule = {
   productId: string;
   control: Control;
   bottomRail: BottomRail;
   bracket: Bracket;
   pelmet: Pelmet;
-  fabric: FabricPricingType;
+  fabric: FabricCost;
 };
 
 type Control = {
@@ -53,7 +53,7 @@ export type PelmetPricing = {
   outside: number[];
 };
 
-type FabricPricingType = {
+type FabricCost = {
   opacity: string[];
   blindType: string[];
   heightHeader: number[];

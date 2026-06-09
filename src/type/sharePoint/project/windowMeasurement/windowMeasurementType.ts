@@ -1,4 +1,4 @@
-export type WindowDetail = {
+export type WindowMeasurement = {
   id: string;
   number: number;
   name: string;

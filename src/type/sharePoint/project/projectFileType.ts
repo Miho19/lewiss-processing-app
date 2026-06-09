@@ -1,6 +1,12 @@
-import type { ProductId } from "./productType";
+import type { ProductId } from "../../process/productType";
 import type { Spec } from "./spec/spec";
-import type { WindowDetail } from "./windowDetail.ts/windowDetail";
+import type { WindowMeasurement } from "./windowMeasurement/windowMeasurementType";
+
+export type ProjectFileName = {
+  surname: string;
+  reference: string;
+  date: string;
+};
 
 export type ProjectFile = {
   id: number;
@@ -64,7 +70,7 @@ export type Room = {
   createdAt: string;
   brief: Brief;
   treatment: Treatment;
-  windows: WindowDetail[];
+  windows: WindowMeasurement[];
   curtains: string[] | null;
 };
 

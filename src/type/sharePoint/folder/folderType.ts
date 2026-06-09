@@ -11,3 +11,8 @@ export type GETSharePointFolderResponse = {
   ok: boolean;
   children: SharePointFolderListItem[];
 };
+
+export type SharePointJSONFileItemType = {
+  ok: boolean;
+  content: string;
+};

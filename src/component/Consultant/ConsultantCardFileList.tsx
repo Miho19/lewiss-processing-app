@@ -1,5 +1,5 @@
 import useSharePointFolderQuery from "../../hook/useSharePointFolderQuery";
-import type { ConsultantFolder } from "../../type/sharePoint/consultantType";
+import type { ConsultantFolder } from "../../type/sharePoint/consultant/consultantType";
 import { filterFolderItemList } from "../../utility/sharePoint/folderUtility";
 import Loading from "../Loading/Loading";
 import ConsultantCardFileListElement from "./ConsultantCardFileListElement";

@@ -1,8 +1,5 @@
-import type {
-  BlindCount,
-  Fit,
-} from "../../../type/process/windowMeasurementType";
-import type { WindowDetail } from "../../../type/sharePoint/project/windowDetail.ts/windowDetail";
+import type { BlindCount, Fit } from "../../../type/process/windowSelectType";
+import type { WindowDetail } from "../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
 
 export function getWindowBlindCountString(
   blindCount: string | number,

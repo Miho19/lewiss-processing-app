@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import type { SharePointFolderListItem } from "../../type/sharePoint/folderType";
+import type { SharePointFolderListItem } from "../../type/sharePoint/folder/folderType";
 import { destructureProjectFileName } from "../../utility/sharePoint/folderUtility";
 import {
   displayDate,

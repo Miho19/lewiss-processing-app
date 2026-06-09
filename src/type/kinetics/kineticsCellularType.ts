@@ -1,11 +1,11 @@
-export type SharePointKineticsCellularPricingType = {
+export type KineticsCellularPricingSchedule = {
   productId: string;
   blockoutMultiplier: number;
   sideChannelCustomColourSurcharge: number;
   sideChannelCostPerMetreHeight: number;
   headRailCustomColourSurcharge: number;
   control: Control;
-  fabric: FabricPricingType;
+  fabric: FabricCost;
 };
 
 type Control = {
@@ -19,7 +19,7 @@ type Motorisation = {
 
 type ControlBase = { base: number; id: string };
 
-type FabricPricingType = {
+type FabricCost = {
   opacity: string[];
   blindType: string[];
   heightHeader: number[];

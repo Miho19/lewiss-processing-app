@@ -1,3 +1,7 @@
+export type ConsultantFolder = {
+  folderId: string;
+} & Consultant;
+
 export type Consultant = {
   name: string;
   email: string;
