@@ -1,5 +1,5 @@
 import type { Content } from "pdfmake";
-import type { TableEntry } from "../../type/process/pdfType";
+
 import type {
   Column,
   ContentColumns,
@@ -7,6 +7,7 @@ import type {
   ContentTable,
 } from "pdfmake/interfaces";
 import type { WorksheetCost } from "../../type/process/worksheetType";
+import type { TableEntry } from "../../type/process/tableEntry/tableEntryType";
 
 export function convertTableEntryToStringArray(tableEntry: TableEntry) {
   return Object.keys(tableEntry).map((column) => {
@@ -66,8 +67,10 @@ export function createTable(tableEntry: TableEntry): ContentTable {
   return table;
 }
 
-export function generateTableEntryList(tableEntry: TableEntry[]): Content[][] {
-  const entries: Content[][] = tableEntry.map((entry) => {
+export function createBlindTableTextData(
+  tableEntryList: TableEntry[],
+): Content[][] {
+  const entries: Content[][] = tableEntryList.map((entry) => {
     return Object.values(entry).map((value) => {
       let adjustedValue: string | number;
 

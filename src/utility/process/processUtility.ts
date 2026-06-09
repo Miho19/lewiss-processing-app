@@ -1,6 +1,7 @@
 import type { TDocumentDefinitions } from "pdfmake/interfaces";
 import type {
   ProcessGroupToWindowSelectDetailed,
+  ProcessName,
   ProductIdToCreatePDFDocumentFunction,
 } from "../../type/process/processType";
 import type {
@@ -8,22 +9,16 @@ import type {
   WindowSelectDetailed,
 } from "../../type/process/windowSelectType";
 import type { SharePointProjectFile } from "../../type/sharePoint/project/projectFileType";
-import createCellularBlindDocument from "../kinetics/cellular/process/createCellularPDFDocument";
-import {
-  createBlockoutRollerBlindDocument,
-  createSunscreenRollerBlindDocument,
-} from "../kinetics/roller/process/createRollerPDFDocument";
+import createCellularBlindDocument from "../kinetics/cellular/process/createCellularBlindDocument";
+import { createBlockoutRollerBlindDocumentAsync } from "../kinetics/roller/process/createBlockoutRollerPDFDocument";
 import { getRoomAndWindowMeasurement } from "../sharePoint/projectFileUtility";
 import {
   getWindowBlindCountString,
   getWindowHeight,
   getWindowWidth,
 } from "../sharePoint/windowMeasurementUtility";
-import type {
-  BlindType,
-  ProcessName,
-  ProductId,
-} from "../../type/process/productType";
+import type { BlindType, ProductId } from "../../type/process/productType";
+import { createSunscreenRollerBlindDocumentAsync } from "../kinetics/roller/process/createSunscreenPDFDocument";
 
 /**
  *  Maybe use a generic pdf array return type --> makes testing easier, currently very badly coupled
@@ -147,8 +142,8 @@ function getWindowSelectDetailedList(
 export const sharePointProductIdToProcessTypeRecord: ProductIdToCreatePDFDocumentFunction =
   {
     "cellular-blind": createCellularBlindDocument,
-    "sunscreen-roller": createSunscreenRollerBlindDocument,
-    "blockout-roller": createBlockoutRollerBlindDocument,
+    "sunscreen-roller": createSunscreenRollerBlindDocumentAsync,
+    "blockout-roller": createBlockoutRollerBlindDocumentAsync,
   };
 
 //   "Kinetics Sunscreen Roller Blind"             → "Sunscreen Roller"
@@ -162,7 +157,7 @@ export const sharePointProductIdToProcessTypeRecord: ProductIdToCreatePDFDocumen
 //   "Santa Fe Normandy Shutter"                   → "Normandy Shutter"
 //   "Santa Fe Waterproof Woodlore Plus Shutter"   → "Waterproof Woodlore Plus Shutter"
 
-export function mapProcessTitleToBlindType(
+export function mapProcessNameToBlindType(
   processName: ProcessName,
 ): BlindType | undefined {
   switch (processName) {

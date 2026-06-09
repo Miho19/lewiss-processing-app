@@ -61,7 +61,7 @@ type FabricCost = {
   data: number[][];
 };
 
-export type KineticsRollerFabricOpacityType =
+export type KineticsRollerFabricOpacity =
   | "sunscreen"
   | "blockout"
   | "light-filtering";

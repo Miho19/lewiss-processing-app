@@ -1,13 +1,15 @@
-import type { TableEntry } from "../../type/process/pdfType";
-import type { ProcessName } from "../../type/process/productType";
+import type { ProcessName } from "../../type/process/processType";
+import type {
+  KineticsCellularTableEntry,
+  KineticsRollerTableEntry,
+} from "../../type/process/tableEntry/kineticsTableEntryType";
+import type { TableEntry } from "../../type/process/tableEntry/tableEntryType";
 import type {
   AdditionalProduct,
   WorksheetCost,
 } from "../../type/process/worksheetType";
-import { getKineticsCellularAdditionalProductListAsync } from "../kinetics/cellular/pricing/kineticsCellularAdditionalProductUtility";
-import type { KineticsCellularTableEntry } from "../kinetics/cellular/process/createCellularPDFDocument";
-import { getKineticsRollerAdditionalProductListAsync } from "../kinetics/roller/pricing/kineticsRollerAdditionalProductUtility";
-import type { KineticsRollerTableEntry } from "../kinetics/roller/process/createRollerPDFDocument";
+import { getKineticsCellularAdditionalProductListAsync } from "../kinetics/cellular/pricing/getKineticsCellularAdditionalProductList";
+import { getKineticsRollerAdditionalProductListAsync } from "../kinetics/roller/pricing/getKineticsRollerAdditionalProductList";
 
 export function getCurrentTableEntryIndex(
   tableEntryList: TableEntry[],
@@ -32,7 +34,7 @@ function getBlindSubTotal(tableEntryList: TableEntry[]): number {
   }
 }
 
-export async function getWorksheetCostObjectAsync(
+export async function getWorksheetCostAsync(
   tableEntryList: TableEntry[],
   processName: ProcessName,
 ): Promise<WorksheetCost> {
@@ -43,15 +45,15 @@ export async function getWorksheetCostObjectAsync(
     processName,
   );
 
-  const gst = getGST(blindSubTotal, additionalArray);
+  // const gst = getGST(blindSubTotal, additionalArray);
 
-  const total = getTotal(blindSubTotal, additionalArray, gst);
+  // const total = getTotal(blindSubTotal, additionalArray, gst);
 
   const costObjcet: WorksheetCost = {
     blindSubTotal: blindSubTotal,
     additional: [...additionalArray],
-    gst: gst,
-    total: total,
+    gst: 0,
+    total: 0,
   };
 
   return costObjcet;
@@ -80,17 +82,17 @@ async function getAdditionalProductArray(
   }
 }
 
-function getGST(
-  blindSubTotal: number,
-  additionalProductList: AdditionalProduct[],
-): number {
-  return 0;
-}
+// function getGST(
+//   blindSubTotal: number,
+//   additionalProductList: AdditionalProduct[],
+// ): number {
+//   return 0;
+// }
 
-function getTotal(
-  blindSubTotal: number,
-  additionalProductList: AdditionalProduct[],
-  gst: number,
-): number {
-  return 0;
-}
+// function getTotal(
+//   blindSubTotal: number,
+//   additionalProductList: AdditionalProduct[],
+//   gst: number,
+// ): number {
+//   return 0;
+// }

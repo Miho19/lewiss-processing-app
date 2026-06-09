@@ -1,5 +1,5 @@
-import type { RemoteChannel } from "../../../type/kinetics/motorAccessoryType";
-import type { TableEntry } from "../../../type/process/pdfType";
+import type { RemoteChannel } from "../../../type/process/tableEntry/kineticsTableEntryType";
+import type { TableEntry } from "../../../type/process/tableEntry/tableEntryType";
 
 /**
  *

@@ -1,10 +1,8 @@
-import type { KineticsRollerFabricOpacityType } from "../../../type/kinetics/kineticsRollerType";
-import type {
-  BlindType,
-  SharePointSpec2Type,
-} from "../../../type/sharePointProjectFile";
+import type { KineticsRollerFabricOpacity } from "../../../../type/pricing/kinetics/kineticsRollerPricingScheduleType";
+import type { BlindType } from "../../../../type/process/productType";
+import type { KineticsRollerSpec } from "../../../../type/sharePoint/project/spec/kineticsSpec";
 
-function getKineticsRollerControlString(spec: SharePointSpec2Type) {
+function getKineticsRollerControlString(spec: KineticsRollerSpec) {
   const chainColour = spec.chainColour;
   const chainOutputString = `Chain FastRise - ${chainColour}`;
 
@@ -20,7 +18,7 @@ function getKineticsRollerControlString(spec: SharePointSpec2Type) {
 
 function getKineticsRollerFabricOpacity(
   blindType: BlindType,
-): KineticsRollerFabricOpacityType | undefined {
+): KineticsRollerFabricOpacity | undefined {
   switch (blindType) {
     case "Kinetics Blockout Roller Blind":
       return "blockout";

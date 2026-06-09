@@ -26,5 +26,3 @@ export type BlindType =
   | KineticsCellularBlind
   | KineticsVenetian
   | SantaFeShutter;
-
-export type ProcessName = ProductId | "light-filtering-roller";
