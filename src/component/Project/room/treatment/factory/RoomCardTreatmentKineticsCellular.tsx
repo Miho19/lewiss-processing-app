@@ -1,11 +1,11 @@
+import type { KineticsCellularSpec } from "../../../../../type/sharePoint/project/spec/kineticsSpec";
 import {
   getKineticsCellularControlString,
   getKineticsCellularSideChannelColour,
 } from "../../../../../utility/kinetics/cellular/kineticsCellular";
-import type { SharePointSpecType } from "../../../../../type/sharePointProjectFile";
 
 type Props = {
-  spec: SharePointSpecType;
+  spec: KineticsCellularSpec;
 };
 function RoomCardTreatmentKineticsCellular(props: Props) {
   const { spec } = props;

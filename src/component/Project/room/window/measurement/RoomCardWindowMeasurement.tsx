@@ -3,26 +3,27 @@ import type {
   onChangeHandlerProjectFormDataCheckboxParameterType,
   projectFormDataType,
 } from "../../../../../page/ProjectPage";
-import type { SharePointWindowType } from "../../../../../type/sharePointProjectFile";
+
 import RoomCardWindowMeasurementControl from "../common/RoomCardWindowMeasurementControl";
+import type { WindowMeasurement } from "../../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
+import type { Fit } from "../../../../../type/process/windowSelectType";
 import {
   getWindowBlindCountString,
   getWindowHeight,
   getWindowWidth,
-  type WindowFitType,
-} from "../../../../../utility/processProject";
+} from "../../../../../utility/sharePoint/windowMeasurementUtility";
 
 type Props = {
-  window: SharePointWindowType;
+  window: WindowMeasurement;
   projectFormData: projectFormDataType;
   onChangeHandlerProjectFormDataCheckBox: (
     window: onChangeHandlerProjectFormDataCheckboxParameterType,
   ) => void;
 
-  fit: WindowFitType;
+  fit: Fit;
 };
 
-function getMeasurementDisplayInside(window: SharePointWindowType) {
+function getMeasurementDisplayInside(window: WindowMeasurement) {
   const height = getWindowHeight(window, "inside");
   const widthArray = getWindowWidth(window, "inside");
 
@@ -60,7 +61,7 @@ function getMeasurementDisplayInside(window: SharePointWindowType) {
   return <p>Invalid blind count</p>;
 }
 
-function getMeasurementDisplayOutside(window: SharePointWindowType) {
+function getMeasurementDisplayOutside(window: WindowMeasurement) {
   const height = getWindowHeight(window, "outside");
   const widthArray = getWindowWidth(window, "outside");
 
@@ -99,10 +100,7 @@ function getMeasurementDisplayOutside(window: SharePointWindowType) {
   return <p>Invalid blind count</p>;
 }
 
-function getMeasurementDisplay(
-  window: SharePointWindowType,
-  fit: WindowFitType,
-) {
+function getMeasurementDisplay(window: WindowMeasurement, fit: Fit) {
   switch (fit) {
     case "inside":
       return getMeasurementDisplayInside(window);
@@ -114,8 +112,8 @@ function getMeasurementDisplay(
 }
 
 function isAbleToDisplayMeasurement(
-  window: SharePointWindowType,
-  fit: WindowFitType,
+  window: WindowMeasurement,
+  fit: Fit,
 ): boolean {
   const widthArray = getWindowWidth(window, fit);
 

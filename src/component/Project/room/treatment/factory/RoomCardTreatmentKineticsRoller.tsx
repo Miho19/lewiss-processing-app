@@ -2,10 +2,10 @@ import {
   getKineticsRollerControlString,
   getKineticsRollerFabricOpacity,
 } from "../../../../../utility/kinetics/roller/kineticsRoller";
-import type { SharePointSpec2Type } from "../../../../../type/sharePointProjectFile";
+import type { KineticsRollerSpec } from "../../../../../type/sharePoint/project/spec/kineticsSpec";
 
 type Props = {
-  spec: SharePointSpec2Type;
+  spec: KineticsRollerSpec;
 };
 
 function RoomCardTreatmentKineticsRoller(props: Props) {

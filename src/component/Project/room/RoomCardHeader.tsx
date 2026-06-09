@@ -1,8 +1,8 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/16/solid";
-import type { SharePointRoomType } from "../../../type/sharePointProjectFile";
+import type { Room } from "../../../type/sharePoint/project/projectFileType";
 
 type Props = {
-  room: SharePointRoomType;
+  room: Room;
   isExpanded: boolean;
   toggleExpanded: () => void;
 };

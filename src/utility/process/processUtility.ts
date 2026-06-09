@@ -1,9 +1,67 @@
 import type { ProductIdToCreatePDFDocumentFunction } from "../../type/process/processType";
+import type {
+  WindowSelect,
+  WindowSelectDetailed,
+} from "../../type/process/windowSelectType";
+import type { SharePointProjectFile } from "../../type/sharePoint/project/projectFileType";
 import createCellularBlindDocument from "../kinetics/cellular/createCellularPDFDocument";
 import {
   createBlockoutRollerBlindDocument,
   createSunscreenRollerBlindDocument,
 } from "../kinetics/roller/createRollerPDFDocument";
+import { getRoomAndWindowMeasurement } from "../sharePoint/projectFileUtility";
+import {
+  getWindowBlindCountString,
+  getWindowHeight,
+  getWindowWidth,
+} from "../sharePoint/windowMeasurementUtility";
+
+export function processWindowsSelectedAsync(
+  windowList: WindowSelect[],
+  projectFile: SharePointProjectFile,
+) {
+  return [];
+}
+
+export function getWindowSelectDetailedList(
+  projectFile: SharePointProjectFile,
+  windowSelectList: WindowSelect[],
+): WindowSelectDetailed[] {
+  const joinedList = windowSelectList.map((window) => {
+    const [projectRoom, projectWindow] = getRoomAndWindowMeasurement(
+      projectFile,
+      window.roomId,
+      window.id,
+    );
+
+    const blindCountString = getWindowBlindCountString(
+      window.fit === "inside"
+        ? projectWindow.blindCount
+        : projectWindow.outsideBlindCount,
+    );
+
+    const treatment =
+      window.fit === "inside"
+        ? projectRoom.treatment.insideLayer
+        : projectRoom.treatment.outsideLayer;
+
+    if (typeof treatment === "undefined" || treatment === null) return [];
+
+    const newEntry: WindowSelectDetailed = {
+      windowId: window.id,
+      roomId: window.roomId,
+      blindCountString: blindCountString,
+      fit: window.fit,
+      width: getWindowWidth(projectWindow, window.fit),
+      height: getWindowHeight(projectWindow, window.fit),
+      treatment: treatment,
+    };
+
+    return newEntry;
+  });
+
+  return joinedList.flat();
+}
 
 export const sharePointProductIdToProcessTypeRecord: ProductIdToCreatePDFDocumentFunction =
   {

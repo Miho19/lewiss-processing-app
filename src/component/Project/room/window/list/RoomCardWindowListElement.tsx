@@ -2,12 +2,13 @@ import type {
   onChangeHandlerProjectFormDataCheckboxParameterType,
   projectFormDataType,
 } from "../../../../../page/ProjectPage";
-import type { SharePointWindowType } from "../../../../../type/sharePointProjectFile";
+import type { WindowMeasurement } from "../../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
+
 import RoomCardWindowMeasurementExtra from "../common/RoomCardWindowMeasurementsExtra";
 import RoomCardWindowMeasurement from "../measurement/RoomCardWindowMeasurement";
 
 type Props = {
-  window: SharePointWindowType;
+  window: WindowMeasurement;
   projectFormData: projectFormDataType;
   onChangeHandlerProjectFormDataCheckBox: (
     window: onChangeHandlerProjectFormDataCheckboxParameterType,

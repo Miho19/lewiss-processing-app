@@ -1,12 +1,13 @@
 import type {
-  SharePointSpec2Type,
-  SharePointSpecType,
-} from "../../../../../type/sharePointProjectFile";
+  KineticsCellularSpec,
+  KineticsRollerSpec,
+} from "../../../../../type/sharePoint/project/spec/kineticsSpec";
+import type { Spec } from "../../../../../type/sharePoint/project/spec/spec";
 import RoomCardTreatmentKineticsCellular from "./RoomCardTreatmentKineticsCellular";
 import RoomCardTreatmentKineticsRoller from "./RoomCardTreatmentKineticsRoller";
 
 type Props = {
-  spec: SharePointSpecType | SharePointSpec2Type;
+  spec: Spec;
 };
 
 function RoomCardTreatmentFactory(props: Props) {
@@ -16,14 +17,16 @@ function RoomCardTreatmentFactory(props: Props) {
     case "Kinetics 10mm Cellular Blind".toLowerCase():
     case "Kinetics 20mm Cellular Blind".toLowerCase():
       return (
-        <RoomCardTreatmentKineticsCellular spec={spec as SharePointSpecType} />
+        <RoomCardTreatmentKineticsCellular
+          spec={spec as KineticsCellularSpec}
+        />
       );
 
     case "Kinetics Sunscreen Roller Blind".toLowerCase():
     case "Kinetics Blockout Roller Blind".toLowerCase():
     case "Kinetics Light Filtering Roller Blind".toLowerCase():
       return (
-        <RoomCardTreatmentKineticsRoller spec={spec as SharePointSpec2Type} />
+        <RoomCardTreatmentKineticsRoller spec={spec as KineticsRollerSpec} />
       );
 
     default:

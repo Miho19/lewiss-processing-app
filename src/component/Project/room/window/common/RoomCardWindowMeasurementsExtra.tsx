@@ -1,7 +1,7 @@
-import type { SharePointWindowType } from "../../../../../type/sharePointProjectFile";
+import type { WindowMeasurement } from "../../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
 
 type Props = {
-  window: SharePointWindowType;
+  window: WindowMeasurement;
 };
 
 function RoomCardWindowMeasurementExtra(props: Props) {

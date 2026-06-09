@@ -1,8 +1,8 @@
-import type { SharePointTreatmentType } from "../../../../type/sharePointProjectFile";
+import type { Treatment } from "../../../../type/sharePoint/project/projectFileType";
 import RoomCardTreatmentFactory from "./factory/RoomCardTreatmentFactory";
 
 type Props = {
-  treatment: SharePointTreatmentType;
+  treatment: Treatment;
 };
 
 function RoomCardTreatmentOutsideLayer(props: Props) {

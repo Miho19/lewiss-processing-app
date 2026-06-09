@@ -1,7 +1,7 @@
-import type { SharePointProjectFileType } from "../../type/sharePointProjectFile";
+import type { SharePointProjectFile } from "../../type/sharePoint/project/projectFileType";
 
 type Props = {
-  projectFile: SharePointProjectFileType;
+  projectFile: SharePointProjectFile;
 };
 function CustomerCard(props: Props) {
   const { projectFile } = props;

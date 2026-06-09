@@ -2,11 +2,12 @@ import type {
   onChangeHandlerProjectFormDataCheckboxParameterType,
   projectFormDataType,
 } from "../../../../../page/ProjectPage";
-import type { SharePointRoomType } from "../../../../../type/sharePointProjectFile";
+import type { Room } from "../../../../../type/sharePoint/project/projectFileType";
+
 import RoomCardWindowListElement from "./RoomCardWindowListElement";
 
 type Props = {
-  room: SharePointRoomType;
+  room: Room;
   projectFormData: projectFormDataType;
   onChangeHandlerProjectFormDataCheckBox: (
     window: onChangeHandlerProjectFormDataCheckboxParameterType,

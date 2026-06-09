@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { SharePointRoomType } from "../../../type/sharePointProjectFile";
+
 import RoomCardHeader from "./RoomCardHeader";
 import RoomCardTreatment from "./treatment/RoomCardTreatment";
 import RoomCardWindowList from "./window/list/RoomCardWindowList";
@@ -7,9 +7,10 @@ import type {
   onChangeHandlerProjectFormDataCheckboxParameterType,
   projectFormDataType,
 } from "../../../page/ProjectPage";
+import type { Room } from "../../../type/sharePoint/project/projectFileType";
 
 type Props = {
-  room: SharePointRoomType;
+  room: Room;
   projectFormData: projectFormDataType;
   onChangeHandlerProjectFormDataCheckBox: (
     window: onChangeHandlerProjectFormDataCheckboxParameterType,

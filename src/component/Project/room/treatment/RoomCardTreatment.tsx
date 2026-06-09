@@ -1,9 +1,9 @@
-import type { SharePointRoomType } from "../../../../type/sharePointProjectFile";
+import type { Room } from "../../../../type/sharePoint/project/projectFileType";
 import RoomCardTreatmentInsideLayer from "./RoomCardTreatmentInsideLayer";
 import RoomCardTreatmentOutsideLayer from "./RoomCardTreatmentOutsideLayer";
 
 type Props = {
-  room: SharePointRoomType;
+  room: Room;
 };
 
 function RoomCardTreatment(props: Props) {

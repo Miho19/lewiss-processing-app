@@ -4,22 +4,28 @@ import Loading from "../component/Loading/Loading";
 import RoomCardList from "../component/Project/room/RoomCardList";
 import useSharePointProjectFileQuery from "../hook/useSharePointProjectFileQuery";
 import { projectRoute } from "../router/router";
-import {
-  filterSelectedWindows,
-  joinTreatment,
-  type WindowFitType,
-  type WindowMeasurement,
-  type WindowMeasurementJoined,
-} from "../utility/processProject";
-import { getOrderPDF, openPDFDocumentAsync } from "../utility/pdfmake/pdfmake";
+
+import type { Fit, WindowSelect } from "../type/process/windowSelectType";
+import { processWindowsSelectedAsync } from "../utility/process/processUtility";
 
 export type onChangeHandlerProjectFormDataCheckboxParameterType = {
   id: string;
-  fit: WindowFitType;
+  fit: Fit;
   isChecked: boolean;
 };
 
-export type projectFormDataType = Record<string, WindowMeasurement>;
+export type projectFormDataType = Record<string, WindowSelect>;
+
+function filterSelectedWindows(formData: projectFormDataType): WindowSelect[] {
+  const filteredWindows: WindowSelect[] = [];
+
+  Object.entries(formData).forEach(([, value]) => {
+    if (!value.selected) return;
+    filteredWindows.push(value);
+  });
+
+  return [...filteredWindows];
+}
 
 // TODO 27/05/2026, switch to context to avoid the prop drilling
 
@@ -29,18 +35,23 @@ function ProjectPage() {
     {},
   );
 
-  const { data, isSuccess, isLoading, isError, error } =
-    useSharePointProjectFileQuery(projectId);
+  const {
+    data: sharePointProjectFile,
+    isSuccess,
+    isLoading,
+    isError,
+    error,
+  } = useSharePointProjectFileQuery(projectId);
 
   useEffect(() => {
     if (!isSuccess) return;
 
-    data.project.rooms.forEach((room) => {
+    sharePointProjectFile.project.rooms.forEach((room) => {
       const roomId = room.id;
       room.windows.forEach((window) => {
         const windowId = window.id;
 
-        const newEntry: WindowMeasurement = {
+        const newEntry: WindowSelect = {
           id: windowId,
           roomId: roomId,
           fit: "inside",
@@ -50,7 +61,7 @@ function ProjectPage() {
         setProjectFormData((prev) => ({ ...prev, [windowId]: newEntry }));
       });
     });
-  }, [data, isSuccess]);
+  }, [sharePointProjectFile, isSuccess]);
 
   const errorStyleClassName = "flex items-center justify-center flex-1";
 
@@ -64,22 +75,18 @@ function ProjectPage() {
 
   function onSubmitHandler(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (typeof data === "undefined") return;
+    if (typeof sharePointProjectFile === "undefined") return;
 
     // potential to give feedback here instead of returning nothing
     const selectedWindows = filterSelectedWindows(projectFormData);
     if (selectedWindows.length === 0) return;
 
-    const joinedSelectedWindows: WindowMeasurementJoined[] = joinTreatment(
-      data,
+    const pdfList = processWindowsSelectedAsync(
       selectedWindows,
+      sharePointProjectFile,
     );
 
-    getOrderPDF(data, joinedSelectedWindows)
-      .then((pdfDocuments) => {
-        openPDFDocumentAsync(pdfDocuments[0]);
-      })
-      .catch((error) => console.error(error));
+    console.log(pdfList);
   }
 
   function onChangeHandlerprojectFormDataCheckbox(
@@ -97,7 +104,7 @@ function ProjectPage() {
 
   return (
     <main className="flex-1 p-6 space-y-12 pt-30">
-      <CustomerCard projectFile={data} />
+      <CustomerCard projectFile={sharePointProjectFile} />
       <form
         className="flex w-full flex-col space-y-6 relative"
         onSubmit={onSubmitHandler}
@@ -112,7 +119,7 @@ function ProjectPage() {
         </div>
 
         <RoomCardList
-          projectFile={data}
+          projectFile={sharePointProjectFile}
           onChangeHandlerProjectFormDataCheckBox={
             onChangeHandlerprojectFormDataCheckbox
           }
