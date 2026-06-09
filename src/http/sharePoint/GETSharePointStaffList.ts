@@ -1,8 +1,7 @@
 import type {
-  ConsultantsType,
+  Consultant,
   GETSharePointStaffListResponseBody,
-  MeasurersType,
-} from "../type/sharePointStaffList";
+} from "../../type/sharePoint/consultant/consultantType";
 
 function GETSharePointStaffListEndpoint() {
   return new URL(
@@ -22,7 +21,7 @@ function GETSharePointStaffListFetchOptions(): RequestInit {
 
 async function GETSharePointStaffList(
   endpoint: URL = GETSharePointStaffListEndpoint(),
-): Promise<{ measurers: MeasurersType[]; consultants: ConsultantsType[] }> {
+): Promise<{ measurers: string[]; consultants: Consultant[] }> {
   try {
     const fetchOptions = GETSharePointStaffListFetchOptions();
 

@@ -1,5 +1,4 @@
-import type { SharePointJSONFileItemType } from "../type/sharePointJSONFile";
-import type { SharePointProjectFileType } from "../type/sharePointProjectFile";
+import type { GETSharePointJSONFileResponse } from "../../type/sharePoint/folder/folderType";
 
 function GETSharePointJSONFileEndpoint() {
   return new URL(
@@ -18,30 +17,21 @@ function GETSharePointJSONFileFetchOptions(fileId: string): RequestInit {
   return fetchOptions;
 }
 
-async function GETSharePointJSONFile(
+export async function GETSharePointJSONFile(
   fileId: string,
   endpoint: URL = GETSharePointJSONFileEndpoint(),
-): Promise<SharePointJSONFileItemType> {
+): Promise<GETSharePointJSONFileResponse> {
   try {
     if (typeof fileId === "undefined") throw new Error("FileId is undefined");
     const fetchOptions = GETSharePointJSONFileFetchOptions(fileId);
+
     const response: Response = await fetch(endpoint, fetchOptions);
     if (!response.ok) throw new Error("Unexpected server response");
-    const jsonBody: SharePointJSONFileItemType = await response.json();
 
+    const jsonBody: GETSharePointJSONFileResponse = await response.json();
     return jsonBody;
   } catch (error) {
     if (error instanceof Error) console.error(error.message);
     throw new Error("Failed to fetch staff folder", { cause: error });
   }
 }
-
-export async function GETSharePointProjectFile(fileId: string) {
-  const response = await GETSharePointJSONFile(fileId);
-  if (!response.ok) throw new Error("Failed to fetch project file");
-
-  const jsonContent: SharePointProjectFileType = JSON.parse(response.content);
-  return jsonContent;
-}
-
-export default GETSharePointJSONFile;

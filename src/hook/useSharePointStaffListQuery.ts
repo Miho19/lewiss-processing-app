@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import GETSharePointStaffList from "../http/GETSharePointStaffList";
+import GETSharePointStaffList from "../http/sharePoint/GETSharePointStaffList";
 
 function useSharePointStaffListQuery() {
   return useQuery({

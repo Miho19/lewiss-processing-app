@@ -2,13 +2,13 @@ import type { ProductId } from "../../process/productType";
 import type { Spec } from "./spec/spec";
 import type { WindowMeasurement } from "./windowMeasurement/windowMeasurementType";
 
-export type ProjectFileName = {
+export type SharePointProjectFileName = {
   surname: string;
   reference: string;
   date: string;
 };
 
-export type ProjectFile = {
+export type SharePointProjectFile = {
   id: number;
   name: string;
   phone: string;

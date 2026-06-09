@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { GETSharePointProjectFile } from "../http/GETSharePointJSONFile";
+import { GETSharePointProjectFile } from "../http/sharePoint/GETSharePointJSONFile";
 
 function useSharePointProjectFileQuery(fileId: string) {
   return useQuery({

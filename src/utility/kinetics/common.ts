@@ -13,7 +13,7 @@ import type {
   ProcessTitleType,
 } from "../../type/sharePointProjectFile";
 import type { PricingScheduleType } from "../../type/kinetics/kineticsType";
-import GETSharePointPricingSchedule from "../../http/GETSharePointPricingSchedule";
+import GETSharePointPricingSchedule from "../../http/sharePoint/GETSharePointPricingSchedule";
 import { queryClient } from "../../http/queryClient";
 import { getKineticsRollerAdditionalProductArrayAsync } from "./roller/kineticsRollerPricing";
 import { getKineticsCellularAdditionalProductArrayAsync } from "./cellular/kineticsCellularPricing";

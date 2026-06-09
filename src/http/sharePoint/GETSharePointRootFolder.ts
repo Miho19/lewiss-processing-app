@@ -1,7 +1,7 @@
 import type {
-  GETSharePointFolderResponseType,
-  SharePointFolderItemListType,
-} from "../type/sharePointFolder";
+  GETSharePointFolderResponse,
+  SharePointFolderListItem,
+} from "../../type/sharePoint/folder/folderType";
 
 function GETSharePointRootFolderEndpoint() {
   return new URL(
@@ -22,14 +22,14 @@ function GETSharePointRootFolderFetchOptions(): RequestInit {
 
 async function GETSharePointRootFolder(
   endpoint: URL = GETSharePointRootFolderEndpoint(),
-): Promise<SharePointFolderItemListType[]> {
+): Promise<SharePointFolderListItem[]> {
   try {
     const fetchOptions = GETSharePointRootFolderFetchOptions();
 
     const response: Response = await fetch(endpoint, fetchOptions);
     if (!response.ok) throw new Error("Unexpected server response");
 
-    const jsonBody: GETSharePointFolderResponseType = await response.json();
+    const jsonBody: GETSharePointFolderResponse = await response.json();
 
     return jsonBody.children;
   } catch (error) {

@@ -1,4 +1,4 @@
-import GETSharePointPricingSchedule from "../../../http/GETSharePointPricingSchedule";
+import GETSharePointPricingSchedule from "../../../http/sharePoint/GETSharePointPricingSchedule";
 import type { SharePointKineticsCellularPricingType } from "../../../type/kinetics/kineticsCellularType";
 import { queryClient } from "../../../http/queryClient";
 import type {
