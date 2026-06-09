@@ -19,23 +19,24 @@ import { createDocument } from "../../pdfmake/pdfmake";
 import {
   createTable,
   generateTableEntryList,
-} from "../../pdfmake/commonFunction";
+} from "../../../pdfmake/commonFunction";
 import {
   getKineticsCellularControlString,
   getKineticsCellularFabricOpacity,
   getKineticsCellularSideChannelColour,
-} from "./kineticsCellular";
-import { getKineticsCellularBlindCostAsync } from "./kineticsCellularPricing";
+} from "../presentation/kineticsCellular";
+import { getKineticsCellularBlindCostAsync } from "../kineticsCellularPricing";
 import {
   createCustomerInformation,
   createWindowWareHeader,
   getBlindIndex,
   getRemoteAndChannel,
-} from "../common";
+} from "../../general/worksheetUtility";
+import type { WindowSelectDetailed } from "../../../../type/process/windowSelectType";
 
 async function createCellularBlindDocument(
+  windowSelectDetailedList: WindowSelectDetailed[],
   projectFile: SharePointProjectFileType,
-  windowJoined: WindowMeasurementJoined[],
 ): Promise<TDocumentDefinitions[]> {
   const document = createDocument(projectFile, "cellular-blind");
   const content: Content[] = [];

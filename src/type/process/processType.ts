@@ -3,7 +3,7 @@ import type { ProductId } from "./productType";
 import type { WindowSelectDetailed } from "./windowSelectType";
 import type { SharePointProjectFile } from "../sharePoint/project/projectFileType";
 
-export type SharePointProductIdToWindowMeasurementJoinedRecordType = Record<
+export type ProcessGroupToWindowSelectDetailed = Record<
   ProductId,
   WindowSelectDetailed[]
 >;
@@ -11,7 +11,7 @@ export type SharePointProductIdToWindowMeasurementJoinedRecordType = Record<
 export type ProductIdToCreatePDFDocumentFunction = Record<
   ProductId,
   (
+    windowSelectDetailedList: WindowSelectDetailed[],
     projectFile: SharePointProjectFile,
-    windowList: WindowSelectDetailed[],
   ) => Promise<TDocumentDefinitions[]>
 >;

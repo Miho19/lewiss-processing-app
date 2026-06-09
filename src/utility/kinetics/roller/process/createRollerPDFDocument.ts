@@ -24,7 +24,7 @@ import {
   createBlindSubTotalCostColumn,
   createTable,
   generateTableEntryList,
-} from "../../pdfmake/commonFunction";
+} from "../../../pdfmake/commonFunction";
 import {
   createCustomerInformation,
   createWindowWareHeader,
@@ -32,9 +32,10 @@ import {
   getRemoteAndChannel,
   getWorksheetCostObjectAsync,
   type WorksheetCostObjectType,
-} from "../common";
-import { getKineticsRollerControlString } from "./kineticsRoller";
-import { getKineticsRollerBlindCostAsync } from "./kineticsRollerPricing";
+} from "../../general/worksheetUtility";
+import { getKineticsRollerControlString } from "../kineticsRoller";
+import { getKineticsRollerBlindCostAsync } from "../pricing/kineticsRollerPricing";
+import type { WindowSelectDetailed } from "../../../../type/process/windowSelectType";
 
 async function createRollerBlindDocument(
   projectFile: SharePointProjectFileType,
@@ -83,8 +84,8 @@ async function createRollerBlindDocument(
 }
 
 async function createSunscreenRollerBlindDocument(
+  windowSelectDetailedList: WindowSelectDetailed[],
   projectFile: SharePointProjectFileType,
-  windowJoined: WindowMeasurementJoined[],
 ): Promise<TDocumentDefinitions[]> {
   const sunscreenDocument = await createRollerBlindDocument(
     projectFile,
@@ -125,13 +126,13 @@ function partitionWindowJoinedIntoKineticsRollerTypes(
 }
 
 async function createBlockoutRollerBlindDocument(
+  windowSelectDetailedList: WindowSelectDetailed[],
   projectFile: SharePointProjectFileType,
-  windowJoined: WindowMeasurementJoined[],
 ): Promise<TDocumentDefinitions[]> {
   const documentOutput = [];
 
   const windowJoinedSplitRecord: partitionedKineticsRollerRecordType =
-    partitionWindowJoinedIntoKineticsRollerTypes(windowJoined);
+    partitionWindowJoinedIntoKineticsRollerTypes(windowSelectDetailedList);
 
   const blockoutWindowJoined =
     windowJoinedSplitRecord["Kinetics Blockout Roller Blind"];

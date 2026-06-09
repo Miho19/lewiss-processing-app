@@ -1,13 +1,14 @@
 import type { Content } from "pdfmake";
-import type { KineticsCellularTableEntry } from "../kinetics/cellular/createCellularPDFDocument";
-import type { Column, ContentTable } from "pdfmake/interfaces";
-import type { KineticsRollerTableEntry } from "../kinetics/roller/createRollerPDFDocument";
-import type { WorksheetCostObjectType } from "../kinetics/common";
+import type { TableEntry } from "../../type/process/pdfType";
+import type {
+  Column,
+  ContentColumns,
+  ContentStack,
+  ContentTable,
+} from "pdfmake/interfaces";
+import type { WorksheetCost } from "../../type/process/worksheetType";
 
-export type TableEntry = KineticsCellularTableEntry | KineticsRollerTableEntry;
-
-// will go into a common file
-function convertTableEntryToStringArray(tableEntry: TableEntry) {
+export function convertTableEntryToStringArray(tableEntry: TableEntry) {
   return Object.keys(tableEntry).map((column) => {
     const columnSplitCapitalised = column
       .split(" ")
@@ -16,7 +17,7 @@ function convertTableEntryToStringArray(tableEntry: TableEntry) {
   });
 }
 
-function generateTableHeader(tableEntry: TableEntry) {
+export function generateTableHeader(tableEntry: TableEntry) {
   const columnStringArray = convertTableEntryToStringArray(tableEntry);
 
   const tableHeaderArray: Content[] = columnStringArray.map((column) => {
@@ -32,7 +33,7 @@ function generateTableHeader(tableEntry: TableEntry) {
   return tableHeaderArray;
 }
 
-function createTable(tableEntry: TableEntry): ContentTable {
+export function createTable(tableEntry: TableEntry): ContentTable {
   const tableHeaderArray: Content[] = generateTableHeader(tableEntry);
 
   const table: ContentTable = {
@@ -65,7 +66,7 @@ function createTable(tableEntry: TableEntry): ContentTable {
   return table;
 }
 
-function generateTableEntryList(tableEntry: TableEntry[]): Content[][] {
+export function generateTableEntryList(tableEntry: TableEntry[]): Content[][] {
   const entries: Content[][] = tableEntry.map((entry) => {
     return Object.values(entry).map((value) => {
       let adjustedValue: string | number;
@@ -94,7 +95,7 @@ function generateTableEntryList(tableEntry: TableEntry[]): Content[][] {
 }
 
 export function createBlindSubTotalCostColumn(
-  worksheetCostObject: WorksheetCostObjectType,
+  worksheetCost: WorksheetCost,
 ): Content {
   const blindSubtotalText: Column = {
     text: "Blind Subtotal",
@@ -103,7 +104,7 @@ export function createBlindSubTotalCostColumn(
     noWrap: true,
   };
 
-  const blindSubtotalCost = worksheetCostObject.blindSubTotal;
+  const blindSubtotalCost = worksheetCost.blindSubTotal;
 
   const costText: Column = {
     text: blindSubtotalCost.toFixed(2),
@@ -119,4 +120,54 @@ export function createBlindSubTotalCostColumn(
   return column;
 }
 
-export { createTable, generateTableEntryList };
+export function createCustomerInformation(
+  name: string,
+  reference: string,
+  consultant: string,
+): ContentColumns {
+  const leftStack1: ContentStack = {
+    stack: [{ text: "Client", marginBottom: 4 }, { text: "Reference" }],
+  };
+
+  const leftStack2: ContentStack = {
+    stack: [{ text: name, marginBottom: 4 }, { text: reference }],
+  };
+
+  const leftColumn: Column[] = [
+    { width: "auto", ...leftStack1 },
+    { width: "auto", ...leftStack2 },
+  ];
+
+  const rightStack1: ContentStack = {
+    stack: [{ text: "Date", marginBottom: 4 }, { text: "Consultant" }],
+  };
+
+  const rightStack2: ContentStack = {
+    stack: [
+      {
+        text: new Date().toLocaleDateString(),
+        marginBottom: 4,
+        alignment: "right",
+      },
+      { text: consultant, alignment: "right" },
+    ],
+  };
+
+  const rightColumn: Column[] = [
+    { width: "auto", ...rightStack1 },
+    { width: "auto", ...rightStack2 },
+  ];
+
+  const customerInformationColumn: Column[] = [
+    { width: "auto", columns: [...leftColumn], columnGap: 24 },
+    { width: "*", text: " " },
+    { width: "auto", columns: [...rightColumn], columnGap: 24 },
+  ];
+
+  const content: Content = {
+    columns: customerInformationColumn,
+    marginBottom: 14,
+  };
+
+  return content;
+}

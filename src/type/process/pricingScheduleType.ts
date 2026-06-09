@@ -1,5 +1,5 @@
-import type { KineticsCellularPricingSchedule } from "../kinetics/kineticsCellularType";
-import type { KineticsRollerPricingSchedule } from "../kinetics/kineticsRollerType";
+import type { KineticsCellularPricingSchedule } from "../kinetics/kineticsCellularPricingScheduleType";
+import type { KineticsRollerPricingSchedule } from "../kinetics/kineticsRollerPricingScheduleType";
 import type { BlindType } from "./productType";
 
 export type PricingSchedule =

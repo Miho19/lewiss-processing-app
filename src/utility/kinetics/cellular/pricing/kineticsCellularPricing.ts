@@ -1,18 +1,4 @@
-import GETSharePointPricingSchedule from "../../../http/sharePoint/GETSharePointPricingSchedule";
-import type { SharePointKineticsCellularPricingType } from "../../../type/kinetics/kineticsCellularType";
-import { queryClient } from "../../../http/queryClient";
-import type {
-  BlindType,
-  ProcessTitleType,
-} from "../../../type/sharePointProjectFile";
-import { getPricingScheduleAsync } from "../common";
-import type { TableEntry } from "../../pdfmake/commonFunction";
-
 // import kineticsCellularPricingSchedule from "../../../../test/utility/kinetics/cellular/kinetics-cellular-pricing-example.json";
-
-function roundMeasurementUp(num: number) {
-  return Math.ceil(num / 100) * 100;
-}
 
 function getKineticsCellularFabricCost(
   width: number,
@@ -157,13 +143,6 @@ async function getKineticsCellularBlindCostAsync(
   return fabricCost + controlCost + headrailCost + sideChannelCost;
 }
 
-async function getKineticsCellularAdditionalProductArrayAsync(
-  tableEntries: TableEntry[],
-  processTitle: ProcessTitleType,
-) {
-  return [];
-}
-
 export {
   getKineticsCellularFabricCost,
   getKineticsCellularControlCost,
@@ -171,5 +150,4 @@ export {
   getKineticsCellularSideChannelCost,
   getKineticsCellularBlindCostAsync,
   roundMeasurementUp,
-  getKineticsCellularAdditionalProductArrayAsync,
 };

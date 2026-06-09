@@ -2,7 +2,7 @@ import type { KineticsCellularSpec } from "../../../../../type/sharePoint/projec
 import {
   getKineticsCellularControlString,
   getKineticsCellularSideChannelColour,
-} from "../../../../../utility/kinetics/cellular/kineticsCellular";
+} from "../../../../../utility/kinetics/cellular/presentation/kineticsCellular";
 
 type Props = {
   spec: KineticsCellularSpec;

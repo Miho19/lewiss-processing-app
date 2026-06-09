@@ -1,12 +1,14 @@
-import type { SharePointSpecType } from "../../../type/sharePointProjectFile";
+import type { KineticsCellularSpec } from "../../../../type/sharePoint/project/spec/kineticsSpec";
 
-function getKineticsCellularControlString(spec: SharePointSpecType) {
+export function getKineticsCellularControlString(spec: KineticsCellularSpec) {
   return typeof spec.motorisation === "undefined" || spec.motorisation === null
     ? "Cord"
     : "Lithium-ion";
 }
 
-function getKineticsCellularSideChannelColour(spec: SharePointSpecType) {
+export function getKineticsCellularSideChannelColour(
+  spec: KineticsCellularSpec,
+) {
   let sideChannelColour = "None";
 
   if (spec.sideChannels) {
@@ -17,7 +19,9 @@ function getKineticsCellularSideChannelColour(spec: SharePointSpecType) {
   return sideChannelColour;
 }
 
-function getKineticsCellularFabricOpacity(spec: SharePointSpecType): string {
+export function getKineticsCellularFabricOpacity(
+  spec: KineticsCellularSpec,
+): string {
   const fabricStringArray = spec.fabric.name.split(" ");
 
   const translucentFound = fabricStringArray.find(
@@ -28,9 +32,3 @@ function getKineticsCellularFabricOpacity(spec: SharePointSpecType): string {
 
   return typeof translucentFound === "undefined" ? "Blockout" : "Translucent";
 }
-
-export {
-  getKineticsCellularControlString,
-  getKineticsCellularSideChannelColour,
-  getKineticsCellularFabricOpacity,
-};

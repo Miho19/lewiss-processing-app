@@ -1,6 +1,8 @@
-import type { ConsultantFolder } from "../../type/sharePoint/consultant/consultantType";
+import type {
+  Consultant,
+  ConsultantFolder,
+} from "../../type/sharePoint/consultant/consultantType";
 import type { SharePointFolderListItem } from "../../type/sharePoint/folder/folderType";
-import type { Consultant } from "../../type/sharePointStaffList";
 
 export function getConsultantFolder(
   consultantList: Consultant[],

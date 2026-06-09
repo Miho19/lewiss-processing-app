@@ -3,10 +3,10 @@ import type {
   TDocumentInformation,
 } from "pdfmake/interfaces";
 import type { ProcessName } from "../../type/process/productType";
-import type { ProjectFile } from "../../type/sharePoint/project/projectFileType";
+import type { SharePointProjectFile } from "../../type/sharePoint/project/projectFileType";
 
 export function createDocument(
-  projectFile: ProjectFile,
+  projectFile: SharePointProjectFile,
   processName: ProcessName,
 ) {
   const { name, reference, salesConsultant } = projectFile;

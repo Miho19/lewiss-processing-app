@@ -2,18 +2,18 @@ import type {
   KineticsRollerFabricOpacityType,
   PerMCost,
   SharePointKineticsRollerPricingType,
-} from "../../../type/kinetics/kineticsRollerType";
+} from "../../../../type/kinetics/kineticsRollerPricingScheduleType";
 import type {
   BlindType,
   ProcessTitleType,
 } from "../../../type/sharePointProjectFile";
-import type { TableEntry } from "../../pdfmake/commonFunction";
+import type { TableEntry } from "../../../pdfmake/commonFunction";
 import { roundMeasurementUp } from "../cellular/kineticsCellularPricing";
 import {
   getPricingScheduleAsync,
   mapProcessTitleToBlindType,
   type WorksheetCostObjectAdditionalProductType,
-} from "../common";
+} from "../../general/worksheetUtility";
 import { getKineticsRollerFabricOpacity } from "./kineticsRoller";
 
 function getKineticsRollerFabricCost(
