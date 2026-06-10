@@ -17,7 +17,7 @@ import {
   getKineticsCellularFabricOpacity,
   getKineticsCellularSideChannelColour,
 } from "../presentation/kineticsCellular";
-import { getKineticsCellularBlindCostAsync } from "../pricing/kineticsCellularPricing";
+import { getKineticsCellularBlindCostAsync } from "../pricing";
 
 export const defaultKineticsCellularTableEntry: KineticsCellularTableEntry = {
   "blind index": 0,

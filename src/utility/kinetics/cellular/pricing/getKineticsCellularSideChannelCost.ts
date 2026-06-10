@@ -9,10 +9,16 @@ export function getKineticsCellularSideChannelCost(
   if (!height || height <= 0) return 0;
 
   if (
+    !sideChannelColour ||
+    typeof sideChannelColour === "undefined" ||
+    sideChannelColour.trim().length === 0
+  )
+    return 0;
+
+  if (
     sideChannelColour.localeCompare("none", undefined, {
       sensitivity: "base",
-    }) === 0 ||
-    !sideChannelColour.trim()
+    }) === 0
   )
     return 0;
 
@@ -40,7 +46,7 @@ function isSideChannelColourAValidOption(sideChannelColour: string) {
       }) === 0,
   );
 
-  return typeof found === "undefined";
+  return typeof found !== "undefined";
 }
 
 function getCostPerMetreHeight(

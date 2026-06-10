@@ -4,7 +4,9 @@ import {
   getKineticsCellularFabricCost,
   getKineticsCellularHeadrailCost,
   getKineticsCellularSideChannelCost,
-} from "../../../../src/utility/kinetics/cellular/kineticsCellularPricing";
+  getKineticsCellularBlindCostAsync,
+} from "../../../../src/utility/kinetics/cellular/pricing";
+
 import kineticsPricingExample from "./kinetics-cellular-pricing-example.json";
 
 // will do tests later...

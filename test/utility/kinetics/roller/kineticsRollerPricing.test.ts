@@ -1,19 +1,19 @@
 import { describe, expect, it } from "vitest";
 import kineticsRollerPricingExample from "./kinetics-roller-pricing-schedule.json";
-import { KineticsRollerFabricOpacityType } from "../../../../src/zod/kinetics/sharePointPricingKineticsRoller";
+import { KineticsRollerFabricOpacity } from "../../../../src/type/pricing/kinetics/kineticsRollerPricingScheduleType";
 import {
   getKineticsRollerFabricCost,
   getKineticsRollerControlCost,
   getKineticsRollerBottomRailCost,
   getKineticsRollerPelmetCost,
-} from "../../../../src/utility/kinetics/roller/kineticsRollerPricing";
+} from "../../../../src/utility/kinetics/roller/pricing";
 
 describe("Kinetics Roller Pricing", () => {
   describe("getKineticsRollerFabricCost", () => {
     const exampleInput: [
       number,
       number,
-      KineticsRollerFabricOpacityType,
+      KineticsRollerFabricOpacity,
       number | undefined,
     ][] = [
       [1200, 900, "light-filtering", 323],

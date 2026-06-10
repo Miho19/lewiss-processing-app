@@ -20,7 +20,7 @@ function GETSharePointJSONFileFetchOptions(fileId: string): RequestInit {
   return fetchOptions;
 }
 
-export async function GETSharePointPricingSchedule(
+export default async function GETSharePointPricingSchedule(
   blindType: BlindType,
   endpoint: URL = GETSharePointPricingScheduleEndpoint(),
 ): Promise<PricingSchedule> {
@@ -45,5 +45,3 @@ export async function GETSharePointPricingSchedule(
     throw new Error("Failed to fetch pricing schedule", { cause: error });
   }
 }
-
-export default GETSharePointPricingSchedule;
