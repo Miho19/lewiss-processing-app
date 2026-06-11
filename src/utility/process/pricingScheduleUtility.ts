@@ -31,9 +31,10 @@ export async function getAccessoryPricingScheduleAsync(
 ): Promise<AccessoryPricingSchedule | undefined> {
   try {
     const pricingSchedule = await queryClient.ensureQueryData({
-      queryKey: [`pricing schedule ${blindType}`],
+      queryKey: [`accessory pricing schedule ${blindType}`],
       queryFn: () => GETSharePointAccessoryPricingSchedule(blindType),
     });
+
     return pricingSchedule;
   } catch (error) {
     console.error(`Failed to fetch ${blindType} pricing schedule ${error}`);

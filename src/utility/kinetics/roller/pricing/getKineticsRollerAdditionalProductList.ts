@@ -1,3 +1,4 @@
+import type { KineticsAccessoryPricingSchedule } from "../../../../type/pricing/kinetics/kineticsMotorAccessoryPricingScheduleType";
 import type { KineticsRollerPricingSchedule } from "../../../../type/pricing/kinetics/kineticsRollerPricingScheduleType";
 import type { ProcessName } from "../../../../type/process/processType";
 import type { BlindType } from "../../../../type/process/productType";
@@ -8,6 +9,7 @@ import {
   getPricingScheduleAsync,
 } from "../../../process/pricingScheduleUtility";
 import { mapProcessNameToBlindType } from "../../../process/processUtility";
+import { getMaxRemote } from "../../general/motorAccessoryUtility";
 
 export async function getKineticsRollerAdditionalProductListAsync(
   tableEntryList: KineticsRollerTableEntry[],
@@ -30,7 +32,7 @@ export async function getKineticsRollerAdditionalProductListAsync(
 //
 
 async function getMotorAdditionalProductListAsync(
-  tableEntries: KineticsRollerTableEntry[],
+  tableEntryList: KineticsRollerTableEntry[],
   blindType: BlindType,
 ): Promise<AdditionalProduct[]> {
   const pricingSchedule = (await getPricingScheduleAsync(
@@ -46,7 +48,7 @@ async function getMotorAdditionalProductListAsync(
   });
 
   motorProducts.forEach((product) => {
-    const filter = tableEntries.filter(
+    const filter = tableEntryList.filter(
       (e) =>
         e.control.localeCompare(product.name, undefined, {
           sensitivity: "base",
@@ -71,11 +73,45 @@ async function getMotorAdditionalProductListAsync(
 }
 
 export async function getAccessoryProductListAsync(
-  tableEntries: KineticsRollerTableEntry[],
+  tableEntryList: KineticsRollerTableEntry[],
   blindType: BlindType,
 ): Promise<AdditionalProduct[]> {
-  const pricingSchedule = await getAccessoryPricingScheduleAsync(blindType);
+  const pricingSchedule = (await getAccessoryPricingScheduleAsync(
+    blindType,
+  )) as KineticsAccessoryPricingSchedule;
   if (typeof pricingSchedule === "undefined") return [];
 
-  return [];
+  const remote = getRemoteAdditionalProduct(tableEntryList, pricingSchedule);
+  if (typeof remote === "undefined") return [];
+
+  const usbCharger = getUSBChargerAdditionalProduct(remote, pricingSchedule);
+  if (typeof usbCharger === "undefined") return [];
+
+  return [remote, usbCharger];
+}
+
+function getRemoteAdditionalProduct(
+  tableEntryList: KineticsRollerTableEntry[],
+  pricingSchedule: KineticsAccessoryPricingSchedule,
+): AdditionalProduct | undefined {
+  const numberOfRemotes = getMaxRemote(tableEntryList);
+  const costOfRemote = pricingSchedule.remote;
+  if (numberOfRemotes === 0) return undefined;
+
+  return {
+    name: "15 Channel Remote",
+    cost: costOfRemote,
+    quantity: numberOfRemotes,
+  };
+}
+
+function getUSBChargerAdditionalProduct(
+  remote: AdditionalProduct,
+  pricingSchedule: KineticsAccessoryPricingSchedule,
+): AdditionalProduct | undefined {
+  if (typeof remote === "undefined") return undefined;
+
+  const cost = pricingSchedule.usbCharger;
+  const quantity = remote.quantity > 6 ? 2 : 1;
+  return { name: "USB Charger", cost: cost, quantity: quantity };
 }

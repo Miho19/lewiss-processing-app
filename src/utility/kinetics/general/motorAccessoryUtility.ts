@@ -4,7 +4,7 @@ import type { TableEntry } from "../../../type/process/tableEntry/tableEntryType
 /**
  *
  */
-function getMaxRemote(entries: TableEntry[]) {
+export function getMaxRemote(entries: TableEntry[]) {
   return entries.reduce(
     (max, curr) => (curr.remote > max ? curr.remote : max),
     0,

@@ -25,7 +25,7 @@ export function getCurrentTableEntryIndex(
 function getBlindSubTotal(tableEntryList: TableEntry[]): number {
   try {
     const blindSubTotal = tableEntryList.reduce(
-      (acc, entry) => parseInt(entry.price) + acc,
+      (acc, entry) => parseFloat(entry.price) + acc,
       0,
     );
     return blindSubTotal;
