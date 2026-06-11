@@ -20,7 +20,7 @@ function GETSharePointRootFolderFetchOptions(): RequestInit {
   return fetchOptions;
 }
 
-async function GETSharePointRootFolder(
+export async function GETSharePointRootFolder(
   endpoint: URL = GETSharePointRootFolderEndpoint(),
 ): Promise<SharePointFolderListItem[]> {
   try {
@@ -37,5 +37,3 @@ async function GETSharePointRootFolder(
     throw new Error("Failed to fetch SharePoint root folder", { cause: error });
   }
 }
-
-export default GETSharePointRootFolder;

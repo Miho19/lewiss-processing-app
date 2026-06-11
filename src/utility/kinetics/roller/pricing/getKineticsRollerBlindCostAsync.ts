@@ -3,7 +3,10 @@ import type { BlindType } from "../../../../type/process/productType";
 import { getPricingScheduleAsync } from "../../../process/pricingScheduleUtility";
 import { getKineticsRollerFabricOpacity } from "../presentation/kineticsRoller";
 import { getKineticsRollerBottomRailCost } from "./getKineticsRollerBottomRailCost";
-import { getKineticsRollerControlCost } from "./getKineticsRollerControlCost";
+import {
+  getKineticsRollerControlCost,
+  isKineticsRollerBlindMotorised,
+} from "./getKineticsRollerControlCost";
 import { getKineticsRollerFabricCost } from "./getKineticsRollerFabricCost";
 import { getKineticsRollerPelmetCost } from "./getKineticsRollerPelmetCost";
 
@@ -17,6 +20,7 @@ export async function getKineticsRollerBlindCostAsync(
   bottomRailColour: string,
   pelmet: string,
   blindType: BlindType,
+  includeMotorisationCost: boolean = true,
 ): Promise<number> {
   const pricingSchedule = (await getPricingScheduleAsync(
     blindType,
@@ -36,12 +40,15 @@ export async function getKineticsRollerBlindCostAsync(
   );
   if (typeof fabricCost === "undefined") return 0;
 
-  const controlCost = getKineticsRollerControlCost(
+  let controlCost = getKineticsRollerControlCost(
     control,
     controlLength,
     pricingSchedule,
   );
   if (typeof controlCost === "undefined") return 0;
+
+  if (isKineticsRollerBlindMotorised(control) && !includeMotorisationCost)
+    controlCost = 0;
 
   const bottomRailCost = getKineticsRollerBottomRailCost(
     width,

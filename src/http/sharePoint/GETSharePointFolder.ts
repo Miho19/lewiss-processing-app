@@ -20,7 +20,7 @@ function GETSharePointFolderFetchOptions(folderId: string): RequestInit {
   return fetchOptions;
 }
 
-async function GETSharePointFolder(
+export async function GETSharePointFolder(
   folderId: string,
   endpoint: URL = GETSharePointFolderEndpoint(),
 ): Promise<SharePointFolderListItem[]> {
@@ -40,5 +40,3 @@ async function GETSharePointFolder(
     throw new Error("Failed to fetch SharePoint folder", { cause: error });
   }
 }
-
-export default GETSharePointFolder;

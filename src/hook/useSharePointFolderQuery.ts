@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import GETSharePointFolder from "../http/sharePoint/GETSharePointFolder";
+import { GETSharePointFolder } from "../http/sharePoint";
 
 function useSharePointFolderQuery(folderId: string) {
   return useQuery({

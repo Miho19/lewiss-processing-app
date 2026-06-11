@@ -1,6 +1,6 @@
-import type { BlindTypeToSharePointPricingScheduleFileId } from "../../type/process/pricingScheduleType";
+import type { BlindTypeToSharePointFileId } from "../../type/process/pricingScheduleType";
 
-export const blindTypeToSharePointPricingScheduleFileId: BlindTypeToSharePointPricingScheduleFileId =
+export const blindTypeToSharePointPricingScheduleFileId: BlindTypeToSharePointFileId =
   {
     "Kinetics Mikronwood 50mm Venetian": "",
     "Lewis's 25mm Aluminium Venetian": "",
@@ -14,3 +14,24 @@ export const blindTypeToSharePointPricingScheduleFileId: BlindTypeToSharePointPr
     "Kinetics 10mm Cellular Blind": "01VFVMOAHWC4LUAIEQDJC3ZSVTJ2Y65NY7",
     "Kinetics 20mm Cellular Blind": "01VFVMOAHWC4LUAIEQDJC3ZSVTJ2Y65NY7",
   };
+
+export const blindTypeToSharePointAccessoryPricingScheduleFileId: BlindTypeToSharePointFileId =
+  {
+    "Kinetics Sunscreen Roller Blind": "01VFVMOADECMGAUDSXGVC2RRRUE62FC5XM",
+    "Kinetics Blockout Roller Blind": "01VFVMOADECMGAUDSXGVC2RRRUE62FC5XM",
+    "Kinetics Light Filtering Roller Blind":
+      "01VFVMOADECMGAUDSXGVC2RRRUE62FC5XM",
+    "Kinetics 10mm Cellular Blind": "01VFVMOADECMGAUDSXGVC2RRRUE62FC5XM",
+    "Kinetics 20mm Cellular Blind": "01VFVMOADECMGAUDSXGVC2RRRUE62FC5XM",
+    "Kinetics Mikronwood 50mm Venetian": "",
+    "Lewis's 25mm Aluminium Venetian": "",
+    "Lewis's 50mm Phoenixwood Venetian": "",
+    "Santa Fe Normandy Shutter": "",
+    "Santa Fe Waterproof Woodlore Plus Shutter": "",
+  };
+
+/**
+ *
+ * Joshua April SharePoint Folder: 01VFVMOAG77RPCSPXOVVEKVOWOFTM6KWOT
+ *
+ */

@@ -19,7 +19,7 @@ function GETSharePointStaffListFetchOptions(): RequestInit {
   return fetchOptions;
 }
 
-async function GETSharePointStaffList(
+export async function GETSharePointStaffList(
   endpoint: URL = GETSharePointStaffListEndpoint(),
 ): Promise<{ measurers: string[]; consultants: Consultant[] }> {
   try {
@@ -39,5 +39,3 @@ async function GETSharePointStaffList(
     throw new Error("Failed to fetch SharePoint staff list", { cause: error });
   }
 }
-
-export default GETSharePointStaffList;

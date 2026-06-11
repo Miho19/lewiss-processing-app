@@ -1,8 +1,12 @@
 import type { KineticsRollerPricingSchedule } from "../../../../type/pricing/kinetics/kineticsRollerPricingScheduleType";
 import type { ProcessName } from "../../../../type/process/processType";
+import type { BlindType } from "../../../../type/process/productType";
 import type { KineticsRollerTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
 import type { AdditionalProduct } from "../../../../type/process/worksheetType";
-import { getPricingScheduleAsync } from "../../../process/pricingScheduleUtility";
+import {
+  getAccessoryPricingScheduleAsync,
+  getPricingScheduleAsync,
+} from "../../../process/pricingScheduleUtility";
 import { mapProcessNameToBlindType } from "../../../process/processUtility";
 
 export async function getKineticsRollerAdditionalProductListAsync(
@@ -12,30 +16,29 @@ export async function getKineticsRollerAdditionalProductListAsync(
   const blindType = mapProcessNameToBlindType(processName);
   if (typeof blindType === "undefined") return [];
 
-  const pricingSchedule = (await getPricingScheduleAsync(
-    blindType,
-  )) as KineticsRollerPricingSchedule;
+  const motorAdditionalProductList: AdditionalProduct[] =
+    await getMotorAdditionalProductListAsync(tableEntryList, blindType);
 
-  const motorProducts: AdditionalProduct[] = getMotorAdditionalProductList(
-    tableEntryList,
-    pricingSchedule,
-  );
+  const accessoryProductList: AdditionalProduct[] =
+    await getAccessoryProductListAsync(tableEntryList, blindType);
 
-  console.log(motorProducts);
-
-  if (typeof pricingSchedule === "undefined") return [];
-
-  return [...motorProducts];
+  return [...motorAdditionalProductList, ...accessoryProductList];
 }
 
 // its probably better to do this the other way --> loop through entires first to get a list of all operations
 // we just use a map ... 8/06/2026
 //
 
-export function getMotorAdditionalProductList(
+async function getMotorAdditionalProductListAsync(
   tableEntries: KineticsRollerTableEntry[],
-  pricingSchedule: KineticsRollerPricingSchedule,
-): AdditionalProduct[] {
+  blindType: BlindType,
+): Promise<AdditionalProduct[]> {
+  const pricingSchedule = (await getPricingScheduleAsync(
+    blindType,
+  )) as KineticsRollerPricingSchedule;
+
+  if (typeof pricingSchedule === "undefined") return [];
+
   const motorProducts: AdditionalProduct[] = Object.keys(
     pricingSchedule.control.motorisation,
   ).map((k) => {
@@ -65,4 +68,14 @@ export function getMotorAdditionalProductList(
   );
 
   return [...filteredMotorProducts];
+}
+
+export async function getAccessoryProductListAsync(
+  tableEntries: KineticsRollerTableEntry[],
+  blindType: BlindType,
+): Promise<AdditionalProduct[]> {
+  const pricingSchedule = await getAccessoryPricingScheduleAsync(blindType);
+  if (typeof pricingSchedule === "undefined") return [];
+
+  return [];
 }

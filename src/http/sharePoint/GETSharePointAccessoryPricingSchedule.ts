@@ -1,7 +1,7 @@
-import type { PricingSchedule } from "../../type/process/pricingScheduleType";
+import type { AccessoryPricingSchedule } from "../../type/process/pricingScheduleType";
 import type { BlindType } from "../../type/process/productType";
 import type { GETSharePointJSONFileResponse } from "../../type/sharePoint/folder/folderType";
-import { blindTypeToSharePointPricingScheduleFileId } from "./pricingSchedule";
+import { blindTypeToSharePointAccessoryPricingScheduleFileId } from "./pricingSchedule";
 
 function GETSharePointPricingScheduleEndpoint() {
   return new URL(
@@ -20,13 +20,13 @@ function GETSharePointJSONFileFetchOptions(fileId: string): RequestInit {
   return fetchOptions;
 }
 
-export async function GETSharePointPricingSchedule(
+export async function GETSharePointAccessoryPricingSchedule(
   blindType: BlindType,
   endpoint: URL = GETSharePointPricingScheduleEndpoint(),
-): Promise<PricingSchedule> {
+): Promise<AccessoryPricingSchedule> {
   try {
     const sharePointItemId: string | undefined =
-      blindTypeToSharePointPricingScheduleFileId[blindType];
+      blindTypeToSharePointAccessoryPricingScheduleFileId[blindType];
     if (typeof sharePointItemId === "undefined")
       throw new Error(`Could not fetch pricing schedule for ${blindType}`);
 
@@ -42,6 +42,8 @@ export async function GETSharePointPricingSchedule(
     return jsonContent;
   } catch (error) {
     if (error instanceof Error) console.error(error.message);
-    throw new Error("Failed to fetch pricing schedule", { cause: error });
+    throw new Error("Failed to fetch accessory pricing schedule", {
+      cause: error,
+    });
   }
 }

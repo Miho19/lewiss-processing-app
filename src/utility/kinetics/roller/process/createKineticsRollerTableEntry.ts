@@ -84,6 +84,7 @@ export async function createKineticsRollerTableEntryAsync(
     bottomRailColour,
     pelmet,
     blindType,
+    false,
   );
 
   const newEntry: KineticsRollerTableEntry = {

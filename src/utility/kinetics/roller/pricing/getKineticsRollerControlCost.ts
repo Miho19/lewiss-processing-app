@@ -5,10 +5,14 @@ export function getKineticsRollerControlCost(
   controlLength: string,
   pricingSchedule: KineticsRollerPricingSchedule,
 ): number | undefined {
-  if (control.toLowerCase().includes("chain"))
+  if (!isKineticsRollerBlindMotorised(control))
     return getChainCost(control, controlLength, pricingSchedule);
 
   return getMotorisationCost(control, pricingSchedule);
+}
+
+export function isKineticsRollerBlindMotorised(control: string) {
+  return !control.toLowerCase().includes("chain");
 }
 
 function getChainCost(
@@ -65,7 +69,5 @@ function getMotorisationCost(
       foundOption as keyof typeof pricingSchedule.control.motorisation
     ];
 
-  return 0;
-
-  // return motorisationObject.base;
+  return motorisationObject.base;
 }

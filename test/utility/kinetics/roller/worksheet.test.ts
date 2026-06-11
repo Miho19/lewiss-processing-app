@@ -1,19 +1,33 @@
 import { afterAll, describe, expect, it, vi } from "vitest";
 import kineticsRollerPricingExample from "./kinetics-roller-pricing-schedule.json";
+import kineticsAccessoryPricingExample from "../kinetics-accessories.json";
 import type { KineticsRollerTableEntry } from "../../../../src/type/process/tableEntry/kineticsTableEntryType";
-import { getKineticsRollerAdditionalProductListAsync } from "../../../../src/utility/kinetics/roller/pricing";
-import { beforeEach } from "node:test";
+import {
+  getKineticsRollerAdditionalProductListAsync,
+  getAccessoryProductListAsync,
+} from "../../../../src/utility/kinetics/roller/pricing";
 
-vi.mock("../../../../src/http/sharePoint/GETSharePointPricingSchedule", () => ({
-  default: vi.fn().mockResolvedValue(kineticsRollerPricingExample),
-}));
+import { GETSharePointAccessoryPricingSchedule } from "../../../../src/http/sharePoint/";
+
+vi.mock("../../../../src/http/sharePoint/", async (importOriginal) => {
+  const actual =
+    await importOriginal<typeof import("../../../../src/http/sharePoint/")>();
+
+  return {
+    ...actual,
+    GETSharePointPricingSchedule: vi
+      .fn()
+      .mockResolvedValue(kineticsRollerPricingExample),
+    GETSharePointAccessoryPricingSchedule: vi
+      .fn()
+      .mockResolvedValue(kineticsAccessoryPricingExample),
+  };
+});
 
 describe("Kinetics Roller Worksheet Cost", () => {
   afterAll(() => vi.resetAllMocks());
 
   describe("getKineticsRollerAdditionalProductListAsync", () => {
-    beforeEach(() => vi.restoreAllMocks());
-
     it("should return an array containing lithium-ion as one of the products", async () => {
       const exampleRollerEntryList: KineticsRollerTableEntry[] = [
         {
@@ -128,4 +142,98 @@ describe("Kinetics Roller Worksheet Cost", () => {
       expect(result.length).toBe(0);
     });
   });
+
+  describe("getAccessoryProductListAsync", () => {
+    const exampleRollerEntryList: KineticsRollerTableEntry[] = [
+      {
+        "blind index": 0,
+        location: "",
+        width: 0,
+        height: 0,
+        fit: "",
+        roll: "",
+        fabric: "",
+        control: "Lithium-ion",
+        "control side": "",
+        "bottom rail": "",
+        bracket: "",
+        pelmet: "",
+        butting: "",
+        remote: 0,
+        "remote channel": 0,
+        price: "",
+      },
+      {
+        "blind index": 0,
+        location: "",
+        width: 0,
+        height: 0,
+        fit: "",
+        roll: "",
+        fabric: "",
+        control: "Hardwired Smart Home",
+        "control side": "",
+        "bottom rail": "",
+        bracket: "",
+        pelmet: "",
+        butting: "",
+        remote: 0,
+        "remote channel": 0,
+        price: "",
+      },
+      {
+        "blind index": 0,
+        location: "",
+        width: 0,
+        height: 0,
+        fit: "",
+        roll: "",
+        fabric: "",
+        control: "Hardwired WiFi Remote Control",
+        "control side": "",
+        "bottom rail": "",
+        bracket: "",
+        pelmet: "",
+        butting: "",
+        remote: 0,
+        "remote channel": 0,
+        price: "",
+      },
+      {
+        "blind index": 0,
+        location: "",
+        width: 0,
+        height: 0,
+        fit: "",
+        roll: "",
+        fabric: "",
+        control: "Chain - White",
+        "control side": "",
+        "bottom rail": "",
+        bracket: "",
+        pelmet: "",
+        butting: "",
+        remote: 0,
+        "remote channel": 0,
+        price: "",
+      },
+    ];
+
+    it("should return a list of accessories... name in progress", async () => {
+      const result = await getAccessoryProductListAsync(
+        exampleRollerEntryList,
+        "Kinetics Blockout Roller Blind",
+      );
+      console.log(result);
+    });
+  });
 });
+
+// describe("HTTP Requests", () => {
+//   it("should make the request", async () => {
+//     const result = await GETSharePointAccessoryPricingSchedule(
+//       "Kinetics 10mm Cellular Blind",
+//     );
+//     console.log(result);
+//   });
+// });
