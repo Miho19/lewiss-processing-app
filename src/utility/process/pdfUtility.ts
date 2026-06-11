@@ -100,6 +100,10 @@ export function createBlindTableTextData(
   return entries;
 }
 
+function createColumn(leftContent: Content, rightContent: Content) {
+  return { columns: [leftContent, { text: " ", width: "auto" }, rightContent] };
+}
+
 export function createBlindSubTotalCostColumn(
   worksheetCost: WorksheetCost,
 ): Content {
@@ -121,11 +125,7 @@ export function createBlindSubTotalCostColumn(
     marginBottom: 5,
   };
 
-  const column = {
-    columns: [blindSubtotalText, { text: " ", width: "*" }, costText],
-  };
-
-  return column;
+  return createColumn(blindSubtotalText, costText);
 }
 
 export function createGSTCostColumn(worksheetCost: WorksheetCost): Content {
@@ -145,15 +145,11 @@ export function createGSTCostColumn(worksheetCost: WorksheetCost): Content {
     noWrap: true,
   };
 
-  const column = {
-    columns: [GSTText, { text: " ", width: "*" }, costText],
-  };
-
-  return column;
+  return createColumn(GSTText, costText);
 }
 
 export function createTotalCostColumn(worksheetCost: WorksheetCost): Content {
-  const TotalText: Column = {
+  const totalText: Column = {
     text: "Total (Inc. GST)",
     width: "auto",
     alignment: "left",
@@ -171,11 +167,7 @@ export function createTotalCostColumn(worksheetCost: WorksheetCost): Content {
     bold: true,
   };
 
-  const column = {
-    columns: [TotalText, { text: " ", width: "*" }, costText],
-  };
-
-  return column;
+  return createColumn(totalText, costText);
 }
 
 function getAdditionalProductNameStack(
@@ -215,19 +207,11 @@ export function createAdditionalProductCostColumn(
     additionalProductList,
   );
 
-  const additionalProductCosts = getAdditionalProductCostStack(
+  const additionalProductCostStack = getAdditionalProductCostStack(
     additionalProductList,
   );
 
-  const column = {
-    columns: [
-      additionalProductNameStack,
-      { text: " ", width: "*" },
-      additionalProductCosts,
-    ],
-  };
-
-  return column;
+  return createColumn(additionalProductNameStack, additionalProductCostStack);
 }
 
 export function createCustomerInformation(
