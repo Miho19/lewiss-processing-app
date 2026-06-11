@@ -6,11 +6,16 @@
 
 ## 🚀 Currently Working On
 
-- [x] **[Display Project file]** - Customer Information
-- [ ] **[Display Project file]** - Booking Information
-- [x] **[Display Project file]** - Room - Window - Treatment
+- [ ] **[Roller Pelmet text]** - change it to full name e.g. 110mm - Inside
+- [ ] **[Roller Special Instructions]** - Add this in
+- [ ] **[Roller Pricing]** - When only blind subtotal exists, total column is too close to cost
+- [ ] **[Roller Butting]** - Handle butting/ intermediate brackets
 
-- [x] **[project window]** - display number of windows selected for a given room
+- [ ] **[Cellular Table]** - Margin within cells
+- [ ] **[Cellular Remote Channel]** - Readd this information in
+- [ ] **[Cellular Pricing]** - Make sure motor cost is not included in blind price
+- [ ] **[Cellular Pricing]** - totals
+- [ ] **[Cellular Pricing]** - totals
 
 ## Palette
 

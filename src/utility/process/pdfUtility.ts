@@ -101,7 +101,10 @@ export function createBlindTableTextData(
 }
 
 function createColumn(leftContent: Content, rightContent: Content) {
-  return { columns: [leftContent, { text: " ", width: "auto" }, rightContent] };
+  return {
+    columns: [leftContent, { text: " ", width: "auto" }, rightContent],
+    columnGap: 10,
+  };
 }
 
 export function createBlindSubTotalCostColumn(
