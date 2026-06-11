@@ -21,6 +21,8 @@ export async function getKineticsRollerAdditionalProductListAsync(
     pricingSchedule,
   );
 
+  console.log(motorProducts);
+
   if (typeof pricingSchedule === "undefined") return [];
 
   return [...motorProducts];

@@ -9,7 +9,7 @@ import type {
   WindowSelectDetailed,
 } from "../../type/process/windowSelectType";
 import type { SharePointProjectFile } from "../../type/sharePoint/project/projectFileType";
-import createCellularBlindDocument from "../kinetics/cellular/process/createCellularBlindDocument";
+import { createCellularBlindDocumentAsync } from "../kinetics/cellular/process/createCellularBlindDocument";
 import { createBlockoutRollerBlindDocumentAsync } from "../kinetics/roller/process/createBlockoutRollerPDFDocument";
 import { getRoomAndWindowMeasurement } from "../sharePoint/projectFileUtility";
 import {
@@ -141,7 +141,7 @@ function getWindowSelectDetailedList(
 
 export const sharePointProductIdToProcessTypeRecord: ProductIdToCreatePDFDocumentFunction =
   {
-    "cellular-blind": createCellularBlindDocument,
+    "cellular-blind": createCellularBlindDocumentAsync,
     "sunscreen-roller": createSunscreenRollerBlindDocumentAsync,
     "blockout-roller": createBlockoutRollerBlindDocumentAsync,
   };

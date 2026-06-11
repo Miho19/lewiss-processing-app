@@ -8,8 +8,8 @@ import type {
   AdditionalProduct,
   WorksheetCost,
 } from "../../type/process/worksheetType";
-import { getKineticsCellularAdditionalProductListAsync } from "../kinetics/cellular/pricing/getKineticsCellularAdditionalProductList";
-import { getKineticsRollerAdditionalProductListAsync } from "../kinetics/roller/pricing/getKineticsRollerAdditionalProductList";
+import { getKineticsCellularAdditionalProductListAsync } from "../kinetics/cellular/pricing";
+import { getKineticsRollerAdditionalProductListAsync } from "../kinetics/roller/pricing";
 
 export function getCurrentTableEntryIndex(
   tableEntryList: TableEntry[],
@@ -45,15 +45,15 @@ export async function getWorksheetCostAsync(
     processName,
   );
 
-  // const gst = getGST(blindSubTotal, additionalArray);
+  const gst = getGST(blindSubTotal, additionalArray);
 
-  // const total = getTotal(blindSubTotal, additionalArray, gst);
+  const total = getTotal(blindSubTotal, additionalArray, gst);
 
   const costObjcet: WorksheetCost = {
     blindSubTotal: blindSubTotal,
     additional: [...additionalArray],
-    gst: 0,
-    total: 0,
+    gst: gst,
+    total: total,
   };
 
   return costObjcet;
@@ -82,17 +82,27 @@ async function getAdditionalProductArray(
   }
 }
 
-// function getGST(
-//   blindSubTotal: number,
-//   additionalProductList: AdditionalProduct[],
-// ): number {
-//   return 0;
-// }
+function getGST(
+  blindSubTotal: number,
+  additionalProductList: AdditionalProduct[],
+): number {
+  const additionalProductListTotalCost = additionalProductList.reduce(
+    (acc, current) => current.cost * current.quantity + acc,
+    0,
+  );
 
-// function getTotal(
-//   blindSubTotal: number,
-//   additionalProductList: AdditionalProduct[],
-//   gst: number,
-// ): number {
-//   return 0;
-// }
+  return (blindSubTotal + additionalProductListTotalCost) * 0.15;
+}
+
+function getTotal(
+  blindSubTotal: number,
+  additionalProductList: AdditionalProduct[],
+  gst: number,
+): number {
+  const additionalProductListTotalCost = additionalProductList.reduce(
+    (acc, current) => current.cost * current.quantity + acc,
+    0,
+  );
+
+  return blindSubTotal + additionalProductListTotalCost + gst;
+}

@@ -43,6 +43,12 @@ function getChainCost(
   }
 }
 
+/**
+ * Excluding the motor costs from the entry as we displays within the worksheet cost
+ * @param control
+ * @param pricingSchedule
+ * @returns
+ */
 function getMotorisationCost(
   control: string,
   pricingSchedule: KineticsRollerPricingSchedule,
@@ -59,5 +65,7 @@ function getMotorisationCost(
       foundOption as keyof typeof pricingSchedule.control.motorisation
     ];
 
-  return motorisationObject.base;
+  return 0;
+
+  // return motorisationObject.base;
 }

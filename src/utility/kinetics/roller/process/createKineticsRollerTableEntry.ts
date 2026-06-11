@@ -50,9 +50,11 @@ export async function createKineticsRollerTableEntryAsync(
   const fabricMultiplier = spec.fabric?.multiplier ?? 0;
 
   const controlString = getKineticsRollerControlString(spec);
-  const controlLength = windowMeasurement.controlLength;
+  const controlLength = controlString.toLowerCase().includes("chain")
+    ? `${windowMeasurement.controlLength}mm`
+    : "";
 
-  const controlOutputString = `${controlString} ${controlString.toLowerCase().includes("chain") && controlLength + `mm`}`;
+  const controlOutputString = `${controlString} ${controlLength}`.trim();
 
   const bottomRailType = spec.bottomRailType;
   const bottomRailColour = spec.bottomRailColour;
@@ -61,7 +63,7 @@ export async function createKineticsRollerTableEntryAsync(
   const controlSide = windowMeasurement.controlSide;
 
   const bracket = `${spec.bracketColour}`;
-
+  //  change the display name to 110mm - Inside for example 11/06/2026
   const pelmet = typeof spec.pelmetType === "undefined" ? "" : spec.pelmetType;
 
   const { remote, channel } = getRemoteAndChannel(

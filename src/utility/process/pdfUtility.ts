@@ -6,7 +6,10 @@ import type {
   ContentStack,
   ContentTable,
 } from "pdfmake/interfaces";
-import type { WorksheetCost } from "../../type/process/worksheetType";
+import type {
+  AdditionalProduct,
+  WorksheetCost,
+} from "../../type/process/worksheetType";
 import type { TableEntry } from "../../type/process/tableEntry/tableEntryType";
 
 export function convertTableEntryToStringArray(tableEntry: TableEntry) {
@@ -105,6 +108,7 @@ export function createBlindSubTotalCostColumn(
     width: "auto",
     alignment: "left",
     noWrap: true,
+    marginBottom: 5,
   };
 
   const blindSubtotalCost = worksheetCost.blindSubTotal;
@@ -114,10 +118,113 @@ export function createBlindSubTotalCostColumn(
     width: "*",
     alignment: "right",
     noWrap: true,
+    marginBottom: 5,
   };
 
   const column = {
     columns: [blindSubtotalText, { text: " ", width: "*" }, costText],
+  };
+
+  return column;
+}
+
+export function createGSTCostColumn(worksheetCost: WorksheetCost): Content {
+  const GSTText: Column = {
+    text: "GST",
+    width: "auto",
+    alignment: "left",
+    noWrap: true,
+  };
+
+  const GST = worksheetCost.gst;
+
+  const costText: Column = {
+    text: GST.toFixed(2),
+    width: "*",
+    alignment: "right",
+    noWrap: true,
+  };
+
+  const column = {
+    columns: [GSTText, { text: " ", width: "*" }, costText],
+  };
+
+  return column;
+}
+
+export function createTotalCostColumn(worksheetCost: WorksheetCost): Content {
+  const TotalText: Column = {
+    text: "Total (Inc. GST)",
+    width: "auto",
+    alignment: "left",
+    noWrap: true,
+    bold: true,
+  };
+
+  const total = worksheetCost.total;
+
+  const costText: Column = {
+    text: total.toFixed(2),
+    width: "*",
+    alignment: "right",
+    noWrap: true,
+    bold: true,
+  };
+
+  const column = {
+    columns: [TotalText, { text: " ", width: "*" }, costText],
+  };
+
+  return column;
+}
+
+function getAdditionalProductNameStack(
+  additionalProductList: AdditionalProduct[],
+): ContentStack {
+  const names: Content = additionalProductList.map((p) => ({
+    text: `${p.name} x ${p.quantity}`,
+    alignment: "left",
+    width: "auto",
+    noWrap: true,
+    marginBottom: 5,
+  }));
+
+  return { stack: [...names] };
+}
+
+function getAdditionalProductCostStack(
+  additionalProductList: AdditionalProduct[],
+): ContentStack {
+  const costs: Content = additionalProductList.map((p) => ({
+    text: `${(p.cost * p.quantity).toFixed(2)}`,
+    alignment: "right",
+    width: "*",
+    noWrap: true,
+    marginBottom: 5,
+  }));
+
+  return { stack: [...costs] };
+}
+
+export function createAdditionalProductCostColumn(
+  worksheetCost: WorksheetCost,
+): Content {
+  const additionalProductList = worksheetCost.additional;
+
+  const additionalProductNameStack = getAdditionalProductNameStack(
+    additionalProductList,
+  );
+
+  const additionalProductCosts = getAdditionalProductCostStack(
+    additionalProductList,
+  );
+
+  const column = {
+    columns: [
+      additionalProductNameStack,
+      { text: " ", width: "*" },
+      additionalProductCosts,
+    ],
   };
 
   return column;

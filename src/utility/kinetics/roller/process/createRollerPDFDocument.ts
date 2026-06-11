@@ -10,10 +10,13 @@ import type { SharePointProjectFile } from "../../../../type/sharePoint/project/
 import { createDocument } from "../../../pdfmake/documentUtility";
 import { createWindowWareHeader } from "../../pdf/windowWareHeader";
 import {
+  createAdditionalProductCostColumn,
   createBlindSubTotalCostColumn,
   createBlindTableTextData,
   createCustomerInformation,
+  createGSTCostColumn,
   createTable,
+  createTotalCostColumn,
 } from "../../../process/pdfUtility";
 import type { KineticsRollerTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
 import { getRoomAndWindowMeasurement } from "../../../sharePoint/projectFileUtility";
@@ -138,11 +141,40 @@ function createBlindInformationTable(
   return table;
 }
 
-function createCostTotalColumn(worksheetCostObject: WorksheetCost): Column[] {
-  const blindSubtotalColumn =
-    createBlindSubTotalCostColumn(worksheetCostObject);
+function createHorizontalLine(): Content {
+  const table: Content = {
+    table: {
+      widths: ["*"],
+      body: [[""]],
+    },
+    layout: {
+      hLineWidth: (index) => (index === 1 ? 1 : 0),
+      hLineColor: () => "#cccccc",
+      vLineWidth: () => 0,
+    },
+    margin: [0, 0, 0, 10],
+  };
 
-  const stack: Content[] = [blindSubtotalColumn];
+  return table;
+}
+
+function createCostTotalColumn(worksheetCost: WorksheetCost): Column[] {
+  const blindSubtotalColumn = createBlindSubTotalCostColumn(worksheetCost);
+
+  const additionalProductColumn =
+    createAdditionalProductCostColumn(worksheetCost);
+
+  const gstCostColumn = createGSTCostColumn(worksheetCost);
+
+  const totalCostColumn = createTotalCostColumn(worksheetCost);
+
+  const stack: Content[] = [
+    blindSubtotalColumn,
+    additionalProductColumn,
+    gstCostColumn,
+    createHorizontalLine(),
+    totalCostColumn,
+  ];
 
   const content: Content[] = [
     {

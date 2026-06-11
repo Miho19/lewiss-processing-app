@@ -1,8 +1,8 @@
+import type { KineticsRollerSpec } from "../../../../../type/sharePoint/project/spec/kineticsSpec";
 import {
   getKineticsRollerControlString,
   getKineticsRollerFabricOpacity,
-} from "../../../../../utility/kinetics/roller/kineticsRoller";
-import type { KineticsRollerSpec } from "../../../../../type/sharePoint/project/spec/kineticsSpec";
+} from "../../../../../utility/kinetics/roller/presentation/kineticsRoller";
 
 type Props = {
   spec: KineticsRollerSpec;
