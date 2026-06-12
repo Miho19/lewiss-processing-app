@@ -1,8 +1,13 @@
 import type { KineticsRollerTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
 import type { WindowSelectDetailed } from "../../../../type/process/windowSelectType";
-import type { Room } from "../../../../type/sharePoint/project/projectFileType";
+import type {
+  Room,
+  SharePointProjectFile,
+} from "../../../../type/sharePoint/project/projectFileType";
 import type { KineticsRollerSpec } from "../../../../type/sharePoint/project/spec/kineticsSpec";
 import type { WindowMeasurement } from "../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
+import { getCurrentTableEntryIndex } from "../../../process/tableEntryUtility";
+import { getRoomAndWindowMeasurement } from "../../../sharePoint/projectFileUtility";
 import { getRemoteAndChannel } from "../../general/motorAccessoryUtility";
 import { getKineticsRollerPelmetString } from "../presentation";
 import { getKineticsRollerControlString } from "../presentation/kineticsRoller";
@@ -108,4 +113,33 @@ export async function createKineticsRollerTableEntryAsync(
   };
 
   return newEntry;
+}
+
+export async function generateKineticsRollerTableEntryListAsync(
+  windowSelectDetailedList: WindowSelectDetailed[],
+  projectFile: SharePointProjectFile,
+): Promise<KineticsRollerTableEntry[]> {
+  const entries: KineticsRollerTableEntry[] = [];
+
+  for (const w of windowSelectDetailedList) {
+    const [projectRoom, projectWindow] = getRoomAndWindowMeasurement(
+      projectFile,
+      w.roomId,
+      w.windowId,
+    );
+
+    const blindIndex = getCurrentTableEntryIndex(entries);
+
+    const newEntry = await createKineticsRollerTableEntryAsync(
+      w,
+      blindIndex,
+      projectRoom,
+      projectWindow,
+      entries,
+    );
+
+    entries.push(newEntry);
+  }
+
+  return entries;
 }

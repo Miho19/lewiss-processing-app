@@ -160,7 +160,7 @@ function generateButtingBlindRHS(
   return buttingBlind;
 }
 
-export async function generateKineticsCellularTableEntriesAsync(
+export async function generateKineticsCellularTableEntryListAsync(
   windowSelectDetailedList: WindowSelectDetailed[],
   projectFile: SharePointProjectFile,
 ) {

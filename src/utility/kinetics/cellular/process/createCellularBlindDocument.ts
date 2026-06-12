@@ -9,14 +9,16 @@ import { createDocument } from "../../../pdfmake/documentUtility";
 import { createWindowWareHeader } from "../../pdf/windowWareHeader";
 import {
   createBlindTableTextData,
+  createCostTotalColumn,
   createCustomerInformation,
   createTable,
 } from "../../../process/pdfUtility";
 import type { KineticsCellularTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
 import {
   defaultKineticsCellularTableEntry,
-  generateKineticsCellularTableEntriesAsync,
+  generateKineticsCellularTableEntryListAsync,
 } from "./kineticsCellularTableEntry";
+import { getWorksheetCostAsync } from "../../../process/tableEntryUtility";
 
 export async function createCellularBlindDocumentAsync(
   windowSelectDetailedList: WindowSelectDetailed[],
@@ -42,7 +44,7 @@ export async function createCellularBlindDocumentAsync(
   content.push(customerInformation);
 
   const kineticsCellularEntryList: KineticsCellularTableEntry[] =
-    await generateKineticsCellularTableEntriesAsync(
+    await generateKineticsCellularTableEntryListAsync(
       windowSelectDetailedList,
       projectFile,
     );
@@ -52,6 +54,14 @@ export async function createCellularBlindDocumentAsync(
   );
 
   content.push(blindInformation);
+
+  const kineticsCellularWorksheetCost = await getWorksheetCostAsync(
+    kineticsCellularEntryList,
+    "cellular-blind",
+  );
+
+  const costTotal = createCostTotalColumn(kineticsCellularWorksheetCost);
+  content.push(costTotal);
 
   const document = createDocument(projectFile, "cellular-blind");
   document.content = [...content];

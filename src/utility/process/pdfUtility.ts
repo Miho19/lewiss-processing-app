@@ -21,6 +21,14 @@ export function convertTableEntryToStringArray(tableEntry: TableEntry) {
   });
 }
 
+function createWidthArray(tableEntry: TableEntry) {
+  return Object.keys(tableEntry).map((key) => {
+    if (key.localeCompare("fabric", undefined, { sensitivity: "base" }) === 0)
+      return "*";
+    return "auto";
+  });
+}
+
 export function generateTableHeader(tableEntry: TableEntry) {
   const columnStringArray = convertTableEntryToStringArray(tableEntry);
 
@@ -43,17 +51,16 @@ export function createTable(tableEntry: TableEntry): ContentTable {
   const table: ContentTable = {
     table: {
       headerRows: 1,
-      widths: Array(tableHeaderArray.length).fill("auto"),
+      widths: createWidthArray(tableEntry),
       body: [tableHeaderArray],
     },
     layout: {
       paddingBottom: () => {
-        return 2;
+        return 5;
       },
 
-      paddingTop: (rowIndex) => {
-        if (rowIndex === 1) return 5;
-        return 1;
+      paddingTop: () => {
+        return 5;
       },
 
       hLineWidth: () => {
@@ -265,6 +272,53 @@ export function createCustomerInformation(
     columns: customerInformationColumn,
     marginBottom: 14,
   };
+
+  return content;
+}
+
+export function createHorizontalLine(): Content {
+  const table: Content = {
+    table: {
+      widths: ["*"],
+      body: [[""]],
+    },
+    layout: {
+      hLineWidth: (index) => (index === 1 ? 1 : 0),
+      hLineColor: () => "#cccccc",
+      vLineWidth: () => 0,
+    },
+    margin: [0, 0, 0, 10],
+  };
+
+  return table;
+}
+
+export function createCostTotalColumn(worksheetCost: WorksheetCost): Column[] {
+  const blindSubtotalColumn = createBlindSubTotalCostColumn(worksheetCost);
+
+  const additionalProductColumn =
+    createAdditionalProductCostColumn(worksheetCost);
+
+  const gstCostColumn = createGSTCostColumn(worksheetCost);
+
+  const totalCostColumn = createTotalCostColumn(worksheetCost);
+
+  const stack: Content[] = [
+    blindSubtotalColumn,
+    additionalProductColumn,
+    gstCostColumn,
+    createHorizontalLine(),
+    totalCostColumn,
+  ];
+
+  const content: Content[] = [
+    {
+      columns: [
+        { width: "*", text: " " },
+        { width: "auto", stack: stack },
+      ],
+    },
+  ];
 
   return content;
 }

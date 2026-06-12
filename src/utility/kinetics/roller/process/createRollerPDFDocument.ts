@@ -1,5 +1,4 @@
 import type {
-  Column,
   Content,
   ContentText,
   TDocumentDefinitions,
@@ -10,25 +9,17 @@ import type { SharePointProjectFile } from "../../../../type/sharePoint/project/
 import { createDocument } from "../../../pdfmake/documentUtility";
 import { createWindowWareHeader } from "../../pdf/windowWareHeader";
 import {
-  createAdditionalProductCostColumn,
-  createBlindSubTotalCostColumn,
   createBlindTableTextData,
+  createCostTotalColumn,
   createCustomerInformation,
-  createGSTCostColumn,
   createTable,
-  createTotalCostColumn,
 } from "../../../process/pdfUtility";
 import type { KineticsRollerTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
-import { getRoomAndWindowMeasurement } from "../../../sharePoint/projectFileUtility";
-import {
-  getCurrentTableEntryIndex,
-  getWorksheetCostAsync,
-} from "../../../process/tableEntryUtility";
+import { getWorksheetCostAsync } from "../../../process/tableEntryUtility";
 
-import type { WorksheetCost } from "../../../../type/process/worksheetType";
 import {
-  createKineticsRollerTableEntryAsync,
   defaultKineticsRollerTableEntry,
+  generateKineticsRollerTableEntryListAsync,
 } from "./createKineticsRollerTableEntry";
 
 export async function createRollerBlindDocumentAsync(
@@ -100,35 +91,6 @@ function createOrderTitleString(
   return content;
 }
 
-async function generateKineticsRollerTableEntryListAsync(
-  windowSelectDetailedList: WindowSelectDetailed[],
-  projectFile: SharePointProjectFile,
-): Promise<KineticsRollerTableEntry[]> {
-  const entries: KineticsRollerTableEntry[] = [];
-
-  for (const w of windowSelectDetailedList) {
-    const [projectRoom, projectWindow] = getRoomAndWindowMeasurement(
-      projectFile,
-      w.roomId,
-      w.windowId,
-    );
-
-    const blindIndex = getCurrentTableEntryIndex(entries);
-
-    const newEntry = await createKineticsRollerTableEntryAsync(
-      w,
-      blindIndex,
-      projectRoom,
-      projectWindow,
-      entries,
-    );
-
-    entries.push(newEntry);
-  }
-
-  return entries;
-}
-
 function createBlindInformationTable(
   kineticsRollerTableEntryList: KineticsRollerTableEntry[],
 ) {
@@ -139,51 +101,4 @@ function createBlindInformationTable(
   table.table.body.push(...tableEntries);
 
   return table;
-}
-
-function createHorizontalLine(): Content {
-  const table: Content = {
-    table: {
-      widths: ["*"],
-      body: [[""]],
-    },
-    layout: {
-      hLineWidth: (index) => (index === 1 ? 1 : 0),
-      hLineColor: () => "#cccccc",
-      vLineWidth: () => 0,
-    },
-    margin: [0, 0, 0, 10],
-  };
-
-  return table;
-}
-
-function createCostTotalColumn(worksheetCost: WorksheetCost): Column[] {
-  const blindSubtotalColumn = createBlindSubTotalCostColumn(worksheetCost);
-
-  const additionalProductColumn =
-    createAdditionalProductCostColumn(worksheetCost);
-
-  const gstCostColumn = createGSTCostColumn(worksheetCost);
-
-  const totalCostColumn = createTotalCostColumn(worksheetCost);
-
-  const stack: Content[] = [
-    blindSubtotalColumn,
-    additionalProductColumn,
-    gstCostColumn,
-    createHorizontalLine(),
-    totalCostColumn,
-  ];
-
-  const content: Content[] = [
-    {
-      columns: [
-        { width: "*", text: " " },
-        { width: "auto", stack: stack },
-      ],
-    },
-  ];
-
-  return content;
 }
