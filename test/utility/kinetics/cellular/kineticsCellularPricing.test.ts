@@ -38,7 +38,7 @@ describe("Kinetics Cellular Pricing", () => {
     ];
 
     it.each(fabricPricingExamples)(
-      "",
+      "should given width: %i height: %i opacity: %s return %i",
       (width, height, opacity, expectedCost) => {
         expect(
           getKineticsCellularFabricCost(
@@ -53,10 +53,10 @@ describe("Kinetics Cellular Pricing", () => {
   });
 
   describe("getKineticsCellularControlCost", () => {
-    const controlInputExamples: [string, number][] = [
-      ["a", 0],
-      ["", 0],
-      [" ", 0],
+    const controlInputExamples: [string, number | undefined][] = [
+      ["a", undefined],
+      ["", undefined],
+      [" ", undefined],
       ["cord", 0],
       [
         "lithium-ion",
@@ -69,7 +69,7 @@ describe("Kinetics Cellular Pricing", () => {
     ];
 
     it.each(controlInputExamples)(
-      "should return the expected results",
+      "should given %s return %i",
       (control, expectedCost) => {
         expect(
           getKineticsCellularControlCost(control, kineticsPricingExample),
@@ -79,17 +79,18 @@ describe("Kinetics Cellular Pricing", () => {
   });
 
   describe("getKineticsCellularHeadrailCost", () => {
-    const exampleInput: [string, number][] = [
-      ["", 0],
+    const exampleInput: [string, number | undefined][] = [
+      ["", undefined],
       ["black", 0],
       ["white", 0],
       ["off white", 0],
-      [" ", 0],
+      [" ", undefined],
+
       ["custom", 103],
     ];
 
     it.each(exampleInput)(
-      "should return expected number",
+      "should given %s return %i",
       (headrailColour, expectedCost) => {
         expect(
           getKineticsCellularHeadrailCost(
@@ -102,13 +103,12 @@ describe("Kinetics Cellular Pricing", () => {
   });
 
   describe("getKineticsCellularSideChannelCost", () => {
-    const exampleInput: [number, string, number][] = [
-      [0, "None", 0],
-      [1200, " ", 0],
-      [1200, "", 0],
-      [-1, "Custom", 0],
-      [1200, "anything", 0],
-      [1200, "black", 150],
+    const exampleInput: [number, string, number | undefined][] = [
+      [0, "None", undefined],
+      [1200, " ", undefined],
+      [1200, "", undefined],
+      [-1, "Custom", undefined],
+      [1200, "anything", undefined],
       [1200, "WhIte", 150],
       [
         1200,

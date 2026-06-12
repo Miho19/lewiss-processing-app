@@ -107,6 +107,7 @@ async function getNewEntryKineticsCellularBlindAsync(
     headrailColour,
     sideChannelColour,
     blindType,
+    false,
   );
 
   const newEntry: KineticsCellularTableEntry = {
