@@ -2,7 +2,7 @@ import type { KineticsRollerFabricOpacity } from "../../../../type/pricing/kinet
 import type { BlindType } from "../../../../type/process/productType";
 import type { KineticsRollerSpec } from "../../../../type/sharePoint/project/spec/kineticsSpec";
 
-function getKineticsRollerControlString(spec: KineticsRollerSpec) {
+export function getKineticsRollerControlString(spec: KineticsRollerSpec) {
   const chainColour = spec.chainColour;
   const chainOutputString = `Chain FastRise - ${chainColour}`;
 
@@ -16,7 +16,7 @@ function getKineticsRollerControlString(spec: KineticsRollerSpec) {
   return spec.motorisation;
 }
 
-function getKineticsRollerFabricOpacity(
+export function getKineticsRollerFabricOpacity(
   blindType: BlindType,
 ): KineticsRollerFabricOpacity | undefined {
   switch (blindType) {
@@ -30,5 +30,3 @@ function getKineticsRollerFabricOpacity(
       return undefined;
   }
 }
-
-export { getKineticsRollerControlString, getKineticsRollerFabricOpacity };
