@@ -224,7 +224,6 @@ describe("Kinetics Roller Worksheet Cost", () => {
         exampleRollerEntryList,
         "Kinetics Blockout Roller Blind",
       );
-      console.log(result);
     });
   });
 });

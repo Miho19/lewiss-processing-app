@@ -1,4 +1,5 @@
 import type { KineticsRollerSpec } from "../../../../../type/sharePoint/project/spec/kineticsSpec";
+import { getKineticsRollerPelmetString } from "../../../../../utility/kinetics/roller/presentation";
 import {
   getKineticsRollerControlString,
   getKineticsRollerFabricOpacity,
@@ -47,7 +48,9 @@ function RoomCardTreatmentKineticsRoller(props: Props) {
       {spec.pelmetType && (
         <>
           <span className="text-sm text-gray-500">Pelmet</span>
-          <span className="">{spec.pelmetType}</span>
+          <span className="">
+            {getKineticsRollerPelmetString(spec.pelmetType)}
+          </span>
         </>
       )}
     </div>

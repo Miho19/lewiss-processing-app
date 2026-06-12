@@ -6,10 +6,11 @@ export function getKineticsRollerPelmetCost(
   pricingSchedule: KineticsRollerPricingSchedule,
 ): number | undefined {
   if (width <= 0 || width > 5000) return undefined;
-  if (pelmet === null || pelmet.trim().length === 0) return 0;
+  if (typeof pelmet === "undefined") return 0;
+  if (pelmet == null) return 0;
+  if (pelmet.trim().length === 0) return 0;
 
   const pelmetCostArray = getPelmetCostArray(pelmet, pricingSchedule);
-
   if (typeof pelmetCostArray === "undefined") return undefined;
 
   const widthIndex = getPelmetWidthArrayIndex(width, pricingSchedule);
@@ -23,36 +24,39 @@ function getPelmetCostArray(
   pelmet: string,
   pricingSchedule: KineticsRollerPricingSchedule,
 ): number[] | undefined {
-  const lookupObject = getPelmetLookupObject(pelmet);
-  if (typeof lookupObject === "undefined") return undefined;
+  const pelmetLookup = destructurePelmetString(pelmet);
+  if (typeof pelmetLookup === "undefined") return undefined;
+
+  const { size, fit } = pelmetLookup;
 
   const found = pricingSchedule.pelmet.cost.find(
-    (p) => p.name === lookupObject.name,
+    (p) => p.size === size.toString(),
   );
+
   if (typeof found === "undefined") return undefined;
 
-  const pelmetCostArray = found[lookupObject.fit as keyof typeof found];
+  const pelmetCostArray = found[fit as keyof typeof found];
 
   if (!Array.isArray(pelmetCostArray)) return undefined;
 
   return pelmetCostArray;
 }
 
-function getPelmetLookupObject(
+function destructurePelmetString(
   pelmet: string,
-): { name: string; fit: string } | undefined {
+): { size: number; fit: string } | undefined {
   const pelmetSize = getPelmetSize(pelmet);
   const pelmetFit = getPelmetFit(pelmet);
 
   if (typeof pelmetSize === "undefined" || typeof pelmetFit === "undefined")
     return undefined;
 
-  return { name: `${pelmetSize}mm Pelmet`, fit: pelmetFit };
+  return { size: pelmetSize, fit: pelmetFit };
 }
 
 function getPelmetSize(pelmet: string): number | undefined {
   try {
-    const pelmetSizeString: string = pelmet.trim().toLowerCase().split(" ")[0];
+    const pelmetSizeString: string = pelmet.toLowerCase().split("-")[0].trim();
     const pelmetSize = parseInt(pelmetSizeString);
     return pelmetSize;
   } catch {
@@ -61,16 +65,10 @@ function getPelmetSize(pelmet: string): number | undefined {
 }
 
 function getPelmetFit(pelmet: string): string | undefined {
-  const pelmetfit: string = pelmet.trim().toLowerCase().split(" ")[1];
-
-  switch (pelmetfit) {
-    case "i/s":
-      return "inside";
-    case "o/s":
-      return "outside";
-    default:
-      return undefined;
-  }
+  const pelmetfit: string = pelmet.split("-")[1].trim();
+  const validFitList = ["Inside", "Outside"];
+  if (!validFitList.includes(pelmetfit)) return undefined;
+  return pelmetfit.toLowerCase();
 }
 
 function getPelmetAdjustedWidth(width: number): number {

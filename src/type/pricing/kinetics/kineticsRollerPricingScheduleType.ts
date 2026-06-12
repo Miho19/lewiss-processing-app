@@ -48,7 +48,7 @@ type Pelmet = {
 };
 
 export type PelmetPricing = {
-  name: string;
+  size: string;
   inside: number[];
   outside: number[];
 };

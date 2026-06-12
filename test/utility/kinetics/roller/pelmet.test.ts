@@ -16,6 +16,13 @@ describe("Kinetics Roller Pelmet", () => {
     ["  ", ""],
     [undefined, ""],
     [null, ""],
+    ["160 o/S", "160mm - Outside"],
+    [null, ""],
+    ["160 os", ""],
+    [null, ""],
+    ["160 IIs", ""],
+    [null, ""],
+    ["160mm IIs", ""],
   ];
 
   it.each(exampleInput)("should given %s return %s", (pelmet, expected) => {

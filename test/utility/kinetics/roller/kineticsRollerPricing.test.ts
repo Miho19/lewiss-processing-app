@@ -106,19 +106,19 @@ describe("Kinetics Roller Pricing", () => {
 
   describe("getKineticsRollerPelmetCost", () => {
     const exampleInput: [number, string, number | undefined][] = [
-      [1200, "110 I/S", 56.25],
-      [0, "110 I/S", undefined],
+      [1200, "110mm - Inside", 56.25],
+      [0, "110mm - Inside", undefined],
       [1200, "", 0],
       [1200, "", 0],
       [1200, "\t\t", 0],
-      [-1, "110 I/S", undefined],
-      [1260, "110 I/S", 67.5],
-      [1000, "110 I/S", 45],
-      [240, "110 I/S", 45],
-      [5000, "110 I/S", 225],
-      [1260, "160 O/S", 138.75],
-      [1000, "160 o/S", 92.5],
-      [240, "160 O/s", 92.5],
+      [-1, "110mm - Inside", undefined],
+      [1260, "110mm - Inside", 67.5],
+      [1000, "110mm - Inside", 45],
+      [240, "110mm - Inside", 45],
+      [5000, "110mm - Inside", 225],
+      [1260, "160mm - Outside", 138.75],
+      [1000, "160mm - Outside", 92.5],
+      [240, "160mm - Outside", 92.5],
     ];
 
     it.each(exampleInput)(

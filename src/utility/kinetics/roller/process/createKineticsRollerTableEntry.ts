@@ -4,6 +4,7 @@ import type { Room } from "../../../../type/sharePoint/project/projectFileType";
 import type { KineticsRollerSpec } from "../../../../type/sharePoint/project/spec/kineticsSpec";
 import type { WindowMeasurement } from "../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
 import { getRemoteAndChannel } from "../../general/motorAccessoryUtility";
+import { getKineticsRollerPelmetString } from "../presentation";
 import { getKineticsRollerControlString } from "../presentation/kineticsRoller";
 import { getKineticsRollerBlindCostAsync } from "../pricing/getKineticsRollerBlindCostAsync";
 
@@ -63,8 +64,8 @@ export async function createKineticsRollerTableEntryAsync(
   const controlSide = windowMeasurement.controlSide;
 
   const bracket = `${spec.bracketColour}`;
-  //  change the display name to 110mm - Inside for example 11/06/2026
-  const pelmet = typeof spec.pelmetType === "undefined" ? "" : spec.pelmetType;
+
+  const pelmet = getKineticsRollerPelmetString(spec.pelmetType);
 
   const { remote, channel } = getRemoteAndChannel(
     location,
