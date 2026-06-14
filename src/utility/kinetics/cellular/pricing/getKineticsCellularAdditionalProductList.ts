@@ -6,6 +6,7 @@ import type { KineticsCellularTableEntry } from "../../../../type/process/tableE
 import type { AdditionalProduct } from "../../../../type/process/worksheetType";
 import { getPricingScheduleAsync } from "../../../process/pricingScheduleUtility";
 import { mapProcessNameToBlindType } from "../../../process/processUtility";
+import { getKineticsAccessoryProductListAsync } from "../../general/getAccessoryProductListAsync";
 
 // note that blindtype is going to be 10mm cellular regardless whether it is 10 or 20mm
 export async function getKineticsCellularAdditionalProductListAsync(
@@ -13,11 +14,20 @@ export async function getKineticsCellularAdditionalProductListAsync(
   processName: ProcessName,
 ) {
   const blindType = mapProcessNameToBlindType(processName);
+  if (typeof blindType === "undefined") return [];
 
-  return [];
+  const motorAdditionalProductList = await getMotorAdditionalProductListAsync(
+    tableEntryList,
+    blindType,
+  );
+
+  const accessoryAdditionalProductList =
+    await getKineticsAccessoryProductListAsync(tableEntryList, blindType);
+
+  return [...motorAdditionalProductList, ...accessoryAdditionalProductList];
 }
 
-export async function getKineticsCellularMotorAdditionalProductListAsync(
+export async function getMotorAdditionalProductListAsync(
   tableEntryList: KineticsCellularTableEntry[],
   blindType: BlindType,
 ): Promise<AdditionalProduct[]> {
@@ -48,3 +58,5 @@ export async function getKineticsCellularMotorAdditionalProductListAsync(
 
   return filtered;
 }
+
+export async function getAccessoryProductListAsync() {}

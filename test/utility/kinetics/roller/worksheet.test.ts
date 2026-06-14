@@ -2,12 +2,9 @@ import { afterAll, describe, expect, it, vi } from "vitest";
 import kineticsRollerPricingExample from "./kinetics-roller-pricing-schedule.json";
 import kineticsAccessoryPricingExample from "../kinetics-accessories.json";
 import type { KineticsRollerTableEntry } from "../../../../src/type/process/tableEntry/kineticsTableEntryType";
-import {
-  getKineticsRollerAdditionalProductListAsync,
-  getAccessoryProductListAsync,
-} from "../../../../src/utility/kinetics/roller/pricing";
+import { getKineticsRollerAdditionalProductListAsync } from "../../../../src/utility/kinetics/roller/pricing";
 
-import { GETSharePointAccessoryPricingSchedule } from "../../../../src/http/sharePoint/";
+import { getKineticsAccessoryProductListAsync } from "../../../../src/utility/kinetics/general/getAccessoryProductListAsync";
 
 vi.mock("../../../../src/http/sharePoint/", async (importOriginal) => {
   const actual =
@@ -44,8 +41,8 @@ describe("Kinetics Roller Worksheet Cost", () => {
           bracket: "",
           pelmet: "",
           butting: "",
-          remote: 0,
-          "remote channel": 0,
+          remote: 1,
+          "remote channel": 1,
           price: "",
         },
         {
@@ -109,7 +106,7 @@ describe("Kinetics Roller Worksheet Cost", () => {
         "blockout-roller",
       );
 
-      expect(result.length).toBe(3);
+      expect(result.length).toBe(5);
       expect(result[0].name).toBe("Lithium-ion");
       expect(result[0].quantity).toBe(1);
     });
@@ -143,7 +140,7 @@ describe("Kinetics Roller Worksheet Cost", () => {
     });
   });
 
-  describe("getAccessoryProductListAsync", () => {
+  describe("getKineticsAccessoryProductListAsync", () => {
     const exampleRollerEntryList: KineticsRollerTableEntry[] = [
       {
         "blind index": 0,
@@ -220,10 +217,14 @@ describe("Kinetics Roller Worksheet Cost", () => {
     ];
 
     it("should return a list of accessories... name in progress", async () => {
-      const result = await getAccessoryProductListAsync(
+      const result = await getKineticsAccessoryProductListAsync(
         exampleRollerEntryList,
         "Kinetics Blockout Roller Blind",
       );
+
+      expect(result.length).toBe(2);
+      expect(result[0].quantity).toBe(2);
+      expect(result[1].quantity).toBe(1);
     });
   });
 });
