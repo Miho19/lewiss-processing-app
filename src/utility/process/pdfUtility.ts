@@ -317,6 +317,7 @@ export function createCostTotalColumn(worksheetCost: WorksheetCost): Column[] {
         { width: "*", text: " " },
         { width: "auto", stack: stack },
       ],
+      unbreakable: true,
     },
   ];
 
