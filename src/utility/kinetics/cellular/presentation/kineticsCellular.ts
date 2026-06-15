@@ -22,9 +22,9 @@ export function getKineticsCellularSideChannelColour(
 export function getKineticsCellularFabricOpacity(
   spec: KineticsCellularSpec,
 ): string {
-  const fabricStringArray = spec.fabric.name.split(" ");
+  const fabricStringArray = spec.fabric?.name.split(" ");
 
-  const translucentFound = fabricStringArray.find(
+  const translucentFound = fabricStringArray?.find(
     (str) =>
       str.localeCompare("translucent", undefined, { sensitivity: "base" }) ===
       0,

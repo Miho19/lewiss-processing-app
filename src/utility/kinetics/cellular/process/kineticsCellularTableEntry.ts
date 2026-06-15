@@ -81,11 +81,7 @@ async function getNewEntryKineticsCellularBlindAsync(
     windowSelectDetailed.treatment.spec as KineticsCellularSpec,
   );
 
-  const { remote, channel } = getRemoteAndChannel(
-    location,
-    windowSelectDetailed.treatment.spec.motorisation ?? "cord",
-    entries,
-  );
+  const { remote, channel } = getRemoteAndChannel(location, control, entries);
 
   const buttingString = getButtingString(
     windowSelectDetailed.blindCountString,

@@ -23,7 +23,7 @@ export type KineticsRollerSpec = {
 
 export type KineticsCellularSpec = {
   blindType: BlindType;
-  fabric: Fabric;
+  fabric?: Fabric;
   bracketColour: string;
   controlSide: string;
   motorisation: string | null;

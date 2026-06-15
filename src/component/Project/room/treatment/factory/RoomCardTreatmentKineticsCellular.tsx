@@ -17,7 +17,7 @@ function RoomCardTreatmentKineticsCellular(props: Props) {
   return (
     <div className="grid grid-cols-[160px_1fr] gap-x-4 gap-y-4 align-middle">
       <span className="text-sm text-gray-500">Fabric</span>
-      <span className="">{spec.fabric.name}</span>
+      <span className="">{spec.fabric?.name}</span>
 
       <span className="text-sm text-gray-500">Control</span>
       <span>{control}</span>
