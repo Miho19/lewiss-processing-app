@@ -1,11 +1,9 @@
 import { afterAll, describe, it, vi, expect } from "vitest";
 import kineticsCellularPricingSchedule from "./kinetics-cellular-pricing-example.json";
 import kineticsAccessoryPricingExample from "../kinetics-accessories.json";
-import {
-  getMotorAdditionalProductListAsync,
-  getKineticsCellularAdditionalProductListAsync,
-} from "../../../../src/utility/kinetics/cellular/pricing";
+import { getKineticsCellularAdditionalProductListAsync } from "../../../../src/utility/kinetics/cellular/pricing";
 import { KineticsCellularTableEntry } from "../../../../src/type/process/tableEntry/kineticsTableEntryType";
+import { getMotorAdditionalProductListAsync } from "../../../../src/utility/kinetics/general/getMotorAdditionalProductListAsync";
 
 vi.mock("../../../../src/http/sharePoint/", async (importOriginal) => {
   const actual =

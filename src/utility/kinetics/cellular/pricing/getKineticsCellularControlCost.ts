@@ -4,16 +4,13 @@ export function getKineticsCellularControlCost(
   control: string,
   pricingSchedule: KineticsCellularPricingSchedule,
 ): number | undefined {
-  if (!isControlValid(control, pricingSchedule)) return undefined;
+  if (!isControlValid(control)) return undefined;
 
   if (!isKineticsCellularBlindMotorised(control)) return 0;
   return pricingSchedule.control.motorisation["Lithium-ion"].base;
 }
 
-function isControlValid(
-  control: string,
-  pricingSchedule: KineticsCellularPricingSchedule,
-) {
+function isControlValid(control: string) {
   if (!control) return false;
   if (typeof control === "undefined") return false;
   if (control.trim().length === 0) return false;
