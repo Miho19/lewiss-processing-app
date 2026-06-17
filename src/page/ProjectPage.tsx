@@ -9,32 +9,21 @@ import type { Fit, WindowSelect } from "../type/process/windowSelectType";
 import { processWindowsSelectedAsync } from "../utility/process/processUtility";
 import { openPDFDocumentAsync } from "../utility/pdfmake/documentUtility";
 
-export type onChangeHandlerProjectFormDataCheckboxParameterType = {
-  id: string;
+export type CheckboxFormData = {
+  windowId: string;
   fit: Fit;
   isChecked: boolean;
 };
 
-export type projectFormDataType = Record<string, WindowSelect>;
-
-function filterSelectedWindows(formData: projectFormDataType): WindowSelect[] {
-  const filteredWindows: WindowSelect[] = [];
-
-  Object.entries(formData).forEach(([, value]) => {
-    if (!value.selected) return;
-    filteredWindows.push(value);
-  });
-
-  return [...filteredWindows];
+function filterSelectedWindows(
+  windowSelectList: WindowSelect[],
+): WindowSelect[] {
+  return windowSelectList.filter((window) => window.selected);
 }
-
-// TODO 27/05/2026, switch to context to avoid the prop drilling
 
 function ProjectPage() {
   const { projectId } = projectRoute.useParams();
-  const [projectFormData, setProjectFormData] = useState<projectFormDataType>(
-    {},
-  );
+  const [formData, setFormData] = useState<WindowSelect[]>([]);
 
   const {
     data: sharePointProjectFile,
@@ -52,14 +41,22 @@ function ProjectPage() {
       room.windows.forEach((window) => {
         const windowId = window.id;
 
-        const newEntry: WindowSelect = {
-          id: windowId,
+        // typescript complaining aobut fit not being assignable...
+        const insideWindow: WindowSelect = {
+          windowId: windowId,
           roomId: roomId,
           fit: "inside",
           selected: false,
         };
 
-        setProjectFormData((prev) => ({ ...prev, [windowId]: newEntry }));
+        const outsideWindow: WindowSelect = {
+          windowId: windowId,
+          roomId: roomId,
+          fit: "outside",
+          selected: false,
+        };
+
+        setFormData((prev) => [...prev, insideWindow, outsideWindow]);
       });
     });
   }, [sharePointProjectFile, isSuccess]);
@@ -79,23 +76,25 @@ function ProjectPage() {
     if (typeof sharePointProjectFile === "undefined") return;
 
     // potential to give feedback here instead of returning nothing
-    const selectedWindows = filterSelectedWindows(projectFormData);
+    const selectedWindows = filterSelectedWindows(formData);
     if (selectedWindows.length === 0) return;
 
     processWindowsSelectedAsync(selectedWindows, sharePointProjectFile);
   }
 
-  function onChangeHandlerprojectFormDataCheckbox(
-    window: onChangeHandlerProjectFormDataCheckboxParameterType,
-  ) {
-    setProjectFormData((prev) => ({
-      ...prev,
-      [window.id]: {
-        ...prev[window.id],
-        fit: window.fit,
-        selected: window.isChecked,
-      },
-    }));
+  function onChangeHandlerCheckBox(formData: CheckboxFormData) {
+    setFormData((prev) =>
+      prev.map((window) => {
+        if (
+          window.windowId === formData.windowId &&
+          window.fit === formData.fit
+        ) {
+          return { ...window, selected: formData.isChecked };
+        }
+
+        return window;
+      }),
+    );
   }
 
   return (
@@ -115,11 +114,9 @@ function ProjectPage() {
         </div>
 
         <RoomCardList
-          projectFile={sharePointProjectFile}
-          onChangeHandlerProjectFormDataCheckBox={
-            onChangeHandlerprojectFormDataCheckbox
-          }
-          projectFormData={projectFormData}
+          roomList={sharePointProjectFile.project.rooms}
+          onChangeHandlerCheckBox={onChangeHandlerCheckBox}
+          formData={formData}
         />
       </form>
     </main>

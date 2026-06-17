@@ -1,12 +1,12 @@
 import type { ChangeEvent } from "react";
-import type {
-  onChangeHandlerProjectFormDataCheckboxParameterType,
-  projectFormDataType,
-} from "../../../../../page/ProjectPage";
+import type { CheckboxFormData } from "../../../../../page/ProjectPage";
 
 import RoomCardWindowMeasurementControl from "../common/RoomCardWindowMeasurementControl";
 import type { WindowMeasurement } from "../../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
-import type { Fit } from "../../../../../type/process/windowSelectType";
+import type {
+  Fit,
+  WindowSelect,
+} from "../../../../../type/process/windowSelectType";
 import {
   getWindowBlindCountString,
   getWindowHeight,
@@ -14,11 +14,9 @@ import {
 } from "../../../../../utility/sharePoint/windowMeasurementUtility";
 
 type Props = {
-  window: WindowMeasurement;
-  projectFormData: projectFormDataType;
-  onChangeHandlerProjectFormDataCheckBox: (
-    window: onChangeHandlerProjectFormDataCheckboxParameterType,
-  ) => void;
+  windowMeasurement: WindowMeasurement;
+  formData: WindowSelect[];
+  onChangeHandlerCheckBox: (window: CheckboxFormData) => void;
 
   fit: Fit;
 };
@@ -129,27 +127,25 @@ function isAbleToDisplayMeasurement(
 }
 
 function RoomCardWindowMeasurement(props: Props) {
-  const {
-    window,
-    projectFormData,
-    onChangeHandlerProjectFormDataCheckBox,
-    fit,
-  } = props;
+  const { windowMeasurement, formData, onChangeHandlerCheckBox, fit } = props;
 
-  if (!projectFormData[window.id]) return <></>;
+  const windowSelect = formData.find(
+    (w) => w.windowId === windowMeasurement.id && w.fit === fit,
+  );
+  if (typeof windowSelect === "undefined") return <></>;
 
-  if (!isAbleToDisplayMeasurement(window, fit)) return <></>;
+  if (!isAbleToDisplayMeasurement(windowMeasurement, fit)) return <></>;
 
   function onChangeHandler(event: ChangeEvent<HTMLInputElement>) {
     event.stopPropagation();
-    onChangeHandlerProjectFormDataCheckBox({
-      id: window.id,
+    onChangeHandlerCheckBox({
+      windowId: windowMeasurement.id,
       fit: fit,
       isChecked: event.target.checked,
     });
   }
 
-  const htmlId = `${window.id} ${fit}`;
+  const htmlId = `${windowMeasurement.id} ${fit}`;
 
   return (
     <label
@@ -158,25 +154,26 @@ function RoomCardWindowMeasurement(props: Props) {
     >
       <p className="w-full text-end text-sm text-gray-500 italic">
         {getWindowBlindCountString(
-          fit === "inside" ? window.blindCount : window.outsideBlindCount,
+          fit === "inside"
+            ? windowMeasurement.blindCount
+            : windowMeasurement.outsideBlindCount,
         )}
       </p>
       <div className="grid grid-cols-[50px_1fr] gap-x-4 gap-y-1 align-middle">
         <p className="text-sm text-gray-500">
           {fit.charAt(0).toUpperCase() + fit.slice(1)}
         </p>
-        {getMeasurementDisplay(window, fit)}
-        <RoomCardWindowMeasurementControl window={window} />
+        {getMeasurementDisplay(windowMeasurement, fit)}
+        <RoomCardWindowMeasurementControl
+          windowMeasurement={windowMeasurement}
+        />
       </div>
 
       <input
         id={htmlId}
         type="checkbox"
         className="w-5 h-5 border border-black/25 rounded-full checked:bg-black cursor-pointer ml-auto accent-black"
-        checked={
-          projectFormData[window.id].selected &&
-          projectFormData[window.id].fit === fit
-        }
+        checked={windowSelect.selected}
         onChange={onChangeHandler}
       />
     </label>

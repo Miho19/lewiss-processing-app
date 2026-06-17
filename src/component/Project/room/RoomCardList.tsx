@@ -1,22 +1,18 @@
-import type {
-  onChangeHandlerProjectFormDataCheckboxParameterType,
-  projectFormDataType,
-} from "../../../page/ProjectPage";
-import type { SharePointProjectFile } from "../../../type/sharePoint/project/projectFileType";
+import type { CheckboxFormData } from "../../../page/ProjectPage";
+import type { WindowSelect } from "../../../type/process/windowSelectType";
+import type { Room } from "../../../type/sharePoint/project/projectFileType";
 import RoomCard from "./RoomCard";
 
 type Props = {
-  projectFile: SharePointProjectFile;
-  projectFormData: projectFormDataType;
-  onChangeHandlerProjectFormDataCheckBox: (
-    window: onChangeHandlerProjectFormDataCheckboxParameterType,
-  ) => void;
+  roomList: Room[];
+  formData: WindowSelect[];
+  onChangeHandlerCheckBox: (window: CheckboxFormData) => void;
 };
 
 function RoomCardList(props: Props) {
-  const { projectFile } = props;
+  const { roomList } = props;
 
-  const roomCards = projectFile.project.rooms.map((room) => (
+  const roomCards = roomList.map((room) => (
     <RoomCard room={room} key={room.id} {...props} />
   ));
 

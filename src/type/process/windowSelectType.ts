@@ -6,7 +6,7 @@ import type {
 export type Fit = "inside" | "outside";
 
 export type WindowSelect = {
-  id: string;
+  windowId: string;
   roomId: string;
   fit: Fit;
   selected: boolean;

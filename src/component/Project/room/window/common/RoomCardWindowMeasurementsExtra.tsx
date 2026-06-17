@@ -1,28 +1,28 @@
 import type { WindowMeasurement } from "../../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
 
 type Props = {
-  window: WindowMeasurement;
+  windowMeasurement: WindowMeasurement;
 };
 
 function RoomCardWindowMeasurementExtra(props: Props) {
-  const { window } = props;
+  const { windowMeasurement } = props;
 
   return (
     <>
       <p className="flex w-full space-x-2 items-center text-sm">
         <span className="text-gray-500">Reveal</span>
-        <span>{window.reveal}mm</span>
+        <span>{windowMeasurement.reveal}mm</span>
       </p>
-      {typeof window.blindAbove !== "undefined" && (
+      {typeof windowMeasurement.blindAbove !== "undefined" && (
         <p className="flex w-full space-x-2 items-center text-sm">
           <span className="text-gray-500">Blind Above</span>
-          <span>{window.blindAbove}mm</span>
+          <span>{windowMeasurement.blindAbove}mm</span>
         </p>
       )}
-      {typeof window.blindUnderhang !== "undefined" && (
+      {typeof windowMeasurement.blindUnderhang !== "undefined" && (
         <p className="flex w-full space-x-2 items-center text-sm">
           <span className="text-gray-500">Under Hang</span>
-          <span>{window.blindUnderhang}mm</span>
+          <span>{windowMeasurement.blindUnderhang}mm</span>
         </p>
       )}
     </>

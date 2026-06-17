@@ -3,18 +3,15 @@ import { useState } from "react";
 import RoomCardHeader from "./RoomCardHeader";
 import RoomCardTreatment from "./treatment/RoomCardTreatment";
 import RoomCardWindowList from "./window/list/RoomCardWindowList";
-import type {
-  onChangeHandlerProjectFormDataCheckboxParameterType,
-  projectFormDataType,
-} from "../../../page/ProjectPage";
+
 import type { Room } from "../../../type/sharePoint/project/projectFileType";
+import type { WindowSelect } from "../../../type/process/windowSelectType";
+import type { CheckboxFormData } from "../../../page/ProjectPage";
 
 type Props = {
   room: Room;
-  projectFormData: projectFormDataType;
-  onChangeHandlerProjectFormDataCheckBox: (
-    window: onChangeHandlerProjectFormDataCheckboxParameterType,
-  ) => void;
+  formData: WindowSelect[];
+  onChangeHandlerCheckBox: (window: CheckboxFormData) => void;
 };
 
 function RoomCard(props: Props) {

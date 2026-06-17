@@ -1,16 +1,16 @@
 import type { WindowMeasurement } from "../../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
 
 type Props = {
-  window: WindowMeasurement;
+  windowMeasurement: WindowMeasurement;
 };
 
 function RoomCardWindowMeasurementControl(props: Props) {
-  const { window } = props;
+  const { windowMeasurement } = props;
   return (
     <>
       <p className="text-gray-500 text-xs">Control</p>
       <p className="text-xs">
-        {window.controlSide} {window.controlLength}mm
+        {windowMeasurement.controlSide} {windowMeasurement.controlLength}mm
       </p>
     </>
   );
