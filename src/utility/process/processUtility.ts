@@ -19,6 +19,7 @@ import {
 import type { BlindType, ProductId } from "../../type/process/productType";
 import { createSunscreenRollerBlindDocumentAsync } from "../kinetics/roller/process/createSunscreenPDFDocument";
 import type { Worksheet } from "../../type/process/worksheetType";
+import { writeWorksheetToSharePointAsync } from "./writeWorksheetToSharePoint";
 
 /**
  *  Maybe use a generic pdf array return type --> makes testing easier, currently very badly coupled
@@ -47,6 +48,10 @@ export async function processWindowsSelectedAsync(
     processGroupMappedToWindowSelectDetailedList,
     projectFile,
   );
+
+  console.log(JSON.stringify(worksheetList));
+
+  await writeWorksheetToSharePointAsync(worksheetList);
 
   // probably want to write data here to SharePoint
 

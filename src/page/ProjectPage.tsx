@@ -82,9 +82,7 @@ function ProjectPage() {
     const selectedWindows = filterSelectedWindows(projectFormData);
     if (selectedWindows.length === 0) return;
 
-    processWindowsSelectedAsync(selectedWindows, sharePointProjectFile).then(
-      async (pdfList) => await openPDFDocumentAsync(pdfList[0]),
-    );
+    processWindowsSelectedAsync(selectedWindows, sharePointProjectFile);
   }
 
   function onChangeHandlerprojectFormDataCheckbox(

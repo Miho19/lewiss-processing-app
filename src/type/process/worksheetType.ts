@@ -16,16 +16,17 @@ export type AdditionalProduct = {
   quantity: number;
 };
 
-export type Worksheet = {
-  processName: ProcessName;
-  blindList: TableEntry[];
-  worksheetCost: WorksheetCost;
-  pdfList: TDocumentDefinitions[];
-  projectFile: SharePointProjectFile;
-};
-
 export type CustomerInformation = {
   name: string;
   reference: string;
   salesConsultant: string;
+};
+
+export type Worksheet = {
+  customer: CustomerInformation;
+  processName: ProcessName;
+  blindList: TableEntry[];
+  worksheetCost: WorksheetCost;
+  pdfList: TDocumentDefinitions[];
+  projectFile?: SharePointProjectFile;
 };
