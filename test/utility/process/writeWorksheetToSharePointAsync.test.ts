@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import worksheetListJSON from "./exampleWorksheetList.json";
-import { writeWorksheetToSharePointAsync } from "../../../src/utility/process/writeWorksheetToSharePoint";
+import { writeWorksheetToSharePointAsync } from "../../../src/utility/process/upload/writeWorksheetToSharePoint";
 import { Worksheet } from "../../../src/type/process/worksheetType";
 
 describe("writeWorksheetToSharePointAsync", () => {

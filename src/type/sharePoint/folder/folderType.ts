@@ -16,3 +16,9 @@ export type GETSharePointJSONFileResponse = {
   ok: boolean;
   content: string;
 };
+
+export type POSTSharePointJSONFileResponse = {
+  ok: boolean;
+  itemId: string;
+  error: string;
+};

@@ -25,3 +25,5 @@ export type KineticsRollerBlindTypeToWindowSelectDetailedList = Record<
   KineticsRollerBlind,
   WindowSelectDetailed[]
 >;
+
+export type ProcessNameMappedToString = Record<ProcessName, string>;
