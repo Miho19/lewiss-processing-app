@@ -10,7 +10,7 @@ import { createWindowWareHeader } from "../../pdf/windowWareHeader";
 import {
   createBlindTableTextData,
   createCostTotalColumn,
-  createCustomerInformation,
+  createCustomerInformationColumn,
   createTable,
 } from "../../../process/pdfUtility";
 import type { KineticsCellularTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
@@ -19,29 +19,17 @@ import {
   generateKineticsCellularTableEntryListAsync,
 } from "./kineticsCellularTableEntry";
 import { getWorksheetCostAsync } from "../../../process/tableEntryUtility";
+import type {
+  CustomerInformation,
+  Worksheet,
+  WorksheetCost,
+} from "../../../../type/process/worksheetType";
 
 export async function createCellularBlindDocumentAsync(
   windowSelectDetailedList: WindowSelectDetailed[],
   projectFile: SharePointProjectFile,
-): Promise<TDocumentDefinitions[]> {
-  const content: Content[] = [];
-
-  const windowWareHeader = await createWindowWareHeader();
-  content.push(windowWareHeader);
-
-  const titleString = createOrderTitleStringCellular(
-    windowSelectDetailedList.length,
-  );
-  if (typeof titleString === "undefined") return [];
-  content.push(titleString);
-
-  const customerInformation = createCustomerInformation(
-    projectFile.name,
-    projectFile.reference,
-    projectFile.salesConsultant,
-  );
-
-  content.push(customerInformation);
+): Promise<Worksheet[]> {
+  // get table entries
 
   const kineticsCellularEntryList: KineticsCellularTableEntry[] =
     await generateKineticsCellularTableEntryListAsync(
@@ -49,23 +37,67 @@ export async function createCellularBlindDocumentAsync(
       projectFile,
     );
 
-  const blindInformation = await createBlindInformationTable(
-    kineticsCellularEntryList,
-  );
-
-  content.push(blindInformation);
+  if (kineticsCellularEntryList.length === 0) return [];
 
   const kineticsCellularWorksheetCost = await getWorksheetCostAsync(
     kineticsCellularEntryList,
     "cellular-blind",
   );
 
-  const costTotal = createCostTotalColumn(kineticsCellularWorksheetCost);
+  const customerInformation: CustomerInformation = {
+    name: projectFile.name,
+    reference: projectFile.reference,
+    salesConsultant: projectFile.salesConsultant,
+  };
+
+  const worksheetPDF = await createWorksheetPDF(
+    customerInformation,
+    kineticsCellularEntryList,
+    kineticsCellularWorksheetCost,
+  );
+
+  if (typeof worksheetPDF === "undefined") return [];
+
+  const worksheet: Worksheet = {
+    processName: "cellular-blind",
+    blindList: kineticsCellularEntryList,
+    worksheetCost: kineticsCellularWorksheetCost,
+    pdfList: [worksheetPDF],
+    projectFile: projectFile,
+  };
+
+  return [worksheet];
+}
+
+async function createWorksheetPDF(
+  customerInformation: CustomerInformation,
+  tableEntryList: KineticsCellularTableEntry[],
+  worksheetCost: WorksheetCost,
+): Promise<TDocumentDefinitions | undefined> {
+  const content: Content[] = [];
+
+  const windowWareHeader = await createWindowWareHeader();
+  content.push(windowWareHeader);
+
+  const titleString = createOrderTitleStringCellular(tableEntryList.length);
+  if (typeof titleString === "undefined") return undefined;
+  content.push(titleString);
+
+  const customerInformationColumn =
+    createCustomerInformationColumn(customerInformation);
+
+  content.push(customerInformationColumn);
+
+  const blindInformation = await createBlindInformationTable(tableEntryList);
+
+  content.push(blindInformation);
+
+  const costTotal = createCostTotalColumn(worksheetCost);
   content.push(costTotal);
 
-  const document = createDocument(projectFile, "cellular-blind");
+  const document = createDocument(customerInformation, "cellular-blind");
   document.content = [...content];
-  return [document];
+  return document;
 }
 
 function createOrderTitleStringCellular(numberOfBlinds: number) {

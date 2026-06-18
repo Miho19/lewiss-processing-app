@@ -1,18 +1,53 @@
-import type { TDocumentDefinitions } from "pdfmake/interfaces";
 import type { WindowSelectDetailed } from "../../../../type/process/windowSelectType";
 import type { SharePointProjectFile } from "../../../../type/sharePoint/project/projectFileType";
 import { createRollerBlindDocumentAsync } from "./createRollerPDFDocument";
+import type {
+  CustomerInformation,
+  Worksheet,
+} from "../../../../type/process/worksheetType";
+import type { KineticsRollerTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
+import { generateKineticsRollerTableEntryListAsync } from "./createKineticsRollerTableEntry";
+import { getWorksheetCostAsync } from "../../../process/tableEntryUtility";
 
 export async function createSunscreenRollerBlindDocumentAsync(
   windowSelectDetailedList: WindowSelectDetailed[],
   projectFile: SharePointProjectFile,
-): Promise<TDocumentDefinitions[]> {
-  const sunscreenDocument = await createRollerBlindDocumentAsync(
-    windowSelectDetailedList,
+): Promise<Worksheet[]> {
+  const kineticsRollerTableEntryList: KineticsRollerTableEntry[] =
+    await generateKineticsRollerTableEntryListAsync(
+      windowSelectDetailedList,
+      projectFile,
+    );
+
+  if (kineticsRollerTableEntryList.length === 0) return [];
+
+  const kineticsRollerWorksheetCost = await getWorksheetCostAsync(
+    kineticsRollerTableEntryList,
     "sunscreen-roller",
-    projectFile,
   );
+
+  const customerInformation: CustomerInformation = {
+    name: projectFile.name,
+    reference: projectFile.reference,
+    salesConsultant: projectFile.salesConsultant,
+  };
+
+  const sunscreenDocument = await createRollerBlindDocumentAsync(
+    "sunscreen-roller",
+    customerInformation,
+    kineticsRollerTableEntryList,
+    kineticsRollerWorksheetCost,
+  );
+
   if (typeof sunscreenDocument === "undefined") return [];
 
-  return [sunscreenDocument];
+  const worksheet: Worksheet = {
+    processName: "sunscreen-roller",
+    blindList: kineticsRollerTableEntryList,
+    worksheetCost: kineticsRollerWorksheetCost,
+    pdfList: [sunscreenDocument],
+    projectFile: projectFile,
+  };
+
+  return [worksheet];
 }

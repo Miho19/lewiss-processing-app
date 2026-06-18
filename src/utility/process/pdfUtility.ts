@@ -8,6 +8,7 @@ import type {
 } from "pdfmake/interfaces";
 import type {
   AdditionalProduct,
+  CustomerInformation,
   WorksheetCost,
 } from "../../type/process/worksheetType";
 import type { TableEntry } from "../../type/process/tableEntry/tableEntryType";
@@ -224,11 +225,11 @@ export function createAdditionalProductCostColumn(
   return createColumn(additionalProductNameStack, additionalProductCostStack);
 }
 
-export function createCustomerInformation(
-  name: string,
-  reference: string,
-  consultant: string,
+export function createCustomerInformationColumn(
+  customerInformation: CustomerInformation,
 ): ContentColumns {
+  const { name, reference, salesConsultant } = customerInformation;
+
   const leftStack1: ContentStack = {
     stack: [{ text: "Client", marginBottom: 4 }, { text: "Reference" }],
   };
@@ -253,7 +254,7 @@ export function createCustomerInformation(
         marginBottom: 4,
         alignment: "right",
       },
-      { text: consultant, alignment: "right" },
+      { text: salesConsultant, alignment: "right" },
     ],
   };
 

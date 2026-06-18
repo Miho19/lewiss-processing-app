@@ -4,72 +4,52 @@ import type {
   TDocumentDefinitions,
 } from "pdfmake/interfaces";
 import type { ProcessName } from "../../../../type/process/processType";
-import type { WindowSelectDetailed } from "../../../../type/process/windowSelectType";
-import type { SharePointProjectFile } from "../../../../type/sharePoint/project/projectFileType";
 import { createDocument } from "../../../pdfmake/documentUtility";
 import { createWindowWareHeader } from "../../pdf/windowWareHeader";
 import {
   createBlindTableTextData,
   createCostTotalColumn,
-  createCustomerInformation,
+  createCustomerInformationColumn,
   createTable,
 } from "../../../process/pdfUtility";
 import type { KineticsRollerTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
-import { getWorksheetCostAsync } from "../../../process/tableEntryUtility";
 
-import {
-  defaultKineticsRollerTableEntry,
-  generateKineticsRollerTableEntryListAsync,
-} from "./createKineticsRollerTableEntry";
+import { defaultKineticsRollerTableEntry } from "./createKineticsRollerTableEntry";
+import type {
+  CustomerInformation,
+  WorksheetCost,
+} from "../../../../type/process/worksheetType";
 
 export async function createRollerBlindDocumentAsync(
-  windowSelectDetailedList: WindowSelectDetailed[],
   processName: ProcessName,
-  projectFile: SharePointProjectFile,
+  customerInformation: CustomerInformation,
+  tableEntryList: KineticsRollerTableEntry[],
+  worksheetCost: WorksheetCost,
 ): Promise<TDocumentDefinitions | undefined> {
-  if (windowSelectDetailedList.length === 0) return undefined;
+  if (tableEntryList.length === 0) return undefined;
 
   const content: Content[] = [];
   const windowWareHeader = await createWindowWareHeader();
   content.push(windowWareHeader);
 
-  const title = createOrderTitleString(
-    processName,
-    windowSelectDetailedList.length,
-  );
+  const title = createOrderTitleString(processName, tableEntryList.length);
   if (typeof title === "undefined") return undefined;
   content.push(title);
 
-  const customerInformation = createCustomerInformation(
-    projectFile.name,
-    projectFile.reference,
-    projectFile.salesConsultant,
-  );
+  const customerInformationColumn =
+    createCustomerInformationColumn(customerInformation);
 
-  content.push(customerInformation);
+  content.push(customerInformationColumn);
 
-  const kineticsRollerTableEntryList: KineticsRollerTableEntry[] =
-    await generateKineticsRollerTableEntryListAsync(
-      windowSelectDetailedList,
-      projectFile,
-    );
-
-  const blindInformation = createBlindInformationTable(
-    kineticsRollerTableEntryList,
-  );
+  const blindInformation = createBlindInformationTable(tableEntryList);
 
   content.push(blindInformation);
 
-  const kineticsRollerWorksheetCost = await getWorksheetCostAsync(
-    kineticsRollerTableEntryList,
-    processName,
-  );
-
-  const costTotal = createCostTotalColumn(kineticsRollerWorksheetCost);
+  const costTotal = createCostTotalColumn(worksheetCost);
 
   content.push(costTotal);
 
-  const document = createDocument(projectFile, processName);
+  const document = createDocument(customerInformation, processName);
   document.content = [...content];
   return document;
 }

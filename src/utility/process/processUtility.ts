@@ -1,8 +1,7 @@
-import type { TDocumentDefinitions } from "pdfmake/interfaces";
 import type {
   ProcessGroupToWindowSelectDetailed,
   ProcessName,
-  ProductIdToCreatePDFDocumentFunction,
+  ProductIdMappedToCreateWorksheetFunction,
 } from "../../type/process/processType";
 import type {
   WindowSelect,
@@ -19,6 +18,7 @@ import {
 } from "../sharePoint/windowMeasurementUtility";
 import type { BlindType, ProductId } from "../../type/process/productType";
 import { createSunscreenRollerBlindDocumentAsync } from "../kinetics/roller/process/createSunscreenPDFDocument";
+import type { Worksheet } from "../../type/process/worksheetType";
 
 /**
  *  Maybe use a generic pdf array return type --> makes testing easier, currently very badly coupled
@@ -31,7 +31,7 @@ import { createSunscreenRollerBlindDocumentAsync } from "../kinetics/roller/proc
 export async function processWindowsSelectedAsync(
   windowSelectList: WindowSelect[],
   projectFile: SharePointProjectFile,
-): Promise<TDocumentDefinitions[]> {
+): Promise<Worksheet[]> {
   if (windowSelectList.length === 0) return [];
   if (typeof projectFile === "undefined") return [];
 
@@ -43,41 +43,41 @@ export async function processWindowsSelectedAsync(
   const processGroupMappedToWindowSelectDetailedList =
     mapWindowSelectDetailedIntoProcessGroup(windowSelectDetailedList);
 
-  const pdfList = await getProcessPDF(
+  const worksheetList = await createWorksheetAsync(
     processGroupMappedToWindowSelectDetailedList,
     projectFile,
   );
 
   // probably want to write data here to SharePoint
 
-  return pdfList;
+  return worksheetList;
 }
 
-async function getProcessPDF(
+async function createWorksheetAsync(
   processGroupMappedToWindowSelectDetailedList: ProcessGroupToWindowSelectDetailed,
   projectFile: SharePointProjectFile,
-): Promise<TDocumentDefinitions[]> {
+): Promise<Worksheet[]> {
   const processGroupTasks = (
     Object.keys(processGroupMappedToWindowSelectDetailedList) as ProductId[]
   ).map(async (productId) => {
     const windowSelectDetailList =
       processGroupMappedToWindowSelectDetailedList[productId];
+
     if (windowSelectDetailList.length === 0) return [];
-    const pdfCreateFunctionAsync =
+    const createWorksheetFunctionAsync =
       sharePointProductIdToProcessTypeRecord[productId];
 
-    const createdPDF = await pdfCreateFunctionAsync(
+    const createdWorksheet = await createWorksheetFunctionAsync(
       windowSelectDetailList,
       projectFile,
     );
 
-    return createdPDF;
+    return createdWorksheet;
   });
 
-  const generatedPDFs: TDocumentDefinitions[][] =
-    await Promise.all(processGroupTasks);
+  const worksheetList: Worksheet[][] = await Promise.all(processGroupTasks);
 
-  return generatedPDFs.flat();
+  return worksheetList.flat();
 }
 
 function mapWindowSelectDetailedIntoProcessGroup(
@@ -139,7 +139,7 @@ function getWindowSelectDetailedList(
   return joinedList.flat();
 }
 
-export const sharePointProductIdToProcessTypeRecord: ProductIdToCreatePDFDocumentFunction =
+export const sharePointProductIdToProcessTypeRecord: ProductIdMappedToCreateWorksheetFunction =
   {
     "cellular-blind": createCellularBlindDocumentAsync,
     "sunscreen-roller": createSunscreenRollerBlindDocumentAsync,

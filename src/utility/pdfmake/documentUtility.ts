@@ -3,15 +3,15 @@ import type {
   TDocumentDefinitions,
   TDocumentInformation,
 } from "pdfmake/interfaces";
-import type { SharePointProjectFile } from "../../type/sharePoint/project/projectFileType";
 import type { ProcessName } from "../../type/process/processType";
 import { getDeliverToText } from "../kinetics/pdf/deliverToText";
+import type { CustomerInformation } from "../../type/process/worksheetType";
 
 export function createDocument(
-  projectFile: SharePointProjectFile,
+  customerInformation: CustomerInformation,
   processName: ProcessName,
 ) {
-  const { name, reference, salesConsultant } = projectFile;
+  const { name, reference, salesConsultant } = customerInformation;
 
   const title = [name, reference, processName].join("-");
 

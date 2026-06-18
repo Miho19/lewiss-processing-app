@@ -23,3 +23,10 @@
 - EEEEEE
 - F9F9F9
 - 000000
+
+## Saving Process
+
+- partition blinds into their process names
+- create individual pdfs and a worksheet
+- save worksheet file to sharepoint confirmed orders
+- move project file to history within consultant folder

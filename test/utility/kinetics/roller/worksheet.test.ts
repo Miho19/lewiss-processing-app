@@ -228,12 +228,3 @@ describe("Kinetics Roller Worksheet Cost", () => {
     });
   });
 });
-
-// describe("HTTP Requests", () => {
-//   it("should make the request", async () => {
-//     const result = await GETSharePointAccessoryPricingSchedule(
-//       "Kinetics 10mm Cellular Blind",
-//     );
-//     console.log(result);
-//   });
-// });

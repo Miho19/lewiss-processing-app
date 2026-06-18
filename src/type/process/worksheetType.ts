@@ -1,3 +1,8 @@
+import type { TDocumentDefinitions } from "pdfmake/interfaces";
+import type { SharePointProjectFile } from "../sharePoint/project/projectFileType";
+import type { ProcessName } from "./processType";
+import type { TableEntry } from "./tableEntry/tableEntryType";
+
 export type WorksheetCost = {
   blindSubTotal: number;
   additional: AdditionalProduct[];
@@ -9,4 +14,18 @@ export type AdditionalProduct = {
   name: string;
   cost: number;
   quantity: number;
+};
+
+export type Worksheet = {
+  processName: ProcessName;
+  blindList: TableEntry[];
+  worksheetCost: WorksheetCost;
+  pdfList: TDocumentDefinitions[];
+  projectFile: SharePointProjectFile;
+};
+
+export type CustomerInformation = {
+  name: string;
+  reference: string;
+  salesConsultant: string;
 };

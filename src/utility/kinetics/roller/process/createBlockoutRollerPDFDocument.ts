@@ -1,8 +1,17 @@
-import type { TDocumentDefinitions } from "pdfmake/interfaces";
-import type { KineticsRollerBlindTypeToWindowSelectDetailedList } from "../../../../type/process/processType";
+import type {
+  KineticsRollerBlindTypeToWindowSelectDetailedList,
+  ProcessName,
+} from "../../../../type/process/processType";
 import type { WindowSelectDetailed } from "../../../../type/process/windowSelectType";
 import type { SharePointProjectFile } from "../../../../type/sharePoint/project/projectFileType";
 import { createRollerBlindDocumentAsync } from "./createRollerPDFDocument";
+import type {
+  CustomerInformation,
+  Worksheet,
+} from "../../../../type/process/worksheetType";
+import type { KineticsRollerTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
+import { generateKineticsRollerTableEntryListAsync } from "./createKineticsRollerTableEntry";
+import { getWorksheetCostAsync } from "../../../process/tableEntryUtility";
 
 function partitionWindowSelectDetailedByKineticRollerBlindType(
   windowSelectDetailedList: WindowSelectDetailed[],
@@ -30,8 +39,8 @@ function partitionWindowSelectDetailedByKineticRollerBlindType(
 export async function createBlockoutRollerBlindDocumentAsync(
   windowSelectDetailedList: WindowSelectDetailed[],
   projectFile: SharePointProjectFile,
-): Promise<TDocumentDefinitions[]> {
-  const documentOutput = [];
+): Promise<Worksheet[]> {
+  const worksheetList: Worksheet[] = [];
 
   const partitionedMapping =
     partitionWindowSelectDetailedByKineticRollerBlindType(
@@ -41,55 +50,73 @@ export async function createBlockoutRollerBlindDocumentAsync(
   const blockoutWindowSelectDetailedList =
     partitionedMapping["Kinetics Blockout Roller Blind"];
 
-  if (blockoutWindowSelectDetailedList.length > 0) {
-    const blockoutDocument = await _createBlockoutRollerDocumentAsync(
-      blockoutWindowSelectDetailedList,
-      projectFile,
-    );
+  const blockoutWorksheet = await createRollerPDFAsync(
+    "blockout-roller",
+    blockoutWindowSelectDetailedList,
+    projectFile,
+  );
 
-    if (typeof blockoutDocument !== "undefined")
-      documentOutput.push(...blockoutDocument);
-  }
+  if (typeof blockoutWorksheet !== "undefined")
+    worksheetList.push(blockoutWorksheet);
 
   const lightFilteringWindowSelectDetailedList =
     partitionedMapping["Kinetics Light Filtering Roller Blind"];
 
-  if (lightFilteringWindowSelectDetailedList.length > 0) {
-    const lightfilteringDocument =
-      await _createLightFilteringRollerDocumentAsync(
-        lightFilteringWindowSelectDetailedList,
-        projectFile,
-      );
-    if (typeof lightfilteringDocument !== "undefined")
-      documentOutput.push(...lightfilteringDocument);
-  }
-
-  return documentOutput;
-}
-
-async function _createBlockoutRollerDocumentAsync(
-  windowSelectDetailedList: WindowSelectDetailed[],
-  projectFile: SharePointProjectFile,
-): Promise<TDocumentDefinitions[]> {
-  const blockoutDocument = await createRollerBlindDocumentAsync(
-    windowSelectDetailedList,
-    "blockout-roller",
-    projectFile,
-  );
-  if (typeof blockoutDocument === "undefined") return [];
-
-  return [blockoutDocument];
-}
-async function _createLightFilteringRollerDocumentAsync(
-  windowSelectDetailedList: WindowSelectDetailed[],
-  projectFile: SharePointProjectFile,
-) {
-  const lightFilteringDocument = await createRollerBlindDocumentAsync(
-    windowSelectDetailedList,
+  const lightFilteringWorksheet = await createRollerPDFAsync(
     "light-filtering-roller",
+    lightFilteringWindowSelectDetailedList,
     projectFile,
   );
-  if (typeof lightFilteringDocument === "undefined") return [];
 
-  return [lightFilteringDocument];
+  if (typeof lightFilteringWorksheet !== "undefined")
+    worksheetList.push(lightFilteringWorksheet);
+
+  return worksheetList;
+}
+
+// we can probably switch sunscreen roller to using this...
+async function createRollerPDFAsync(
+  processName: ProcessName,
+  windowSelectDetailedList: WindowSelectDetailed[],
+  projectFile: SharePointProjectFile,
+): Promise<Worksheet | undefined> {
+  if (windowSelectDetailedList.length === 0) return undefined;
+
+  const customerInformation: CustomerInformation = {
+    name: projectFile.name,
+    reference: projectFile.reference,
+    salesConsultant: projectFile.salesConsultant,
+  };
+
+  const kineticsRollerTableEntryList: KineticsRollerTableEntry[] =
+    await generateKineticsRollerTableEntryListAsync(
+      windowSelectDetailedList,
+      projectFile,
+    );
+
+  if (kineticsRollerTableEntryList.length === 0) return undefined;
+
+  const kineticsRollerWorksheetCost = await getWorksheetCostAsync(
+    kineticsRollerTableEntryList,
+    processName,
+  );
+
+  const pdfDocument = await createRollerBlindDocumentAsync(
+    processName,
+    customerInformation,
+    kineticsRollerTableEntryList,
+    kineticsRollerWorksheetCost,
+  );
+
+  if (typeof pdfDocument === "undefined") return undefined;
+
+  const worksheet: Worksheet = {
+    processName: processName,
+    blindList: kineticsRollerTableEntryList,
+    worksheetCost: kineticsRollerWorksheetCost,
+    pdfList: [pdfDocument],
+    projectFile: projectFile,
+  };
+
+  return worksheet;
 }
