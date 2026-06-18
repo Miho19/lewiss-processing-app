@@ -59,6 +59,7 @@ export async function createCellularBlindDocumentAsync(
   if (typeof worksheetPDF === "undefined") return [];
 
   const worksheet: Worksheet = {
+    customer: customerInformation,
     processName: "cellular-blind",
     blindList: kineticsCellularEntryList,
     worksheetCost: kineticsCellularWorksheetCost,

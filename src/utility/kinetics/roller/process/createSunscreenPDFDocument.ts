@@ -42,6 +42,7 @@ export async function createSunscreenRollerBlindDocumentAsync(
   if (typeof sunscreenDocument === "undefined") return [];
 
   const worksheet: Worksheet = {
+    customer: customerInformation,
     processName: "sunscreen-roller",
     blindList: kineticsRollerTableEntryList,
     worksheetCost: kineticsRollerWorksheetCost,

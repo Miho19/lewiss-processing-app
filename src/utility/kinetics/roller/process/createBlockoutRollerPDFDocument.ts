@@ -111,6 +111,7 @@ async function createRollerPDFAsync(
   if (typeof pdfDocument === "undefined") return undefined;
 
   const worksheet: Worksheet = {
+    customer: customerInformation,
     processName: processName,
     blindList: kineticsRollerTableEntryList,
     worksheetCost: kineticsRollerWorksheetCost,

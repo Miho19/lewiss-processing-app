@@ -7,7 +7,6 @@ import { projectRoute } from "../router/router";
 
 import type { Fit, WindowSelect } from "../type/process/windowSelectType";
 import { processWindowsSelectedAsync } from "../utility/process/processUtility";
-import { openPDFDocumentAsync } from "../utility/pdfmake/documentUtility";
 
 export type CheckboxFormData = {
   windowId: string;
