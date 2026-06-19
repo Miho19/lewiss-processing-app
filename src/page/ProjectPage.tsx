@@ -7,6 +7,7 @@ import { projectRoute } from "../router/router";
 
 import type { Fit, WindowSelect } from "../type/process/windowSelectType";
 import { processWindowsSelectedAsync } from "../utility/process/processUtility";
+import { openPDFDocumentAsync } from "../utility/pdfmake/documentUtility";
 
 export type CheckboxFormData = {
   windowId: string;
@@ -78,7 +79,12 @@ function ProjectPage() {
     const selectedWindows = filterSelectedWindows(formData);
     if (selectedWindows.length === 0) return;
 
-    processWindowsSelectedAsync(selectedWindows, sharePointProjectFile);
+    processWindowsSelectedAsync(selectedWindows, sharePointProjectFile).then(
+      async (data) => {
+        const worksheet = data[0];
+        await openPDFDocumentAsync(worksheet.pdfList[0]);
+      },
+    );
   }
 
   function onChangeHandlerCheckBox(formData: CheckboxFormData) {
