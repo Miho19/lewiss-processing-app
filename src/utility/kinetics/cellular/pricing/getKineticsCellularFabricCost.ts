@@ -56,7 +56,11 @@ function getWidthIndex(
   width: number,
   pricingSchedule: KineticsCellularPricingSchedule,
 ): number | undefined {
-  const widthAdjusted = roundMeasurementUp(width);
+  let widthAdjusted = roundMeasurementUp(width);
+
+  const minimumFabricWidth = pricingSchedule.fabric.widthHeader[0];
+  if (widthAdjusted < minimumFabricWidth) widthAdjusted = minimumFabricWidth;
+
   const widthIndex = pricingSchedule.fabric.widthHeader.findIndex(
     (w) => w === widthAdjusted || w === width,
   );
@@ -70,7 +74,11 @@ function getHeightIndex(
   height: number,
   pricingSchedule: KineticsCellularPricingSchedule,
 ) {
-  const heightAdjusted = roundMeasurementUp(height);
+  let heightAdjusted = roundMeasurementUp(height);
+  const minimumFabricHeight = pricingSchedule.fabric.heightHeader[0];
+  if (heightAdjusted < minimumFabricHeight)
+    heightAdjusted = minimumFabricHeight;
+
   const heightIndex = pricingSchedule.fabric.heightHeader.findIndex(
     (h) => h === heightAdjusted || h === height,
   );

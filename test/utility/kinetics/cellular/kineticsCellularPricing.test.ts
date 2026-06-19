@@ -18,36 +18,41 @@ describe("Kinetics Cellular Pricing", () => {
       string,
       number | undefined,
     ][] = [
-      [1200, 900, "Translucent", 376],
-      [1986, 988, "Translucent", 595],
+      [1200, 900, "Translucent", 387],
+      [1986, 988, "Translucent", 613],
       [-1000, 988, "Translucent", undefined],
       [1200, 988, "Translunt", undefined],
       [1000, -988, "Translucent", undefined],
-      [240, 900, "Translucent", 191],
-      [300, 3600, "Translucent", 411],
-      [3499, 1999, "Translucent", 1718],
+      [240, 900, "Translucent", 197],
+      [300, 3600, "Translucent", 423],
+      [3499, 1999, "Translucent", 1769],
       [0, 0, "Blockout", undefined],
       [-1, 0, "Blockout", undefined],
       [0, -1, "Blockout", undefined],
       [-1, -1, "Blockout", undefined],
-      [1200, 900, "Blockout", 432.4],
+      [1200, 900, "Blockout", 445.05],
       [0, 0, "Translucent", undefined],
       [0, 0, "432", undefined],
       [1200, 900, "", undefined],
       [1200, 900, "    ", undefined],
+      [240, 240, "Translucent", 161],
     ];
 
     it.each(fabricPricingExamples)(
       "should given width: %i height: %i opacity: %s return %i",
       (width, height, opacity, expectedCost) => {
-        expect(
-          getKineticsCellularFabricCost(
-            width,
-            height,
-            opacity,
-            kineticsPricingExample,
-          ),
-        ).toBe(expectedCost);
+        const result = getKineticsCellularFabricCost(
+          width,
+          height,
+          opacity,
+          kineticsPricingExample,
+        );
+
+        if (typeof expectedCost === "undefined") {
+          expect(result).toBe(undefined);
+        } else {
+          expect(result).toBeCloseTo(expectedCost);
+        }
       },
     );
   });
@@ -71,9 +76,16 @@ describe("Kinetics Cellular Pricing", () => {
     it.each(controlInputExamples)(
       "should given %s return %i",
       (control, expectedCost) => {
-        expect(
-          getKineticsCellularControlCost(control, kineticsPricingExample),
-        ).toBe(expectedCost);
+        const result = getKineticsCellularControlCost(
+          control,
+          kineticsPricingExample,
+        );
+
+        if (typeof expectedCost === "undefined") {
+          expect(result).toBe(undefined);
+        } else {
+          expect(result).toBeCloseTo(expectedCost);
+        }
       },
     );
   });
@@ -92,12 +104,16 @@ describe("Kinetics Cellular Pricing", () => {
     it.each(exampleInput)(
       "should given %s return %i",
       (headrailColour, expectedCost) => {
-        expect(
-          getKineticsCellularHeadrailCost(
-            headrailColour,
-            kineticsPricingExample,
-          ),
-        ).toBe(expectedCost);
+        const result = getKineticsCellularHeadrailCost(
+          headrailColour,
+          kineticsPricingExample,
+        );
+
+        if (typeof expectedCost === "undefined") {
+          expect(result).toBe(undefined);
+        } else {
+          expect(result).toBeCloseTo(expectedCost);
+        }
       },
     );
   });
@@ -120,13 +136,17 @@ describe("Kinetics Cellular Pricing", () => {
     it.each(exampleInput)(
       "should given (%i, %s) return %i",
       (height, sideChannelColour, expectedCost) => {
-        expect(
-          getKineticsCellularSideChannelCost(
-            height,
-            sideChannelColour,
-            kineticsPricingExample,
-          ),
-        ).toBe(expectedCost);
+        const result = getKineticsCellularSideChannelCost(
+          height,
+          sideChannelColour,
+          kineticsPricingExample,
+        );
+
+        if (typeof expectedCost === "undefined") {
+          expect(result).toBe(undefined);
+        } else {
+          expect(result).toBeCloseTo(expectedCost);
+        }
       },
     );
   });

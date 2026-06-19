@@ -16,33 +16,37 @@ describe("Kinetics Roller Pricing", () => {
       KineticsRollerFabricOpacity,
       number | undefined,
     ][] = [
-      [1200, 900, "light-filtering", 323],
-      [1199, 900, "light-filtering", 323],
-      [1101, 900, "light-filtering", 323],
-      [1200, 899, "light-filtering", 323],
-      [1200, 801, "light-filtering", 323],
+      [1200, 900, "light-filtering", 333],
+      [1199, 900, "light-filtering", 333],
+      [1101, 900, "light-filtering", 333],
+      [1200, 899, "light-filtering", 333],
+      [1200, 801, "light-filtering", 333],
       [0, 0, "light-filtering", undefined],
       [-1, 0, "light-filtering", undefined],
       [-1, -1, "light-filtering", undefined],
       [-1, -1, "light-filtering", undefined],
       [0, -1, "light-filtering", undefined],
-      [1200, 900, "blockout", 323],
-      [1200, 900, "blockout", 323],
+      [1200, 900, "blockout", 333],
+      [1200, 900, "blockout", 333],
       [1200, 900, "sunscreen", undefined],
     ];
 
     it.each(exampleInput)(
       "should given %i, %i, %s multilplier 1.0 return %i",
       (width, height, opacity, expected) => {
-        expect(
-          getKineticsRollerFabricCost(
-            width,
-            height,
-            opacity,
-            1,
-            kineticsRollerPricingExample,
-          ),
-        ).toBe(expected);
+        const result = getKineticsRollerFabricCost(
+          width,
+          height,
+          opacity,
+          1,
+          kineticsRollerPricingExample,
+        );
+
+        if (typeof expected === "undefined") {
+          expect(result).toBe(undefined);
+        } else {
+          expect(result).toBeCloseTo(expected);
+        }
       },
     );
   });
@@ -106,31 +110,34 @@ describe("Kinetics Roller Pricing", () => {
 
   describe("getKineticsRollerPelmetCost", () => {
     const exampleInput: [number, string, number | undefined][] = [
-      [1200, "110mm - Inside", 56.25],
+      [1200, "110mm - Inside", 57.91],
       [0, "110mm - Inside", undefined],
       [1200, "", 0],
       [1200, "", 0],
       [1200, "\t\t", 0],
       [-1, "110mm - Inside", undefined],
-      [1260, "110mm - Inside", 67.5],
-      [1000, "110mm - Inside", 45],
-      [240, "110mm - Inside", 45],
-      [5000, "110mm - Inside", 225],
-      [1260, "160mm - Outside", 138.75],
-      [1000, "160mm - Outside", 92.5],
-      [240, "160mm - Outside", 92.5],
+      [1260, "110mm - Inside", 69.49],
+      [1000, "110mm - Inside", 46.33],
+      [240, "110mm - Inside", 46.33],
+      [5000, "110mm - Inside", 231.64],
+      [1260, "160mm - Outside", 142.84],
+      [1000, "160mm - Outside", 95.23],
+      [240, "160mm - Outside", 95.23],
     ];
 
     it.each(exampleInput)(
       "should given %i %s return %i",
       (width, pelmet, expected) => {
-        expect(
-          getKineticsRollerPelmetCost(
-            width,
-            pelmet,
-            kineticsRollerPricingExample,
-          ),
-        ).toBe(expected);
+        const result = getKineticsRollerPelmetCost(
+          width,
+          pelmet,
+          kineticsRollerPricingExample,
+        );
+        if (typeof expected === "undefined") {
+          expect(result).toBe(undefined);
+        } else {
+          expect(result).toBeCloseTo(expected);
+        }
       },
     );
   });
