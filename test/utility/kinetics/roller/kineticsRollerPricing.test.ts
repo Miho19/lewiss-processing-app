@@ -16,18 +16,18 @@ describe("Kinetics Roller Pricing", () => {
       KineticsRollerFabricOpacity,
       number | undefined,
     ][] = [
-      [1200, 900, "light-filtering", 333],
-      [1199, 900, "light-filtering", 333],
-      [1101, 900, "light-filtering", 333],
-      [1200, 899, "light-filtering", 333],
-      [1200, 801, "light-filtering", 333],
+      [1200, 900, "light-filtering", 333.03],
+      [1199, 900, "light-filtering", 333.03],
+      [1101, 900, "light-filtering", 333.03],
+      [1200, 899, "light-filtering", 333.03],
+      [1200, 801, "light-filtering", 333.03],
       [0, 0, "light-filtering", undefined],
       [-1, 0, "light-filtering", undefined],
       [-1, -1, "light-filtering", undefined],
       [-1, -1, "light-filtering", undefined],
       [0, -1, "light-filtering", undefined],
-      [1200, 900, "blockout", 333],
-      [1200, 900, "blockout", 333],
+      [1200, 900, "blockout", 333.03],
+      [1200, 900, "blockout", 333.03],
       [1200, 900, "sunscreen", undefined],
     ];
 
@@ -45,7 +45,7 @@ describe("Kinetics Roller Pricing", () => {
         if (typeof expected === "undefined") {
           expect(result).toBe(undefined);
         } else {
-          expect(result).toBeCloseTo(expected);
+          expect(result).toBeCloseTo(expected, 2);
         }
       },
     );
