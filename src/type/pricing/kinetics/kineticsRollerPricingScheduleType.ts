@@ -29,7 +29,7 @@ type Motorisation = {
   "Hardwired WiFi Remote Control": MotorisationBase;
 };
 
-type MotorisationBase = { base: number; id: string };
+export type MotorisationBase = { base: number; id: string; name: string };
 
 type BottomRail = {
   customColour: number;

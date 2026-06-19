@@ -13,15 +13,15 @@
     },
     "motorisation": {
       "Lithium-ion": {
-        "base": 165,
+        "base": 170,
         "id": "103171"
       },
       "Hardwired Smart Home": {
-        "base": 196,
+        "base": 202,
         "id": "103189"
       },
       "Hardwired WiFi Remote Control": {
-        "base": 196,
+        "base": 202,
         "id": "103186"
       }
     }

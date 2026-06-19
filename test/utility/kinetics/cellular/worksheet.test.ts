@@ -83,6 +83,16 @@ describe("Kinetics Cellular Worksheet Test", () => {
         "cellular-blind",
       );
       expect(result.length).toBe(3);
+
+      const lithiumIon = result.find(
+        (m) => m.name.toLowerCase() === "lithium-ion",
+      );
+      expect(lithiumIon).toBeDefined();
+      if (typeof lithiumIon === "undefined") return;
+
+      expect(lithiumIon.cost).toBeDefined();
+      expect(lithiumIon.cost).toBeGreaterThan(0);
+      expect(lithiumIon.quantity).toBeGreaterThan(0);
     });
   });
 

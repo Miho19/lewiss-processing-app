@@ -15,6 +15,8 @@ export async function getKineticsRollerAdditionalProductListAsync(
   const motorAdditionalProductList: AdditionalProduct[] =
     await getMotorAdditionalProductListAsync(tableEntryList, blindType);
 
+  if (motorAdditionalProductList.length === 0) return [];
+
   const accessoryProductList: AdditionalProduct[] =
     await getKineticsAccessoryProductListAsync(tableEntryList, blindType);
 

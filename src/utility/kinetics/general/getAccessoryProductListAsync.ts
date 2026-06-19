@@ -31,12 +31,16 @@ function getRemoteAdditionalProduct(
   pricingSchedule: KineticsAccessoryPricingSchedule,
 ): AdditionalProduct | undefined {
   const numberOfRemotes = getMaxRemote(tableEntryList);
-  const costOfRemote = pricingSchedule.remote;
-  if (numberOfRemotes === 0) return undefined;
+
+  const remoteCost = pricingSchedule.motorisation.find(
+    (m) => m.name.toLowerCase() === "remote",
+  );
+
+  if (typeof remoteCost === "undefined") return undefined;
 
   return {
     name: "15 Channel Remote",
-    cost: costOfRemote,
+    cost: remoteCost.base,
     quantity: numberOfRemotes,
   };
 }
@@ -47,7 +51,11 @@ function getUSBChargerAdditionalProduct(
 ): AdditionalProduct | undefined {
   if (typeof remote === "undefined") return undefined;
 
-  const cost = pricingSchedule.usbCharger;
+  const cost = pricingSchedule.motorisation.find(
+    (m) => m.name.toLowerCase() === "usbcharger",
+  );
+  if (typeof cost === "undefined") return undefined;
+
   const quantity = remote.quantity > 6 ? 2 : 1;
-  return { name: "USB Charger", cost: cost, quantity: quantity };
+  return { name: "USB Charger", cost: cost.base, quantity: quantity };
 }

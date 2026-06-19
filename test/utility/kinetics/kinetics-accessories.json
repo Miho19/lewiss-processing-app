@@ -1,6 +1,12 @@
 {
-  "smartLinkHub": 152,
-  "usbCharger": 28,
-  "remote": 28,
-  "sillClip": 6
+  "motorisation": [
+    { "id": "103220", "base": 156.0, "name": "smartLinkHub" },
+    { "id": "103219", "base": 29.0, "name": "usbCharger" },
+    { "id": "'04680", "base": 39.0, "name": "remote" }
+  ],
+  "sillClip": {
+    "id": "",
+    "base": 6.0,
+    "name": "sillClip"
+  }
 }

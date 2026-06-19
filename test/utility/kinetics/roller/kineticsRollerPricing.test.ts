@@ -58,14 +58,14 @@ describe("Kinetics Roller Pricing", () => {
       ["Chain - Nickel", "750", 21],
       ["Chain - Black Metal", "1200", 20.4],
       ["Chain - Black Metal", "1200mm", 20.4],
-      ["Lithium-ion", "1200mm", 165],
-      ["Lithium-ion", "0mm", 165],
-      ["Lithium-ion", "-1mm", 165],
-      ["Lithium-ion", "1000000mm", 165],
+      ["Lithium-ion", "1200mm", 170],
+      ["Lithium-ion", "0mm", 170],
+      ["Lithium-ion", "-1mm", 170],
+      ["Lithium-ion", "1000000mm", 170],
       ["Lithiu-ion", "1000000mm", undefined],
       ["Lith-ion", "1000000mm", undefined],
-      ["Hardwired Smart Home", "1000000mm", 196],
-      ["Hardwired WiFi Remote Control", "1000000mm", 196],
+      ["Hardwired Smart Home", "1000000mm", 202],
+      ["Hardwired WiFi Remote Control", "1000000mm", 202],
     ];
 
     it.each(exampleInput)(
