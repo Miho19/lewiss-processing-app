@@ -54,3 +54,12 @@ export async function openPDFDocumentAsync(document: TDocumentDefinitions) {
 
   pdfmake.createPdf(document).open();
 }
+
+export async function getPDFDocumentAsync(document: TDocumentDefinitions) {
+  const pdfmake = (await import("pdfmake/build/pdfmake")).default;
+  const pdfFonts = (await import("pdfmake/build/vfs_fonts")).default;
+
+  pdfmake.addVirtualFileSystem(pdfFonts);
+
+  return pdfmake.createPdf(document);
+}

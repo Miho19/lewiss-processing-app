@@ -1,22 +1,18 @@
-import type { PricingSchedule } from "../../type/process/pricingScheduleType";
 import type {
   ProcessName,
   ProcessNameMappedToString,
 } from "../../type/process/processType";
 
-import type {
-  GETSharePointJSONFileResponse,
-  POSTSharePointJSONFileResponse,
-} from "../../type/sharePoint/folder/folderType";
+import type { POSTSharePointJSONFileResponse } from "../../type/sharePoint/folder/folderType";
 
-function POSTSharePointHistoryConfirmedFileEndpoint() {
+function POSTSharePointHistoryFileFileEndpoint() {
   return new URL(
     ``,
     "https://lewiss-measure-pro.netlify.app/.netlify/functions/graph",
   );
 }
 
-function POSTSharePointHistoryConfirmedFileFetchOptions(
+function POSTSharePointHistoryFileFetchOptions(
   fileName: string,
   content: string,
   folderId: string,
@@ -35,16 +31,25 @@ function POSTSharePointHistoryConfirmedFileFetchOptions(
   return fetchOptions;
 }
 
-export async function POSTSharePointHistoryConfirmedFile(
-  processName: ProcessName,
-  fileName: string,
-  data: string,
-  endpoint: URL = POSTSharePointHistoryConfirmedFileEndpoint(),
-): Promise<string> {
+/** */
+
+type Parameters = {
+  processName: ProcessName;
+  fileName: string;
+  data: string;
+  endpoint?: URL;
+};
+
+export async function POSTSharePointHistoryFile({
+  processName,
+  fileName,
+  data,
+  endpoint = POSTSharePointHistoryFileFileEndpoint(),
+}: Parameters): Promise<string> {
   try {
     const folderId = processNameMappedToSharePointConfirmedFolder[processName];
 
-    const fetchOptions = POSTSharePointHistoryConfirmedFileFetchOptions(
+    const fetchOptions = POSTSharePointHistoryFileFetchOptions(
       fileName,
       data,
       folderId,
@@ -53,6 +58,9 @@ export async function POSTSharePointHistoryConfirmedFile(
     const response: Response = await fetch(endpoint, fetchOptions);
     if (!response.ok) throw new Error("Unexpected server response");
     const jsonBody: POSTSharePointJSONFileResponse = await response.json();
+
+    console.log(jsonBody);
+
     if (!jsonBody.ok) throw new Error(jsonBody.error);
 
     // we are going to use ZOD here
@@ -63,10 +71,11 @@ export async function POSTSharePointHistoryConfirmedFile(
   }
 }
 
+// currently /joshua april/exampleFileStructure/History/
 const processNameMappedToSharePointConfirmedFolder: ProcessNameMappedToString =
   {
-    "cellular-blind": "01VFVMOAEPH2B72PIHJNBYWJDJZL2ZZQIW",
-    "sunscreen-roller": "01VFVMOAEPH2B72PIHJNBYWJDJZL2ZZQIW",
-    "blockout-roller": "01VFVMOAEPH2B72PIHJNBYWJDJZL2ZZQIW",
-    "light-filtering-roller": "01VFVMOAEPH2B72PIHJNBYWJDJZL2ZZQIW",
+    "cellular-blind": "01VFVMOADT7SXX4FMGQ5AIUCBIC7TN7DMM",
+    "sunscreen-roller": "01VFVMOADT7SXX4FMGQ5AIUCBIC7TN7DMM",
+    "blockout-roller": "01VFVMOADT7SXX4FMGQ5AIUCBIC7TN7DMM",
+    "light-filtering-roller": "01VFVMOADT7SXX4FMGQ5AIUCBIC7TN7DMM",
   };

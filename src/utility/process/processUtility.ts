@@ -110,7 +110,7 @@ function getWindowSelectDetailedList(
     const [projectRoom, projectWindow] = getRoomAndWindowMeasurement(
       projectFile,
       window.roomId,
-      window.id,
+      window.windowId,
     );
 
     const blindCountString = getWindowBlindCountString(
@@ -127,7 +127,7 @@ function getWindowSelectDetailedList(
     if (typeof treatment === "undefined" || treatment === null) return [];
 
     const newEntry: WindowSelectDetailed = {
-      windowId: window.id,
+      windowId: window.windowId,
       roomId: window.roomId,
       blindCountString: blindCountString,
       fit: window.fit,

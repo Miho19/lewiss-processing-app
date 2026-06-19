@@ -5,29 +5,24 @@ import {
 } from "../../../src/http/sharePoint";
 
 describe.skip("HTTP Requests", () => {
-  it("should return the sharepoint root folder", async () => {
+  it.skip("should return the sharepoint root folder", async () => {
     const result = await GETSharePointRootFolder();
     expect(result.length).toBeGreaterThan(0);
   });
 
-  it("should return joshua april folder", async () => {
+  it.skip("should return joshua april folder", async () => {
     const result = await GETSharePointFolder(
       "01VFVMOAG77RPCSPXOVVEKVOWOFTM6KWOT",
     );
     expect(result.length).toBeGreaterThan(0);
+    console.log(result);
   });
 
-  it("should return the confirmed folder", async () => {
+  it.skip("should return the confirmed folder", async () => {
     const result = await GETSharePointFolder(
-      "01VFVMOAFUZHOHA46TH5C2266C3ACO23AF",
+      "01VFVMOAB3N7ANXUDNBJH2YLJ4YKSMJY3I",
     );
     expect(result.length).toBeGreaterThan(0);
-  });
-
-  it("should return the kinetics confirmed folder", async () => {
-    const result = await GETSharePointFolder(
-      "01VFVMOACOU2OWM2TEQ5GJ4WTVPHIWJTLT",
-    );
-    expect(result.length).toBe(0);
+    console.log(result);
   });
 });
