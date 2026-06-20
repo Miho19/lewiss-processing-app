@@ -19,7 +19,7 @@ function ConsultantCardHeader(props: Props) {
 
   return (
     <section
-      className="flex w-full border-b border-black/10 pb-6 justify-between group cursor-pointer"
+      className="flex w-full justify-between group cursor-pointer"
       onClick={toggleFileList}
     >
       <div className="flex space-x-6">

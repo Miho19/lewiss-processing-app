@@ -52,8 +52,10 @@ function HomePage() {
   ));
 
   return (
-    <main className="flex-1 p-6 space-y-12 pt-30">
-      <ul className="flex flex-col w-full space-y-12">{consultantCards}</ul>
+    <main className="flex-1 p-6 pt-30">
+      <ul className="flex flex-col w-full items-center justify-center space-y-12">
+        {consultantCards}
+      </ul>
     </main>
   );
 }

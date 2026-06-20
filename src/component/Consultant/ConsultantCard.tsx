@@ -16,7 +16,9 @@ function ConsultantCard(props: Props) {
   }
 
   return (
-    <li className="flex w-full flex-col space-y-3 shadow-md p-6 border border-black/15 pb-6">
+    <li
+      className={`flex w-full flex-col shadow-md border border-slate-200/60 xl:w-3xl rounded-2xl p-6 bg-white ${isExpanded && `space-y-12 pb-12`}`}
+    >
       <ConsultantCardHeader
         consultant={consultant}
         toggleFileList={toggleFileListDisplay}
