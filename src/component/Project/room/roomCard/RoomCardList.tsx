@@ -1,6 +1,6 @@
-import type { CheckboxFormData } from "../../../page/ProjectPage";
-import type { WindowSelect } from "../../../type/process/windowSelectType";
-import type { Room } from "../../../type/sharePoint/project/projectFileType";
+import type { CheckboxFormData } from "../../../../page/ProjectPage";
+import type { WindowSelect } from "../../../../type/process/windowSelectType";
+import type { Room } from "../../../../type/sharePoint/project/projectFileType";
 import RoomCard from "./RoomCard";
 
 type Props = {
@@ -16,7 +16,11 @@ function RoomCardList(props: Props) {
     <RoomCard room={room} key={room.id} {...props} />
   ));
 
-  return <ul className="flex flex-col w-full space-y-12">{roomCards}</ul>;
+  return (
+    <ul className="flex flex-col w-full space-y-12 items-center">
+      {roomCards}
+    </ul>
+  );
 }
 
 export default RoomCardList;

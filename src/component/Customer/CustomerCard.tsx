@@ -6,23 +6,33 @@ type Props = {
 function CustomerCard(props: Props) {
   const { projectFile } = props;
 
+  const {
+    name,
+    reference,
+    address,
+    addressCity,
+    addressPostcode,
+    email,
+    phone,
+  } = projectFile;
+
   return (
-    <section className="flex w-full flex-col space-y-3 shadow-md p-6 border border-black/15 pb-6">
-      <div className="flex w-full pb-6 border-b border-black/15 justify-between">
-        <p className="text-black font-semibold text-lg">{projectFile.name}</p>
-        <p className="text-black text-sm">Reference: {projectFile.reference}</p>
+    <section className="flex w-full flex-col shadow-md border border-slate-200/60 xl:w-5xl rounded-2xl p-6 bg-white space-y-6 mt-12">
+      <div className="flex w-full justify-between">
+        <h2 className="text-black font-semibold text-xl">{name}</h2>
+        <p className="text-gray-500 text-sm">Reference: {reference}</p>
       </div>
 
       <div className="text-sm">
-        <p>{projectFile.address},</p>
+        <p>{address},</p>
         <p>
-          {projectFile.addressCity} {projectFile.addressPostcode}
+          {addressCity} {addressPostcode}
         </p>
       </div>
 
       <div className="flex w-full justify-between text-sm">
-        <p>{projectFile.email}</p>
-        <p>{projectFile.phone}</p>
+        <p>{email}</p>
+        <p>{phone}</p>
       </div>
     </section>
   );

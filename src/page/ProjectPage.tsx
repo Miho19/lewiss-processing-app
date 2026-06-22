@@ -1,13 +1,14 @@
 import { useEffect, useState, type SubmitEvent } from "react";
 import CustomerCard from "../component/Customer/CustomerCard";
 import Loading from "../component/Loading/Loading";
-import RoomCardList from "../component/Project/room/RoomCardList";
+import RoomCardList from "../component/Project/room/roomCard/RoomCardList";
 import useSharePointProjectFileQuery from "../hook/useSharePointProjectFileQuery";
 import { projectRoute } from "../router/router";
 
 import type { Fit, WindowSelect } from "../type/process/windowSelectType";
 import { processWindowsSelectedAsync } from "../utility/process/processUtility";
 import { openPDFDocumentAsync } from "../utility/pdfmake/documentUtility";
+import SubmitButton from "../component/Project/form/SubmitButton";
 
 export type CheckboxFormData = {
   windowId: string;
@@ -103,20 +104,16 @@ function ProjectPage() {
   }
 
   return (
-    <main className="flex-1 p-6 space-y-12 pt-30">
-      <CustomerCard projectFile={sharePointProjectFile} />
+    <main className="flex-1 p-6 pt-30 space-y-12">
+      <div className="flex w-full justify-center">
+        <CustomerCard projectFile={sharePointProjectFile} />
+      </div>
+
       <form
         className="flex w-full flex-col space-y-6 relative"
         onSubmit={onSubmitHandler}
       >
-        <div className="fixed right-6 top-18 z-100">
-          <button
-            type="submit"
-            className="w-26 flex ml-auto justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#1D1D1D] hover:bg-[#393939] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1D1D1D] hover:-translate-y-1 transition-all duration-100 ease-in-out cursor-pointer"
-          >
-            Submit
-          </button>
-        </div>
+        <SubmitButton />
 
         <RoomCardList
           roomList={sharePointProjectFile.project.rooms}

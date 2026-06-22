@@ -1,5 +1,5 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/16/solid";
-import type { Room } from "../../../type/sharePoint/project/projectFileType";
+import type { Room } from "../../../../type/sharePoint/project/projectFileType";
 
 type Props = {
   room: Room;
@@ -20,7 +20,7 @@ function RoomCardHeader(props: Props) {
 
   return (
     <section
-      className="flex w-full border-b border-black/5 pb-6 justify-between items-center space-x-6 group cursor-pointer"
+      className="flex w-full justify-between items-center space-x-6 group cursor-pointer"
       onClick={toggleExpanded}
     >
       <div className="flex space-x-2 items-center">
@@ -29,8 +29,6 @@ function RoomCardHeader(props: Props) {
           {room.name}
         </p>
       </div>
-
-      <p className="text-xs text-gray-500 italic">{room.id}</p>
     </section>
   );
 }

@@ -1,4 +1,3 @@
-import type { ChangeEvent } from "react";
 import type { CheckboxFormData } from "../../../../../page/ProjectPage";
 
 import RoomCardWindowMeasurementControl from "../common/RoomCardWindowMeasurementControl";
@@ -14,11 +13,10 @@ import {
 } from "../../../../../utility/sharePoint/windowMeasurementUtility";
 
 type Props = {
+  fit: Fit;
   windowMeasurement: WindowMeasurement;
   formData: WindowSelect[];
   onChangeHandlerCheckBox: (window: CheckboxFormData) => void;
-
-  fit: Fit;
 };
 
 function getMeasurementDisplayInside(window: WindowMeasurement) {
@@ -109,55 +107,19 @@ function getMeasurementDisplay(window: WindowMeasurement, fit: Fit) {
   }
 }
 
-function isAbleToDisplayMeasurement(
-  window: WindowMeasurement,
-  fit: Fit,
-): boolean {
-  const widthArray = getWindowWidth(window, fit);
-
-  if (widthArray.length === 0) return false;
-  if (widthArray[0] === 0) return false;
-
-  const height = getWindowHeight(window, fit);
-  if (height === 0) return false;
-
-  // probably should check blindcount string here
-
-  return true;
-}
-
 function RoomCardWindowMeasurement(props: Props) {
-  const { windowMeasurement, formData, onChangeHandlerCheckBox, fit } = props;
+  const { windowMeasurement, fit } = props;
 
-  const windowSelect = formData.find(
-    (w) => w.windowId === windowMeasurement.id && w.fit === fit,
+  const blindCountString = getWindowBlindCountString(
+    fit === "inside"
+      ? windowMeasurement.blindCount
+      : windowMeasurement.outsideBlindCount,
   );
-  if (typeof windowSelect === "undefined") return <></>;
-
-  if (!isAbleToDisplayMeasurement(windowMeasurement, fit)) return <></>;
-
-  function onChangeHandler(event: ChangeEvent<HTMLInputElement>) {
-    event.stopPropagation();
-    onChangeHandlerCheckBox({
-      windowId: windowMeasurement.id,
-      fit: fit,
-      isChecked: event.target.checked,
-    });
-  }
-
-  const htmlId = `${windowMeasurement.id} ${fit}`;
 
   return (
-    <label
-      htmlFor={htmlId}
-      className="flex flex-col w-full space-y-1 border-b border-black/5 py-3 group hover:-translate-y-4 transition-all duration-100 ease-in-out cursor-pointer"
-    >
-      <p className="w-full text-end text-sm text-gray-500 italic">
-        {getWindowBlindCountString(
-          fit === "inside"
-            ? windowMeasurement.blindCount
-            : windowMeasurement.outsideBlindCount,
-        )}
+    <section className="flex flex-col w-full">
+      <p className="w-full text-sm text-gray-500 italic mb-6">
+        {blindCountString}
       </p>
       <div className="grid grid-cols-[50px_1fr] gap-x-4 gap-y-1 align-middle">
         <p className="text-sm text-gray-500">
@@ -168,15 +130,7 @@ function RoomCardWindowMeasurement(props: Props) {
           windowMeasurement={windowMeasurement}
         />
       </div>
-
-      <input
-        id={htmlId}
-        type="checkbox"
-        className="w-5 h-5 border border-black/25 rounded-full checked:bg-black cursor-pointer ml-auto accent-black"
-        checked={windowSelect.selected}
-        onChange={onChangeHandler}
-      />
-    </label>
+    </section>
   );
 }
 

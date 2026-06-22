@@ -22,7 +22,12 @@ function ConsultantCardFileList(props: Props) {
 
   const errorStyleClassNames = "flex flex-1 justify-center items-center";
 
-  if (isLoading) return <Loading />;
+  if (isLoading)
+    return (
+      <div className="flex w-full h-4 justify-center items-center">
+        <Loading />
+      </div>
+    );
   if (isError)
     return <div className={errorStyleClassNames}>error: {error.message}</div>;
   if (!isSuccess)
