@@ -1,11 +1,9 @@
 import { useState } from "react";
-
-import RoomCardHeader from "./RoomCardHeader";
-
-import type { Room } from "../../../../type/sharePoint/project/projectFileType";
-import type { WindowSelect } from "../../../../type/process/windowSelectType";
-import type { CheckboxFormData } from "../../../../page/ProjectPage";
-import WindowMeasurementList from "../windowMeasurement/WindowMeasurementList";
+import type { Room } from "../../../type/sharePoint/project/projectFileType";
+import type { WindowSelect } from "../../../type/process/windowSelectType";
+import type { CheckboxFormData } from "../../../page/ProjectPage";
+import WindowMeasurementList from "./WindowMeasurement/WindowMeasurementList";
+import CardHeader from "./CardHeader";
 
 type Props = {
   room: Room;
@@ -25,7 +23,7 @@ function RoomCard(props: Props) {
     <li
       className={`flex w-full flex-col shadow-md border border-slate-200/60 xl:w-5xl rounded-2xl p-6 bg-white ${isExpanded && `space-y-12`}`}
     >
-      <RoomCardHeader
+      <CardHeader
         room={room}
         isExpanded={isExpanded}
         toggleExpanded={toggleExpanded}

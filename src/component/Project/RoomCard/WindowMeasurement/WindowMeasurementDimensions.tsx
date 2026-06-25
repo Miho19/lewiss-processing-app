@@ -1,58 +1,27 @@
-import type { CheckboxFormData } from "../../../../page/ProjectPage";
-
+import type { Fit } from "../../../../type/process/windowSelectType";
 import type { WindowMeasurement } from "../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
-import type {
-  Fit,
-  WindowSelect,
-} from "../../../../type/process/windowSelectType";
+import { capitalisedString } from "../../../../utility/general/Capitalised";
 import {
-  getWindowBlindCountString,
   getWindowHeight,
   getWindowWidth,
 } from "../../../../utility/sharePoint/windowMeasurementUtility";
-import { capitalisedString } from "../../../../utility/general/Capitalised";
-import WindowMeasurementControl from "./WindowMeasurementControl";
-import WindowMeasurementTreatment from "./WindowMeasurementTreatment";
-import type { Treatment } from "../../../../type/sharePoint/project/projectFileType";
 
 type Props = {
   fit: Fit;
   windowMeasurement: WindowMeasurement;
-  treatment: Treatment;
-  formData: WindowSelect[];
-  onChangeHandlerCheckBox: (window: CheckboxFormData) => void;
 };
-
-function WindowMeasurementInfomation(props: Props) {
+function WindowMeasurementDimensions(props: Props) {
   const { windowMeasurement, fit } = props;
-
-  const blindCountString = getWindowBlindCountString(
-    fit === "inside"
-      ? windowMeasurement.blindCount
-      : windowMeasurement.outsideBlindCount,
-  );
-
-  const blindCountText = capitalisedString(blindCountString);
 
   const measurementDisplay = getMeasurementDisplay(windowMeasurement, fit);
 
   const fitText = capitalisedString(fit);
 
   return (
-    <section className="flex flex-col w-full">
-      <p className="w-full text-sm text-gray-500 italic mb-6">
-        {blindCountText}
-      </p>
-      <div className="flex w-full justify-between">
-        <div className="grid grid-cols-[50px_1fr] gap-x-4 gap-y-1 align-middle">
-          <p className="text-sm text-gray-500">{fitText}</p>
-          {measurementDisplay}
-          <WindowMeasurementControl windowMeasurement={windowMeasurement} />
-        </div>
-
-        <WindowMeasurementTreatment />
-      </div>
-    </section>
+    <>
+      <p className="text-sm text-gray-500">{fitText}</p>
+      {measurementDisplay}
+    </>
   );
 }
 
@@ -144,4 +113,4 @@ function getMeasurementDisplay(window: WindowMeasurement, fit: Fit) {
   }
 }
 
-export default WindowMeasurementInfomation;
+export default WindowMeasurementDimensions;

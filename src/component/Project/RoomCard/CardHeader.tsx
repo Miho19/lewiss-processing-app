@@ -1,5 +1,5 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/16/solid";
-import type { Room } from "../../../../type/sharePoint/project/projectFileType";
+import type { Room } from "../../../type/sharePoint/project/projectFileType";
 
 type Props = {
   room: Room;
@@ -7,7 +7,7 @@ type Props = {
   toggleExpanded: () => void;
 };
 
-function RoomCardHeader(props: Props) {
+function CardHeader(props: Props) {
   const { room, isExpanded, toggleExpanded } = props;
 
   const chevronClassNames =
@@ -33,4 +33,4 @@ function RoomCardHeader(props: Props) {
   );
 }
 
-export default RoomCardHeader;
+export default CardHeader;

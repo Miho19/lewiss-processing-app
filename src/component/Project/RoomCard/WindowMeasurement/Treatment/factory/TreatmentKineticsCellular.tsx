@@ -1,14 +1,21 @@
-import type { KineticsCellularSpec } from "../../../../../type/sharePoint/project/spec/kineticsSpec";
+import {
+  isKineticsCellularSpec,
+  type KineticsCellularSpec,
+} from "../../../../../../type/sharePoint/project/spec/kineticsSpec";
+import type { Spec } from "../../../../../../type/sharePoint/project/spec/spec";
 import {
   getKineticsCellularControlString,
   getKineticsCellularSideChannelColour,
-} from "../../../../../utility/kinetics/cellular/presentation/kineticsCellular";
+} from "../../../../../../utility/kinetics/cellular/presentation/kineticsCellular";
 
 type Props = {
-  spec: KineticsCellularSpec;
+  spec: Spec;
 };
+
 function RoomCardTreatmentKineticsCellular(props: Props) {
   const { spec } = props;
+
+  if (!isKineticsCellularSpec(spec)) return <></>;
 
   const control = getKineticsCellularControlString(spec);
 

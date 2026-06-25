@@ -1,16 +1,19 @@
-import type { KineticsRollerSpec } from "../../../../../type/sharePoint/project/spec/kineticsSpec";
-import { getKineticsRollerPelmetString } from "../../../../../utility/kinetics/roller/presentation";
+import { isKineticsRollerSpec } from "../../../../../../type/sharePoint/project/spec/kineticsSpec";
+import type { Spec } from "../../../../../../type/sharePoint/project/spec/spec";
 import {
   getKineticsRollerControlString,
   getKineticsRollerFabricOpacity,
-} from "../../../../../utility/kinetics/roller/presentation/kineticsRoller";
+  getKineticsRollerPelmetString,
+} from "../../../../../../utility/kinetics/roller/presentation";
 
 type Props = {
-  spec: KineticsRollerSpec;
+  spec: Spec;
 };
 
 function RoomCardTreatmentKineticsRoller(props: Props) {
   const { spec } = props;
+
+  if (!isKineticsRollerSpec(spec)) return <></>;
 
   const control = getKineticsRollerControlString(spec);
 

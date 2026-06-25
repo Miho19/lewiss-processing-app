@@ -3,38 +3,35 @@ import type {
   KineticsRollerSpec,
 } from "../../../../../type/sharePoint/project/spec/kineticsSpec";
 import type { Spec } from "../../../../../type/sharePoint/project/spec/spec";
-import RoomCardTreatmentKineticsCellular from "./RoomCardTreatmentKineticsCellular";
-import RoomCardTreatmentKineticsRoller from "./RoomCardTreatmentKineticsRoller";
+import RoomCardTreatmentKineticsCellular from "./factory/TreatmentKineticsCellular";
+import RoomCardTreatmentKineticsRoller from "./factory/TreatmentKineticsRoller";
 
 type Props = {
-  spec: Spec;
+  spec: Spec | undefined;
 };
 
-function RoomCardTreatmentFactory(props: Props) {
+function TreatmentFactory(props: Props) {
   const { spec } = props;
+
+  if (!spec || typeof spec === "undefined")
+    return <p>Spec infomation missing</p>;
 
   switch (spec.blindType.toLowerCase()) {
     case "Kinetics 10mm Cellular Blind".toLowerCase():
     case "Kinetics 20mm Cellular Blind".toLowerCase():
-      return (
-        <RoomCardTreatmentKineticsCellular
-          spec={spec as KineticsCellularSpec}
-        />
-      );
+      return <RoomCardTreatmentKineticsCellular spec={spec} />;
 
     case "Kinetics Sunscreen Roller Blind".toLowerCase():
     case "Kinetics Blockout Roller Blind".toLowerCase():
     case "Kinetics Light Filtering Roller Blind".toLowerCase():
-      return (
-        <RoomCardTreatmentKineticsRoller spec={spec as KineticsRollerSpec} />
-      );
+      return <RoomCardTreatmentKineticsRoller spec={spec} />;
 
     default:
       return <p>'{spec.blindType}' is not valid blind type</p>;
   }
 }
 
-export default RoomCardTreatmentFactory;
+export default TreatmentFactory;
 
 //   "Kinetics Sunscreen Roller Blind"             → "Sunscreen Roller"
 //   "Kinetics Blockout Roller Blind"              → "Blockout Roller"

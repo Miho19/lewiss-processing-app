@@ -1,6 +1,6 @@
-import type { CheckboxFormData } from "../../../../page/ProjectPage";
-import type { WindowSelect } from "../../../../type/process/windowSelectType";
-import type { Room } from "../../../../type/sharePoint/project/projectFileType";
+import type { CheckboxFormData } from "../../../page/ProjectPage";
+import type { WindowSelect } from "../../../type/process/windowSelectType";
+import type { Room } from "../../../type/sharePoint/project/projectFileType";
 import RoomCard from "./RoomCard";
 
 type Props = {
