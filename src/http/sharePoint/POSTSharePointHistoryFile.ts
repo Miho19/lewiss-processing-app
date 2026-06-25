@@ -59,8 +59,6 @@ export async function POSTSharePointHistoryFile({
     if (!response.ok) throw new Error("Unexpected server response");
     const jsonBody: POSTSharePointJSONFileResponse = await response.json();
 
-    console.log(jsonBody);
-
     if (!jsonBody.ok) throw new Error(jsonBody.error);
 
     // we are going to use ZOD here

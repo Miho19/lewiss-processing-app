@@ -5,11 +5,7 @@ import type {
   Fit,
   WindowSelect,
 } from "../../../../type/process/windowSelectType";
-import {
-  getWindowBlindCountString,
-  getWindowHeight,
-  getWindowWidth,
-} from "../../../../utility/sharePoint/windowMeasurementUtility";
+import { getWindowBlindCountString } from "../../../../utility/sharePoint/windowMeasurementUtility";
 import { capitalisedString } from "../../../../utility/general/Capitalised";
 import WindowMeasurementControl from "./WindowMeasurementControl";
 import WindowMeasurementTreatment from "./WindowMeasurementTreatment";

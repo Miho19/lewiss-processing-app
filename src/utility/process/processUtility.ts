@@ -51,8 +51,6 @@ export async function processWindowsSelectedAsync(
 
   await writeWorksheetToSharePointAsync(worksheetList);
 
-  // probably want to write data here to SharePoint
-
   return worksheetList;
 }
 

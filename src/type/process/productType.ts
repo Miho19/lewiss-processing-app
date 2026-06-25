@@ -26,7 +26,7 @@ export const KineticsRollerBlindOptions = [
   "Kinetics Light Filtering Roller Blind",
 ] as const;
 
-export type KineticsRollerBlind = (typeof KineticsCellularBlindOptions)[number];
+export type KineticsRollerBlind = (typeof KineticsRollerBlindOptions)[number];
 
 export type BlindType =
   | KineticsRollerBlind
