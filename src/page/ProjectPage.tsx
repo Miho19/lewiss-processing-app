@@ -74,6 +74,7 @@ function ProjectPage() {
     );
 
   function onSubmitHandler(event: SubmitEvent<HTMLFormElement>) {
+    console.log("Submit fired");
     event.preventDefault();
     if (typeof sharePointProjectFile === "undefined") return;
 

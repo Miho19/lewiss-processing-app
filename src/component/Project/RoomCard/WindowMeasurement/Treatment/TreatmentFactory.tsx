@@ -14,7 +14,7 @@ function TreatmentFactory(props: Props) {
   const { spec } = props;
 
   if (!spec || typeof spec === "undefined")
-    return <p>Spec infomation missing</p>;
+    return <p className="overflow-hidden">Spec infomation missing</p>;
 
   switch (spec.blindType.toLowerCase()) {
     case "Kinetics 10mm Cellular Blind".toLowerCase():
@@ -27,7 +27,11 @@ function TreatmentFactory(props: Props) {
       return <RoomCardTreatmentKineticsRoller spec={spec} />;
 
     default:
-      return <p>'{spec.blindType}' is not valid blind type</p>;
+      return (
+        <p className="overflow-hidden">
+          '{spec.blindType}' is not valid blind type
+        </p>
+      );
   }
 }
 

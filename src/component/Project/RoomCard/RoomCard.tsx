@@ -15,7 +15,8 @@ function RoomCard(props: Props) {
   const { room } = props;
   const [isExpanded, setIsExpanded] = useState(false);
 
-  function toggleExpanded() {
+  function toggleExpanded(event: React.MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
     setIsExpanded((prev) => !prev);
   }
 
@@ -30,7 +31,7 @@ function RoomCard(props: Props) {
       />
 
       <div
-        className={`grid transition-all duration-200 ease-in-out ${isExpanded ? `grid-rows-[1fr] opacity-100 pointer-events-auto` : `grid-rows-[0fr] opacity-0 pointer-events-none`}`}
+        className={`grid transition-all duration-300 ease-in-out ${isExpanded ? `grid-rows-[1fr] opacity-100 pointer-events-auto` : `grid-rows-[0fr] opacity-0 pointer-events-none`}`}
       >
         <div className="flex flex-col w-full h-full overflow-hidden space-y-6">
           <WindowMeasurementList {...props} />

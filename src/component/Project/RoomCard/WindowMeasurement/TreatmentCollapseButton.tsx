@@ -1,14 +1,12 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/16/solid";
-import type { Room } from "../../../type/sharePoint/project/projectFileType";
 
 type Props = {
-  room: Room;
   isExpanded: boolean;
   toggleExpanded: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-function CardHeader(props: Props) {
-  const { room, isExpanded, toggleExpanded } = props;
+function TreatmentCollapseButton(props: Props) {
+  const { isExpanded, toggleExpanded } = props;
 
   const chevronClassNames =
     "w-10 h-10 rounded-full group-hover:-translate-y-1 transition-all duration-150 ease-in-out group-hover:scale-125";
@@ -20,17 +18,17 @@ function CardHeader(props: Props) {
 
   return (
     <button
-      className="flex w-full justify-between items-center space-x-6 group cursor-pointer"
+      className="flex w-full justify-between items-center space-x-6 group cursor-pointer "
       onClick={toggleExpanded}
     >
-      <div className="flex space-x-2 items-center">
+      <div className="flex space-x-2 items-center text-sm">
         {chevronIcon}
         <p className="group-hover:-translate-y-1 group-hover:translate-x-10 transition-all duration-150 ease-in-out group-hover:scale-125">
-          {room.name}
+          Treatment
         </p>
       </div>
     </button>
   );
 }
 
-export default CardHeader;
+export default TreatmentCollapseButton;

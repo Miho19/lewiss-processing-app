@@ -30,7 +30,7 @@ function RoomCardTreatmentKineticsRoller(props: Props) {
   const fabric = `${spec.fabric.name} - ${fabricOpacity}`;
 
   return (
-    <div className="grid grid-cols-[160px_1fr] gap-x-4 gap-y-4 align-middle">
+    <div className="grid grid-cols-[160px_1fr] gap-x-4 gap-y-4 align-middle overflow-hidden">
       <span className="text-sm text-gray-500">Fabric</span>
       <span className="">{fabric}</span>
 
