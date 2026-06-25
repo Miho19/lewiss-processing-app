@@ -1,12 +1,16 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/16/solid";
+import type { Spec } from "../../../../type/sharePoint/project/spec/spec";
 
 type Props = {
+  spec: Spec | undefined;
   isExpanded: boolean;
   toggleExpanded: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 function TreatmentCollapseButton(props: Props) {
-  const { isExpanded, toggleExpanded } = props;
+  const { spec, isExpanded, toggleExpanded } = props;
+
+  const specName = spec?.blindType ?? "Treatment";
 
   const chevronClassNames =
     "w-10 h-10 rounded-full group-hover:-translate-y-1 transition-all duration-150 ease-in-out group-hover:scale-125";
@@ -24,7 +28,7 @@ function TreatmentCollapseButton(props: Props) {
       <div className="flex space-x-2 items-center text-sm">
         {chevronIcon}
         <p className="group-hover:-translate-y-1 group-hover:translate-x-10 transition-all duration-150 ease-in-out group-hover:scale-125">
-          Treatment
+          {specName}
         </p>
       </div>
     </button>

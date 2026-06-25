@@ -50,6 +50,7 @@ function getUSBChargerAdditionalProduct(
   pricingSchedule: KineticsAccessoryPricingSchedule,
 ): AdditionalProduct | undefined {
   if (typeof remote === "undefined") return undefined;
+  if (remote.quantity === 0) return undefined;
 
   const cost = pricingSchedule.motorisation.find(
     (m) => m.name.toLowerCase() === "usbcharger",
