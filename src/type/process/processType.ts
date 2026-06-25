@@ -16,6 +16,7 @@ export type ProductIdMappedToCreateWorksheetFunction = Record<
   ) => Promise<Worksheet[]>
 >;
 
+// apparently light-filtering-roller is not a valid productId...
 export type ProcessName = ProductId | "light-filtering-roller";
 
 /**

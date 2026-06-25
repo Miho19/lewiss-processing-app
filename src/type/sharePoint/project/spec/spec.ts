@@ -1,3 +1,7 @@
-import type { KineticsCellularSpec, KineticsRollerSpec } from "./kineticsSpec";
+import type {
+  KineticsCellularSpec,
+  KineticsRollerSpec,
+  VenetianSpec,
+} from "./kineticsSpec";
 
-export type Spec = KineticsCellularSpec | KineticsRollerSpec;
+export type Spec = KineticsCellularSpec | KineticsRollerSpec | VenetianSpec;

@@ -1,16 +1,20 @@
 export type ProductId =
   | "cellular-blind"
   | "sunscreen-roller"
-  | "blockout-roller";
+  | "blockout-roller"
+  | "venetian-blind";
 
-type KineticsVenetian =
-  | "Kinetics Mikronwood 50mm Venetian"
-  | "Lewis's 25mm Aluminium Venetian"
-  | "Lewis's 50mm Phoenixwood Venetian";
+export const VenetianBlindOptions = [
+  "Kinetics Mikronwood 50mm Venetian",
+  "Lewis's 25mm Aluminium Venetian",
+  "Lewis's 50mm Phoenixwood Venetian",
+] as const;
 
-type SantaFeShutter =
-  | "Santa Fe Normandy Shutter"
-  | "Santa Fe Waterproof Woodlore Plus Shutter";
+type VenetianBlind = (typeof VenetianBlindOptions)[number];
+
+// type SantaFeShutter =
+//   | "Santa Fe Normandy Shutter"
+//   | "Santa Fe Waterproof Woodlore Plus Shutter";
 
 export const KineticsCellularBlindOptions = [
   "Kinetics 10mm Cellular Blind",
@@ -31,5 +35,4 @@ export type KineticsRollerBlind = (typeof KineticsRollerBlindOptions)[number];
 export type BlindType =
   | KineticsRollerBlind
   | KineticsCellularBlind
-  | KineticsVenetian
-  | SantaFeShutter;
+  | VenetianBlind;
