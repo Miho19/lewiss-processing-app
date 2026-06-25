@@ -1,33 +1,34 @@
-import type { CheckboxFormData } from "../../../../../page/ProjectPage";
-import type { WindowSelect } from "../../../../../type/process/windowSelectType";
-import type { Room } from "../../../../../type/sharePoint/project/projectFileType";
-
-import RoomCardWindowListElement from "./RoomCardWindowListElement";
+import type { CheckboxFormData } from "../../../../page/ProjectPage";
+import type { WindowSelect } from "../../../../type/process/windowSelectType";
+import type { Room } from "../../../../type/sharePoint/project/projectFileType";
+import WindowMeasurementListElement from "./WindowMeasurementListElement";
 
 type Props = {
   room: Room;
   formData: WindowSelect[];
   onChangeHandlerCheckBox: (window: CheckboxFormData) => void;
 };
-function RoomCardWindowMeasurementList(props: Props) {
+function WindowMeasurementList(props: Props) {
   const { room, formData, onChangeHandlerCheckBox } = props;
-  const windows = room.windows;
+  const { windows, treatment } = room;
 
   const roomCardWindowListElements = windows.map((windowMeasurement) => {
     return [
-      <RoomCardWindowListElement
+      <WindowMeasurementListElement
         key={`${windowMeasurement.id}-inside`}
         windowMeasurement={windowMeasurement}
         formData={formData}
         onChangeHandlerCheckBox={onChangeHandlerCheckBox}
         fit="inside"
+        treatment={treatment}
       />,
-      <RoomCardWindowListElement
+      <WindowMeasurementListElement
         key={`${windowMeasurement.id}-outside`}
         windowMeasurement={windowMeasurement}
         formData={formData}
         onChangeHandlerCheckBox={onChangeHandlerCheckBox}
         fit="outside"
+        treatment={treatment}
       />,
     ];
   });
@@ -39,4 +40,4 @@ function RoomCardWindowMeasurementList(props: Props) {
   );
 }
 
-export default RoomCardWindowMeasurementList;
+export default WindowMeasurementList;

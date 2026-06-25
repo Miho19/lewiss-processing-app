@@ -1,10 +1,10 @@
-import type { WindowMeasurement } from "../../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
+import type { WindowMeasurement } from "../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
 
 type Props = {
   windowMeasurement: WindowMeasurement;
 };
 
-function RoomCardWindowMeasurementExtra(props: Props) {
+function WindowMeasurementExtra(props: Props) {
   const { windowMeasurement } = props;
 
   return (
@@ -29,4 +29,4 @@ function RoomCardWindowMeasurementExtra(props: Props) {
   );
 }
 
-export default RoomCardWindowMeasurementExtra;
+export default WindowMeasurementExtra;

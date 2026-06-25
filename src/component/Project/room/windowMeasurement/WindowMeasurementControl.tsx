@@ -1,10 +1,10 @@
-import type { WindowMeasurement } from "../../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
+import type { WindowMeasurement } from "../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
 
 type Props = {
   windowMeasurement: WindowMeasurement;
 };
 
-function RoomCardWindowMeasurementControl(props: Props) {
+function WindowMeasurementControl(props: Props) {
   const { windowMeasurement } = props;
   return (
     <>
@@ -16,4 +16,4 @@ function RoomCardWindowMeasurementControl(props: Props) {
   );
 }
 
-export default RoomCardWindowMeasurementControl;
+export default WindowMeasurementControl;

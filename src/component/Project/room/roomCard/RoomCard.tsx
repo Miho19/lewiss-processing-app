@@ -5,7 +5,7 @@ import RoomCardHeader from "./RoomCardHeader";
 import type { Room } from "../../../../type/sharePoint/project/projectFileType";
 import type { WindowSelect } from "../../../../type/process/windowSelectType";
 import type { CheckboxFormData } from "../../../../page/ProjectPage";
-import RoomCardWindowMeasurementList from "../windowMeasurement/list/RoomCardWindowMeasurementList";
+import WindowMeasurementList from "../windowMeasurement/WindowMeasurementList";
 
 type Props = {
   room: Room;
@@ -35,7 +35,7 @@ function RoomCard(props: Props) {
         className={`grid transition-all duration-200 ease-in-out ${isExpanded ? `grid-rows-[1fr] opacity-100 pointer-events-auto` : `grid-rows-[0fr] opacity-0 pointer-events-none`}`}
       >
         <div className="flex flex-col w-full h-full overflow-hidden space-y-6">
-          <RoomCardWindowMeasurementList {...props} />
+          <WindowMeasurementList {...props} />
         </div>
       </div>
     </li>
