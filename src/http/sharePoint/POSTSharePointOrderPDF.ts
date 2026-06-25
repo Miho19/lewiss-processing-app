@@ -45,7 +45,7 @@ export async function POSTSharePointOrderPDF({
   fileName,
   fileBase64,
   endpoint = POSTSharePointOrderPDFEndpoint(),
-}: Parameters): Promise<string> {
+}: Parameters): Promise<POSTSharePointJSONFileResponse> {
   try {
     const folderId = processNameMappedToSharePointConfirmedFolder[processName];
 
@@ -58,11 +58,10 @@ export async function POSTSharePointOrderPDF({
     const response: Response = await fetch(endpoint, fetchOptions);
     if (!response.ok) throw new Error("Unexpected server response");
     const jsonBody: POSTSharePointJSONFileResponse = await response.json();
-
     if (!jsonBody.ok) throw new Error(jsonBody.error);
 
     // we are going to use ZOD here
-    return jsonBody.itemId;
+    return jsonBody;
   } catch (error) {
     if (error instanceof Error) console.error(error.message);
     throw new Error("Failed to fetch pricing schedule", { cause: error });

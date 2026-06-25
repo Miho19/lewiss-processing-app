@@ -45,7 +45,7 @@ export async function POSTSharePointHistoryFile({
   fileName,
   data,
   endpoint = POSTSharePointHistoryFileFileEndpoint(),
-}: Parameters): Promise<string> {
+}: Parameters): Promise<POSTSharePointJSONFileResponse> {
   try {
     const folderId = processNameMappedToSharePointConfirmedFolder[processName];
 
@@ -60,12 +60,10 @@ export async function POSTSharePointHistoryFile({
 
     const jsonBody: POSTSharePointJSONFileResponse = await response.json();
 
-    console.log(jsonBody);
-
     if (!jsonBody.ok) throw new Error(jsonBody.error);
 
     // we are going to use ZOD here
-    return jsonBody.itemId;
+    return jsonBody;
   } catch (error) {
     if (error instanceof Error) console.error(error.message);
     throw new Error("Failed to fetch pricing schedule", { cause: error });
