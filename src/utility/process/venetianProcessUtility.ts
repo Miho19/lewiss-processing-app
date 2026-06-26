@@ -1,4 +1,9 @@
-import type { VenetianBlindTypeToWindowSelectDetailed } from "../../type/process/processType";
+import type { TDocumentDefinitions } from "pdfmake/interfaces";
+import type {
+  VenetianBlindTypeMappedToCreateWorksheetFunction,
+  VenetianBlindTypeToPDFCreateFunction,
+  VenetianBlindTypeToWindowSelectDetailed,
+} from "../../type/process/processType";
 import type { WindowSelectDetailed } from "../../type/process/windowSelectType";
 import type {
   CustomerInformation,
@@ -6,6 +11,8 @@ import type {
 } from "../../type/process/worksheetType";
 import type { SharePointProjectFile } from "../../type/sharePoint/project/projectFileType";
 import { isVenetianSpec } from "../../type/sharePoint/project/spec/venetianSpec";
+import { createMikronwoodPDFAsync } from "../kinetics/mikronwood/process/createMikronwoodDocument";
+import type { VenetianBlind } from "../../type/process/productType";
 
 export async function createVenetianBlindDocumentAsync(
   windowSelectDetailedList: WindowSelectDetailed[],
@@ -16,13 +23,23 @@ export async function createVenetianBlindDocumentAsync(
   const partitionedWindowSelectDetailedList =
     partitionVenetianWindowSelectDetailed(windowSelectDetailedList);
 
-  const customerInformation: CustomerInformation = {
-    name: projectFile.name,
-    reference: projectFile.reference,
-    salesConsultant: projectFile.salesConsultant,
-  };
+  const taskList = Object.entries(partitionedWindowSelectDetailedList).map(
+    async ([key, windowSelectDetailedList]) => {
+      const createWorksheetFunctionAsync =
+        venetianCreateWorksheetDocumentFunctionMap[
+          key as keyof VenetianBlindTypeMappedToCreateWorksheetFunction
+        ];
 
-  return [];
+      return await createWorksheetFunctionAsync(
+        windowSelectDetailedList,
+        projectFile,
+      );
+    },
+  );
+
+  const outputList = await Promise.all(taskList);
+
+  return outputList.filter((w) => typeof w !== "undefined");
 }
 
 export function partitionVenetianWindowSelectDetailed(
@@ -58,3 +75,44 @@ export function partitionVenetianWindowSelectDetailed(
 
   return partitionMapping;
 }
+
+const venetianCreateWorksheetDocumentFunctionMap: VenetianBlindTypeMappedToCreateWorksheetFunction =
+  {
+    "Kinetics Mikronwood 50mm Venetian": createMikronwoodPDFAsync,
+    "Lewis's 25mm Aluminium Venetian": function (
+      windowSelectDetailedList: WindowSelectDetailed[],
+      projectFile: SharePointProjectFile,
+    ): Promise<Worksheet | undefined> {
+      throw new Error("Function not implemented.");
+    },
+    "Lewis's 50mm Aluminium Venetian": function (
+      windowSelectDetailedList: WindowSelectDetailed[],
+      projectFile: SharePointProjectFile,
+    ): Promise<Worksheet | undefined> {
+      throw new Error("Function not implemented.");
+    },
+    "Lewis's 50mm Fauxwood Venetian": function (
+      windowSelectDetailedList: WindowSelectDetailed[],
+      projectFile: SharePointProjectFile,
+    ): Promise<Worksheet | undefined> {
+      throw new Error("Function not implemented.");
+    },
+    "Lewis's 63mm Fauxwood Venetian": function (
+      windowSelectDetailedList: WindowSelectDetailed[],
+      projectFile: SharePointProjectFile,
+    ): Promise<Worksheet | undefined> {
+      throw new Error("Function not implemented.");
+    },
+    "Lewis's 50mm Phoenixwood Venetian": function (
+      windowSelectDetailedList: WindowSelectDetailed[],
+      projectFile: SharePointProjectFile,
+    ): Promise<Worksheet | undefined> {
+      throw new Error("Function not implemented.");
+    },
+    "Lewis's 63mm Phoenixwood Venetian": function (
+      windowSelectDetailedList: WindowSelectDetailed[],
+      projectFile: SharePointProjectFile,
+    ): Promise<Worksheet | undefined> {
+      throw new Error("Function not implemented.");
+    },
+  };
