@@ -42,6 +42,9 @@ export async function createKineticsRollerTableEntryAsync(
   windowMeasurement: WindowMeasurement,
   entries: KineticsRollerTableEntry[],
 ) {
+  const spec = windowSelectDetailed.treatment.spec;
+  if (!isKineticsRollerSpec(spec)) return undefined;
+
   const location = `${room.name} - ${windowMeasurement.name}`;
 
   const width = windowSelectDetailed.width[0];
@@ -50,9 +53,6 @@ export async function createKineticsRollerTableEntryAsync(
   const fit =
     windowSelectDetailed.fit.charAt(0).toUpperCase() +
     windowSelectDetailed.fit.slice(1);
-
-  const spec = windowSelectDetailed.treatment.spec;
-  if (!isKineticsRollerSpec(spec)) return undefined;
 
   const blindType = spec.blindType;
 

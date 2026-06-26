@@ -6,7 +6,7 @@ import type { WindowSelectDetailed } from "../../type/process/windowSelectType";
 import type { Worksheet } from "../../type/process/worksheetType";
 import type { SharePointProjectFile } from "../../type/sharePoint/project/projectFileType";
 import { isVenetianSpec } from "../../type/sharePoint/project/spec/venetianSpec";
-import { createMikronwoodDocumentAsync } from "../kinetics/mikronwood/process/createMikronwoodDocument";
+import { createMikronwoodDocumentAsync } from "../kinetics/mikronwood/process/createKineticsMikronwoodDocument";
 
 export async function createVenetianBlindDocumentAsync(
   windowSelectDetailedList: WindowSelectDetailed[],

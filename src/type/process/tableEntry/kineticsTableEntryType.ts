@@ -39,3 +39,21 @@ export type KineticsRollerTableEntry = {
   "remote channel": number;
   price: string;
 };
+
+export type KineticsMikronwoodTableEntry = {
+  "blind index": number;
+  location: string;
+  width: number;
+  height: number;
+  fit: string;
+  colour: string;
+  control: string;
+  "control side": string;
+  "tilt side": string;
+  fascia: string;
+  "hold down bracket": string;
+  butting: string;
+  remote: number;
+  "remote channel": number;
+  price: string;
+};

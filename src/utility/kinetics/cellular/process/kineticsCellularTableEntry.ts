@@ -7,7 +7,10 @@ import type {
   Room,
   SharePointProjectFile,
 } from "../../../../type/sharePoint/project/projectFileType";
-import type { KineticsCellularSpec } from "../../../../type/sharePoint/project/spec/kineticsSpec";
+import {
+  isKineticsCellularSpec,
+  type KineticsCellularSpec,
+} from "../../../../type/sharePoint/project/spec/kineticsSpec";
 import type { WindowMeasurement } from "../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
 import { getCurrentTableEntryIndex } from "../../../process/tableEntryUtility";
 import { getRoomAndWindowMeasurement } from "../../../sharePoint/projectFileUtility";
@@ -24,7 +27,7 @@ export const defaultKineticsCellularTableEntry: KineticsCellularTableEntry = {
   location: "",
   width: 0,
   height: 0,
-  fit: "",
+  fit: "Inside",
   "comb size": "",
   fabric: "",
   control: "",
@@ -55,6 +58,10 @@ async function getNewEntryKineticsCellularBlindAsync(
   projectWindow: WindowMeasurement,
   entries: KineticsCellularTableEntry[],
 ) {
+  const spec = windowSelectDetailed.treatment.spec;
+
+  if (!isKineticsCellularSpec(spec)) return undefined;
+
   const location = `${projectRoom.name} - ${projectWindow.name}`;
 
   const width = windowSelectDetailed.width[0];
@@ -93,7 +100,7 @@ async function getNewEntryKineticsCellularBlindAsync(
     windowSelectDetailed.treatment.spec as KineticsCellularSpec,
   );
 
-  const blindType = windowSelectDetailed.treatment.spec.blindType;
+  const blindType = spec.blindType;
 
   const costOfBlind = await getKineticsCellularBlindCostAsync(
     width,
@@ -179,6 +186,8 @@ export async function generateKineticsCellularTableEntryListAsync(
       projectWindow,
       entries,
     );
+
+    if (typeof newEntry === "undefined") continue;
 
     entries.push(newEntry);
     if (newEntry.butting === "No") continue;
