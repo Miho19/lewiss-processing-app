@@ -1,18 +1,12 @@
-import type { TDocumentDefinitions } from "pdfmake/interfaces";
 import type {
   VenetianBlindTypeMappedToCreateWorksheetFunction,
-  VenetianBlindTypeToPDFCreateFunction,
   VenetianBlindTypeToWindowSelectDetailed,
 } from "../../type/process/processType";
 import type { WindowSelectDetailed } from "../../type/process/windowSelectType";
-import type {
-  CustomerInformation,
-  Worksheet,
-} from "../../type/process/worksheetType";
+import type { Worksheet } from "../../type/process/worksheetType";
 import type { SharePointProjectFile } from "../../type/sharePoint/project/projectFileType";
 import { isVenetianSpec } from "../../type/sharePoint/project/spec/venetianSpec";
-import { createMikronwoodPDFAsync } from "../kinetics/mikronwood/process/createMikronwoodDocument";
-import type { VenetianBlind } from "../../type/process/productType";
+import { createMikronwoodDocumentAsync } from "../kinetics/mikronwood/process/createMikronwoodDocument";
 
 export async function createVenetianBlindDocumentAsync(
   windowSelectDetailedList: WindowSelectDetailed[],
@@ -25,6 +19,8 @@ export async function createVenetianBlindDocumentAsync(
 
   const taskList = Object.entries(partitionedWindowSelectDetailedList).map(
     async ([key, windowSelectDetailedList]) => {
+      if (windowSelectDetailedList.length === 0) return;
+
       const createWorksheetFunctionAsync =
         venetianCreateWorksheetDocumentFunctionMap[
           key as keyof VenetianBlindTypeMappedToCreateWorksheetFunction
@@ -78,7 +74,7 @@ export function partitionVenetianWindowSelectDetailed(
 
 const venetianCreateWorksheetDocumentFunctionMap: VenetianBlindTypeMappedToCreateWorksheetFunction =
   {
-    "Kinetics Mikronwood 50mm Venetian": createMikronwoodPDFAsync,
+    "Kinetics Mikronwood 50mm Venetian": createMikronwoodDocumentAsync,
     "Lewis's 25mm Aluminium Venetian": function (
       windowSelectDetailedList: WindowSelectDetailed[],
       projectFile: SharePointProjectFile,

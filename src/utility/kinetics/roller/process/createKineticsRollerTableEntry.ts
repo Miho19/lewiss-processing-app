@@ -4,7 +4,10 @@ import type {
   Room,
   SharePointProjectFile,
 } from "../../../../type/sharePoint/project/projectFileType";
-import type { KineticsRollerSpec } from "../../../../type/sharePoint/project/spec/kineticsSpec";
+import {
+  isKineticsRollerSpec,
+  type KineticsRollerSpec,
+} from "../../../../type/sharePoint/project/spec/kineticsSpec";
 import type { WindowMeasurement } from "../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
 import { getCurrentTableEntryIndex } from "../../../process/tableEntryUtility";
 import { getRoomAndWindowMeasurement } from "../../../sharePoint/projectFileUtility";
@@ -48,7 +51,10 @@ export async function createKineticsRollerTableEntryAsync(
     windowSelectDetailed.fit.charAt(0).toUpperCase() +
     windowSelectDetailed.fit.slice(1);
 
-  const spec = windowSelectDetailed.treatment.spec as KineticsRollerSpec;
+  const spec = windowSelectDetailed.treatment.spec;
+  if (!isKineticsRollerSpec(spec)) return undefined;
+
+  const blindType = spec.blindType;
 
   const roll = spec.rollDirection.replace("Roll", "");
 
@@ -77,8 +83,6 @@ export async function createKineticsRollerTableEntryAsync(
     controlString,
     entries,
   );
-
-  const blindType = windowSelectDetailed.treatment.spec.blindType;
 
   const price = await getKineticsRollerBlindCostAsync(
     width,
@@ -137,6 +141,8 @@ export async function generateKineticsRollerTableEntryListAsync(
       projectWindow,
       entries,
     );
+
+    if (typeof newEntry === "undefined") continue;
 
     entries.push(newEntry);
   }

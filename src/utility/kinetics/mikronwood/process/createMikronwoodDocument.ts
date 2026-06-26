@@ -1,11 +1,21 @@
-import type { TDocumentDefinitions } from "pdfmake/interfaces";
 import type { WindowSelectDetailed } from "../../../../type/process/windowSelectType";
 import type { SharePointProjectFile } from "../../../../type/sharePoint/project/projectFileType";
-import type { Worksheet } from "../../../../type/process/worksheetType";
+import type {
+  CustomerInformation,
+  Worksheet,
+} from "../../../../type/process/worksheetType";
 
-export async function createMikronwoodPDFAsync(
+export async function createMikronwoodDocumentAsync(
   windowSelectDetailedList: WindowSelectDetailed[],
   projectFile: SharePointProjectFile,
 ): Promise<Worksheet | undefined> {
+  const customerInformation: CustomerInformation = {
+    name: projectFile.name,
+    reference: projectFile.reference,
+    salesConsultant: projectFile.salesConsultant,
+  };
+
   return undefined;
 }
+
+async function createMikronwoodPDF() {}
