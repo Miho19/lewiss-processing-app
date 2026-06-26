@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { getKineticsMikronwoodFabricCost } from "../../../../src/utility/kinetics/mikronwood/pricing";
+import pricingSchedule from "./kinetics-mikronwood-pricing-schedule.json";
 
 describe("Kinetics Mikronwood Pricing", () => {
   describe("getKineticsMikronwoodFabricCost", () => {
@@ -17,8 +19,8 @@ describe("Kinetics Mikronwood Pricing", () => {
     ];
     it.each(exampleInput)(
       "should given w: %i h: %i return %i",
-      async (width, height, expected) => {
-        const result = await getKineticsMikronwoodFabricCost(
+      (width, height, expected) => {
+        const result = getKineticsMikronwoodFabricCost(
           width,
           height,
           pricingSchedule,

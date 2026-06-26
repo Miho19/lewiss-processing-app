@@ -1,0 +1,38 @@
+{
+  "productId": "venetian-blind",
+  "baseType": "Kinetics Mikronwood 50mm Venetian",
+  "control": {
+    "motorisation": {
+      "Lithium-ion": { "base": 257, "id": "103172", "name": "lithium-ion" }
+    }
+  },
+  "fascia": {
+    "Flat": {
+      "base": 19,
+      "id": "",
+      "name": "Fascia Flat"
+    },
+    "Colonial": {
+      "base": 19,
+      "id": "",
+      "name": "Fascia Colonial"
+    }
+  },
+  "holdDownBracket": {
+    "base": 12,
+    "id": "103250",
+    "name": "Hold Down Bracket Antique Brass"
+  },
+  "fabric": {
+    "blindType": ["Kinetics Mikronwood 50mm Venetian"],
+    "widthHeader": [
+      600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800,
+      1900, 2000, 2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2890
+    ],
+    "heightHeader": [
+      600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800,
+      1900, 2000, 2100, 2200, 2300, 2400, 2500, 2600
+    ],
+    "data": []
+  }
+}
