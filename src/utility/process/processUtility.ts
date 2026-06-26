@@ -102,7 +102,7 @@ function mapWindowSelectDetailedIntoProcessGroup(
   return map;
 }
 
-function getWindowSelectDetailedList(
+export function getWindowSelectDetailedList(
   windowSelectList: WindowSelect[],
   projectFile: SharePointProjectFile,
 ): WindowSelectDetailed[] {

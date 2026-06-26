@@ -12,6 +12,7 @@ import type {
 import type { KineticsRollerTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
 import { generateKineticsRollerTableEntryListAsync } from "./createKineticsRollerTableEntry";
 import { getWorksheetCostAsync } from "../../../process/tableEntryUtility";
+import { isKineticsRollerSpec } from "../../../../type/sharePoint/project/spec/kineticsSpec";
 
 function partitionWindowSelectDetailedByKineticRollerBlindType(
   windowSelectDetailedList: WindowSelectDetailed[],
@@ -23,12 +24,20 @@ function partitionWindowSelectDetailedByKineticRollerBlindType(
   };
 
   Object.entries(partitionMapping).forEach(([key, value]) => {
-    const filteredList = windowSelectDetailedList.filter(
-      (w) =>
-        w.treatment.spec.blindType.localeCompare(key, undefined, {
+    const filteredList = windowSelectDetailedList.filter((w) => {
+      const spec = w.treatment.spec;
+
+      if (!isKineticsRollerSpec(spec)) return false;
+
+      if (
+        spec.blindType.localeCompare(key, undefined, {
           sensitivity: "base",
-        }) === 0,
-    );
+        }) === 0
+      )
+        return true;
+
+      return false;
+    });
 
     value.push(...filteredList);
   });
