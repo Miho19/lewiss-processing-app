@@ -1,6 +1,6 @@
 import type { PricingSchedule } from "../../../../type/process/pricingScheduleType";
 
-export async function getKineticsMikronwoodFabricCost(
+export function getKineticsMikronwoodFabricCost(
   width: number,
   height: number,
   pricingSchedule: PricingSchedule,
