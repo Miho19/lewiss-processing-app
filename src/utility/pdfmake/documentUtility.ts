@@ -3,18 +3,9 @@ import type {
   TDocumentDefinitions,
   TDocumentInformation,
 } from "pdfmake/interfaces";
-import type { ProcessName } from "../../type/process/processType";
 import { getDeliverToText } from "../kinetics/pdf/deliverToText";
-import type { CustomerInformation } from "../../type/process/worksheetType";
 
-export function createDocument(
-  customerInformation: CustomerInformation,
-  processName: ProcessName,
-) {
-  const { name, reference, salesConsultant } = customerInformation;
-
-  const title = [name, reference, processName].join("-");
-
+export function createDocument(salesConsultant: string, title: string) {
   const metaData: TDocumentInformation = {
     title: title,
     author: salesConsultant,

@@ -96,7 +96,11 @@ async function createWorksheetPDF(
   const costTotal = createCostTotalColumn(worksheetCost);
   content.push(costTotal);
 
-  const document = createDocument(customerInformation, "cellular-blind");
+  const { name, reference, salesConsultant } = customerInformation;
+
+  const documentTitle = [name, reference, "cellular-blind"].join("-");
+
+  const document = createDocument(salesConsultant, documentTitle);
   document.content = [...content];
   return document;
 }

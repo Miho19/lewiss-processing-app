@@ -49,7 +49,11 @@ export async function createRollerBlindDocumentAsync(
 
   content.push(costTotal);
 
-  const document = createDocument(customerInformation, processName);
+  const { name, reference, salesConsultant } = customerInformation;
+
+  const documentTitle = [name, reference, processName].join("-");
+
+  const document = createDocument(salesConsultant, documentTitle);
   document.content = [...content];
   return document;
 }
