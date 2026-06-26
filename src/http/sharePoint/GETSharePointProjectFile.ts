@@ -3,7 +3,6 @@ import { GETSharePointJSONFile } from "./GETSharePointJSONFile";
 
 export async function GETSharePointProjectFile(fileId: string) {
   const response = await GETSharePointJSONFile(fileId);
-  console.log(response.content);
 
   if (!response.ok) throw new Error("Failed to fetch project file");
 

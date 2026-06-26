@@ -1,5 +1,6 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/16/solid";
 import type { Spec } from "../../../../type/sharePoint/project/spec/spec";
+import { isVenetianSpec } from "../../../../type/sharePoint/project/spec/venetianSpec";
 
 type Props = {
   spec: Spec | undefined;
@@ -10,7 +11,7 @@ type Props = {
 function TreatmentCollapseButton(props: Props) {
   const { spec, isExpanded, toggleExpanded } = props;
 
-  const specName = spec?.blindType ?? "Treatment";
+  const specName = getTreatmentName(spec);
 
   const chevronClassNames =
     "w-10 h-10 rounded-full group-hover:-translate-y-1 transition-all duration-150 ease-in-out group-hover:scale-125";
@@ -33,6 +34,14 @@ function TreatmentCollapseButton(props: Props) {
       </div>
     </button>
   );
+}
+
+function getTreatmentName(spec: Spec | undefined) {
+  if (typeof spec === "undefined") return "Invalid Treatment";
+
+  if (isVenetianSpec(spec)) return spec.baseType ?? "Invalid Treatment";
+
+  return spec.blindType;
 }
 
 export default TreatmentCollapseButton;

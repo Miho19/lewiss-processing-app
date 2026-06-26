@@ -1,3 +1,4 @@
+import type { WindowSelect } from "../../type/process/windowSelectType";
 import type {
   Room,
   SharePointProjectFile,
@@ -19,4 +20,51 @@ export function getRoomAndWindowMeasurement(
   if (!window) throw new Error("Window not found");
 
   return [{ ...room }, { ...window }];
+}
+
+export function getWindowSelectList(
+  projectFile: SharePointProjectFile,
+): WindowSelect[] {
+  const rooms = projectFile.project.rooms;
+  if (rooms.length === 0) return [];
+
+  const outputList: WindowSelect[] = [];
+
+  rooms.forEach((room) => {
+    const { id, windows } = room;
+
+    windows.forEach((window) => {
+      const [insideWindow, outsideWindow] = getWindowSelect(id, window);
+      outputList.push(insideWindow);
+      outputList.push(outsideWindow);
+    });
+  });
+
+  return outputList.flat();
+}
+
+export function getWindowSelect(
+  roomId: string,
+  windowMeasurement: WindowMeasurement,
+): WindowSelect[] {
+  if (typeof windowMeasurement === "undefined") return [];
+
+  const windowId = windowMeasurement.id;
+
+  // typescript complaining aobut fit not being assignable...
+  const insideWindow: WindowSelect = {
+    windowId: windowId,
+    roomId: roomId,
+    fit: "inside",
+    selected: false,
+  };
+
+  const outsideWindow: WindowSelect = {
+    windowId: windowId,
+    roomId: roomId,
+    fit: "outside",
+    selected: false,
+  };
+
+  return [insideWindow, outsideWindow];
 }

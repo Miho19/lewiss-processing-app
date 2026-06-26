@@ -1,4 +1,8 @@
-import type { KineticsRollerBlind, ProductId } from "./productType";
+import type {
+  KineticsRollerBlind,
+  ProductId,
+  VenetianBlind,
+} from "./productType";
 import type { WindowSelectDetailed } from "./windowSelectType";
 import type { SharePointProjectFile } from "../sharePoint/project/projectFileType";
 import type { Worksheet } from "./worksheetType";
@@ -28,3 +32,8 @@ export type KineticsRollerBlindTypeToWindowSelectDetailedList = Record<
 >;
 
 export type ProcessNameMappedToString = Record<ProcessName, string>;
+
+export type VenetianBlindTypeToWindowSelectDetailed = Record<
+  VenetianBlind,
+  WindowSelectDetailed[]
+>;

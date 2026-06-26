@@ -12,7 +12,7 @@ type Props = {
   spec: Spec;
 };
 
-function RoomCardTreatmentKineticsCellular(props: Props) {
+export function TreatmentKineticsCellular(props: Props) {
   const { spec } = props;
 
   if (!isKineticsCellularSpec(spec)) return <></>;
@@ -37,5 +37,3 @@ function RoomCardTreatmentKineticsCellular(props: Props) {
     </div>
   );
 }
-
-export default RoomCardTreatmentKineticsCellular;

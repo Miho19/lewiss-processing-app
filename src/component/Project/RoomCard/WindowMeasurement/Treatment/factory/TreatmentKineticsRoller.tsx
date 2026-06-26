@@ -10,7 +10,7 @@ type Props = {
   spec: Spec;
 };
 
-function RoomCardTreatmentKineticsRoller(props: Props) {
+export function TreatmentKineticsRoller(props: Props) {
   const { spec } = props;
 
   if (!isKineticsRollerSpec(spec)) return <></>;
@@ -59,5 +59,3 @@ function RoomCardTreatmentKineticsRoller(props: Props) {
     </div>
   );
 }
-
-export default RoomCardTreatmentKineticsRoller;

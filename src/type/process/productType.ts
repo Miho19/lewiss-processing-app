@@ -4,14 +4,6 @@ export type ProductId =
   | "blockout-roller"
   | "venetian-blind";
 
-export const VenetianBlindOptions = [
-  "Kinetics Mikronwood 50mm Venetian",
-  "Lewis's 25mm Aluminium Venetian",
-  "Lewis's 50mm Phoenixwood Venetian",
-] as const;
-
-type VenetianBlind = (typeof VenetianBlindOptions)[number];
-
 // type SantaFeShutter =
 //   | "Santa Fe Normandy Shutter"
 //   | "Santa Fe Waterproof Woodlore Plus Shutter";
@@ -31,6 +23,30 @@ export const KineticsRollerBlindOptions = [
 ] as const;
 
 export type KineticsRollerBlind = (typeof KineticsRollerBlindOptions)[number];
+
+const venetianSubTypeOption = [
+  "mikronwood-50",
+  "aluminium-25",
+  "aluminium-50",
+  "fauxwood-50",
+  "fauxwood-63",
+  "phoenixwood-50",
+  "phoenixwood-63",
+] as const;
+
+export type VenetianSubType = (typeof venetianSubTypeOption)[number];
+
+export const VenetianBlindOptions = [
+  "Kinetics Mikronwood 50mm Venetian",
+  "Lewis's 25mm Aluminium Venetian",
+  "Lewis's 50mm Aluminium Venetian",
+  "Lewis's 50mm Fauxwood Venetian",
+  "Lewis's 63mm Fauxwood Venetian",
+  "Lewis's 50mm Phoenixwood Venetian",
+  "Lewis's 63mm Phoenixwood Venetian",
+] as const;
+
+export type VenetianBlind = (typeof VenetianBlindOptions)[number];
 
 export type BlindType =
   | KineticsRollerBlind

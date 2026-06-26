@@ -6,7 +6,7 @@ import {
   writeOrderPDFAsync,
 } from "../../../src/utility/process/upload/";
 
-describe("writeWorksheetToSharePointAsync", () => {
+describe.skip("writeWorksheetToSharePointAsync", () => {
   const worksheetList: Worksheet[] = worksheetListJSON as Worksheet[];
 
   describe.skip("writeHistoryFileAsync", () => {

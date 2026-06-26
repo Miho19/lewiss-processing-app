@@ -6,22 +6,21 @@ import useSharePointProjectFileQuery from "../hook/useSharePointProjectFileQuery
 import { projectRoute } from "../router/router";
 
 import type { Fit, WindowSelect } from "../type/process/windowSelectType";
-import { processWindowsSelectedAsync } from "../utility/process/processUtility";
+import {
+  filterWindowSelectBySelected,
+  processWindowsSelectedAsync,
+} from "../utility/process/processUtility";
 import { openPDFDocumentAsync } from "../utility/pdfmake/documentUtility";
 import SubmitButton from "../component/Project/Form/SubmitButton";
 import RoomCardList from "../component/Project/RoomCard/RoomCardList";
+
+import { getWindowSelectList } from "../utility/sharePoint/projectFileUtility";
 
 export type CheckboxFormData = {
   windowId: string;
   fit: Fit;
   isChecked: boolean;
 };
-
-function filterSelectedWindows(
-  windowSelectList: WindowSelect[],
-): WindowSelect[] {
-  return windowSelectList.filter((window) => window.selected);
-}
 
 function ProjectPage() {
   const { projectId } = projectRoute.useParams();
@@ -38,29 +37,11 @@ function ProjectPage() {
   useEffect(() => {
     if (!isSuccess) return;
 
-    sharePointProjectFile.project.rooms.forEach((room) => {
-      const roomId = room.id;
-      room.windows.forEach((window) => {
-        const windowId = window.id;
+    const windowSelectList: WindowSelect[] = getWindowSelectList(
+      sharePointProjectFile,
+    );
 
-        // typescript complaining aobut fit not being assignable...
-        const insideWindow: WindowSelect = {
-          windowId: windowId,
-          roomId: roomId,
-          fit: "inside",
-          selected: false,
-        };
-
-        const outsideWindow: WindowSelect = {
-          windowId: windowId,
-          roomId: roomId,
-          fit: "outside",
-          selected: false,
-        };
-
-        setFormData((prev) => [...prev, insideWindow, outsideWindow]);
-      });
-    });
+    setFormData([...windowSelectList]);
   }, [sharePointProjectFile, isSuccess]);
 
   const errorStyleClassName = "flex items-center justify-center flex-1";
@@ -77,8 +58,7 @@ function ProjectPage() {
     event.preventDefault();
     if (typeof sharePointProjectFile === "undefined") return;
 
-    // potential to give feedback here instead of returning nothing
-    const selectedWindows = filterSelectedWindows(formData);
+    const selectedWindows = filterWindowSelectBySelected(formData);
     if (selectedWindows.length === 0) return;
 
     processWindowsSelectedAsync(selectedWindows, sharePointProjectFile).then(

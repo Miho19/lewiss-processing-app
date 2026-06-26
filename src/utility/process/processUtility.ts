@@ -20,6 +20,7 @@ import type { BlindType, ProductId } from "../../type/process/productType";
 import { createSunscreenRollerBlindDocumentAsync } from "../kinetics/roller/process/createSunscreenPDFDocument";
 import type { Worksheet } from "../../type/process/worksheetType";
 import { writeWorksheetToSharePointAsync } from "./upload/writeWorksheetToSharePoint";
+import { createVenetianBlindDocumentAsync } from "./venetianProcessUtility";
 
 /**
  *  Maybe use a generic pdf array return type --> makes testing easier, currently very badly coupled
@@ -88,6 +89,7 @@ function mapWindowSelectDetailedIntoProcessGroup(
     "cellular-blind": [],
     "sunscreen-roller": [],
     "blockout-roller": [],
+    "venetian-blind": [],
   };
 
   Object.entries(map).forEach(([key, value]) => {
@@ -145,18 +147,8 @@ export const sharePointProductIdToProcessTypeRecord: ProductIdMappedToCreateWork
     "cellular-blind": createCellularBlindDocumentAsync,
     "sunscreen-roller": createSunscreenRollerBlindDocumentAsync,
     "blockout-roller": createBlockoutRollerBlindDocumentAsync,
+    "venetian-blind": createVenetianBlindDocumentAsync,
   };
-
-//   "Kinetics Sunscreen Roller Blind"             → "Sunscreen Roller"
-//   "Kinetics Blockout Roller Blind"              → "Blockout Roller"
-//   "Kinetics Light Filtering Roller Blind"       → "Light Filter Roller"
-//   "Kinetics 10mm Cellular Blind"                → "10mm Cellular"
-//   "Kinetics 20mm Cellular Blind"                → "20mm Cellular"
-//   "Kinetics Mikronwood 50mm Venetian"           → "Mikronwood 50mm Venetian"
-//   "Lewis's 25mm Aluminium Venetian"             → "25mm Aluminium Venetian"
-//   "Lewis's 50mm Phoenixwood Venetian"           → "50mm Phoenixwood Venetian"
-//   "Santa Fe Normandy Shutter"                   → "Normandy Shutter"
-//   "Santa Fe Waterproof Woodlore Plus Shutter"   → "Waterproof Woodlore Plus Shutter"
 
 export function mapProcessNameToBlindType(
   processName: ProcessName,
@@ -173,4 +165,10 @@ export function mapProcessNameToBlindType(
     default:
       return undefined;
   }
+}
+
+export function filterWindowSelectBySelected(
+  windowSelectList: WindowSelect[],
+): WindowSelect[] {
+  return windowSelectList.filter((window) => window.selected);
 }
