@@ -3,7 +3,9 @@ import type {
   OutsideLayer,
 } from "../sharePoint/project/projectFileType";
 
-export type Fit = "inside" | "outside";
+export const FitOptions = ["inside", "outside"] as const;
+
+export type Fit = (typeof FitOptions)[number];
 
 export type WindowSelect = {
   windowId: string;
@@ -12,7 +14,14 @@ export type WindowSelect = {
   selected: boolean;
 };
 
-export type BlindCount = "single" | "dual" | "butting" | "invalid";
+export const BlindCountOption = [
+  "single",
+  "dual",
+  "butting",
+  "invalid",
+] as const;
+
+export type BlindCount = (typeof BlindCountOption)[number];
 
 export type WindowSelectDetailed = {
   windowId: string;

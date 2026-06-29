@@ -6,7 +6,6 @@ import type {
 import type { WindowSelectDetailed } from "./windowSelectType";
 import type { SharePointProjectFile } from "../sharePoint/project/projectFileType";
 import type { Worksheet } from "./worksheetType";
-import type { TDocumentDefinitions } from "pdfmake/interfaces";
 
 export type ProcessGroupToWindowSelectDetailed = Record<
   ProductId,

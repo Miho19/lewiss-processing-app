@@ -2,6 +2,11 @@
   "productId": "venetian-blind",
   "baseType": "Kinetics Mikronwood 50mm Venetian",
   "control": {
+    "cord": {
+      "base": 0,
+      "id": "",
+      "name": "Cord"
+    },
     "motorisation": {
       "Lithium-ion": { "base": 257, "id": "103172", "name": "lithium-ion" }
     }

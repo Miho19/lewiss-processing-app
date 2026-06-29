@@ -24,7 +24,7 @@ export const KineticsRollerBlindOptions = [
 
 export type KineticsRollerBlind = (typeof KineticsRollerBlindOptions)[number];
 
-const venetianSubTypeOption = [
+export const venetianSubTypeOptions = [
   "mikronwood-50",
   "aluminium-25",
   "aluminium-50",
@@ -34,7 +34,7 @@ const venetianSubTypeOption = [
   "phoenixwood-63",
 ] as const;
 
-export type VenetianSubType = (typeof venetianSubTypeOption)[number];
+export type VenetianSubType = (typeof venetianSubTypeOptions)[number];
 
 export const VenetianBlindOptions = [
   "Kinetics Mikronwood 50mm Venetian",

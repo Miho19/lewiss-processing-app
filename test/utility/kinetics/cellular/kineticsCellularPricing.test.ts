@@ -4,7 +4,6 @@ import {
   getKineticsCellularFabricCost,
   getKineticsCellularHeadrailCost,
   getKineticsCellularSideChannelCost,
-  getKineticsCellularBlindCostAsync,
 } from "../../../../src/utility/kinetics/cellular/pricing";
 
 import kineticsPricingExample from "./kinetics-cellular-pricing-example.json";

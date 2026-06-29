@@ -1,7 +1,7 @@
-import type { PricingSchedule } from "../../../../type/process/pricingScheduleType";
+import type { KineticsMikronwoodPricingSchedule } from "../../../../type/pricing/kinetics/kineticsMikronwoodPricingScheduleType";
 
 export function getKineticsMikronwoodFabricCost(
   width: number,
   height: number,
-  pricingSchedule: PricingSchedule,
+  pricingSchedule: KineticsMikronwoodPricingSchedule,
 ) {}
