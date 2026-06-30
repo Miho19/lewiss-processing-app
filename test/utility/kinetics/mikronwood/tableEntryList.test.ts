@@ -13,5 +13,6 @@ describe("generateKineticsMikroonTableEntryListAsync", () => {
     );
 
     expect(result.length).toBeGreaterThan(0);
+    result.map((e) => expect(parseInt(e.price)).toBeGreaterThan(0));
   });
 });

@@ -1,4 +1,7 @@
-import type { KineticsCellularPricingSchedule } from "../../../../type/pricing/kinetics/kineticsCellularPricingScheduleType";
+import {
+  isKineticsCellularPricingSchedule,
+  type KineticsCellularPricingSchedule,
+} from "../../../../type/pricing/kinetics/kineticsCellularPricingScheduleType";
 import type { BlindType } from "../../../../type/process/productType";
 import { getPricingScheduleAsync } from "../../../process/pricingScheduleUtility";
 import {
@@ -19,11 +22,10 @@ export async function getKineticsCellularBlindCostAsync(
   blindType: BlindType,
   includeMotorisationCost: boolean = true,
 ): Promise<number> {
-  const pricingSchedule = (await getPricingScheduleAsync(
-    blindType,
-  )) as KineticsCellularPricingSchedule;
+  const pricingSchedule = await getPricingScheduleAsync(blindType);
 
   if (typeof pricingSchedule === "undefined") return 0;
+  if (!isKineticsCellularPricingSchedule(pricingSchedule)) return 0;
 
   const fabricCost = getKineticsCellularFabricCost(
     width,

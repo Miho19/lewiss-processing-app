@@ -2,6 +2,7 @@ import type { PricingSchedule } from "../../process/pricingScheduleType";
 
 export type KineticsMikronwoodPricingSchedule = {
   productId: string;
+  buttingMultiplier: number;
   baseType: string;
   control: Control;
   fascia: Fascia;
@@ -35,6 +36,9 @@ type FabricCost = {
 export function isKineiicsMikronwoodPricingSchedule(
   pricingSchedule: PricingSchedule,
 ): pricingSchedule is KineticsMikronwoodPricingSchedule {
+  if (typeof pricingSchedule === "undefined") return false;
+  if (!("productId" in pricingSchedule)) return false;
+
   if (pricingSchedule.productId !== "venetian-blind") return false;
   if (!("baseType" in pricingSchedule)) return false;
   return true;

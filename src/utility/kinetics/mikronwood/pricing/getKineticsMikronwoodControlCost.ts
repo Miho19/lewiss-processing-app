@@ -6,7 +6,7 @@ export function getKineticsMikronwoodControlCost(
 ): number | undefined {
   if (!isControlValid(control)) return undefined;
 
-  if (!isMotorised(control, pricingSchedule))
+  if (!isKineticsMikronwoodBlindMotorised(control, pricingSchedule))
     return pricingSchedule.control.cord.base;
 
   return getMotorisationCost(control, pricingSchedule);
@@ -20,7 +20,7 @@ function isControlValid(control: string) {
   return true;
 }
 
-function isMotorised(
+export function isKineticsMikronwoodBlindMotorised(
   control: string,
   pricingSchedule: KineticsMikronwoodPricingSchedule,
 ) {

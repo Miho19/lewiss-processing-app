@@ -15,7 +15,7 @@ export function getKineticsMikronwoodControlString(spec: VenetianSpec): string {
 export function getKineticsMikronwoodHoldDownBracketString(
   spec: VenetianSpec,
 ): string {
-  return spec.holdDownBrackets ? "Yes" : "No";
+  return spec.holdDownBrackets ? "Antique Brass" : "";
 }
 
 export function getKineticsMikronwoodFasciaString(spec: VenetianSpec): string {
@@ -27,5 +27,5 @@ export function getKineticsMikronwoodFasciaString(spec: VenetianSpec): string {
   if (typeof fasciaFlatReturns === "boolean" && fasciaFlatReturns)
     return "Flat";
 
-  return "None";
+  return "";
 }

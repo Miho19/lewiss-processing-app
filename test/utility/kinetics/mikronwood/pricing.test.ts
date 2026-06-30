@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   getKineticsMikronwoodControlCost,
   getKineticsMikronwoodFabricCost,
+  getKineticsMikronwoodFasciaCost,
+  getKineticsMikronwoodHoldDownBracketCost,
 } from "../../../../src/utility/kinetics/mikronwood/pricing";
 import pricingSchedule from "./kinetics-mikronwood-pricing-schedule.json";
 
@@ -60,6 +62,57 @@ describe("Kinetics Mikronwood Pricing", () => {
       }
     });
   });
-  // describe("getKineticsMikronwoodFasciaCost", () => {});
-  // describe("getKineticsMikronwoodHoldDownBracketCost", () => {});
+
+  describe("getKineticsMikronwoodFasciaCost", () => {
+    const exampleInput: [string, number | undefined][] = [
+      ["", 0],
+      ["  ", 0],
+      ["a", undefined],
+      ["abc", undefined],
+      ["fascia", undefined],
+      ["Flat", pricingSchedule.fascia["Flat"].base],
+      ["FlAt", pricingSchedule.fascia["Flat"].base],
+      ["FlAT", pricingSchedule.fascia["Flat"].base],
+      ["flat", pricingSchedule.fascia["Flat"].base],
+      ["Colonial", pricingSchedule.fascia["Colonial"].base],
+    ];
+
+    it.each(exampleInput)(
+      "should given the fascia %s return %i",
+      (fascia, expected) => {
+        const result = getKineticsMikronwoodFasciaCost(fascia, pricingSchedule);
+        if (typeof expected === "undefined") {
+          expect(result).toBeUndefined();
+        } else {
+          expect(result).toBe(expected);
+        }
+      },
+    );
+  });
+
+  describe("getKineticsMikronwoodHoldDownBracketCost", () => {
+    const exampleInput: [string, number | undefined][] = [
+      ["", 0],
+      ["  ", 0],
+      ["Antique Brass", 12],
+      ["antique brass", 12],
+      ["antIque brAss", 12],
+      ["antIque", undefined],
+      ["brass", undefined],
+      ["a", undefined],
+      ["bcdsd", undefined],
+    ];
+
+    it.each(exampleInput)("should given %s return %i", (fascia, expected) => {
+      const result = getKineticsMikronwoodHoldDownBracketCost(
+        fascia,
+        pricingSchedule,
+      );
+      if (typeof expected === "undefined") {
+        expect(result).toBeUndefined();
+      } else {
+        expect(result).toBe(expected);
+      }
+    });
+  });
 });

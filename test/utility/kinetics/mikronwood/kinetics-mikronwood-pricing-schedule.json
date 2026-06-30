@@ -1,6 +1,7 @@
 {
   "productId": "venetian-blind",
   "baseType": "Kinetics Mikronwood 50mm Venetian",
+  "buttingMultiplier": 2.1,
   "control": {
     "cord": {
       "base": 0,
@@ -26,7 +27,7 @@
   "holdDownBracket": {
     "base": 12,
     "id": "103250",
-    "name": "Hold Down Bracket Antique Brass"
+    "name": "Antique Brass"
   },
   "fabric": {
     "blindType": ["Kinetics Mikronwood 50mm Venetian"],

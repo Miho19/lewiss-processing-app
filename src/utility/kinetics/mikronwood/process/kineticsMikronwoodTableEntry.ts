@@ -17,6 +17,7 @@ import {
   getKineticsMikronwoodFasciaString,
   getKineticsMikronwoodHoldDownBracketString,
 } from "../presentation/kineticsMikronwood";
+import { getKineticsMikronwoodBlindCostAsync } from "../pricing";
 
 export async function generateKineticsMikroonTableEntryListAsync(
   windowSelectDetailedList: WindowSelectDetailed[],
@@ -86,6 +87,16 @@ async function getNewEntry(
 
   const { remote, channel } = getRemoteAndChannel(location, control, entries);
 
+  const price = await getKineticsMikronwoodBlindCostAsync(
+    width,
+    height,
+    control,
+    fasica,
+    holdDownBracket,
+    "Kinetics Mikronwood 50mm Venetian",
+    false,
+  );
+
   const newEntry: KineticsMikronwoodTableEntry = {
     "blind index": blindIndex,
     location: location,
@@ -101,7 +112,7 @@ async function getNewEntry(
     butting: buttingString,
     remote: remote,
     "remote channel": channel,
-    price: "",
+    price: price.toFixed(2),
   };
 
   return newEntry;

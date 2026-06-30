@@ -1,3 +1,5 @@
+import type { PricingSchedule } from "../../process/pricingScheduleType";
+
 export type KineticsCellularPricingSchedule = {
   productId: string;
   blockoutMultiplier: number;
@@ -26,3 +28,17 @@ type FabricCost = {
   widthHeader: number[];
   data: number[][];
 };
+
+export function isKineticsCellularPricingSchedule(
+  pricingSchedule: PricingSchedule,
+): pricingSchedule is KineticsCellularPricingSchedule {
+  if (typeof pricingSchedule === "undefined") return false;
+
+  if (!("productId" in pricingSchedule)) return false;
+
+  const productId = pricingSchedule.productId;
+
+  if (productId !== "cellular-blind") return false;
+
+  return true;
+}
