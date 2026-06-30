@@ -1,8 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { getKineticsMikronwoodFabricCost } from "../../../../src/utility/kinetics/mikronwood/pricing";
+import {
+  getKineticsMikronwoodControlCost,
+  getKineticsMikronwoodFabricCost,
+} from "../../../../src/utility/kinetics/mikronwood/pricing";
 import pricingSchedule from "./kinetics-mikronwood-pricing-schedule.json";
 
-describe.skip("Kinetics Mikronwood Pricing", () => {
+describe("Kinetics Mikronwood Pricing", () => {
   describe("getKineticsMikronwoodFabricCost", () => {
     const exampleInput: [number, number, number | undefined][] = [
       [1200, 900, 528],
@@ -35,7 +38,28 @@ describe.skip("Kinetics Mikronwood Pricing", () => {
     );
   });
 
-  describe("getKineticsMikronwoodControlCost", () => {});
-  describe("getKineticsMikronwoodFasciaCost", () => {});
-  describe("getKineticsMikronwoodHoldDownBracketCost", () => {});
+  describe("getKineticsMikronwoodControlCost", () => {
+    const exampleInput: [string, number | undefined][] = [
+      ["a", undefined],
+      ["cord", 0],
+      ["corD", 0],
+      ["cora", undefined],
+      [" ", undefined],
+      ["", undefined],
+      ["lithium-ion", pricingSchedule.control.motorisation["Lithium-ion"].base],
+      ["Lithium-ion", pricingSchedule.control.motorisation["Lithium-ion"].base],
+      ["LitHium-ion", pricingSchedule.control.motorisation["Lithium-ion"].base],
+    ];
+
+    it.each(exampleInput)("should given %s return %i", (control, expected) => {
+      const result = getKineticsMikronwoodControlCost(control, pricingSchedule);
+      if (typeof expected === "undefined") {
+        expect(result).toBeUndefined();
+      } else {
+        expect(result).toBe(expected);
+      }
+    });
+  });
+  // describe("getKineticsMikronwoodFasciaCost", () => {});
+  // describe("getKineticsMikronwoodHoldDownBracketCost", () => {});
 });
