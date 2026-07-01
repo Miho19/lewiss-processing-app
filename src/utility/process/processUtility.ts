@@ -150,6 +150,7 @@ export const sharePointProductIdToProcessTypeRecord: ProductIdMappedToCreateWork
     "venetian-blind": createVenetianBlindDocumentAsync,
   };
 
+// venetian blinds are incorrect --> mapping from productId to blindtype is impossible...
 export function mapProcessNameToBlindType(
   processName: ProcessName,
 ): BlindType | undefined {
@@ -162,6 +163,8 @@ export function mapProcessNameToBlindType(
       return "Kinetics Sunscreen Roller Blind";
     case "cellular-blind":
       return "Kinetics 10mm Cellular Blind";
+    case "venetian-blind":
+      return "Kinetics Mikronwood 50mm Venetian";
     default:
       return undefined;
   }

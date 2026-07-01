@@ -3,3 +3,4 @@ export * from "./getKineticsMikronwoodFabricCost";
 export * from "./getKineticsMikronwoodControlCost";
 export * from "./getKineticsMikronwoodFasciaCost";
 export * from "./getKineticsMikronwoodHoldDownBracketCost";
+export * from "./getKineticsMikronwoodAdditionalProductList";

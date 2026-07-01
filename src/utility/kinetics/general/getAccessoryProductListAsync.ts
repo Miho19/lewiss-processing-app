@@ -2,14 +2,20 @@ import type { KineticsAccessoryPricingSchedule } from "../../../type/pricing/kin
 import type { BlindType } from "../../../type/process/productType";
 import type {
   KineticsCellularTableEntry,
+  KineticsMikronwoodTableEntry,
   KineticsRollerTableEntry,
 } from "../../../type/process/tableEntry/kineticsTableEntryType";
 import type { AdditionalProduct } from "../../../type/process/worksheetType";
 import { getAccessoryPricingScheduleAsync } from "../../process/pricingScheduleUtility";
 import { getMaxRemote } from "./motorAccessoryUtility";
 
+type AllowedTableEntry =
+  | KineticsRollerTableEntry
+  | KineticsCellularTableEntry
+  | KineticsMikronwoodTableEntry;
+
 export async function getKineticsAccessoryProductListAsync(
-  tableEntryList: KineticsRollerTableEntry[] | KineticsCellularTableEntry[],
+  tableEntryList: AllowedTableEntry[],
   blindType: BlindType,
 ): Promise<AdditionalProduct[]> {
   const pricingSchedule = (await getAccessoryPricingScheduleAsync(
@@ -27,7 +33,8 @@ export async function getKineticsAccessoryProductListAsync(
 }
 
 function getRemoteAdditionalProduct(
-  tableEntryList: KineticsRollerTableEntry[] | KineticsCellularTableEntry[],
+  tableEntryList: AllowedTableEntry[],
+
   pricingSchedule: KineticsAccessoryPricingSchedule,
 ): AdditionalProduct | undefined {
   const numberOfRemotes = getMaxRemote(tableEntryList);

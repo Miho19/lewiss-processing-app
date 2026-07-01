@@ -4,6 +4,9 @@ import type {
   CustomerInformation,
   Worksheet,
 } from "../../../../type/process/worksheetType";
+import type { KineticsMikronwoodTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
+import { generateKineticsMikroonTableEntryListAsync } from "./kineticsMikronwoodTableEntry";
+import { getWorksheetCostAsync } from "../../../process/tableEntryUtility";
 
 export async function createMikronwoodDocumentAsync(
   windowSelectDetailedList: WindowSelectDetailed[],
@@ -15,7 +18,33 @@ export async function createMikronwoodDocumentAsync(
     salesConsultant: projectFile.salesConsultant,
   };
 
-  return undefined;
+  const entryList: KineticsMikronwoodTableEntry[] =
+    await generateKineticsMikroonTableEntryListAsync(
+      windowSelectDetailedList,
+      projectFile,
+    );
+
+  if (entryList.length === 0) return undefined;
+
+  // what happens when we have other venetians...
+  const worksheetCost = await getWorksheetCostAsync(
+    entryList,
+    "venetian-blind",
+  );
+
+  // todo
+  const pdf = await createMikronwoodPDF();
+  if (typeof pdf === "undefined") return undefined;
+
+  const worksheet: Worksheet = {
+    customer: customerInformation,
+    processName: "venetian-blind",
+    blindList: entryList,
+    worksheetCost: worksheetCost,
+    pdfList: [pdf],
+  };
+
+  return worksheet;
 }
 
 async function createMikronwoodPDF() {}
