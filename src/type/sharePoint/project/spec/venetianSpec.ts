@@ -27,7 +27,7 @@ export type VenetianSpec = {
   intermediateBracket?: boolean;
   combaBracket?: boolean;
   subtypeId?: VenetianSubType;
-  baseType?: VenetianBlind;
+  baseType: VenetianBlind;
   operation: any;
   spacerBlock?: boolean;
   cutout?: boolean;

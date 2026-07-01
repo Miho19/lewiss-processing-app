@@ -1,7 +1,6 @@
 import type {
-  ProcessGroupToWindowSelectDetailed,
-  ProcessName,
-  ProductIdMappedToCreateWorksheetFunction,
+  BlindTypeMappedToCreateWorksheetFunction,
+  BlindTypeMappedToWindowSelectDetailed,
 } from "../../type/process/processType";
 import type {
   WindowSelect,
@@ -16,11 +15,17 @@ import {
   getWindowHeight,
   getWindowWidth,
 } from "../sharePoint/windowMeasurementUtility";
-import type { BlindType, ProductId } from "../../type/process/productType";
+import type { BlindType } from "../../type/process/productType";
 import { createSunscreenRollerBlindDocumentAsync } from "../kinetics/roller/process/createSunscreenPDFDocument";
 import type { Worksheet } from "../../type/process/worksheetType";
 import { writeWorksheetToSharePointAsync } from "./upload/writeWorksheetToSharePoint";
 import { createVenetianBlindDocumentAsync } from "./venetianProcessUtility";
+import type { Spec } from "../../type/sharePoint/project/spec/spec";
+import {
+  isKineticsCellularSpec,
+  isKineticsRollerSpec,
+} from "../../type/sharePoint/project/spec/kineticsSpec";
+import { isVenetianSpec } from "../../type/sharePoint/project/spec/venetianSpec";
 
 /**
  *  Maybe use a generic pdf array return type --> makes testing easier, currently very badly coupled
@@ -42,11 +47,12 @@ export async function processWindowsSelectedAsync(
     projectFile,
   );
 
-  const processGroupMappedToWindowSelectDetailedList =
-    mapWindowSelectDetailedIntoProcessGroup(windowSelectDetailedList);
+  const blindTypeMapped = mapWindowSelectDetailedIntoBlindType(
+    windowSelectDetailedList,
+  );
 
   const worksheetList = await createWorksheetAsync(
-    processGroupMappedToWindowSelectDetailedList,
+    blindTypeMapped,
     projectFile,
   );
 
@@ -56,50 +62,72 @@ export async function processWindowsSelectedAsync(
 }
 
 async function createWorksheetAsync(
-  processGroupMappedToWindowSelectDetailedList: ProcessGroupToWindowSelectDetailed,
+  blindTypeMapped: BlindTypeMappedToWindowSelectDetailed,
   projectFile: SharePointProjectFile,
 ): Promise<Worksheet[]> {
-  const processGroupTasks = (
-    Object.keys(processGroupMappedToWindowSelectDetailedList) as ProductId[]
-  ).map(async (productId) => {
-    const windowSelectDetailList =
-      processGroupMappedToWindowSelectDetailedList[productId];
+  const processGroupTasks = (Object.keys(blindTypeMapped) as BlindType[]).map(
+    async (blindType) => {
+      const windowSelectDetailList = blindTypeMapped[blindType];
+      if (windowSelectDetailList.length === 0) return [];
 
-    if (windowSelectDetailList.length === 0) return [];
-    const createWorksheetFunctionAsync =
-      sharePointProductIdToProcessTypeRecord[productId];
+      const createWorksheetFunctionAsync =
+        blindTypeMappedToWorksheetCreateFunction[blindType];
 
-    const createdWorksheet = await createWorksheetFunctionAsync(
-      windowSelectDetailList,
-      projectFile,
-    );
+      const createdWorksheet = await createWorksheetFunctionAsync(
+        windowSelectDetailList,
+        projectFile,
+      );
 
-    return createdWorksheet;
-  });
+      return createdWorksheet;
+    },
+  );
 
   const worksheetList: Worksheet[][] = await Promise.all(processGroupTasks);
 
   return worksheetList.flat();
 }
 
-function mapWindowSelectDetailedIntoProcessGroup(
+function mapWindowSelectDetailedIntoBlindType(
   windowSelectDetailedList: WindowSelectDetailed[],
-): ProcessGroupToWindowSelectDetailed {
-  const map: ProcessGroupToWindowSelectDetailed = {
-    "cellular-blind": [],
-    "sunscreen-roller": [],
-    "blockout-roller": [],
-    "venetian-blind": [],
+): BlindTypeMappedToWindowSelectDetailed {
+  const map: BlindTypeMappedToWindowSelectDetailed = {
+    "Kinetics Sunscreen Roller Blind": [],
+    "Kinetics Blockout Roller Blind": [],
+    "Kinetics Light Filtering Roller Blind": [],
+    "Kinetics 10mm Cellular Blind": [],
+    "Kinetics 20mm Cellular Blind": [],
+    "Kinetics Mikronwood 50mm Venetian": [],
+    "Lewis's 25mm Aluminium Venetian": [],
+    "Lewis's 50mm Aluminium Venetian": [],
+    "Lewis's 50mm Fauxwood Venetian": [],
+    "Lewis's 63mm Fauxwood Venetian": [],
+    "Lewis's 50mm Phoenixwood Venetian": [],
+    "Lewis's 63mm Phoenixwood Venetian": [],
   };
 
   Object.entries(map).forEach(([key, value]) => {
-    const filteredList = windowSelectDetailedList.filter(
-      (window) => window.treatment.productId === key,
-    );
+    const filteredList = windowSelectDetailedList.filter((window) => {
+      const blindType = getBlindTypeFromSpec(window.treatment.spec);
+      if (typeof blindType === "undefined") return false;
+      if (
+        key.localeCompare(blindType, undefined, { sensitivity: "base" }) === 0
+      )
+        return true;
+
+      return false;
+    });
     value.push(...filteredList);
   });
 
   return map;
+}
+
+function getBlindTypeFromSpec(spec: Spec): BlindType | undefined {
+  if (isKineticsCellularSpec(spec)) return spec.blindType;
+  if (isKineticsRollerSpec(spec)) return spec.blindType;
+  if (isVenetianSpec(spec)) return spec.baseType;
+
+  return undefined;
 }
 
 export function getWindowSelectDetailedList(
@@ -142,33 +170,52 @@ export function getWindowSelectDetailedList(
   return joinedList.flat();
 }
 
-export const sharePointProductIdToProcessTypeRecord: ProductIdMappedToCreateWorksheetFunction =
+export const blindTypeMappedToWorksheetCreateFunction: BlindTypeMappedToCreateWorksheetFunction =
   {
-    "cellular-blind": createCellularBlindDocumentAsync,
-    "sunscreen-roller": createSunscreenRollerBlindDocumentAsync,
-    "blockout-roller": createBlockoutRollerBlindDocumentAsync,
-    "venetian-blind": createVenetianBlindDocumentAsync,
+    "Kinetics 10mm Cellular Blind": createCellularBlindDocumentAsync,
+    "Kinetics 20mm Cellular Blind": createCellularBlindDocumentAsync,
+    "Kinetics Blockout Roller Blind": createBlockoutRollerBlindDocumentAsync,
+    "Kinetics Light Filtering Roller Blind":
+      createBlockoutRollerBlindDocumentAsync,
+    "Kinetics Sunscreen Roller Blind": createSunscreenRollerBlindDocumentAsync,
+    "Kinetics Mikronwood 50mm Venetian": createVenetianBlindDocumentAsync,
+    "Lewis's 25mm Aluminium Venetian": function (
+      windowSelectDetailedList: WindowSelectDetailed[],
+      projectFile: SharePointProjectFile,
+    ): Promise<Worksheet[]> {
+      throw new Error("Function not implemented.");
+    },
+    "Lewis's 50mm Aluminium Venetian": function (
+      windowSelectDetailedList: WindowSelectDetailed[],
+      projectFile: SharePointProjectFile,
+    ): Promise<Worksheet[]> {
+      throw new Error("Function not implemented.");
+    },
+    "Lewis's 50mm Fauxwood Venetian": function (
+      windowSelectDetailedList: WindowSelectDetailed[],
+      projectFile: SharePointProjectFile,
+    ): Promise<Worksheet[]> {
+      throw new Error("Function not implemented.");
+    },
+    "Lewis's 63mm Fauxwood Venetian": function (
+      windowSelectDetailedList: WindowSelectDetailed[],
+      projectFile: SharePointProjectFile,
+    ): Promise<Worksheet[]> {
+      throw new Error("Function not implemented.");
+    },
+    "Lewis's 50mm Phoenixwood Venetian": function (
+      windowSelectDetailedList: WindowSelectDetailed[],
+      projectFile: SharePointProjectFile,
+    ): Promise<Worksheet[]> {
+      throw new Error("Function not implemented.");
+    },
+    "Lewis's 63mm Phoenixwood Venetian": function (
+      windowSelectDetailedList: WindowSelectDetailed[],
+      projectFile: SharePointProjectFile,
+    ): Promise<Worksheet[]> {
+      throw new Error("Function not implemented.");
+    },
   };
-
-// venetian blinds are incorrect --> mapping from productId to blindtype is impossible...
-export function mapProcessNameToBlindType(
-  processName: ProcessName,
-): BlindType | undefined {
-  switch (processName) {
-    case "blockout-roller":
-      return "Kinetics Blockout Roller Blind";
-    case "light-filtering-roller":
-      return "Kinetics Light Filtering Roller Blind";
-    case "sunscreen-roller":
-      return "Kinetics Sunscreen Roller Blind";
-    case "cellular-blind":
-      return "Kinetics 10mm Cellular Blind";
-    case "venetian-blind":
-      return "Kinetics Mikronwood 50mm Venetian";
-    default:
-      return undefined;
-  }
-}
 
 export function filterWindowSelectBySelected(
   windowSelectList: WindowSelect[],

@@ -1,6 +1,6 @@
 import { queryClient } from "../../../http/queryClient";
 import { POSTSharePointOrderPDF } from "../../../http/sharePoint/POSTSharePointOrderPDF";
-import type { ProcessNameMappedToString } from "../../../type/process/processType";
+import type { BlindTypeMappedToString } from "../../../type/process/processType";
 import type { Worksheet } from "../../../type/process/worksheetType";
 import { MutationObserver } from "@tanstack/react-query";
 
@@ -14,16 +14,40 @@ export async function writeOrderPDFAsync(
 }
 
 function getFileName(worksheet: Worksheet): string {
-  const manufacturer = manufacturerNameMap[worksheet.processName];
+  const manufacturer = manufacturerNameMap[worksheet.blindType];
+  const tag = blindTypeTag[worksheet.blindType];
   const { reference } = worksheet.customer;
-  return `${manufacturer}-${reference}-${worksheet.processName}.pdf`;
+  return `${manufacturer}-${reference}-${tag}.pdf`;
 }
 
-const manufacturerNameMap: ProcessNameMappedToString = {
-  "cellular-blind": "Windoware",
-  "sunscreen-roller": "Windoware",
-  "blockout-roller": "Windoware",
-  "light-filtering-roller": "Windoware",
+const blindTypeTag: BlindTypeMappedToString = {
+  "Kinetics Sunscreen Roller Blind": "roller-ss",
+  "Kinetics Blockout Roller Blind": "roller-bo",
+  "Kinetics Light Filtering Roller Blind": "roller-lf",
+  "Kinetics 10mm Cellular Blind": "cellular-10",
+  "Kinetics 20mm Cellular Blind": "cellular-20",
+  "Kinetics Mikronwood 50mm Venetian": "mikronwood-50",
+  "Lewis's 25mm Aluminium Venetian": "aluminium-25",
+  "Lewis's 50mm Aluminium Venetian": "aluminium-50",
+  "Lewis's 50mm Fauxwood Venetian": "fauxwood-50",
+  "Lewis's 63mm Fauxwood Venetian": "fauxwood-63",
+  "Lewis's 50mm Phoenixwood Venetian": "pheonixwood-50",
+  "Lewis's 63mm Phoenixwood Venetian": "pheonixwood-63",
+};
+
+const manufacturerNameMap: BlindTypeMappedToString = {
+  "Kinetics Sunscreen Roller Blind": "Windoware",
+  "Kinetics Blockout Roller Blind": "Windoware",
+  "Kinetics Light Filtering Roller Blind": "Windoware",
+  "Kinetics 10mm Cellular Blind": "Windoware",
+  "Kinetics 20mm Cellular Blind": "Windoware",
+  "Kinetics Mikronwood 50mm Venetian": "Windoware",
+  "Lewis's 25mm Aluminium Venetian": "",
+  "Lewis's 50mm Aluminium Venetian": "",
+  "Lewis's 50mm Fauxwood Venetian": "",
+  "Lewis's 63mm Fauxwood Venetian": "",
+  "Lewis's 50mm Phoenixwood Venetian": "",
+  "Lewis's 63mm Phoenixwood Venetian": "",
 };
 
 async function writeFile(
@@ -35,15 +59,15 @@ async function writeFile(
     if (!fileName.endsWith(".pdf")) return undefined;
 
     const observer = getObserver();
-    const processName = worksheet.processName;
+    const blindType = worksheet.blindType;
 
     const fileBase64 = await getPDFasBase64(worksheet);
-
-    return await observer.mutate({
-      processName: processName,
+    const result = await observer.mutate({
+      blindType: blindType,
       fileName: fileName,
       fileBase64: fileBase64,
     });
+    return result.webUrl;
   } catch (error) {
     console.error(error);
     return undefined;

@@ -1,3 +1,6 @@
+/**
+ * 2/07/2026 we are moving away from product Id being used in the process
+ */
 export type ProductId =
   | "cellular-blind"
   | "sunscreen-roller"

@@ -1,7 +1,7 @@
 import type { TDocumentDefinitions } from "pdfmake/interfaces";
 import type { SharePointProjectFile } from "../sharePoint/project/projectFileType";
-import type { ProcessName } from "./processType";
 import type { TableEntry } from "./tableEntry/tableEntryType";
+import type { BlindType } from "./productType";
 
 export type WorksheetCost = {
   blindSubTotal: number;
@@ -24,7 +24,7 @@ export type CustomerInformation = {
 
 export type Worksheet = {
   customer: CustomerInformation;
-  processName: ProcessName;
+  blindType: BlindType;
   blindList: TableEntry[];
   worksheetCost: WorksheetCost;
   pdfList: TDocumentDefinitions[];
