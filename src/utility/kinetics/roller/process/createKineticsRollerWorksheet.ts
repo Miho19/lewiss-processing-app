@@ -1,6 +1,10 @@
+import type {
+  KineticsRollerBlindTypeToWindowSelectDetailedList,
+  ProcessName,
+} from "../../../../type/process/processType";
 import type { WindowSelectDetailed } from "../../../../type/process/windowSelectType";
 import type { SharePointProjectFile } from "../../../../type/sharePoint/project/projectFileType";
-import { createRollerBlindDocumentAsync } from "./createRollerPDFDocument";
+import { createRollerBlindDocumentAsync } from "./createRollerPDF";
 import type {
   CustomerInformation,
   Worksheet,
@@ -8,11 +12,21 @@ import type {
 import type { KineticsRollerTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
 import { generateKineticsRollerTableEntryListAsync } from "./createKineticsRollerTableEntry";
 import { getWorksheetCostAsync } from "../../../process/tableEntryUtility";
+import type { BlindType } from "../../../../type/process/productType";
 
-export async function createSunscreenRollerBlindDocumentAsync(
+export async function createKineticsRollerWorksheetAsync(
+  blindType: BlindType,
   windowSelectDetailedList: WindowSelectDetailed[],
   projectFile: SharePointProjectFile,
 ): Promise<Worksheet[]> {
+  if (windowSelectDetailedList.length === 0) return [];
+
+  const customerInformation: CustomerInformation = {
+    name: projectFile.name,
+    reference: projectFile.reference,
+    salesConsultant: projectFile.salesConsultant,
+  };
+
   const kineticsRollerTableEntryList: KineticsRollerTableEntry[] =
     await generateKineticsRollerTableEntryListAsync(
       windowSelectDetailedList,
@@ -23,30 +37,24 @@ export async function createSunscreenRollerBlindDocumentAsync(
 
   const kineticsRollerWorksheetCost = await getWorksheetCostAsync(
     kineticsRollerTableEntryList,
-    "sunscreen-roller",
+    blindType,
   );
 
-  const customerInformation: CustomerInformation = {
-    name: projectFile.name,
-    reference: projectFile.reference,
-    salesConsultant: projectFile.salesConsultant,
-  };
-
-  const sunscreenDocument = await createRollerBlindDocumentAsync(
-    "sunscreen-roller",
+  const pdfDocument = await createRollerBlindDocumentAsync(
+    blindType,
     customerInformation,
     kineticsRollerTableEntryList,
     kineticsRollerWorksheetCost,
   );
 
-  if (typeof sunscreenDocument === "undefined") return [];
+  if (typeof pdfDocument === "undefined") return undefined;
 
   const worksheet: Worksheet = {
     customer: customerInformation,
-    processName: "sunscreen-roller",
+    processName: processName,
     blindList: kineticsRollerTableEntryList,
     worksheetCost: kineticsRollerWorksheetCost,
-    pdfList: [sunscreenDocument],
+    pdfList: [pdfDocument],
     projectFile: projectFile,
   };
 

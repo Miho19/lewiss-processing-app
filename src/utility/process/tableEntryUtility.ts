@@ -1,9 +1,4 @@
-import type { ProcessName } from "../../type/process/processType";
-import type {
-  KineticsCellularTableEntry,
-  KineticsMikronwoodTableEntry,
-  KineticsRollerTableEntry,
-} from "../../type/process/tableEntry/kineticsTableEntryType";
+import type { BlindType } from "../../type/process/productType";
 import type { TableEntry } from "../../type/process/tableEntry/tableEntryType";
 import type {
   AdditionalProduct,
@@ -38,13 +33,13 @@ function getBlindSubTotal(tableEntryList: TableEntry[]): number {
 
 export async function getWorksheetCostAsync(
   tableEntryList: TableEntry[],
-  processName: ProcessName,
+  blindType: BlindType,
 ): Promise<WorksheetCost> {
   const blindSubTotal = getBlindSubTotal(tableEntryList);
 
   const additionalArray = await getAdditionalProductArray(
     tableEntryList,
-    processName,
+    blindType,
   );
 
   const gst = getGST(blindSubTotal, additionalArray);
@@ -64,25 +59,26 @@ export async function getWorksheetCostAsync(
 // potential to just use record <processTitle, func>
 async function getAdditionalProductArray(
   tableEntryList: TableEntry[],
-  processName: ProcessName,
+  blindType: BlindType,
 ): Promise<AdditionalProduct[]> {
-  switch (processName) {
-    case "blockout-roller":
-    case "light-filtering-roller":
-    case "sunscreen-roller":
-      return await getKineticsRollerAdditionalProductListAsync(
-        tableEntryList as KineticsRollerTableEntry[],
-        processName,
-      );
-    case "cellular-blind":
+  switch (blindType) {
+    case "Kinetics 10mm Cellular Blind":
+    case "Kinetics 20mm Cellular Blind":
       return await getKineticsCellularAdditionalProductListAsync(
-        tableEntryList as KineticsCellularTableEntry[],
-        processName,
+        tableEntryList,
+        blindType,
       );
-    case "venetian-blind":
+    case "Kinetics Blockout Roller Blind":
+    case "Kinetics Light Filtering Roller Blind":
+    case "Kinetics Sunscreen Roller Blind":
+      return await getKineticsRollerAdditionalProductListAsync(
+        tableEntryList,
+        blindType,
+      );
+    case "Kinetics Mikronwood 50mm Venetian":
       return await getKineticsMikronwoodAdditionalProductListAsync(
-        tableEntryList as KineticsMikronwoodTableEntry[],
-        processName,
+        tableEntryList,
+        blindType,
       );
     default:
       return [];

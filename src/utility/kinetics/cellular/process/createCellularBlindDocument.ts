@@ -24,8 +24,10 @@ import type {
   Worksheet,
   WorksheetCost,
 } from "../../../../type/process/worksheetType";
+import type { BlindType } from "../../../../type/process/productType";
 
-export async function createCellularBlindDocumentAsync(
+export async function createKineticsCellularDocumentAsync(
+  blindType: BlindType,
   windowSelectDetailedList: WindowSelectDetailed[],
   projectFile: SharePointProjectFile,
 ): Promise<Worksheet[]> {
@@ -41,7 +43,7 @@ export async function createCellularBlindDocumentAsync(
 
   const kineticsCellularWorksheetCost = await getWorksheetCostAsync(
     kineticsCellularEntryList,
-    "cellular-blind",
+    blindType,
   );
 
   const customerInformation: CustomerInformation = {
@@ -60,7 +62,7 @@ export async function createCellularBlindDocumentAsync(
 
   const worksheet: Worksheet = {
     customer: customerInformation,
-    processName: "cellular-blind",
+    blindType: blindType,
     blindList: kineticsCellularEntryList,
     worksheetCost: kineticsCellularWorksheetCost,
     pdfList: [worksheetPDF],

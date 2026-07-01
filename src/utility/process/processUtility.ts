@@ -7,8 +7,14 @@ import type {
   WindowSelectDetailed,
 } from "../../type/process/windowSelectType";
 import type { SharePointProjectFile } from "../../type/sharePoint/project/projectFileType";
-import { createCellularBlindDocumentAsync } from "../kinetics/cellular/process/createCellularBlindDocument";
-import { createBlockoutRollerBlindDocumentAsync } from "../kinetics/roller/process/createBlockoutRollerPDFDocument";
+import {
+  createCellularBlindDocumentAsync,
+  createKineticsCellularDocumentAsync,
+} from "../kinetics/cellular/process/createCellularBlindDocument";
+import {
+  createBlockoutRollerBlindDocumentAsync,
+  createKineticsRollerWorksheetAsync,
+} from "../kinetics/roller/process/createKineticsRollerWorksheet";
 import { getRoomAndWindowMeasurement } from "../sharePoint/projectFileUtility";
 import {
   getWindowBlindCountString,
@@ -19,13 +25,13 @@ import type { BlindType } from "../../type/process/productType";
 import { createSunscreenRollerBlindDocumentAsync } from "../kinetics/roller/process/createSunscreenPDFDocument";
 import type { Worksheet } from "../../type/process/worksheetType";
 import { writeWorksheetToSharePointAsync } from "./upload/writeWorksheetToSharePoint";
-import { createVenetianBlindDocumentAsync } from "./venetianProcessUtility";
 import type { Spec } from "../../type/sharePoint/project/spec/spec";
 import {
   isKineticsCellularSpec,
   isKineticsRollerSpec,
 } from "../../type/sharePoint/project/spec/kineticsSpec";
 import { isVenetianSpec } from "../../type/sharePoint/project/spec/venetianSpec";
+import { createMikronwoodDocumentAsync } from "../kinetics/mikronwood/process/createKineticsMikronwoodDocument";
 
 /**
  *  Maybe use a generic pdf array return type --> makes testing easier, currently very badly coupled
@@ -74,6 +80,7 @@ async function createWorksheetAsync(
         blindTypeMappedToWorksheetCreateFunction[blindType];
 
       const createdWorksheet = await createWorksheetFunctionAsync(
+        blindType,
         windowSelectDetailList,
         projectFile,
       );
@@ -172,44 +179,49 @@ export function getWindowSelectDetailedList(
 
 export const blindTypeMappedToWorksheetCreateFunction: BlindTypeMappedToCreateWorksheetFunction =
   {
-    "Kinetics 10mm Cellular Blind": createCellularBlindDocumentAsync,
-    "Kinetics 20mm Cellular Blind": createCellularBlindDocumentAsync,
-    "Kinetics Blockout Roller Blind": createBlockoutRollerBlindDocumentAsync,
-    "Kinetics Light Filtering Roller Blind":
-      createBlockoutRollerBlindDocumentAsync,
-    "Kinetics Sunscreen Roller Blind": createSunscreenRollerBlindDocumentAsync,
-    "Kinetics Mikronwood 50mm Venetian": createVenetianBlindDocumentAsync,
+    "Kinetics 10mm Cellular Blind": createKineticsCellularDocumentAsync,
+    "Kinetics 20mm Cellular Blind": createKineticsCellularDocumentAsync,
+    "Kinetics Blockout Roller Blind": createKineticsRollerWorksheetAsync,
+    "Kinetics Light Filtering Roller Blind": createKineticsRollerWorksheetAsync,
+    "Kinetics Sunscreen Roller Blind": createKineticsRollerWorksheetAsync,
+    "Kinetics Mikronwood 50mm Venetian": createMikronwoodDocumentAsync,
     "Lewis's 25mm Aluminium Venetian": function (
+      blindType: BlindType,
       windowSelectDetailedList: WindowSelectDetailed[],
       projectFile: SharePointProjectFile,
     ): Promise<Worksheet[]> {
       throw new Error("Function not implemented.");
     },
     "Lewis's 50mm Aluminium Venetian": function (
+      blindType: BlindType,
       windowSelectDetailedList: WindowSelectDetailed[],
       projectFile: SharePointProjectFile,
     ): Promise<Worksheet[]> {
       throw new Error("Function not implemented.");
     },
     "Lewis's 50mm Fauxwood Venetian": function (
+      blindType: BlindType,
       windowSelectDetailedList: WindowSelectDetailed[],
       projectFile: SharePointProjectFile,
     ): Promise<Worksheet[]> {
       throw new Error("Function not implemented.");
     },
     "Lewis's 63mm Fauxwood Venetian": function (
+      blindType: BlindType,
       windowSelectDetailedList: WindowSelectDetailed[],
       projectFile: SharePointProjectFile,
     ): Promise<Worksheet[]> {
       throw new Error("Function not implemented.");
     },
     "Lewis's 50mm Phoenixwood Venetian": function (
+      blindType: BlindType,
       windowSelectDetailedList: WindowSelectDetailed[],
       projectFile: SharePointProjectFile,
     ): Promise<Worksheet[]> {
       throw new Error("Function not implemented.");
     },
     "Lewis's 63mm Phoenixwood Venetian": function (
+      blindType: BlindType,
       windowSelectDetailedList: WindowSelectDetailed[],
       projectFile: SharePointProjectFile,
     ): Promise<Worksheet[]> {

@@ -5,7 +5,8 @@ export type ProductId =
   | "cellular-blind"
   | "sunscreen-roller"
   | "blockout-roller"
-  | "venetian-blind";
+  | "venetian-blind"
+  | "light-filtering-roller";
 
 // type SantaFeShutter =
 //   | "Santa Fe Normandy Shutter"

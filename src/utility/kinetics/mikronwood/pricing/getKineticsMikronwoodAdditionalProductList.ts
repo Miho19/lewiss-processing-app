@@ -1,17 +1,13 @@
-import type { ProcessName } from "../../../../type/process/processType";
-import type { KineticsMikronwoodTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
+import type { BlindType } from "../../../../type/process/productType";
+import type { TableEntry } from "../../../../type/process/tableEntry/tableEntryType";
 import type { AdditionalProduct } from "../../../../type/process/worksheetType";
-import { mapProcessNameToBlindType } from "../../../process/processUtility";
 import { getKineticsAccessoryProductListAsync } from "../../general/getAccessoryProductListAsync";
 import { getMotorAdditionalProductListAsync } from "../../general/getMotorAdditionalProductListAsync";
 
 export async function getKineticsMikronwoodAdditionalProductListAsync(
-  tableEntryList: KineticsMikronwoodTableEntry[],
-  processName: ProcessName,
+  tableEntryList: TableEntry[],
+  blindType: BlindType,
 ): Promise<AdditionalProduct[]> {
-  const blindType = mapProcessNameToBlindType(processName);
-  if (typeof blindType === "undefined") return [];
-
   const motorAdditionalProductList: AdditionalProduct[] =
     await getMotorAdditionalProductListAsync(tableEntryList, blindType);
 

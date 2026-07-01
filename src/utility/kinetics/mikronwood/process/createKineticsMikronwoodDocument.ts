@@ -24,12 +24,13 @@ import {
   createTable,
 } from "../../../process/pdfUtility";
 import { createDocument } from "../../../pdfmake/documentUtility";
-import { venetianBlindTypeMappedToVenetianSubType } from "../../../process/venetianProcessUtility";
+import type { BlindType } from "../../../../type/process/productType";
 
 export async function createMikronwoodDocumentAsync(
+  blindType: BlindType,
   windowSelectDetailedList: WindowSelectDetailed[],
   projectFile: SharePointProjectFile,
-): Promise<Worksheet | undefined> {
+): Promise<Worksheet[]> {
   const customerInformation: CustomerInformation = {
     name: projectFile.name,
     reference: projectFile.reference,
@@ -42,15 +43,9 @@ export async function createMikronwoodDocumentAsync(
       projectFile,
     );
 
-  if (entryList.length === 0) return undefined;
+  if (entryList.length === 0) return [];
 
-  // what happens when we have other venetians...
-  // we have venetianBlindTypeMappedToVenetianSubType
-  // will redo how we do this later...
-  const worksheetCost = await getWorksheetCostAsync(
-    entryList,
-    "venetian-blind",
-  );
+  const worksheetCost = await getWorksheetCostAsync(entryList, blindType);
 
   // todo
   const pdf = await createMikronwoodPDF(
@@ -58,17 +53,17 @@ export async function createMikronwoodDocumentAsync(
     entryList,
     worksheetCost,
   );
-  if (typeof pdf === "undefined") return undefined;
+  if (typeof pdf === "undefined") return [];
 
   const worksheet: Worksheet = {
     customer: customerInformation,
-    processName: "venetian-blind",
+    blindType: blindType,
     blindList: entryList,
     worksheetCost: worksheetCost,
     pdfList: [pdf],
   };
 
-  return worksheet;
+  return [worksheet];
 }
 
 async function createMikronwoodPDF(
@@ -102,13 +97,7 @@ async function createMikronwoodPDF(
 
   const { name, reference, salesConsultant } = customerInformation;
 
-  const documentTitle = [
-    name,
-    reference,
-    venetianBlindTypeMappedToVenetianSubType[
-      "Kinetics Mikronwood 50mm Venetian"
-    ],
-  ].join("-");
+  const documentTitle = [name, reference, "mikronwood-50"].join("-");
 
   const document = createDocument(salesConsultant, documentTitle);
   document.content = [...content];

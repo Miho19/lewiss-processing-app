@@ -1,6 +1,7 @@
 import type {
   BlindType,
   KineticsRollerBlind,
+  ProductId,
   VenetianBlind,
   VenetianSubType,
 } from "./productType";
@@ -16,6 +17,7 @@ export type BlindTypeMappedToWindowSelectDetailed = Record<
 export type BlindTypeMappedToCreateWorksheetFunction = Record<
   BlindType,
   (
+    blindType: BlindType,
     windowSelectDetailedList: WindowSelectDetailed[],
     projectFile: SharePointProjectFile,
   ) => Promise<Worksheet[]>
@@ -24,25 +26,18 @@ export type BlindTypeMappedToCreateWorksheetFunction = Record<
 /**
  * No where better to put this right now
  */
+
+export type KineticsRollerBlindMappedtoProductId = Record<
+  KineticsRollerBlind,
+  ProductId
+>;
+
 export type KineticsRollerBlindTypeToWindowSelectDetailedList = Record<
   KineticsRollerBlind,
   WindowSelectDetailed[]
 >;
 
 export type BlindTypeMappedToString = Record<BlindType, string>;
-
-export type VenetianBlindTypeToWindowSelectDetailed = Record<
-  VenetianBlind,
-  WindowSelectDetailed[]
->;
-
-export type VenetianBlindTypeMappedToCreateWorksheetFunction = Record<
-  VenetianBlind,
-  (
-    windowSelectDetailedList: WindowSelectDetailed[],
-    projectFile: SharePointProjectFile,
-  ) => Promise<Worksheet | undefined>
->;
 
 export type VenetianBlindMappedToVenetianSubType = Record<
   VenetianBlind,

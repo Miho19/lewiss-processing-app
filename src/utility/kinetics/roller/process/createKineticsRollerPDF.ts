@@ -3,7 +3,7 @@ import type {
   ContentText,
   TDocumentDefinitions,
 } from "pdfmake/interfaces";
-import type { ProcessName } from "../../../../type/process/processType";
+import type { KineticsRollerBlindMappedtoProductId } from "../../../../type/process/processType";
 import { createDocument } from "../../../pdfmake/documentUtility";
 import { createWindowWareHeader } from "../../pdf/windowWareHeader";
 import {
@@ -19,9 +19,10 @@ import type {
   CustomerInformation,
   WorksheetCost,
 } from "../../../../type/process/worksheetType";
+import type { BlindType } from "../../../../type/process/productType";
 
-export async function createRollerBlindDocumentAsync(
-  processName: ProcessName,
+export async function createKineticsRollerPDFAsync(
+  blindType: BlindType,
   customerInformation: CustomerInformation,
   tableEntryList: KineticsRollerTableEntry[],
   worksheetCost: WorksheetCost,
@@ -32,7 +33,7 @@ export async function createRollerBlindDocumentAsync(
   const windowWareHeader = await createWindowWareHeader();
   content.push(windowWareHeader);
 
-  const title = createOrderTitleString(processName, tableEntryList.length);
+  const title = createOrderTitleString(blindType, tableEntryList.length);
   if (typeof title === "undefined") return undefined;
   content.push(title);
 
@@ -50,8 +51,8 @@ export async function createRollerBlindDocumentAsync(
   content.push(costTotal);
 
   const { name, reference, salesConsultant } = customerInformation;
-
-  const documentTitle = [name, reference, processName].join("-");
+  const blindName = getKineticsRollerBlindTypeTitle(blindType);
+  const documentTitle = [name, reference, blindName].join("-");
 
   const document = createDocument(salesConsultant, documentTitle);
   document.content = [...content];
@@ -59,20 +60,28 @@ export async function createRollerBlindDocumentAsync(
 }
 
 function createOrderTitleString(
-  processName: ProcessName,
+  blindType: BlindType,
   numberOfBlinds: number,
 ): ContentText | undefined {
   if (numberOfBlinds === 0) return undefined;
 
   const blindText = numberOfBlinds > 1 ? "blinds" : "blind";
 
+  const blindName = getKineticsRollerBlindTypeTitle(blindType);
+
   const content: Content = {
-    text: `Lewis's order for custom-made kinetics ${processName} ${blindText}`.toUpperCase(),
+    text: `Lewis's order for custom-made kinetics ${blindName} ${blindText}`.toUpperCase(),
     bold: true,
     marginBottom: 14,
   };
 
   return content;
+}
+
+function getKineticsRollerBlindTypeTitle(blindType: BlindType): string {
+  return kineticsRollerBlindToProductId[
+    blindType as keyof KineticsRollerBlindMappedtoProductId
+  ];
 }
 
 function createBlindInformationTable(
@@ -86,3 +95,9 @@ function createBlindInformationTable(
 
   return table;
 }
+
+const kineticsRollerBlindToProductId: KineticsRollerBlindMappedtoProductId = {
+  "Kinetics Sunscreen Roller Blind": "sunscreen-roller",
+  "Kinetics Blockout Roller Blind": "blockout-roller",
+  "Kinetics Light Filtering Roller Blind": "light-filtering-roller",
+};
