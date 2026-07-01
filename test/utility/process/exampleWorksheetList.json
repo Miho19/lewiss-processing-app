@@ -1,6 +1,6 @@
 [
   {
-    "processName": "cellular-blind",
+    "blindType": "Kinetics 10mm Cellular Blind",
     "customer": {
       "name": "Joshua",
       "reference": "100021",
@@ -690,7 +690,7 @@
     ]
   },
   {
-    "processName": "sunscreen-roller",
+    "blindType": "Kinetics Sunscreen Roller Blind",
     "customer": {
       "name": "Joshua",
       "reference": "100021",
@@ -1177,7 +1177,7 @@
     ]
   },
   {
-    "processName": "blockout-roller",
+    "blindType": "Kinetics Blockout Roller Blind",
     "customer": {
       "name": "Joshua",
       "reference": "100021",

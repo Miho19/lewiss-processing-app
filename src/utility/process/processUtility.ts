@@ -7,14 +7,8 @@ import type {
   WindowSelectDetailed,
 } from "../../type/process/windowSelectType";
 import type { SharePointProjectFile } from "../../type/sharePoint/project/projectFileType";
-import {
-  createCellularBlindDocumentAsync,
-  createKineticsCellularDocumentAsync,
-} from "../kinetics/cellular/process/createCellularBlindDocument";
-import {
-  createBlockoutRollerBlindDocumentAsync,
-  createKineticsRollerWorksheetAsync,
-} from "../kinetics/roller/process/createKineticsRollerWorksheet";
+import { createKineticsCellularDocumentAsync } from "../kinetics/cellular/process/createCellularBlindDocument";
+import { createKineticsRollerWorksheetAsync } from "../kinetics/roller/process/createKineticsRollerWorksheet";
 import { getRoomAndWindowMeasurement } from "../sharePoint/projectFileUtility";
 import {
   getWindowBlindCountString,
@@ -22,9 +16,7 @@ import {
   getWindowWidth,
 } from "../sharePoint/windowMeasurementUtility";
 import type { BlindType } from "../../type/process/productType";
-import { createSunscreenRollerBlindDocumentAsync } from "../kinetics/roller/process/createSunscreenPDFDocument";
 import type { Worksheet } from "../../type/process/worksheetType";
-import { writeWorksheetToSharePointAsync } from "./upload/writeWorksheetToSharePoint";
 import type { Spec } from "../../type/sharePoint/project/spec/spec";
 import {
   isKineticsCellularSpec,

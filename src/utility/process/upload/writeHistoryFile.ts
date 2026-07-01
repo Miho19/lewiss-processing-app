@@ -2,6 +2,7 @@ import { queryClient } from "../../../http/queryClient";
 import { POSTSharePointHistoryFile } from "../../../http/sharePoint/POSTSharePointHistoryFile";
 import type { Worksheet } from "../../../type/process/worksheetType";
 import { MutationObserver } from "@tanstack/react-query";
+import { blindTypeFileTag } from "./writeOrderPDF";
 
 export async function writeHistoryFileAsync(
   worksheet: Worksheet,
@@ -13,7 +14,8 @@ export async function writeHistoryFileAsync(
 function getFileName(worksheet: Worksheet): string {
   const { name, reference, salesConsultant } = worksheet.customer;
   const salesConsultantCode = getConsultantCode(salesConsultant);
-  return `${salesConsultantCode} ${name}-${reference} ${worksheet.processName}.json`;
+  const tag = blindTypeFileTag[worksheet.blindType];
+  return `${salesConsultantCode} ${name}-${reference} ${tag}.json`;
 }
 
 function getConsultantCode(consultant: string): string {
@@ -33,14 +35,16 @@ async function writeFile(
     if (!fileName.endsWith(".json")) return undefined;
 
     const observer = getObserver();
-    const processName = worksheet.processName;
+    const blindType = worksheet.blindType;
     const data = JSON.stringify(worksheet, null, 2);
 
-    return await observer.mutate({
-      processName: processName,
+    const result = await observer.mutate({
+      blindType: blindType,
       fileName: fileName,
       data: data,
     });
+
+    return result.webUrl;
   } catch {
     return undefined;
   }

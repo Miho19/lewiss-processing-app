@@ -15,12 +15,12 @@ export async function writeOrderPDFAsync(
 
 function getFileName(worksheet: Worksheet): string {
   const manufacturer = manufacturerNameMap[worksheet.blindType];
-  const tag = blindTypeTag[worksheet.blindType];
+  const tag = blindTypeFileTag[worksheet.blindType];
   const { reference } = worksheet.customer;
   return `${manufacturer}-${reference}-${tag}.pdf`;
 }
 
-const blindTypeTag: BlindTypeMappedToString = {
+export const blindTypeFileTag: BlindTypeMappedToString = {
   "Kinetics Sunscreen Roller Blind": "roller-ss",
   "Kinetics Blockout Roller Blind": "roller-bo",
   "Kinetics Light Filtering Roller Blind": "roller-lf",

@@ -1,10 +1,5 @@
-import type {
-  KineticsRollerBlindTypeToWindowSelectDetailedList,
-  ProcessName,
-} from "../../../../type/process/processType";
 import type { WindowSelectDetailed } from "../../../../type/process/windowSelectType";
 import type { SharePointProjectFile } from "../../../../type/sharePoint/project/projectFileType";
-import { createRollerBlindDocumentAsync } from "./createRollerPDF";
 import type {
   CustomerInformation,
   Worksheet,
@@ -13,6 +8,7 @@ import type { KineticsRollerTableEntry } from "../../../../type/process/tableEnt
 import { generateKineticsRollerTableEntryListAsync } from "./createKineticsRollerTableEntry";
 import { getWorksheetCostAsync } from "../../../process/tableEntryUtility";
 import type { BlindType } from "../../../../type/process/productType";
+import { createKineticsRollerPDFAsync } from "./createKineticsRollerPDF";
 
 export async function createKineticsRollerWorksheetAsync(
   blindType: BlindType,
@@ -40,18 +36,18 @@ export async function createKineticsRollerWorksheetAsync(
     blindType,
   );
 
-  const pdfDocument = await createRollerBlindDocumentAsync(
+  const pdfDocument = await createKineticsRollerPDFAsync(
     blindType,
     customerInformation,
     kineticsRollerTableEntryList,
     kineticsRollerWorksheetCost,
   );
 
-  if (typeof pdfDocument === "undefined") return undefined;
+  if (typeof pdfDocument === "undefined") return [];
 
   const worksheet: Worksheet = {
     customer: customerInformation,
-    processName: processName,
+    blindType: blindType,
     blindList: kineticsRollerTableEntryList,
     worksheetCost: kineticsRollerWorksheetCost,
     pdfList: [pdfDocument],
