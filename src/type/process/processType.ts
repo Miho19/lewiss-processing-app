@@ -2,6 +2,7 @@ import type {
   KineticsRollerBlind,
   ProductId,
   VenetianBlind,
+  VenetianSubType,
 } from "./productType";
 import type { WindowSelectDetailed } from "./windowSelectType";
 import type { SharePointProjectFile } from "../sharePoint/project/projectFileType";
@@ -44,4 +45,9 @@ export type VenetianBlindTypeMappedToCreateWorksheetFunction = Record<
     windowSelectDetailedList: WindowSelectDetailed[],
     projectFile: SharePointProjectFile,
   ) => Promise<Worksheet | undefined>
+>;
+
+export type VenetianBlindMappedToVenetianSubType = Record<
+  VenetianBlind,
+  VenetianSubType
 >;

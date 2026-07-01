@@ -1,4 +1,5 @@
 import type {
+  VenetianBlindMappedToVenetianSubType,
   VenetianBlindTypeMappedToCreateWorksheetFunction,
   VenetianBlindTypeToWindowSelectDetailed,
 } from "../../type/process/processType";
@@ -111,4 +112,15 @@ const venetianCreateWorksheetDocumentFunctionMap: VenetianBlindTypeMappedToCreat
     ): Promise<Worksheet | undefined> {
       throw new Error("Function not implemented.");
     },
+  };
+
+export const venetianBlindTypeMappedToVenetianSubType: VenetianBlindMappedToVenetianSubType =
+  {
+    "Kinetics Mikronwood 50mm Venetian": "mikronwood-50",
+    "Lewis's 25mm Aluminium Venetian": "aluminium-25",
+    "Lewis's 50mm Aluminium Venetian": "aluminium-50",
+    "Lewis's 50mm Fauxwood Venetian": "fauxwood-50",
+    "Lewis's 63mm Fauxwood Venetian": "fauxwood-63",
+    "Lewis's 50mm Phoenixwood Venetian": "phoenixwood-50",
+    "Lewis's 63mm Phoenixwood Venetian": "phoenixwood-63",
   };

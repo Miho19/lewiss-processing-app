@@ -118,23 +118,24 @@ async function getNewEntry(
   return newEntry;
 }
 
-const defaultKineticsMikronwoodTableEntry: KineticsMikronwoodTableEntry = {
-  "blind index": 0,
-  location: "",
-  width: 0,
-  height: 0,
-  fit: "",
-  colour: "",
-  control: "",
-  "control side": "",
-  "tilt side": "",
-  fascia: "",
-  "hold down bracket": "",
-  butting: "",
-  remote: 0,
-  "remote channel": 0,
-  price: "",
-};
+export const defaultKineticsMikronwoodTableEntry: KineticsMikronwoodTableEntry =
+  {
+    "blind index": 0,
+    location: "",
+    width: 0,
+    height: 0,
+    fit: "",
+    colour: "",
+    control: "",
+    "control side": "",
+    "tilt side": "",
+    fascia: "",
+    "hold down bracket": "",
+    butting: "",
+    remote: 0,
+    "remote channel": 0,
+    price: "",
+  };
 
 function getButtingString(
   blindCountString: BlindCount,

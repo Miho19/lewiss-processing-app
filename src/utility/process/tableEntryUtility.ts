@@ -1,6 +1,7 @@
 import type { ProcessName } from "../../type/process/processType";
 import type {
   KineticsCellularTableEntry,
+  KineticsMikronwoodTableEntry,
   KineticsRollerTableEntry,
 } from "../../type/process/tableEntry/kineticsTableEntryType";
 import type { TableEntry } from "../../type/process/tableEntry/tableEntryType";
@@ -9,6 +10,7 @@ import type {
   WorksheetCost,
 } from "../../type/process/worksheetType";
 import { getKineticsCellularAdditionalProductListAsync } from "../kinetics/cellular/pricing";
+import { getKineticsMikronwoodAdditionalProductListAsync } from "../kinetics/mikronwood/pricing";
 import { getKineticsRollerAdditionalProductListAsync } from "../kinetics/roller/pricing";
 
 export function getCurrentTableEntryIndex(
@@ -75,6 +77,11 @@ async function getAdditionalProductArray(
     case "cellular-blind":
       return await getKineticsCellularAdditionalProductListAsync(
         tableEntryList as KineticsCellularTableEntry[],
+        processName,
+      );
+    case "venetian-blind":
+      return await getKineticsMikronwoodAdditionalProductListAsync(
+        tableEntryList as KineticsMikronwoodTableEntry[],
         processName,
       );
     default:

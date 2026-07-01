@@ -89,7 +89,7 @@ async function createWorksheetPDF(
 
   content.push(customerInformationColumn);
 
-  const blindInformation = await createBlindInformationTable(tableEntryList);
+  const blindInformation = createBlindInformationTable(tableEntryList);
 
   content.push(blindInformation);
 
@@ -121,9 +121,9 @@ function createOrderTitleStringCellular(numberOfBlinds: number) {
   return content;
 }
 
-async function createBlindInformationTable(
+function createBlindInformationTable(
   kineticsCellularTableEntryList: KineticsCellularTableEntry[],
-): Promise<ContentTable> {
+): ContentTable {
   const tableEntries = createBlindTableTextData(kineticsCellularTableEntryList);
 
   const table = createTable(defaultKineticsCellularTableEntry);

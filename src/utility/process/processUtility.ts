@@ -50,7 +50,7 @@ export async function processWindowsSelectedAsync(
     projectFile,
   );
 
-  await writeWorksheetToSharePointAsync(worksheetList);
+  //await writeWorksheetToSharePointAsync(worksheetList);
 
   return worksheetList;
 }
