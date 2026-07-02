@@ -1,31 +1,25 @@
 export type LewissAluminiumVenetianPricingSchedule = {
   blindType: string[];
-
-  buttingMultiplier: number;
   control: Control;
-  fascia: Fascia;
-  holdDownBracket: ControlBase;
   fabric: FabricCost;
 };
 
 type Control = {
-  cord: ControlBase;
-  motorisation: Motorisation;
+  aluminium25: ControlBase;
+  aluminium50: ControlBase;
 };
 
-type Motorisation = {
-  "Lithium-ion": ControlBase;
+type ControlBase = {
+  corded: ControlCostBase;
+  cordless: ControlCostBase;
 };
 
-type ControlBase = { base: number; id: string; name: string };
-
-type Fascia = {
-  Flat: ControlBase;
-  Colonial: ControlBase;
+type ControlCostBase = {
+  multiplier: number;
+  name: string;
 };
 
 type FabricCost = {
-  blindType: string[];
   heightHeader: number[];
   widthHeader: number[];
   data: number[][];

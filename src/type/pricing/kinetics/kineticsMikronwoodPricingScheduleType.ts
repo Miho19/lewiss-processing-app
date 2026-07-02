@@ -26,7 +26,6 @@ type Fascia = {
 };
 
 type FabricCost = {
-  blindType: string[];
   heightHeader: number[];
   widthHeader: number[];
   data: number[][];
