@@ -23,7 +23,7 @@ import {
   isKineticsRollerSpec,
 } from "../../type/sharePoint/project/spec/kineticsSpec";
 import { isVenetianSpec } from "../../type/sharePoint/project/spec/venetianSpec";
-import { createMikronwoodDocumentAsync } from "../kinetics/mikronwood/process/createKineticsMikronwoodDocument";
+import { createKineticsMikronwoodWorksheetAsync } from "../kinetics/mikronwood/process/createKineticsMikronwoodWorksheet";
 
 /**
  *  Maybe use a generic pdf array return type --> makes testing easier, currently very badly coupled
@@ -176,7 +176,7 @@ export const blindTypeMappedToWorksheetCreateFunction: BlindTypeMappedToCreateWo
     "Kinetics Blockout Roller Blind": createKineticsRollerWorksheetAsync,
     "Kinetics Light Filtering Roller Blind": createKineticsRollerWorksheetAsync,
     "Kinetics Sunscreen Roller Blind": createKineticsRollerWorksheetAsync,
-    "Kinetics Mikronwood 50mm Venetian": createMikronwoodDocumentAsync,
+    "Kinetics Mikronwood 50mm Venetian": createKineticsMikronwoodWorksheetAsync,
     "Lewis's 25mm Aluminium Venetian": function (
       blindType: BlindType,
       windowSelectDetailedList: WindowSelectDetailed[],

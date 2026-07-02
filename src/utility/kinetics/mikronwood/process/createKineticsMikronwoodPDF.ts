@@ -1,21 +1,13 @@
-import type { WindowSelectDetailed } from "../../../../type/process/windowSelectType";
-import type { SharePointProjectFile } from "../../../../type/sharePoint/project/projectFileType";
-import type {
-  CustomerInformation,
-  Worksheet,
-  WorksheetCost,
-} from "../../../../type/process/worksheetType";
-import type { KineticsMikronwoodTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
-import {
-  defaultKineticsMikronwoodTableEntry,
-  generateKineticsMikroonTableEntryListAsync,
-} from "./kineticsMikronwoodTableEntry";
-import { getWorksheetCostAsync } from "../../../process/tableEntryUtility";
 import type {
   Content,
   ContentTable,
   TDocumentDefinitions,
 } from "pdfmake/interfaces";
+import type { KineticsMikronwoodTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
+import type {
+  CustomerInformation,
+  WorksheetCost,
+} from "../../../../type/process/worksheetType";
 import { createWindowWareHeader } from "../../pdf/windowWareHeader";
 import {
   createBlindTableTextData,
@@ -24,49 +16,9 @@ import {
   createTable,
 } from "../../../process/pdfUtility";
 import { createDocument } from "../../../pdfmake/documentUtility";
-import type { BlindType } from "../../../../type/process/productType";
+import { defaultKineticsMikronwoodTableEntry } from "./kineticsMikronwoodTableEntry";
 
-export async function createMikronwoodDocumentAsync(
-  blindType: BlindType,
-  windowSelectDetailedList: WindowSelectDetailed[],
-  projectFile: SharePointProjectFile,
-): Promise<Worksheet[]> {
-  const customerInformation: CustomerInformation = {
-    name: projectFile.name,
-    reference: projectFile.reference,
-    salesConsultant: projectFile.salesConsultant,
-  };
-
-  const entryList: KineticsMikronwoodTableEntry[] =
-    await generateKineticsMikroonTableEntryListAsync(
-      windowSelectDetailedList,
-      projectFile,
-    );
-
-  if (entryList.length === 0) return [];
-
-  const worksheetCost = await getWorksheetCostAsync(entryList, blindType);
-
-  // todo
-  const pdf = await createMikronwoodPDF(
-    customerInformation,
-    entryList,
-    worksheetCost,
-  );
-  if (typeof pdf === "undefined") return [];
-
-  const worksheet: Worksheet = {
-    customer: customerInformation,
-    blindType: blindType,
-    blindList: entryList,
-    worksheetCost: worksheetCost,
-    pdfList: [pdf],
-  };
-
-  return [worksheet];
-}
-
-async function createMikronwoodPDF(
+export async function createKineticsMikronwoodPDF(
   customerInformation: CustomerInformation,
   tableEntryList: KineticsMikronwoodTableEntry[],
   worksheetCost: WorksheetCost,
