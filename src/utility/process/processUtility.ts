@@ -121,7 +121,7 @@ function mapWindowSelectDetailedIntoBlindType(
   return map;
 }
 
-function getBlindTypeFromSpec(spec: Spec): BlindType | undefined {
+export function getBlindTypeFromSpec(spec: Spec): BlindType | undefined {
   if (isKineticsCellularSpec(spec)) return spec.blindType;
   if (isKineticsRollerSpec(spec)) return spec.blindType;
   if (isVenetianSpec(spec)) return spec.baseType;

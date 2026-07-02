@@ -1,6 +1,5 @@
-import type { BlindType } from "../../../../../type/process/productType";
 import type { Spec } from "../../../../../type/sharePoint/project/spec/spec";
-import { isVenetianSpec } from "../../../../../type/sharePoint/project/spec/venetianSpec";
+import { getBlindTypeFromSpec } from "../../../../../utility/process/processUtility";
 import {
   TreatmentKineticsCellular,
   TreatmentKineticsMikronwood,
@@ -17,7 +16,7 @@ function TreatmentFactory(props: Props) {
   if (!spec || typeof spec === "undefined")
     return <p className="overflow-hidden">Spec infomation missing</p>;
 
-  const blindType = getBlindType(spec);
+  const blindType = getBlindTypeFromSpec(spec);
 
   if (typeof blindType === "undefined")
     return (
@@ -41,11 +40,6 @@ function TreatmentFactory(props: Props) {
         <p className="overflow-hidden">'{blindType}' is not valid blind type</p>
       );
   }
-}
-
-function getBlindType(spec: Spec) {
-  if (isVenetianSpec(spec)) return spec.baseType;
-  return spec.blindType;
 }
 
 export default TreatmentFactory;

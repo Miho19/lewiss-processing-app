@@ -3,7 +3,6 @@ import type { PricingSchedule } from "../../process/pricingScheduleType";
 export type KineticsMikronwoodPricingSchedule = {
   blindType: string[];
   buttingMultiplier: number;
-  baseType: string;
   control: Control;
   fascia: Fascia;
   holdDownBracket: ControlBase;

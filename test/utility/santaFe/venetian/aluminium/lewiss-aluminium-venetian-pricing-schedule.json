@@ -1,0 +1,22 @@
+{
+  "blindType": [
+    "Lewis's 25mm Aluminium Venetian",
+    "Lewis's 50mm Aluminium Venetian"
+  ],
+  "control": {
+    "aluminium25": {
+      "corded": { "multiplier": 1.0, "name": "25mm Corded" },
+      "cordless": {
+        "multiplier": 1.4,
+        "name": "25mm Cordless with Privacy slat"
+      }
+    },
+    "aluminium50": {
+      "corded": { "multiplier": 1.5, "name": "50mm Corded" },
+      "cordless": {
+        "multiplier": 2.38,
+        "name": "50mm Cordless with Privacy slat"
+      }
+    }
+  }
+}
