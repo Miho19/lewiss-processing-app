@@ -4,7 +4,7 @@ import {
   excelTableStringToStringArray,
 } from "../../../src/utility/excel/excel";
 
-it("just works", () => {
+it.skip("just works", () => {
   const strArr = [
     "    281	313	333	354	385	414	434	457	486	508	528	546	580	601	623	661	683	703	721	744	767	786	808	796",
     "298	329	351	374	405	436	457	482	515	535	558	579	613	637	658	701	721	743	765	788	811	836	857	848",

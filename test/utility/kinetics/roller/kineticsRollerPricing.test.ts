@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import kineticsRollerPricingExample from "./kinetics-roller-pricing-schedule.json";
+import kineticsRollerPricingExample from "./kinetics-blockout-roller-pricing-schedule.json";
 import { KineticsRollerFabricOpacity } from "../../../../src/type/pricing/kinetics/kineticsRollerPricingScheduleType";
 import {
   getKineticsRollerFabricCost,
