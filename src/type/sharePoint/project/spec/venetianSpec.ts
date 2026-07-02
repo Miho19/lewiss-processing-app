@@ -1,7 +1,13 @@
 import {
-  VenetianBlindOptions,
+  KineticsVenetianBlindOptions,
+  type KineticsVenetian,
+} from "../../../process/product/kineticsType";
+import {
+  SantaFeVenetianBlindOptions,
+  type SantaFeVenetianBlind,
+} from "../../../process/product/santaFeType";
+import {
   type BlindType,
-  type VenetianBlind,
   type VenetianSubType,
 } from "../../../process/productType";
 import type { Fabric } from "../projectFileType";
@@ -13,21 +19,13 @@ export type VenetianSpec = {
   bracketColour: string;
   controlSide: string;
   motorisation?: string;
-  pelmetType: any;
-  customColour?: boolean;
-  sideChannels?: boolean;
+
   remoteQty: number;
   usbCableQty: number;
   smartLinkHubQty: number;
-  rollDirection?: string;
-  bottomRailType?: string;
-  bottomRailColour?: string;
-  chainColour?: string;
-  inlineBracket?: boolean;
-  intermediateBracket?: boolean;
-  combaBracket?: boolean;
-  subtypeId?: VenetianSubType;
-  baseType: VenetianBlind;
+
+  subtypeId: VenetianSubType;
+  baseType: KineticsVenetian | SantaFeVenetianBlind;
   operation: any;
   spacerBlock?: boolean;
   cutout?: boolean;
@@ -47,5 +45,11 @@ export function isVenetianSpec(spec: Spec): spec is VenetianSpec {
   const { baseType } = spec;
   if (typeof baseType !== "string") return false;
 
-  return VenetianBlindOptions.includes(baseType);
+  if (
+    !SantaFeVenetianBlindOptions.includes(baseType as any) &&
+    !KineticsVenetianBlindOptions.includes(baseType as any)
+  )
+    return false;
+
+  return true;
 }

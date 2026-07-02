@@ -5,6 +5,7 @@ import {
   TreatmentKineticsMikronwood,
   TreatmentKineticsRoller,
 } from "./factory";
+import TreatmentLewissAluminium from "./factory/TreatmentLewissAluminium";
 
 type Props = {
   spec: Spec | undefined;
@@ -34,6 +35,9 @@ function TreatmentFactory(props: Props) {
     case "Kinetics Blockout Roller Blind":
     case "Kinetics Light Filtering Roller Blind":
       return <TreatmentKineticsRoller spec={spec} />;
+    case "Lewis's 25mm Aluminium Venetian":
+    case "Lewis's 50mm Aluminium Venetian":
+      return <TreatmentLewissAluminium spec={spec} />;
 
     default:
       return (

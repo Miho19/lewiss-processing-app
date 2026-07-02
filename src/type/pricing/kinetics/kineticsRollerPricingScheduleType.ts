@@ -1,5 +1,5 @@
 import type { PricingSchedule } from "../../process/pricingScheduleType";
-import { KineticsRollerBlindOptions } from "../../process/productType";
+import { KineticsRollerBlindOptions } from "../../process/product/kineticsType";
 
 export type KineticsRollerPricingSchedule = {
   blindType: string[];

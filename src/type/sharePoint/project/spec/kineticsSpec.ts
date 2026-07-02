@@ -1,8 +1,8 @@
 import {
   KineticsCellularBlindOptions,
   KineticsRollerBlindOptions,
-  type BlindType,
-} from "../../../process/productType";
+} from "../../../process/product/kineticsType";
+import type { BlindType } from "../../../process/productType";
 import type { Fabric } from "../projectFileType";
 import type { Spec } from "./spec";
 
@@ -42,9 +42,9 @@ export type KineticsCellularSpec = {
 export function isKineticsCellularSpec(
   spec: Spec,
 ): spec is KineticsCellularSpec {
-  const { blindType } = spec;
+  if (typeof spec.blindType !== "string") return false;
 
-  if (typeof blindType !== "string") return false;
+  const { blindType } = spec;
 
   return KineticsCellularBlindOptions.includes(blindType as any);
 }

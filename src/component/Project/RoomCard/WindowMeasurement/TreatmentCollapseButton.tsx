@@ -39,7 +39,7 @@ function TreatmentCollapseButton(props: Props) {
 function getTreatmentName(spec: Spec | undefined) {
   if (typeof spec === "undefined") return "Invalid Treatment";
 
-  if (isVenetianSpec(spec)) return spec.baseType ?? "Invalid Treatment";
+  if (isVenetianSpec(spec)) return spec.baseType ?? "Invalid base type";
 
   return spec.blindType;
 }

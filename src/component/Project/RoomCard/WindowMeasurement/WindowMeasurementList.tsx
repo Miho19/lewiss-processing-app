@@ -13,24 +13,33 @@ function WindowMeasurementList(props: Props) {
   const { windows, treatment } = room;
 
   const roomCardWindowListElements = windows.map((windowMeasurement) => {
-    return [
-      <WindowMeasurementListElement
-        key={`${windowMeasurement.id}-inside`}
-        windowMeasurement={windowMeasurement}
-        formData={formData}
-        onChangeHandlerCheckBox={onChangeHandlerCheckBox}
-        fit="inside"
-        treatment={treatment}
-      />,
-      <WindowMeasurementListElement
-        key={`${windowMeasurement.id}-outside`}
-        windowMeasurement={windowMeasurement}
-        formData={formData}
-        onChangeHandlerCheckBox={onChangeHandlerCheckBox}
-        fit="outside"
-        treatment={treatment}
-      />,
-    ];
+    const output = [];
+
+    if (treatment.insideLayer != null)
+      output.push(
+        <WindowMeasurementListElement
+          key={`${windowMeasurement.id}-inside`}
+          windowMeasurement={windowMeasurement}
+          formData={formData}
+          onChangeHandlerCheckBox={onChangeHandlerCheckBox}
+          fit="inside"
+          treatment={treatment}
+        />,
+      );
+
+    if (treatment.outsideLayer != null)
+      output.push(
+        <WindowMeasurementListElement
+          key={`${windowMeasurement.id}-outside`}
+          windowMeasurement={windowMeasurement}
+          formData={formData}
+          onChangeHandlerCheckBox={onChangeHandlerCheckBox}
+          fit="outside"
+          treatment={treatment}
+        />,
+      );
+
+    return output;
   });
 
   return (
