@@ -1,13 +1,8 @@
-import type {
-  BlindType,
-  KineticsRollerBlind,
-  ProductId,
-  VenetianBlind,
-  VenetianSubType,
-} from "./productType";
+import type { BlindType, ProductId } from "./productType";
 import type { WindowSelectDetailed } from "./windowSelectType";
 import type { SharePointProjectFile } from "../sharePoint/project/projectFileType";
 import type { Worksheet } from "./worksheetType";
+import type { KineticsRollerBlind } from "./product/kineticsType";
 
 export type BlindTypeMappedToWindowSelectDetailed = Record<
   BlindType,
@@ -33,8 +28,3 @@ export type KineticsRollerBlindMappedtoProductId = Record<
 >;
 
 export type BlindTypeMappedToString = Record<BlindType, string>;
-
-export type VenetianBlindMappedToVenetianSubType = Record<
-  VenetianBlind,
-  VenetianSubType
->;
