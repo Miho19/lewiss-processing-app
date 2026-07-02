@@ -1,5 +1,5 @@
 import { afterAll, describe, expect, it, vi } from "vitest";
-import kineticsRollerPricingExample from "./kinetics-roller-pricing-schedule.json";
+import kineticsRollerPricingExample from "./kinetics-blockout-roller-pricing-schedule.json";
 import kineticsAccessoryPricingExample from "../kinetics-accessories.json";
 import type { KineticsRollerTableEntry } from "../../../../src/type/process/tableEntry/kineticsTableEntryType";
 import { getKineticsRollerAdditionalProductListAsync } from "../../../../src/utility/kinetics/roller/pricing";
@@ -103,7 +103,7 @@ describe("Kinetics Roller Worksheet Cost", () => {
 
       const result = await getKineticsRollerAdditionalProductListAsync(
         exampleRollerEntryList,
-        "blockout-roller",
+        "Kinetics Blockout Roller Blind",
       );
 
       expect(result.length).toBeGreaterThan(0);
@@ -195,7 +195,7 @@ describe("Kinetics Roller Worksheet Cost", () => {
 
       const result = await getKineticsRollerAdditionalProductListAsync(
         exampleRollerEntryList,
-        "blockout-roller",
+        "Kinetics Blockout Roller Blind",
       );
 
       expect(result.length).toBeGreaterThan(0);
@@ -230,7 +230,7 @@ describe("Kinetics Roller Worksheet Cost", () => {
 
       const result = await getKineticsRollerAdditionalProductListAsync(
         [exampleRollerEntry],
-        "blockout-roller",
+        "Kinetics Blockout Roller Blind",
       );
 
       expect(result.length).toBe(0);

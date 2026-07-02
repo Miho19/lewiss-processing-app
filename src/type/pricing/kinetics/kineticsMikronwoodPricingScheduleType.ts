@@ -1,7 +1,7 @@
 import type { PricingSchedule } from "../../process/pricingScheduleType";
 
 export type KineticsMikronwoodPricingSchedule = {
-  productId: string;
+  blindType: string[];
   buttingMultiplier: number;
   baseType: string;
   control: Control;
@@ -37,9 +37,16 @@ export function isKineiicsMikronwoodPricingSchedule(
   pricingSchedule: PricingSchedule,
 ): pricingSchedule is KineticsMikronwoodPricingSchedule {
   if (typeof pricingSchedule === "undefined") return false;
-  if (!("productId" in pricingSchedule)) return false;
 
-  if (pricingSchedule.productId !== "venetian-blind") return false;
-  if (!("baseType" in pricingSchedule)) return false;
+  if (typeof pricingSchedule === "undefined") return false;
+
+  if (!("blindType" in pricingSchedule)) return false;
+
+  const blindType = pricingSchedule.blindType;
+
+  const mikronwoodBlindType = "Kinetics Mikronwood 50mm Venetian";
+
+  if (!blindType.includes(mikronwoodBlindType)) return false;
+
   return true;
 }

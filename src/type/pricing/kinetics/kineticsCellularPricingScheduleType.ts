@@ -1,7 +1,8 @@
 import type { PricingSchedule } from "../../process/pricingScheduleType";
+import { KineticsCellularBlindOptions } from "../../process/productType";
 
 export type KineticsCellularPricingSchedule = {
-  productId: string;
+  blindType: string[];
   blockoutMultiplier: number;
   sideChannelCustomColourSurcharge: number;
   sideChannelCostPerMetreHeight: number;
@@ -23,7 +24,6 @@ type ControlBase = { base: number; id: string };
 
 type FabricCost = {
   opacity: string[];
-  blindType: string[];
   heightHeader: number[];
   widthHeader: number[];
   data: number[][];
@@ -34,11 +34,15 @@ export function isKineticsCellularPricingSchedule(
 ): pricingSchedule is KineticsCellularPricingSchedule {
   if (typeof pricingSchedule === "undefined") return false;
 
-  if (!("productId" in pricingSchedule)) return false;
+  if (!("blindType" in pricingSchedule)) return false;
 
-  const productId = pricingSchedule.productId;
+  const blindType = pricingSchedule.blindType;
 
-  if (productId !== "cellular-blind") return false;
+  const optionSet = new Set<string>(KineticsCellularBlindOptions);
+
+  const hasBlindType = blindType.some((bt) => optionSet.has(bt));
+
+  if (!hasBlindType) return false;
 
   return true;
 }

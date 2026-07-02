@@ -32,11 +32,6 @@ export type KineticsRollerBlindMappedtoProductId = Record<
   ProductId
 >;
 
-export type KineticsRollerBlindTypeToWindowSelectDetailedList = Record<
-  KineticsRollerBlind,
-  WindowSelectDetailed[]
->;
-
 export type BlindTypeMappedToString = Record<BlindType, string>;
 
 export type VenetianBlindMappedToVenetianSubType = Record<

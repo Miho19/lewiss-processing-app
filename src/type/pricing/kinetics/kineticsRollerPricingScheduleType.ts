@@ -1,5 +1,8 @@
+import type { PricingSchedule } from "../../process/pricingScheduleType";
+import { KineticsRollerBlindOptions } from "../../process/productType";
+
 export type KineticsRollerPricingSchedule = {
-  productId: string;
+  blindType: string[];
   control: Control;
   bottomRail: BottomRail;
   bracket: Bracket;
@@ -55,7 +58,6 @@ export type PelmetPricing = {
 
 type FabricCost = {
   opacity: string[];
-  blindType: string[];
   heightHeader: number[];
   widthHeader: number[];
   data: number[][];
@@ -65,3 +67,21 @@ export type KineticsRollerFabricOpacity =
   | "sunscreen"
   | "blockout"
   | "light-filtering";
+
+export function isKineticsRollerPricingSchedule(
+  pricingSchedule: PricingSchedule,
+): pricingSchedule is KineticsRollerPricingSchedule {
+  if (typeof pricingSchedule === "undefined") return false;
+
+  if (!("blindType" in pricingSchedule)) return false;
+
+  const blindType = pricingSchedule.blindType;
+
+  const optionSet = new Set<string>(KineticsRollerBlindOptions);
+
+  const hasBlindType = blindType.some((bt) => optionSet.has(bt));
+
+  if (!hasBlindType) return false;
+
+  return true;
+}

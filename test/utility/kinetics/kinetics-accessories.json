@@ -1,4 +1,12 @@
 {
+  "blindType": [
+    "Kinetics Blockout Roller Blind",
+    "Kinetics Light Filtering Roller Blind",
+    "Kinetics Sunscreen Roller Blind",
+    "Kinetics Mikronwood 50mm Venetian",
+    "Kinetics 10mm Cellular Blind",
+    "Kinetics 20mm Cellular Blind"
+  ],
   "motorisation": [
     { "id": "103220", "base": 156.0, "name": "smartLinkHub" },
     { "id": "103219", "base": 29.0, "name": "usbCharger" },

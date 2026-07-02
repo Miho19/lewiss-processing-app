@@ -1,6 +1,5 @@
 {
-  "productId": "venetian-blind",
-  "baseType": "Kinetics Mikronwood 50mm Venetian",
+  "blindType": ["Kinetics Mikronwood 50mm Venetian"],
   "buttingMultiplier": 2.1,
   "control": {
     "cord": {
@@ -30,7 +29,6 @@
     "name": "Antique Brass"
   },
   "fabric": {
-    "blindType": ["Kinetics Mikronwood 50mm Venetian"],
     "widthHeader": [
       600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800,
       1900, 2000, 2100, 2200, 2300, 2400, 2500, 2600, 2700, 2800, 2890

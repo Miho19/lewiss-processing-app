@@ -80,7 +80,7 @@ describe("Kinetics Cellular Worksheet Test", () => {
       ];
       const result = await getKineticsCellularAdditionalProductListAsync(
         exampleCellularEntryList,
-        "cellular-blind",
+        "Kinetics 10mm Cellular Blind",
       );
       expect(result.length).toBe(3);
 
