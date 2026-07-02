@@ -9,7 +9,7 @@ type Props = {
   spec: Spec;
 };
 
-function TreatmentLewissAluminium(props: Props) {
+export function TreatmentLewissAluminium(props: Props) {
   const { spec } = props;
 
   if (!isVenetianSpec(spec)) return <></>;
@@ -35,5 +35,3 @@ function TreatmentLewissAluminium(props: Props) {
     </div>
   );
 }
-
-export default TreatmentLewissAluminium;

@@ -4,8 +4,8 @@ import {
   TreatmentKineticsCellular,
   TreatmentKineticsMikronwood,
   TreatmentKineticsRoller,
+  TreatmentLewissAluminium,
 } from "./factory";
-import TreatmentLewissAluminium from "./factory/TreatmentLewissAluminium";
 
 type Props = {
   spec: Spec | undefined;
