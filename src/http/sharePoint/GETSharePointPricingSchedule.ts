@@ -27,8 +27,11 @@ export async function GETSharePointPricingSchedule(
   try {
     const sharePointItemId: string | undefined =
       blindTypeToSharePointPricingScheduleFileId[blindType];
-    if (typeof sharePointItemId === "undefined")
-      throw new Error(`Could not fetch pricing schedule for ${blindType}`);
+    if (
+      typeof sharePointItemId === "undefined" ||
+      sharePointItemId.length === 0
+    )
+      throw new Error(`${blindType} does not have a pricing schedule`);
 
     const fetchOptions = GETSharePointJSONFileFetchOptions(sharePointItemId);
 

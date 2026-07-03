@@ -13,7 +13,7 @@ describe("Lewiss Aluminium Table Entry", () => {
       windowSelectDetailedList,
       projectFile,
     );
-    console.log(result);
+
     expect(result.length).toBeGreaterThan(0);
     result.map((e) => expect(parseInt(e.price)).toBeGreaterThan(0));
   });

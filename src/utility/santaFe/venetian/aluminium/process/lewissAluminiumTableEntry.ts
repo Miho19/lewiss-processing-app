@@ -10,8 +10,10 @@ import { getCurrentTableEntryIndex } from "../../../../process/tableEntryUtility
 import { getRoomAndWindowMeasurement } from "../../../../sharePoint/projectFileUtility";
 import {
   getLewissAluminiumControlString,
+  getLewissAluminiumSlatSize,
   getLewissAluminiumSpacerBlockString,
 } from "../presentation/lewissAluminium";
+import { getLewissAluminiumBlindCostAsync } from "../pricing";
 
 export async function generateLewissAluminiumTableEntryListAsync(
   windowSelectDetailedList: WindowSelectDetailed[],
@@ -68,15 +70,18 @@ async function getNewEntry(
 
   const spacerBlock = getLewissAluminiumSpacerBlockString(spec);
 
-  //   const price = await getKineticsMikronwoodBlindCostAsync(
-  //     width,
-  //     height,
-  //     control,
-  //     fasica,
-  //     holdDownBracket,
-  //     "Kinetics Mikronwood 50mm Venetian",
-  //     false,
-  //   );
+  const slatSize = parseInt(getLewissAluminiumSlatSize(spec));
+  const fabricMultiplier = spec.fabric?.multiplier ?? 1;
+
+  const price = await getLewissAluminiumBlindCostAsync(
+    width,
+    height,
+    slatSize,
+    fabricMultiplier,
+    control,
+    spec.spacerBlock ?? false,
+    spec.baseType,
+  );
 
   const newEntry: LewissAluminiumTableEntry = {
     "blind index": blindIndex,
@@ -89,7 +94,7 @@ async function getNewEntry(
     "control side": controlSide,
     "tilt side": tiltSide,
     "Spacer Block": spacerBlock,
-    price: "",
+    price: price.toFixed(2),
   };
 
   return newEntry;

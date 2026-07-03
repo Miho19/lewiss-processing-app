@@ -7,5 +7,6 @@ export default defineConfig({
     // configuration options
     globals: true, // Optional: allows use of 'describe', 'it', 'expect' without importing
     environment: "happy-dom",
+    testTimeout: 10000,
   },
 });

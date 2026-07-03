@@ -1,5 +1,13 @@
 {
-  "spacer-block": { "id": "", "base": 7, "name": "Spacer Block" },
+  "blindType": [
+    "Lewis's 25mm Aluminium Venetian",
+    "Lewis's 50mm Aluminium Venetian",
+    "Lewis's 50mm Fauxwood Venetian",
+    "Lewis's 63mm Fauxwood Venetian",
+    "Lewis's 50mm Phoenixwood Venetian",
+    "Lewis's 63mm Phoenixwood Venetian"
+  ],
+  "spacerBlock": { "id": "", "base": 7, "name": "Spacer Block" },
   "palladianShelf": {
     "id": "",
     "perM": 80,
@@ -44,6 +52,27 @@
       { "id": 256, "name": "Mist", "surcharge": 0 },
       { "id": 836, "name": "Classic Black", "surcharge": 45 },
       { "id": 862, "name": "French Oak", "surcharge": 0 }
+    ]
+  },
+  "cutOut": { "id": "", "base": 29, "name": "Cut out" },
+  "keystone": { "id": "", "base": 19, "name": "Keystone" },
+  "valance": { "id": "", "base": 28, "name": "Valace" },
+  "twoOnOne": { "id": "", "base": 28, "name": "2 on 1" },
+  "phoenixwoodColourSurcharge": {
+    "under10": {
+      "id": "",
+      "base": 449,
+      "name": "Matte Black, Gray Black & Platter up to 10 blinds"
+    },
+    "over10": {
+      "id": "",
+      "base": 900,
+      "name": "Matte Black, Gray Black & Platter over 10 blinds"
+    },
+    "colour": [
+      { "id": 17, "name": "Gray Black", "surcharge": 0 },
+      { "id": 617, "name": "Platter", "surcharge": 0 },
+      { "id": 246, "name": "Matte Black", "surcharge": 0 }
     ]
   }
 }

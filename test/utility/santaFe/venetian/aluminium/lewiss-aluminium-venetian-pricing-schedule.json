@@ -5,15 +5,15 @@
   ],
   "control": {
     "aluminium25": {
-      "corded": { "multiplier": 1.0, "name": "25mm Corded" },
-      "cordless": {
+      "Cord": { "multiplier": 1.0, "name": "25mm Corded" },
+      "Cordless": {
         "multiplier": 1.4,
         "name": "25mm Cordless with Privacy slat"
       }
     },
     "aluminium50": {
-      "corded": { "multiplier": 1.5, "name": "50mm Corded" },
-      "cordless": {
+      "Cord": { "multiplier": 1.5, "name": "50mm Corded" },
+      "Cordless": {
         "multiplier": 2.38,
         "name": "50mm Cordless with Privacy slat"
       }

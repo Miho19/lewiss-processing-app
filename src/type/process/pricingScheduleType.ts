@@ -3,6 +3,7 @@ import type { KineticsMikronwoodPricingSchedule } from "../pricing/kinetics/kine
 import type { KineticsAccessoryPricingSchedule } from "../pricing/kinetics/kineticsMotorAccessoryPricingScheduleType";
 import type { KineticsRollerPricingSchedule } from "../pricing/kinetics/kineticsRollerPricingScheduleType";
 import type { LewissAluminiumVenetianPricingSchedule } from "../pricing/santaFe/lewissAluminiumVenetianPricingScheduleType";
+import type { SantaFeAccessoriesPricingSchedule } from "../pricing/santaFe/santaFeAccessoriesPricingScheduleType";
 import type { BlindType } from "./productType";
 
 export type PricingSchedule =
@@ -13,4 +14,6 @@ export type PricingSchedule =
 
 export type BlindTypeToSharePointFileId = Record<BlindType, string>;
 
-export type AccessoryPricingSchedule = KineticsAccessoryPricingSchedule;
+export type AccessoryPricingSchedule =
+  | KineticsAccessoryPricingSchedule
+  | SantaFeAccessoriesPricingSchedule;

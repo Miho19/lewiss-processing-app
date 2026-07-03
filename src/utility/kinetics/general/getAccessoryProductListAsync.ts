@@ -9,13 +9,13 @@ import type { AdditionalProduct } from "../../../type/process/worksheetType";
 import { getAccessoryPricingScheduleAsync } from "../../process/pricingScheduleUtility";
 import { getMaxRemote } from "./motorAccessoryUtility";
 
-type AllowedTableEntry =
+type KineticsTableEntry =
   | KineticsRollerTableEntry
   | KineticsCellularTableEntry
   | KineticsMikronwoodTableEntry;
 
 export async function getKineticsAccessoryProductListAsync(
-  tableEntryList: AllowedTableEntry[],
+  tableEntryList: KineticsTableEntry[],
   blindType: BlindType,
 ): Promise<AdditionalProduct[]> {
   const pricingSchedule = (await getAccessoryPricingScheduleAsync(

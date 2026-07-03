@@ -13,8 +13,8 @@ type Control = {
 };
 
 type ControlBase = {
-  corded: ControlCostBase;
-  cordless: ControlCostBase;
+  Corded: ControlCostBase;
+  Cordless: ControlCostBase;
 };
 
 type ControlCostBase = {
@@ -28,7 +28,7 @@ type FabricCost = {
   data: number[][];
 };
 
-function isLewissAluminiumPricingSchedule(
+export function isLewissAluminiumPricingSchedule(
   pricingSchedule: PricingSchedule,
 ): pricingSchedule is LewissAluminiumVenetianPricingSchedule {
   if (typeof pricingSchedule === "undefined") return false;
