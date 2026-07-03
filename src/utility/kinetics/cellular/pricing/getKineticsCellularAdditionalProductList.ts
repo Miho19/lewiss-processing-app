@@ -1,4 +1,5 @@
 import type { BlindType } from "../../../../type/process/productType";
+import { isKineticsCellularTableEntryList } from "../../../../type/process/tableEntry/kineticsTableEntryType";
 import type { TableEntry } from "../../../../type/process/tableEntry/tableEntryType";
 import { getKineticsAccessoryProductListAsync } from "../../general/getAccessoryProductListAsync";
 import { getMotorAdditionalProductListAsync } from "../../general/getMotorAdditionalProductListAsync";
@@ -13,10 +14,10 @@ export async function getKineticsCellularAdditionalProductListAsync(
     blindType,
   );
 
+  if (!isKineticsCellularTableEntryList(tableEntryList)) return [];
+
   const accessoryAdditionalProductList =
     await getKineticsAccessoryProductListAsync(tableEntryList, blindType);
 
   return [...motorAdditionalProductList, ...accessoryAdditionalProductList];
 }
-
-export async function getAccessoryProductListAsync() {}

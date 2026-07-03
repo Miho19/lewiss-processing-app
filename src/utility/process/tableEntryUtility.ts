@@ -7,6 +7,7 @@ import type {
 import { getKineticsCellularAdditionalProductListAsync } from "../kinetics/cellular/pricing";
 import { getKineticsMikronwoodAdditionalProductListAsync } from "../kinetics/mikronwood/pricing";
 import { getKineticsRollerAdditionalProductListAsync } from "../kinetics/roller/pricing";
+import { getLewissAluminiumAdditionalProductListAsync } from "../santaFe/venetian/aluminium/pricing/getLewissAluminiumAdditionalProductList";
 
 export function getCurrentTableEntryIndex(
   tableEntryList: TableEntry[],
@@ -48,7 +49,7 @@ export async function getWorksheetCostAsync(
 
   const costObjcet: WorksheetCost = {
     blindSubTotal: blindSubTotal,
-    additional: [...additionalArray],
+    additional: [...additionalArray].flat(),
     gst: gst,
     total: total,
   };
@@ -77,6 +78,12 @@ async function getAdditionalProductArray(
       );
     case "Kinetics Mikronwood 50mm Venetian":
       return await getKineticsMikronwoodAdditionalProductListAsync(
+        tableEntryList,
+        blindType,
+      );
+    case "Lewis's 25mm Aluminium Venetian":
+    case "Lewis's 50mm Aluminium Venetian":
+      return await getLewissAluminiumAdditionalProductListAsync(
         tableEntryList,
         blindType,
       );

@@ -1,3 +1,5 @@
+import type { TableEntry } from "./tableEntryType";
+
 export type RemoteChannel = {
   remote: number;
   channel: number;
@@ -21,6 +23,22 @@ export type KineticsCellularTableEntry = {
   price: string;
 };
 
+export function isKineticsCellularTableEntryList(
+  tableEntryList: TableEntry[],
+): tableEntryList is KineticsCellularTableEntry[] {
+  return tableEntryList.every((e) => isKineticsCellularTableEntry(e));
+}
+
+export function isKineticsCellularTableEntry(
+  tableEntry: TableEntry,
+): tableEntry is KineticsCellularTableEntry {
+  if (typeof tableEntry === "undefined") return false;
+  if (!("comb size" in tableEntry)) return false;
+  if (!("headrail colour" in tableEntry)) return false;
+  if (!("side channel colour" in tableEntry)) return false;
+  return true;
+}
+
 export type KineticsRollerTableEntry = {
   "blind index": number;
   location: string;
@@ -40,6 +58,18 @@ export type KineticsRollerTableEntry = {
   price: string;
 };
 
+export function isKineticsRollerTableEntry(
+  tableEntry: TableEntry,
+): tableEntry is KineticsRollerTableEntry {
+  if (typeof tableEntry === "undefined") return false;
+  if (!("roll" in tableEntry)) return false;
+  if (!("bottom rail" in tableEntry)) return false;
+  if (!("bracket" in tableEntry)) return false;
+  if (!("pelmet" in tableEntry)) return false;
+
+  return true;
+}
+
 export type KineticsMikronwoodTableEntry = {
   "blind index": number;
   location: string;
@@ -57,3 +87,14 @@ export type KineticsMikronwoodTableEntry = {
   "remote channel": number;
   price: string;
 };
+
+export function isKineticsMikronwoodTableEntry(
+  tableEntry: TableEntry,
+): tableEntry is KineticsMikronwoodTableEntry {
+  if (typeof tableEntry === "undefined") return false;
+  if (!("tilt side" in tableEntry)) return false;
+  if (!("fascia" in tableEntry)) return false;
+  if (!("hold down bracket" in tableEntry)) return false;
+
+  return true;
+}

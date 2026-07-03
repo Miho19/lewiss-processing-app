@@ -33,8 +33,7 @@ export async function getKineticsAccessoryProductListAsync(
 }
 
 function getRemoteAdditionalProduct(
-  tableEntryList: AllowedTableEntry[],
-
+  tableEntryList: KineticsTableEntry[],
   pricingSchedule: KineticsAccessoryPricingSchedule,
 ): AdditionalProduct | undefined {
   const numberOfRemotes = getMaxRemote(tableEntryList);
