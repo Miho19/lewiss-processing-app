@@ -9,7 +9,7 @@ import { generateKineticsMikroonTableEntryListAsync } from "./kineticsMikronwood
 import { getWorksheetCostAsync } from "../../../process/tableEntryUtility";
 
 import type { BlindType } from "../../../../type/process/productType";
-import { createKineticsMikronwoodPDF } from "./createKineticsMikronwoodPDF";
+import { createKineticsMikronwoodPDFAsync } from "./createKineticsMikronwoodPDF";
 
 export async function createKineticsMikronwoodWorksheetAsync(
   blindType: BlindType,
@@ -33,7 +33,7 @@ export async function createKineticsMikronwoodWorksheetAsync(
   const worksheetCost = await getWorksheetCostAsync(entryList, blindType);
 
   // todo
-  const pdf = await createKineticsMikronwoodPDF(
+  const pdf = await createKineticsMikronwoodPDFAsync(
     customerInformation,
     entryList,
     worksheetCost,

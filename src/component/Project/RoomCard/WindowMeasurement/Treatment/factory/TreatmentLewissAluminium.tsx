@@ -3,6 +3,7 @@ import { isVenetianSpec } from "../../../../../../type/sharePoint/project/spec/v
 import {
   getLewissAluminiumControlString,
   getLewissAluminiumSlatSize,
+  getLewissAluminiumSpacerBlockString,
 } from "../../../../../../utility/santaFe/venetian/aluminium/presentation/lewissAluminium";
 
 type Props = {
@@ -17,7 +18,7 @@ export function TreatmentLewissAluminium(props: Props) {
   const slatSize = getLewissAluminiumSlatSize(spec);
   const control = getLewissAluminiumControlString(spec);
 
-  const spacerBlockString = spec.spacerBlock ? "Yes" : "No";
+  const spacerBlockString = getLewissAluminiumSpacerBlockString(spec);
 
   return (
     <div className="grid grid-cols-[160px_1fr] gap-x-4 gap-y-4 align-middle overflow-hidden">

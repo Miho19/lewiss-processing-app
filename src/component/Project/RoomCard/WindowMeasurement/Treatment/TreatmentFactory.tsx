@@ -5,6 +5,8 @@ import {
   TreatmentKineticsMikronwood,
   TreatmentKineticsRoller,
   TreatmentLewissAluminium,
+  TreatmentLewissFauxwood,
+  TreatmentLewissPhoenixwood,
 } from "./factory";
 
 type Props = {
@@ -27,6 +29,7 @@ function TreatmentFactory(props: Props) {
   switch (blindType) {
     case "Kinetics Mikronwood 50mm Venetian":
       return <TreatmentKineticsMikronwood spec={spec} />;
+
     case "Kinetics 10mm Cellular Blind":
     case "Kinetics 20mm Cellular Blind":
       return <TreatmentKineticsCellular spec={spec} />;
@@ -35,9 +38,18 @@ function TreatmentFactory(props: Props) {
     case "Kinetics Blockout Roller Blind":
     case "Kinetics Light Filtering Roller Blind":
       return <TreatmentKineticsRoller spec={spec} />;
+
     case "Lewis's 25mm Aluminium Venetian":
     case "Lewis's 50mm Aluminium Venetian":
       return <TreatmentLewissAluminium spec={spec} />;
+
+    case "Lewis's 50mm Fauxwood Venetian":
+    case "Lewis's 63mm Fauxwood Venetian":
+      return <TreatmentLewissFauxwood spec={spec} />;
+
+    case "Lewis's 50mm Phoenixwood Venetian":
+    case "Lewis's 63mm Phoenixwood Venetian":
+      return <TreatmentLewissPhoenixwood spec={spec} />;
 
     default:
       return (

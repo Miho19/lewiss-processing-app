@@ -18,7 +18,7 @@ import {
 import { createDocument } from "../../../pdfmake/documentUtility";
 import { defaultKineticsMikronwoodTableEntry } from "./kineticsMikronwoodTableEntry";
 
-export async function createKineticsMikronwoodPDF(
+export async function createKineticsMikronwoodPDFAsync(
   customerInformation: CustomerInformation,
   tableEntryList: KineticsMikronwoodTableEntry[],
   worksheetCost: WorksheetCost,
