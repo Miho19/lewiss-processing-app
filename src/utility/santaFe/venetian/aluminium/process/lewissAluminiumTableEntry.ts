@@ -32,7 +32,6 @@ export async function generateLewissAluminiumTableEntryListAsync(
       blindIndex,
       projectRoom,
       projectWindow,
-      entries,
     );
 
     if (typeof newEntry === "undefined") continue;
@@ -47,7 +46,6 @@ async function getNewEntry(
   blindIndex: number,
   projectRoom: Room,
   projectWindow: WindowMeasurement,
-  entries: LewissAluminiumTableEntry[],
 ): Promise<LewissAluminiumTableEntry | undefined> {
   const spec = windowSelectDetailed.treatment.spec;
   if (!isVenetianSpec(spec)) return undefined;
@@ -64,7 +62,7 @@ async function getNewEntry(
 
   const control = getLewissAluminiumControlString(spec);
 
-  const controlSide = projectWindow.controlSide;
+  const controlSide = projectWindow.controlSide || spec.controlSide;
 
   const tiltSide = spec.controlSide;
 
