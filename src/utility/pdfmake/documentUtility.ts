@@ -3,7 +3,7 @@ import type {
   TDocumentDefinitions,
   TDocumentInformation,
 } from "pdfmake/interfaces";
-import { getDeliverToText } from "../kinetics/pdf/deliverToText";
+import { getDeliverToText } from "../process/pdfUtility";
 
 export function createDocument(salesConsultant: string, title: string) {
   const metaData: TDocumentInformation = {

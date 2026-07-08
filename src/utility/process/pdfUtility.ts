@@ -5,6 +5,7 @@ import type {
   ContentColumns,
   ContentStack,
   ContentTable,
+  TableCellProperties,
 } from "pdfmake/interfaces";
 import type {
   AdditionalProduct,
@@ -30,7 +31,10 @@ function createWidthArray(tableEntry: TableEntry) {
   });
 }
 
-export function generateTableHeader(tableEntry: TableEntry) {
+export function generateTableHeader(
+  tableEntry: TableEntry,
+  centerOnPage: boolean,
+) {
   const columnStringArray = convertTableEntryToStringArray(tableEntry);
 
   const tableHeaderArray: Content[] = columnStringArray.map((column) => {
@@ -43,16 +47,49 @@ export function generateTableHeader(tableEntry: TableEntry) {
     };
   });
 
+  if (centerOnPage) {
+    tableHeaderArray.unshift(emptyTableContent);
+    tableHeaderArray.push(emptyTableContent);
+  }
+
   return tableHeaderArray;
 }
 
-export function createTable(tableEntry: TableEntry): ContentTable {
-  const tableHeaderArray: Content[] = generateTableHeader(tableEntry);
+const emptyTableContent: Content & TableCellProperties = {
+  text: "",
+  border: [false, false, false, false],
+};
+
+type CreateTableOptions = {
+  centerOnPage?: boolean;
+};
+
+const defaultCreateTableOptions: Required<CreateTableOptions> = {
+  centerOnPage: false,
+};
+
+export function createTable(
+  tableEntryList: TableEntry[],
+  options: CreateTableOptions = {},
+): ContentTable {
+  const { centerOnPage } = { ...defaultCreateTableOptions, ...options };
+
+  const tableHeaderArray: Content[] = generateTableHeader(
+    tableEntryList[0],
+    centerOnPage,
+  );
+
+  const widthArray = createWidthArray(tableEntryList[0]);
+
+  if (centerOnPage) {
+    widthArray.unshift("*");
+    widthArray.push("*");
+  }
 
   const table: ContentTable = {
     table: {
       headerRows: 1,
-      widths: createWidthArray(tableEntry),
+      widths: widthArray,
       body: [tableHeaderArray],
     },
     layout: {
@@ -74,6 +111,17 @@ export function createTable(tableEntry: TableEntry): ContentTable {
     },
     marginBottom: 14,
   };
+
+  const tableEntries = createBlindTableTextData(tableEntryList);
+
+  if (centerOnPage) {
+    for (const entry of tableEntries) {
+      entry.unshift(emptyTableContent);
+      entry.push(emptyTableContent);
+    }
+  }
+
+  table.table.body.push(...tableEntries);
 
   return table;
 }
@@ -323,4 +371,12 @@ export function createCostTotalColumn(worksheetCost: WorksheetCost): Column[] {
   ];
 
   return content;
+}
+
+export function getDeliverToText(): Content {
+  return {
+    text: "Please deliver to Lewis's Home Fabrics Ltd, Warehouse 2, 25 Centennial Highway, Ngauranga, Wellington 6035",
+    alignment: "center",
+    margin: [0, 10, 0, 10],
+  };
 }

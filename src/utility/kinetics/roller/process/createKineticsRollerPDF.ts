@@ -42,7 +42,7 @@ export async function createKineticsRollerPDFAsync(
 
   content.push(customerInformationColumn);
 
-  const blindInformation = createBlindInformationTable(tableEntryList);
+  const blindInformation = createTable(tableEntryList);
 
   content.push(blindInformation);
 
@@ -82,18 +82,6 @@ function getKineticsRollerBlindTypeTitle(blindType: BlindType): string {
   return kineticsRollerBlindToProductId[
     blindType as keyof KineticsRollerBlindMappedtoProductId
   ];
-}
-
-function createBlindInformationTable(
-  kineticsRollerTableEntryList: KineticsRollerTableEntry[],
-) {
-  const tableEntries = createBlindTableTextData(kineticsRollerTableEntryList);
-
-  const table = createTable(defaultKineticsRollerTableEntry);
-
-  table.table.body.push(...tableEntries);
-
-  return table;
 }
 
 const kineticsRollerBlindToProductId: KineticsRollerBlindMappedtoProductId = {

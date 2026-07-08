@@ -1,5 +1,5 @@
 import getImageAsBase64Async from "../../image/imageUtility";
-import santaFeLogo from "../../../asset/santa fe logo.png";
+import santaFeLogo from "../../../asset/santaFeLogo.png";
 import type { Content, ContentImage } from "pdfmake/interfaces";
 
 export async function createSantaFeOrderLogoAsync() {

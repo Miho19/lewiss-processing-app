@@ -16,7 +16,6 @@ import {
   createTable,
 } from "../../../process/pdfUtility";
 import { createDocument } from "../../../pdfmake/documentUtility";
-import { defaultKineticsCellularTableEntry } from "./kineticsCellularTableEntry";
 
 export async function createKineticsCellularPDF(
   customerInformation: CustomerInformation,
@@ -37,7 +36,7 @@ export async function createKineticsCellularPDF(
 
   content.push(customerInformationColumn);
 
-  const blindInformation = createBlindInformationTable(tableEntryList);
+  const blindInformation = createTable(tableEntryList);
 
   content.push(blindInformation);
 
@@ -67,15 +66,4 @@ function createOrderTitleStringCellular(numberOfBlinds: number) {
   };
 
   return content;
-}
-
-function createBlindInformationTable(
-  kineticsCellularTableEntryList: KineticsCellularTableEntry[],
-): ContentTable {
-  const tableEntries = createBlindTableTextData(kineticsCellularTableEntryList);
-
-  const table = createTable(defaultKineticsCellularTableEntry);
-  table.table.body.push(...tableEntries);
-
-  return table;
 }

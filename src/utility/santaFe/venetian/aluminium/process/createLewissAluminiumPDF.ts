@@ -1,4 +1,10 @@
-import type { Content, TDocumentDefinitions } from "pdfmake/interfaces";
+import type {
+  Column,
+  Content,
+  ContentColumns,
+  ContentTable,
+  TDocumentDefinitions,
+} from "pdfmake/interfaces";
 import type {
   CustomerInformation,
   WorksheetCost,
@@ -7,6 +13,13 @@ import type { LewissAluminiumTableEntry } from "../../../../../type/process/tabl
 import { createSantaFeOrderLogoAsync } from "../../../pdf/createSantaFeOrderLogo";
 import type { BlindType } from "../../../../../type/process/productType";
 import { createDocument } from "../../../../pdfmake/documentUtility";
+import {
+  createBlindTableTextData,
+  createCostTotalColumn,
+  createCustomerInformationColumn,
+  createTable,
+} from "../../../../process/pdfUtility";
+import { defaultLewissAluminiumTableEntry } from "./lewissAluminiumTableEntry";
 
 export async function createLewissAluminiumPDFAsync(
   customerInformation: CustomerInformation,
@@ -20,6 +33,22 @@ export async function createLewissAluminiumPDFAsync(
 
   const santaFeHeader = await createSantaFeOrderLogoAsync();
   content.push(santaFeHeader);
+
+  const title = createOrderTitleString(tableEntryList.length, blindType);
+  content.push(title);
+
+  const customerInformationColumn =
+    createCustomerInformationColumn(customerInformation);
+
+  content.push(customerInformationColumn);
+
+  const blindInformationTable = createTable(tableEntryList, {
+    centerOnPage: true,
+  });
+  content.push(blindInformationTable);
+
+  const costTotal = createCostTotalColumn(worksheetCost);
+  content.push(costTotal);
 
   const { name, reference, salesConsultant } = customerInformation;
 
@@ -43,4 +72,29 @@ function getDocumentTitleSuffix(blindType: BlindType) {
     default:
       return "error";
   }
+}
+
+function getTitleBlindTypeString(blindType: BlindType) {
+  switch (blindType) {
+    case "Lewis's 25mm Aluminium Venetian":
+      return "aluminium 25mm";
+    case "Lewis's 50mm Aluminium Venetian":
+      return "aluminium 50mm";
+    default:
+      return "error";
+  }
+}
+
+function createOrderTitleString(numberOfBlinds: number, blindType: BlindType) {
+  const blindText = numberOfBlinds > 1 ? "blinds" : "blind";
+
+  const blindTypeString = getTitleBlindTypeString(blindType);
+
+  const content: Content = {
+    text: `Order for custom-made Lewis's ${blindTypeString} ${blindText}`.toUpperCase(),
+    bold: true,
+    marginBottom: 14,
+  };
+
+  return content;
 }

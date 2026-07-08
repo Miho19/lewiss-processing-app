@@ -39,7 +39,7 @@ export async function createKineticsMikronwoodPDFAsync(
 
   content.push(customerInformationColumn);
 
-  const blindInformation = createBlindInformationTable(tableEntryList);
+  const blindInformation = createTable(tableEntryList);
 
   content.push(blindInformation);
 
@@ -70,15 +70,4 @@ function createOrderTitleString(numberOfBlinds: number) {
   };
 
   return content;
-}
-
-function createBlindInformationTable(
-  tableEntryList: KineticsMikronwoodTableEntry[],
-): ContentTable {
-  const tableEntries = createBlindTableTextData(tableEntryList);
-
-  const table = createTable(defaultKineticsMikronwoodTableEntry);
-  table.table.body.push(...tableEntries);
-
-  return table;
 }
