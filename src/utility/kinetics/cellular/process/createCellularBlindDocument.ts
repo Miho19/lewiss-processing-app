@@ -8,7 +8,6 @@ import type {
   Worksheet,
 } from "../../../../type/process/worksheetType";
 import type { BlindType } from "../../../../type/process/productType";
-import { createKineticsCellularPDF } from "./createKineticsCellularPDF";
 
 export async function createKineticsCellularDocumentAsync(
   blindType: BlindType,
@@ -34,20 +33,11 @@ export async function createKineticsCellularDocumentAsync(
     salesConsultant: projectFile.salesConsultant,
   };
 
-  const worksheetPDF = await createKineticsCellularPDF(
-    customerInformation,
-    kineticsCellularEntryList,
-    kineticsCellularWorksheetCost,
-  );
-
-  if (typeof worksheetPDF === "undefined") return [];
-
   const worksheet: Worksheet = {
     customer: customerInformation,
     blindType: blindType,
     blindList: kineticsCellularEntryList,
     worksheetCost: kineticsCellularWorksheetCost,
-    pdfList: [worksheetPDF],
     projectFile: projectFile,
   };
 

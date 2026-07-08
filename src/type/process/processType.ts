@@ -1,8 +1,14 @@
 import type { BlindType, ProductId } from "./productType";
 import type { WindowSelectDetailed } from "./windowSelectType";
 import type { SharePointProjectFile } from "../sharePoint/project/projectFileType";
-import type { Worksheet } from "./worksheetType";
+import type {
+  CustomerInformation,
+  Worksheet,
+  WorksheetCost,
+} from "./worksheetType";
 import type { KineticsRollerBlind } from "./product/kineticsType";
+import type { TDocumentDefinitions } from "pdfmake/interfaces";
+import type { TableEntry } from "./tableEntry/tableEntryType";
 
 export type BlindTypeMappedToWindowSelectDetailed = Record<
   BlindType,
@@ -28,3 +34,8 @@ export type KineticsRollerBlindMappedtoProductId = Record<
 >;
 
 export type BlindTypeMappedToString = Record<BlindType, string>;
+
+export type BlindTypeMappedToPDFCreateFunction = Record<
+  BlindType,
+  (worksheet: Worksheet) => Promise<TDocumentDefinitions | undefined>
+>;

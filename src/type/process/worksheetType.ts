@@ -1,4 +1,3 @@
-import type { TDocumentDefinitions } from "pdfmake/interfaces";
 import type { SharePointProjectFile } from "../sharePoint/project/projectFileType";
 import type { TableEntry } from "./tableEntry/tableEntryType";
 import type { BlindType } from "./productType";
@@ -27,6 +26,5 @@ export type Worksheet = {
   blindType: BlindType;
   blindList: TableEntry[];
   worksheetCost: WorksheetCost;
-  pdfList: TDocumentDefinitions[];
   projectFile?: SharePointProjectFile;
 };

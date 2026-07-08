@@ -11,36 +11,30 @@ import {
   createCustomerInformationColumn,
   createTable,
 } from "../../../process/pdfUtility";
-import type { KineticsRollerTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
 
-import type {
-  CustomerInformation,
-  WorksheetCost,
-} from "../../../../type/process/worksheetType";
+import type { Worksheet } from "../../../../type/process/worksheetType";
 import type { BlindType } from "../../../../type/process/productType";
 
 export async function createKineticsRollerPDFAsync(
-  blindType: BlindType,
-  customerInformation: CustomerInformation,
-  tableEntryList: KineticsRollerTableEntry[],
-  worksheetCost: WorksheetCost,
+  worksheet: Worksheet,
 ): Promise<TDocumentDefinitions | undefined> {
-  if (tableEntryList.length === 0) return undefined;
+  const { blindList, blindType, customer, worksheetCost } = worksheet;
+
+  if (blindList.length === 0) return undefined;
 
   const content: Content[] = [];
   const windowWareHeader = await createWindowWareHeader();
   content.push(windowWareHeader);
 
-  const title = createOrderTitleString(blindType, tableEntryList.length);
+  const title = createOrderTitleString(blindType, blindList.length);
   if (typeof title === "undefined") return undefined;
   content.push(title);
 
-  const customerInformationColumn =
-    createCustomerInformationColumn(customerInformation);
+  const customerInformationColumn = createCustomerInformationColumn(customer);
 
   content.push(customerInformationColumn);
 
-  const blindInformation = createTable(tableEntryList);
+  const blindInformation = createTable(blindList);
 
   content.push(blindInformation);
 
@@ -48,7 +42,7 @@ export async function createKineticsRollerPDFAsync(
 
   content.push(costTotal);
 
-  const { name, reference, salesConsultant } = customerInformation;
+  const { name, reference, salesConsultant } = customer;
   const blindName = getKineticsRollerBlindTypeTitle(blindType);
   const documentTitle = [name, reference, blindName].join("-");
 

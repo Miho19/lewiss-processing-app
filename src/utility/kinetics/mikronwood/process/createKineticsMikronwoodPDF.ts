@@ -1,45 +1,34 @@
-import type {
-  Content,
-  ContentTable,
-  TDocumentDefinitions,
-} from "pdfmake/interfaces";
-import type { KineticsMikronwoodTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
-import type {
-  CustomerInformation,
-  WorksheetCost,
-} from "../../../../type/process/worksheetType";
+import type { Content, TDocumentDefinitions } from "pdfmake/interfaces";
+import type { Worksheet } from "../../../../type/process/worksheetType";
 import { createWindowWareHeader } from "../../pdf/windowWareHeader";
 import {
-  createBlindTableTextData,
   createCostTotalColumn,
   createCustomerInformationColumn,
   createTable,
 } from "../../../process/pdfUtility";
 import { createDocument } from "../../../pdfmake/documentUtility";
-import { defaultKineticsMikronwoodTableEntry } from "./kineticsMikronwoodTableEntry";
 
 export async function createKineticsMikronwoodPDFAsync(
-  customerInformation: CustomerInformation,
-  tableEntryList: KineticsMikronwoodTableEntry[],
-  worksheetCost: WorksheetCost,
+  worksheet: Worksheet,
 ): Promise<TDocumentDefinitions | undefined> {
-  if (tableEntryList.length === 0) return undefined;
+  const { blindList, customer, worksheetCost } = worksheet;
+
+  if (blindList.length === 0) return undefined;
 
   const content: Content[] = [];
 
   const windowWareHeader = await createWindowWareHeader();
   content.push(windowWareHeader);
 
-  const title = createOrderTitleString(tableEntryList.length);
+  const title = createOrderTitleString(blindList.length);
   if (typeof title === "undefined") return undefined;
   content.push(title);
 
-  const customerInformationColumn =
-    createCustomerInformationColumn(customerInformation);
+  const customerInformationColumn = createCustomerInformationColumn(customer);
 
   content.push(customerInformationColumn);
 
-  const blindInformation = createTable(tableEntryList);
+  const blindInformation = createTable(blindList);
 
   content.push(blindInformation);
 
@@ -47,7 +36,7 @@ export async function createKineticsMikronwoodPDFAsync(
 
   content.push(costTotal);
 
-  const { name, reference, salesConsultant } = customerInformation;
+  const { name, reference, salesConsultant } = customer;
 
   const documentTitle = [name, reference, "mikronwood-50"].join("-");
 

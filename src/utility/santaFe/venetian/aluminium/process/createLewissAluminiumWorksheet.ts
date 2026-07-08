@@ -6,7 +6,6 @@ import type {
 } from "../../../../../type/process/worksheetType";
 import type { SharePointProjectFile } from "../../../../../type/sharePoint/project/projectFileType";
 import { getWorksheetCostAsync } from "../../../../process/tableEntryUtility";
-import { createLewissAluminiumPDFAsync } from "./createLewissAluminiumPDF";
 import { generateLewissAluminiumTableEntryListAsync } from "./lewissAluminiumTableEntry";
 
 export async function createLewissAluminiumWorksheetAsync(
@@ -28,21 +27,12 @@ export async function createLewissAluminiumWorksheetAsync(
 
   const worksheetCost = await getWorksheetCostAsync(entryList, blindType);
 
-  const pdf = await createLewissAluminiumPDFAsync(
-    customerInformation,
-    entryList,
-    worksheetCost,
-    blindType,
-  );
-
-  if (typeof pdf === "undefined") return [];
-
   const worksheet: Worksheet = {
     customer: customerInformation,
     blindType: blindType,
     blindList: entryList,
     worksheetCost: worksheetCost,
-    pdfList: [pdf],
+    projectFile: projectFile,
   };
 
   return [worksheet];

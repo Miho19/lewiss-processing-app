@@ -8,7 +8,6 @@ import type { KineticsRollerTableEntry } from "../../../../type/process/tableEnt
 import { generateKineticsRollerTableEntryListAsync } from "./createKineticsRollerTableEntry";
 import { getWorksheetCostAsync } from "../../../process/tableEntryUtility";
 import type { BlindType } from "../../../../type/process/productType";
-import { createKineticsRollerPDFAsync } from "./createKineticsRollerPDF";
 
 export async function createKineticsRollerWorksheetAsync(
   blindType: BlindType,
@@ -36,21 +35,11 @@ export async function createKineticsRollerWorksheetAsync(
     blindType,
   );
 
-  const pdfDocument = await createKineticsRollerPDFAsync(
-    blindType,
-    customerInformation,
-    kineticsRollerTableEntryList,
-    kineticsRollerWorksheetCost,
-  );
-
-  if (typeof pdfDocument === "undefined") return [];
-
   const worksheet: Worksheet = {
     customer: customerInformation,
     blindType: blindType,
     blindList: kineticsRollerTableEntryList,
     worksheetCost: kineticsRollerWorksheetCost,
-    pdfList: [pdfDocument],
     projectFile: projectFile,
   };
 

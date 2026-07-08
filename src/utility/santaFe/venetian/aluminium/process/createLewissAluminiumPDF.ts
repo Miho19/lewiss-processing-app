@@ -1,15 +1,5 @@
-import type {
-  Column,
-  Content,
-  ContentColumns,
-  ContentTable,
-  TDocumentDefinitions,
-} from "pdfmake/interfaces";
-import type {
-  CustomerInformation,
-  WorksheetCost,
-} from "../../../../../type/process/worksheetType";
-import type { LewissAluminiumTableEntry } from "../../../../../type/process/tableEntry/santaFeTableEntryType";
+import type { Content, TDocumentDefinitions } from "pdfmake/interfaces";
+import type { Worksheet } from "../../../../../type/process/worksheetType";
 import { createSantaFeOrderLogoAsync } from "../../../pdf/createSantaFeOrderLogo";
 import type { BlindType } from "../../../../../type/process/productType";
 import { createDocument } from "../../../../pdfmake/documentUtility";
@@ -20,27 +10,25 @@ import {
 } from "../../../../process/pdfUtility";
 
 export async function createLewissAluminiumPDFAsync(
-  customerInformation: CustomerInformation,
-  tableEntryList: LewissAluminiumTableEntry[],
-  worksheetCost: WorksheetCost,
-  blindType: BlindType,
+  worksheet: Worksheet,
 ): Promise<TDocumentDefinitions | undefined> {
-  if (tableEntryList.length === 0) return undefined;
+  const { blindList, blindType, customer, worksheetCost } = worksheet;
+
+  if (blindList.length === 0) return undefined;
 
   const content: Content[] = [];
 
   const santaFeHeader = await createSantaFeOrderLogoAsync();
   content.push(santaFeHeader);
 
-  const title = createOrderTitleString(tableEntryList.length, blindType);
+  const title = createOrderTitleString(blindList.length, blindType);
   content.push(title);
 
-  const customerInformationColumn =
-    createCustomerInformationColumn(customerInformation);
+  const customerInformationColumn = createCustomerInformationColumn(customer);
 
   content.push(customerInformationColumn);
 
-  const blindInformationTable = createTable(tableEntryList, {
+  const blindInformationTable = createTable(blindList, {
     evenCellLength: true,
   });
   content.push(blindInformationTable);
@@ -48,7 +36,7 @@ export async function createLewissAluminiumPDFAsync(
   const costTotal = createCostTotalColumn(worksheetCost);
   content.push(costTotal);
 
-  const { name, reference, salesConsultant } = customerInformation;
+  const { name, reference, salesConsultant } = customer;
 
   const documentTitle = [
     name,

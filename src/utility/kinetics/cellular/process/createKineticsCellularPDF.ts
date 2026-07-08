@@ -1,9 +1,5 @@
 import type { Content, TDocumentDefinitions } from "pdfmake/interfaces";
-import type { KineticsCellularTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
-import type {
-  CustomerInformation,
-  WorksheetCost,
-} from "../../../../type/process/worksheetType";
+import type { Worksheet } from "../../../../type/process/worksheetType";
 import { createWindowWareHeader } from "../../pdf/windowWareHeader";
 import {
   createCostTotalColumn,
@@ -13,32 +9,31 @@ import {
 import { createDocument } from "../../../pdfmake/documentUtility";
 
 export async function createKineticsCellularPDF(
-  customerInformation: CustomerInformation,
-  tableEntryList: KineticsCellularTableEntry[],
-  worksheetCost: WorksheetCost,
+  worksheet: Worksheet,
 ): Promise<TDocumentDefinitions | undefined> {
-  const content: Content[] = [];
+  const { blindList, customer, worksheetCost } = worksheet;
+  if (blindList.length === 0) return undefined;
 
+  const content: Content[] = [];
   const windowWareHeader = await createWindowWareHeader();
   content.push(windowWareHeader);
 
-  const titleString = createOrderTitleStringCellular(tableEntryList.length);
+  const titleString = createOrderTitleStringCellular(blindList.length);
   if (typeof titleString === "undefined") return undefined;
   content.push(titleString);
 
-  const customerInformationColumn =
-    createCustomerInformationColumn(customerInformation);
+  const customerInformationColumn = createCustomerInformationColumn(customer);
 
   content.push(customerInformationColumn);
 
-  const blindInformation = createTable(tableEntryList);
+  const blindInformation = createTable(blindList);
 
   content.push(blindInformation);
 
   const costTotal = createCostTotalColumn(worksheetCost);
   content.push(costTotal);
 
-  const { name, reference, salesConsultant } = customerInformation;
+  const { name, reference, salesConsultant } = customer;
 
   const documentTitle = [name, reference, "cellular-blind"].join("-");
 
