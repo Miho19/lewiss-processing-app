@@ -9,6 +9,8 @@ import { getKineticsMikronwoodAdditionalProductListAsync } from "../kinetics/mik
 import { getKineticsRollerAdditionalProductListAsync } from "../kinetics/roller/pricing";
 import { getLewissAluminiumAdditionalProductListAsync } from "../santaFe/venetian/aluminium/pricing/getLewissAluminiumAdditionalProductList";
 
+const GST = 0.15;
+
 export function getCurrentTableEntryIndex(
   tableEntryList: TableEntry[],
 ): number {
@@ -95,13 +97,14 @@ async function getAdditionalProductArray(
 function getGST(
   blindSubTotal: number,
   additionalProductList: AdditionalProduct[],
+  gst: number = GST,
 ): number {
   const additionalProductListTotalCost = additionalProductList.reduce(
     (acc, current) => current.cost * current.quantity + acc,
     0,
   );
 
-  return (blindSubTotal + additionalProductListTotalCost) * 0.15;
+  return (blindSubTotal + additionalProductListTotalCost) * gst;
 }
 
 function getTotal(

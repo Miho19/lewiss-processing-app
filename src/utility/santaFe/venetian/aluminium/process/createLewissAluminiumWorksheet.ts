@@ -32,6 +32,7 @@ export async function createLewissAluminiumWorksheetAsync(
     customerInformation,
     entryList,
     worksheetCost,
+    blindType,
   );
 
   if (typeof pdf === "undefined") return [];

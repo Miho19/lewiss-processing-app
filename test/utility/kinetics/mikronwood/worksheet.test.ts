@@ -79,7 +79,7 @@ describe("Kinetics Mikronwood Worksheet", () => {
     it("should return an array containing lithium ion with a cost and quantity", async () => {
       const result = await getKineticsMikronwoodAdditionalProductListAsync(
         entryList,
-        "venetian-blind",
+        "Kinetics Mikronwood 50mm Venetian",
       );
 
       expect(result.length).toBeGreaterThan(0);

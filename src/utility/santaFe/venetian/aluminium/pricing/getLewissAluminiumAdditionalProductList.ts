@@ -7,10 +7,5 @@ export async function getLewissAluminiumAdditionalProductListAsync(
   tableEntryList: TableEntry[],
   blindType: BlindType,
 ): Promise<AdditionalProduct[]> {
-  //   const accessoryPricingSchedule =
-  //     await getAccessoryPricingScheduleAsync(blindType);
-  //   if (typeof accessoryPricingSchedule === "undefined") return 0;
-
-  //   if (!isSantaFeAccessoryPricingSchedule(accessoryPricingSchedule)) return 0;
   return [];
 }
