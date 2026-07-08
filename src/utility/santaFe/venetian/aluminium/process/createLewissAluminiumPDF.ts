@@ -14,12 +14,10 @@ import { createSantaFeOrderLogoAsync } from "../../../pdf/createSantaFeOrderLogo
 import type { BlindType } from "../../../../../type/process/productType";
 import { createDocument } from "../../../../pdfmake/documentUtility";
 import {
-  createBlindTableTextData,
   createCostTotalColumn,
   createCustomerInformationColumn,
   createTable,
 } from "../../../../process/pdfUtility";
-import { defaultLewissAluminiumTableEntry } from "./lewissAluminiumTableEntry";
 
 export async function createLewissAluminiumPDFAsync(
   customerInformation: CustomerInformation,
@@ -43,7 +41,7 @@ export async function createLewissAluminiumPDFAsync(
   content.push(customerInformationColumn);
 
   const blindInformationTable = createTable(tableEntryList, {
-    centerOnPage: true,
+    evenCellLength: true,
   });
   content.push(blindInformationTable);
 

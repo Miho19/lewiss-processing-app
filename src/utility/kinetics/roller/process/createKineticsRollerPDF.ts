@@ -7,14 +7,12 @@ import type { KineticsRollerBlindMappedtoProductId } from "../../../../type/proc
 import { createDocument } from "../../../pdfmake/documentUtility";
 import { createWindowWareHeader } from "../../pdf/windowWareHeader";
 import {
-  createBlindTableTextData,
   createCostTotalColumn,
   createCustomerInformationColumn,
   createTable,
 } from "../../../process/pdfUtility";
 import type { KineticsRollerTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
 
-import { defaultKineticsRollerTableEntry } from "./createKineticsRollerTableEntry";
 import type {
   CustomerInformation,
   WorksheetCost,

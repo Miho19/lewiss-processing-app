@@ -1,8 +1,4 @@
-import type {
-  Content,
-  ContentTable,
-  TDocumentDefinitions,
-} from "pdfmake/interfaces";
+import type { Content, TDocumentDefinitions } from "pdfmake/interfaces";
 import type { KineticsCellularTableEntry } from "../../../../type/process/tableEntry/kineticsTableEntryType";
 import type {
   CustomerInformation,
@@ -10,7 +6,6 @@ import type {
 } from "../../../../type/process/worksheetType";
 import { createWindowWareHeader } from "../../pdf/windowWareHeader";
 import {
-  createBlindTableTextData,
   createCostTotalColumn,
   createCustomerInformationColumn,
   createTable,

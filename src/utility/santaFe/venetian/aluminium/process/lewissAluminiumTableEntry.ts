@@ -99,17 +99,3 @@ async function getNewEntry(
 
   return newEntry;
 }
-
-export const defaultLewissAluminiumTableEntry: LewissAluminiumTableEntry = {
-  "blind index": 0,
-  location: "",
-  width: 0,
-  height: 0,
-  fit: "",
-  colour: "",
-  control: "",
-  "control side": "",
-  "tilt side": "",
-  "Spacer Block": "",
-  price: "",
-};

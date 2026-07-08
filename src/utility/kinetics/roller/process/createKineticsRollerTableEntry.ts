@@ -16,25 +16,6 @@ import { getKineticsRollerPelmetString } from "../presentation";
 import { getKineticsRollerControlString } from "../presentation/kineticsRoller";
 import { getKineticsRollerBlindCostAsync } from "../pricing/getKineticsRollerBlindCostAsync";
 
-export const defaultKineticsRollerTableEntry: KineticsRollerTableEntry = {
-  "blind index": 0,
-  location: "",
-  width: 0,
-  height: 0,
-  fit: "",
-  roll: "",
-  fabric: "",
-  control: "",
-  "control side": "",
-  "bottom rail": "",
-  bracket: "",
-  pelmet: "",
-  butting: "",
-  remote: 0,
-  "remote channel": 0,
-  price: "",
-};
-
 export async function createKineticsRollerTableEntryAsync(
   windowSelectDetailed: WindowSelectDetailed,
   blindIndex: number,

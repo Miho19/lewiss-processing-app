@@ -22,24 +22,6 @@ import {
 } from "../presentation/kineticsCellular";
 import { getKineticsCellularBlindCostAsync } from "../pricing";
 
-export const defaultKineticsCellularTableEntry: KineticsCellularTableEntry = {
-  "blind index": 0,
-  location: "",
-  width: 0,
-  height: 0,
-  fit: "Inside",
-  "comb size": "",
-  fabric: "",
-  control: "",
-  "control side": "",
-  "headrail colour": "",
-  "side channel colour": "",
-  butting: "",
-  remote: 0,
-  "remote channel": 0,
-  price: "",
-};
-
 function getCombSize(windowSelectDetailed: WindowSelectDetailed) {
   switch (windowSelectDetailed.treatment.spec.blindType) {
     case "Kinetics 10mm Cellular Blind":

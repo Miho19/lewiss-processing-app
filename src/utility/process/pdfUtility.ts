@@ -23,8 +23,10 @@ export function convertTableEntryToStringArray(tableEntry: TableEntry) {
   });
 }
 
-function createWidthArray(tableEntry: TableEntry) {
+function createWidthArray(tableEntry: TableEntry, evenCellLength: boolean) {
   return Object.keys(tableEntry).map((key) => {
+    if (evenCellLength) return "*";
+
     if (key.localeCompare("fabric", undefined, { sensitivity: "base" }) === 0)
       return "*";
     return "auto";
@@ -62,24 +64,29 @@ const emptyTableContent: Content & TableCellProperties = {
 
 type CreateTableOptions = {
   centerOnPage?: boolean;
+  evenCellLength?: boolean;
 };
 
 const defaultCreateTableOptions: Required<CreateTableOptions> = {
   centerOnPage: false,
+  evenCellLength: false,
 };
 
 export function createTable(
   tableEntryList: TableEntry[],
   options: CreateTableOptions = {},
 ): ContentTable {
-  const { centerOnPage } = { ...defaultCreateTableOptions, ...options };
+  const { centerOnPage, evenCellLength } = {
+    ...defaultCreateTableOptions,
+    ...options,
+  };
 
   const tableHeaderArray: Content[] = generateTableHeader(
     tableEntryList[0],
     centerOnPage,
   );
 
-  const widthArray = createWidthArray(tableEntryList[0]);
+  const widthArray = createWidthArray(tableEntryList[0], evenCellLength);
 
   if (centerOnPage) {
     widthArray.unshift("*");
