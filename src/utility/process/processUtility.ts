@@ -26,14 +26,6 @@ import { isVenetianSpec } from "../../type/sharePoint/project/spec/venetianSpec"
 import { createKineticsMikronwoodWorksheetAsync } from "../kinetics/mikronwood/process/createKineticsMikronwoodWorksheet";
 import { createLewissAluminiumWorksheetAsync } from "../santaFe/venetian/aluminium/process/createLewissAluminiumWorksheet";
 
-/**
- *  Maybe use a generic pdf array return type --> makes testing easier, currently very badly coupled
- * @param windowSelectList
- *
- * @param projectFile
- * @returns
- */
-
 export async function processWindowsSelectedAsync(
   windowSelectList: WindowSelect[],
   projectFile: SharePointProjectFile,

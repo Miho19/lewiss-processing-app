@@ -6,10 +6,12 @@ import type {
   ContentStack,
   ContentTable,
   TableCellProperties,
+  TDocumentDefinitions,
 } from "pdfmake/interfaces";
 import type {
   AdditionalProduct,
   CustomerInformation,
+  Worksheet,
   WorksheetCost,
 } from "../../type/process/worksheetType";
 import type { TableEntry } from "../../type/process/tableEntry/tableEntryType";
@@ -386,4 +388,15 @@ export function getDeliverToText(): Content {
     alignment: "center",
     margin: [0, 10, 0, 10],
   };
+}
+
+export async function getWorksheetPDFAsync(
+  worksheet: Worksheet,
+): Promise<TDocumentDefinitions> {
+  try {
+    return {};
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to create PDF");
+  }
 }

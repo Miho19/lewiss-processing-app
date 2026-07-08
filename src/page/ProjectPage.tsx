@@ -26,6 +26,9 @@ function ProjectPage() {
   const { projectId } = projectRoute.useParams();
   const [formData, setFormData] = useState<WindowSelect[]>([]);
 
+  const [isFormSubmitting, setIsFormSubmitting] = useState(false);
+  const [formError, SetFormError] = useState("");
+
   const {
     data: sharePointProjectFile,
     isSuccess,
@@ -54,19 +57,33 @@ function ProjectPage() {
       <div className={errorStyleClassName}>Failed to fetch project file</div>
     );
 
-  function onSubmitHandler(event: SubmitEvent<HTMLFormElement>) {
+  async function onSubmitHandler(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (typeof sharePointProjectFile === "undefined") return;
 
-    const selectedWindows = filterWindowSelectBySelected(formData);
-    if (selectedWindows.length === 0) return;
+    setIsFormSubmitting(true);
+    SetFormError("");
 
-    processWindowsSelectedAsync(selectedWindows, sharePointProjectFile).then(
-      async (data) => {
-        const worksheet = data[0];
-        await openPDFDocumentAsync(worksheet.pdfList[0]);
-      },
-    );
+    try {
+      if (typeof sharePointProjectFile === "undefined") {
+        SetFormError("Missing project file");
+        return;
+      }
+
+      const selectedWindows = filterWindowSelectBySelected(formData);
+      if (selectedWindows.length === 0) {
+        SetFormError("No windows selected");
+        return;
+      }
+
+      const worksheetList = await processWindowsSelectedAsync(
+        selectedWindows,
+        sharePointProjectFile,
+      );
+    } catch (error: unknown) {
+      if (error instanceof Error) SetFormError(error.message);
+    } finally {
+      setIsFormSubmitting(false);
+    }
   }
 
   function onChangeHandlerCheckBox(formData: CheckboxFormData) {
@@ -94,7 +111,7 @@ function ProjectPage() {
         className="flex w-full flex-col space-y-6 relative"
         onSubmit={onSubmitHandler}
       >
-        <SubmitButton />
+        <SubmitButton isFormSubmitting={isFormSubmitting} />
 
         <RoomCardList
           roomList={sharePointProjectFile.project.rooms}
