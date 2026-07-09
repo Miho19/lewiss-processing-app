@@ -25,6 +25,7 @@ import {
 import { isVenetianSpec } from "../../type/sharePoint/project/spec/venetianSpec";
 import { createKineticsMikronwoodWorksheetAsync } from "../kinetics/mikronwood/process/createKineticsMikronwoodWorksheet";
 import { createLewissAluminiumWorksheetAsync } from "../santaFe/venetian/aluminium/process/createLewissAluminiumWorksheet";
+import { writeWorksheetToSharePointAsync } from "./upload";
 
 export async function processWindowsSelectedAsync(
   windowSelectList: WindowSelect[],
@@ -47,7 +48,7 @@ export async function processWindowsSelectedAsync(
     projectFile,
   );
 
-  //await writeWorksheetToSharePointAsync(worksheetList);
+  await writeWorksheetToSharePointAsync(worksheetList);
 
   return worksheetList;
 }

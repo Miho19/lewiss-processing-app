@@ -38,12 +38,8 @@ function getPageNumberText(currentPage: number, pageCount: number): Content {
 }
 
 export async function openPDFDocumentAsync(document: TDocumentDefinitions) {
-  const pdfmake = (await import("pdfmake/build/pdfmake")).default;
-  const pdfFonts = (await import("pdfmake/build/vfs_fonts")).default;
-
-  pdfmake.addVirtualFileSystem(pdfFonts);
-
-  pdfmake.createPdf(document).open();
+  const pdfDocument = await getPDFDocumentAsync(document);
+  pdfDocument.open();
 }
 
 export async function getPDFDocumentAsync(document: TDocumentDefinitions) {

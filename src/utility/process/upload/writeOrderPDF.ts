@@ -5,6 +5,7 @@ import type { Worksheet } from "../../../type/process/worksheetType";
 import { MutationObserver } from "@tanstack/react-query";
 
 import { getPDFDocumentAsync } from "../../pdfmake/documentUtility";
+import { getWorksheetPDFAsync } from "../pdfUtility";
 
 export async function writeOrderPDFAsync(
   worksheet: Worksheet,
@@ -42,12 +43,12 @@ const manufacturerNameMap: BlindTypeMappedToString = {
   "Kinetics 10mm Cellular Blind": "Windoware",
   "Kinetics 20mm Cellular Blind": "Windoware",
   "Kinetics Mikronwood 50mm Venetian": "Windoware",
-  "Lewis's 25mm Aluminium Venetian": "",
-  "Lewis's 50mm Aluminium Venetian": "",
-  "Lewis's 50mm Fauxwood Venetian": "",
-  "Lewis's 63mm Fauxwood Venetian": "",
-  "Lewis's 50mm Phoenixwood Venetian": "",
-  "Lewis's 63mm Phoenixwood Venetian": "",
+  "Lewis's 25mm Aluminium Venetian": "SantaFe",
+  "Lewis's 50mm Aluminium Venetian": "SantaFe",
+  "Lewis's 50mm Fauxwood Venetian": "SantaFe",
+  "Lewis's 63mm Fauxwood Venetian": "SantaFe",
+  "Lewis's 50mm Phoenixwood Venetian": "SantaFe",
+  "Lewis's 63mm Phoenixwood Venetian": "SantaFe",
 };
 
 async function writeFile(
@@ -81,7 +82,9 @@ function getObserver() {
 }
 
 async function getPDFasBase64(worksheet: Worksheet) {
-  const pdf = worksheet.pdfList[0];
+  const pdf = await getWorksheetPDFAsync(worksheet);
+  if (typeof pdf === "undefined")
+    throw new Error("Failed to create worksheet pdf");
 
   const pdfDocument = await getPDFDocumentAsync(pdf);
 

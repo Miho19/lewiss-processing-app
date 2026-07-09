@@ -10,7 +10,7 @@ describe.skip("HTTP Requests", () => {
     expect(result.length).toBeGreaterThan(0);
   });
 
-  it("should return joshua april folder", async () => {
+  it.skip("should return joshua april folder", async () => {
     const result = await GETSharePointFolder(
       "01VFVMOAG77RPCSPXOVVEKVOWOFTM6KWOT",
     );
@@ -18,7 +18,7 @@ describe.skip("HTTP Requests", () => {
     console.log(result);
   });
 
-  it.skip("should return the confirmed folder", async () => {
+  it("should return the confirmed folder", async () => {
     const result = await GETSharePointFolder(
       "01VFVMOAB3N7ANXUDNBJH2YLJ4YKSMJY3I",
     );

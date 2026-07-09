@@ -73,13 +73,14 @@ const blindTypeMappedToSharePointConfirmedFolder: BlindTypeMappedToString = {
   "Kinetics Light Filtering Roller Blind": "01VFVMOACOU2OWM2TEQ5GJ4WTVPHIWJTLT",
   "Kinetics 10mm Cellular Blind": "01VFVMOACOU2OWM2TEQ5GJ4WTVPHIWJTLT",
   "Kinetics 20mm Cellular Blind": "01VFVMOACOU2OWM2TEQ5GJ4WTVPHIWJTLT",
-  "Kinetics Mikronwood 50mm Venetian": "",
-  "Lewis's 25mm Aluminium Venetian": "",
-  "Lewis's 50mm Aluminium Venetian": "",
-  "Lewis's 50mm Fauxwood Venetian": "",
-  "Lewis's 63mm Fauxwood Venetian": "",
-  "Lewis's 50mm Phoenixwood Venetian": "",
-  "Lewis's 63mm Phoenixwood Venetian": "",
+  "Kinetics Mikronwood 50mm Venetian": "01VFVMOACOU2OWM2TEQ5GJ4WTVPHIWJTLT",
+  "Lewis's 25mm Aluminium Venetian": "01VFVMOAGRRUS4C6EWZRFJBJXQFTAYSTRG",
+  "Lewis's 50mm Aluminium Venetian": "01VFVMOAGRRUS4C6EWZRFJBJXQFTAYSTRG",
+  "Lewis's 50mm Fauxwood Venetian": "01VFVMOAGRRUS4C6EWZRFJBJXQFTAYSTRG",
+  "Lewis's 63mm Fauxwood Venetian": "01VFVMOAGRRUS4C6EWZRFJBJXQFTAYSTRG",
+  "Lewis's 50mm Phoenixwood Venetian": "01VFVMOAGRRUS4C6EWZRFJBJXQFTAYSTRG",
+  "Lewis's 63mm Phoenixwood Venetian": "01VFVMOAGRRUS4C6EWZRFJBJXQFTAYSTRG",
 };
 
-// 01VFVMOACOU2OWM2TEQ5GJ4WTVPHIWJTLT
+// 01VFVMOACOU2OWM2TEQ5GJ4WTVPHIWJTLT confirmed/kinetics
+// 01VFVMOAGRRUS4C6EWZRFJBJXQFTAYSTRG confirmed/santaFe

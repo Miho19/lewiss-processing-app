@@ -15,6 +15,11 @@ import type {
   WorksheetCost,
 } from "../../type/process/worksheetType";
 import type { TableEntry } from "../../type/process/tableEntry/tableEntryType";
+import type { BlindTypeMappedToPDFCreateFunction } from "../../type/process/processType";
+import { createKineticsCellularPDF } from "../kinetics/cellular/process/createKineticsCellularPDF";
+import { createKineticsRollerPDFAsync } from "../kinetics/roller/process/createKineticsRollerPDF";
+import { createKineticsMikronwoodPDFAsync } from "../kinetics/mikronwood/process/createKineticsMikronwoodPDF";
+import { createLewissAluminiumPDFAsync } from "../santaFe/venetian/aluminium/process/createLewissAluminiumPDF";
 
 export function convertTableEntryToStringArray(tableEntry: TableEntry) {
   return Object.keys(tableEntry).map((column) => {
@@ -392,11 +397,45 @@ export function getDeliverToText(): Content {
 
 export async function getWorksheetPDFAsync(
   worksheet: Worksheet,
-): Promise<TDocumentDefinitions> {
+): Promise<TDocumentDefinitions | undefined> {
   try {
-    return {};
+    const pdfAsyncFunc =
+      blindTypeMappedToCreatePDFFunction[worksheet.blindType];
+    const pdf = await pdfAsyncFunc(worksheet);
+    return pdf;
   } catch (error) {
     console.error(error);
     throw new Error("Failed to create PDF");
   }
 }
+
+const blindTypeMappedToCreatePDFFunction: BlindTypeMappedToPDFCreateFunction = {
+  "Kinetics Sunscreen Roller Blind": createKineticsRollerPDFAsync,
+  "Kinetics Blockout Roller Blind": createKineticsRollerPDFAsync,
+  "Kinetics Light Filtering Roller Blind": createKineticsRollerPDFAsync,
+  "Kinetics 10mm Cellular Blind": createKineticsCellularPDF,
+  "Kinetics 20mm Cellular Blind": createKineticsCellularPDF,
+  "Kinetics Mikronwood 50mm Venetian": createKineticsMikronwoodPDFAsync,
+  "Lewis's 25mm Aluminium Venetian": createLewissAluminiumPDFAsync,
+  "Lewis's 50mm Aluminium Venetian": createLewissAluminiumPDFAsync,
+  "Lewis's 50mm Fauxwood Venetian": function (
+    worksheet: Worksheet,
+  ): Promise<TDocumentDefinitions | undefined> {
+    throw new Error("Function not implemented.");
+  },
+  "Lewis's 63mm Fauxwood Venetian": function (
+    worksheet: Worksheet,
+  ): Promise<TDocumentDefinitions | undefined> {
+    throw new Error("Function not implemented.");
+  },
+  "Lewis's 50mm Phoenixwood Venetian": function (
+    worksheet: Worksheet,
+  ): Promise<TDocumentDefinitions | undefined> {
+    throw new Error("Function not implemented.");
+  },
+  "Lewis's 63mm Phoenixwood Venetian": function (
+    worksheet: Worksheet,
+  ): Promise<TDocumentDefinitions | undefined> {
+    throw new Error("Function not implemented.");
+  },
+};

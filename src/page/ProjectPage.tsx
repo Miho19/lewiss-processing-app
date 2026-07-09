@@ -15,6 +15,7 @@ import SubmitButton from "../component/Project/Form/SubmitButton";
 import RoomCardList from "../component/Project/RoomCard/RoomCardList";
 
 import { getWindowSelectList } from "../utility/sharePoint/projectFileUtility";
+import { getWorksheetPDFAsync } from "../utility/process/pdfUtility";
 
 export type CheckboxFormData = {
   windowId: string;
@@ -79,9 +80,16 @@ function ProjectPage() {
         selectedWindows,
         sharePointProjectFile,
       );
+
+      for (const worksheet of worksheetList) {
+        const pdf = await getWorksheetPDFAsync(worksheet);
+        if (typeof pdf === "undefined") continue;
+        await openPDFDocumentAsync(pdf);
+      }
     } catch (error: unknown) {
       if (error instanceof Error) SetFormError(error.message);
     } finally {
+      console.error(formError);
       setIsFormSubmitting(false);
     }
   }
