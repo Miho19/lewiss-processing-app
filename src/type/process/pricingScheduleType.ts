@@ -3,6 +3,8 @@ import type { KineticsMikronwoodPricingSchedule } from "../pricing/kinetics/kine
 import type { KineticsAccessoryPricingSchedule } from "../pricing/kinetics/kineticsMotorAccessoryPricingScheduleType";
 import type { KineticsRollerPricingSchedule } from "../pricing/kinetics/kineticsRollerPricingScheduleType";
 import type { LewissAluminiumVenetianPricingSchedule } from "../pricing/santaFe/lewissAluminiumVenetianPricingScheduleType";
+import type { LewissFauxwoodVenetianPricingSchedule } from "../pricing/santaFe/lewissFauxwoodVenetianPricingScheduleType";
+import type { LewissPhoenixwoodVenetianPricingSchedule } from "../pricing/santaFe/lewissPhoenixwoodVenetianPricingScheduleType";
 import type { SantaFeAccessoriesPricingSchedule } from "../pricing/santaFe/santaFeAccessoriesPricingScheduleType";
 import type { BlindType } from "./productType";
 
@@ -10,7 +12,9 @@ export type PricingSchedule =
   | KineticsCellularPricingSchedule
   | KineticsRollerPricingSchedule
   | KineticsMikronwoodPricingSchedule
-  | LewissAluminiumVenetianPricingSchedule;
+  | LewissAluminiumVenetianPricingSchedule
+  | LewissFauxwoodVenetianPricingSchedule
+  | LewissPhoenixwoodVenetianPricingSchedule;
 
 export type BlindTypeToSharePointFileId = Record<BlindType, string>;
 
