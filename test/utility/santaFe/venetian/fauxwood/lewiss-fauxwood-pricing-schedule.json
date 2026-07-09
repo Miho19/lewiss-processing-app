@@ -1,0 +1,30 @@
+{
+  "blindType": [
+    "Lewis's 50mm Fauxwood Venetian",
+    "Lewis's 63mm Fauxwood Venetian"
+  ],
+  "control": {
+    "fauxwood50": {
+      "cord": {
+        "multiplier": 1.0,
+        "name": "50mm cord"
+      },
+      "cordless": { "multiplier": 1.25, "name": "50mm cordless" },
+      "cordloop": { "multiplier": 3.15, "name": "50mm cordloop" }
+    },
+    "fauxwood63": {
+      "cord": {
+        "multiplier": 1.05,
+        "name": "63mm cord"
+      },
+      "cordless": { "multiplier": 1.32, "name": "63mm cordless" },
+      "cordloop": { "multiplier": 3.3, "name": "63mm cordloop" }
+    }
+  },
+  "fascia": {},
+  "fabric": {
+    "heightHeader": [],
+    "widthHeader": [],
+    "data": []
+  }
+}

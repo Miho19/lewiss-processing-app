@@ -1,0 +1,21 @@
+{
+  "25mm": {
+    "corded": {
+      "doubleCell": { "available": false },
+      "twoOnOne": {
+        "available": true,
+        "surcharge": 125,
+        "restriction": { "width": { "maximum": 2500 } }
+      },
+      "aluminiumGuard": {
+        "available": true,
+        "surcharge": "49 * (height/1000)"
+      },
+      "fabric": {
+        "restriction": { "type": "must not be flame resistant" }
+      }
+    }
+  },
+  "45mm": {},
+  "62mm": {}
+}

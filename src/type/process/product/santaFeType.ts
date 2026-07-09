@@ -11,4 +11,7 @@ export const SantaFeVenetianBlindOptions = [
   "Lewis's 63mm Phoenixwood Venetian",
 ] as const;
 
+// lewisis 25mm Thermacell
+// - operation
+
 export type SantaFeVenetianBlind = (typeof SantaFeVenetianBlindOptions)[number];
