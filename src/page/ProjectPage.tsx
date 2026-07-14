@@ -11,11 +11,12 @@ import {
   processWindowsSelectedAsync,
 } from "../utility/process/processUtility";
 import { openPDFDocumentAsync } from "../utility/pdfmake/documentUtility";
-import SubmitButton from "../component/Project/Form/SubmitButton";
+
 import RoomCardList from "../component/Project/RoomCard/RoomCardList";
 
 import { getWindowSelectList } from "../utility/sharePoint/projectFileUtility";
 import { getWorksheetPDFAsync } from "../utility/process/pdfUtility";
+import SubmitButton from "../component/Project/form/SubmitButton";
 
 export type CheckboxFormData = {
   windowId: string;
@@ -39,14 +40,15 @@ function ProjectPage() {
   } = useSharePointProjectFileQuery(projectId);
 
   useEffect(() => {
+    if (isLoading) return;
     if (!isSuccess) return;
 
     const windowSelectList: WindowSelect[] = getWindowSelectList(
       sharePointProjectFile,
     );
 
-    setFormData([...windowSelectList]);
-  }, [sharePointProjectFile, isSuccess]);
+    setFormData(() => [...windowSelectList]);
+  }, [sharePointProjectFile, isSuccess, isLoading]);
 
   const errorStyleClassName = "flex items-center justify-center flex-1";
 
