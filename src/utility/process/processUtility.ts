@@ -26,6 +26,7 @@ import { isVenetianSpec } from "../../type/sharePoint/project/spec/venetianSpec"
 import { createKineticsMikronwoodWorksheetAsync } from "../kinetics/mikronwood/process/createKineticsMikronwoodWorksheet";
 import { createLewissAluminiumWorksheetAsync } from "../santaFe/venetian/aluminium/process/createLewissAluminiumWorksheet";
 import { writeWorksheetToSharePointAsync } from "./upload";
+import { createLewissFauxwoodWorksheetAsync } from "../santaFe/venetian/fauxwood/process/createLewissFauxwoodWorksheet";
 
 export async function processWindowsSelectedAsync(
   windowSelectList: WindowSelect[],
@@ -173,20 +174,8 @@ export const blindTypeMappedToWorksheetCreateFunction: BlindTypeMappedToCreateWo
     "Kinetics Mikronwood 50mm Venetian": createKineticsMikronwoodWorksheetAsync,
     "Lewis's 25mm Aluminium Venetian": createLewissAluminiumWorksheetAsync,
     "Lewis's 50mm Aluminium Venetian": createLewissAluminiumWorksheetAsync,
-    "Lewis's 50mm Fauxwood Venetian": function (
-      blindType: BlindType,
-      windowSelectDetailedList: WindowSelectDetailed[],
-      projectFile: SharePointProjectFile,
-    ): Promise<Worksheet[]> {
-      throw new Error("Function not implemented.");
-    },
-    "Lewis's 63mm Fauxwood Venetian": function (
-      blindType: BlindType,
-      windowSelectDetailedList: WindowSelectDetailed[],
-      projectFile: SharePointProjectFile,
-    ): Promise<Worksheet[]> {
-      throw new Error("Function not implemented.");
-    },
+    "Lewis's 50mm Fauxwood Venetian": createLewissFauxwoodWorksheetAsync,
+    "Lewis's 63mm Fauxwood Venetian": createLewissFauxwoodWorksheetAsync,
     "Lewis's 50mm Phoenixwood Venetian": function (
       blindType: BlindType,
       windowSelectDetailedList: WindowSelectDetailed[],

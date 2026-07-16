@@ -1,8 +1,11 @@
 import type { SantaFeAccessoriesPricingSchedule } from "../../../../../type/pricing/santaFe/santaFeAccessoriesPricingScheduleType";
 
-function getLewissFauxwoodCutOutCost(
+export function getLewissFauxwoodCutOutCost(
   cutout: boolean,
   pricingSchedule: SantaFeAccessoriesPricingSchedule,
-): boolean {
-  return false;
+): number | undefined {
+  if (!cutout) return 0;
+
+  const cutoutCost = pricingSchedule.cutOut.base;
+  return cutoutCost;
 }

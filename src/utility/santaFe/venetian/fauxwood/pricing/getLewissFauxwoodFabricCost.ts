@@ -89,9 +89,11 @@ function getControlMultiplier(
 
   if (typeof controlSlatTypeObject === "undefined") return undefined;
 
+  const controlKey = control.trim().toLowerCase();
+
   const controlObject =
     controlSlatTypeObject[
-      control as keyof typeof pricingSchedule.control.fauxwood50
+      controlKey as keyof typeof pricingSchedule.control.fauxwood50
     ];
 
   if (typeof controlObject === "undefined") return undefined;

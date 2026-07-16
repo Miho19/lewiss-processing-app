@@ -6,8 +6,10 @@ import {
   getPricingScheduleAsync,
 } from "../../../../process/pricingScheduleUtility";
 import { getLewissFauxwoodSpacerBlockCost } from "./getLewisFauxwoodSpacerBlockCost";
+import { getLewissFauxwoodCutOutCost } from "./getLewissFauxwoodCutOutCost";
 import { getLewissFauxwoodFabricCost } from "./getLewissFauxwoodFabricCost";
 import { getLewissFauxwoodFasciaCost } from "./getLewissFauxwoodFasciaCost";
+import { getLewissFauxwoodPalladianCost } from "./getLewissFauxwoodPalladianCost";
 import { getLewissFauxwoodValanceCost } from "./getLewissFauxwoodValanceCost";
 
 export async function getLewissFauxwoodBlindCostAsync(
@@ -63,5 +65,25 @@ export async function getLewissFauxwoodBlindCostAsync(
   );
   if (typeof spacerBlockCost === "undefined") return 0;
 
-  return fabricCost + valanceCost + fasciaCost + spacerBlockCost;
+  const cutoutCost = getLewissFauxwoodCutOutCost(
+    cutOut,
+    accessoryPricingSchedule,
+  );
+  if (typeof cutoutCost === "undefined") return 0;
+
+  const palladianCost = getLewissFauxwoodPalladianCost(
+    width,
+    palladianShelf,
+    accessoryPricingSchedule,
+  );
+  if (typeof palladianCost === "undefined") return 0;
+
+  return (
+    fabricCost +
+    valanceCost +
+    fasciaCost +
+    spacerBlockCost +
+    cutoutCost +
+    palladianCost
+  );
 }
