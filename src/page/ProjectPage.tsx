@@ -91,7 +91,7 @@ function ProjectPage() {
     } catch (error: unknown) {
       if (error instanceof Error) SetFormError(error.message);
     } finally {
-      console.error(formError);
+      if (formError.length !== 0) console.error(formError);
       setIsFormSubmitting(false);
     }
   }

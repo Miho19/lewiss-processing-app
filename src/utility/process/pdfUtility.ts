@@ -20,6 +20,7 @@ import { createKineticsCellularPDF } from "../kinetics/cellular/process/createKi
 import { createKineticsRollerPDFAsync } from "../kinetics/roller/process/createKineticsRollerPDF";
 import { createKineticsMikronwoodPDFAsync } from "../kinetics/mikronwood/process/createKineticsMikronwoodPDF";
 import { createLewissAluminiumPDFAsync } from "../santaFe/venetian/aluminium/process/createLewissAluminiumPDF";
+import { createLewissFauxwoodPDFAsync } from "../santaFe/venetian/fauxwood/process/createLewissFauxwoodPDF";
 
 export function convertTableEntryToStringArray(tableEntry: TableEntry) {
   return Object.keys(tableEntry).map((column) => {
@@ -418,16 +419,8 @@ const blindTypeMappedToCreatePDFFunction: BlindTypeMappedToPDFCreateFunction = {
   "Kinetics Mikronwood 50mm Venetian": createKineticsMikronwoodPDFAsync,
   "Lewis's 25mm Aluminium Venetian": createLewissAluminiumPDFAsync,
   "Lewis's 50mm Aluminium Venetian": createLewissAluminiumPDFAsync,
-  "Lewis's 50mm Fauxwood Venetian": function (
-    worksheet: Worksheet,
-  ): Promise<TDocumentDefinitions | undefined> {
-    throw new Error("Function not implemented.");
-  },
-  "Lewis's 63mm Fauxwood Venetian": function (
-    worksheet: Worksheet,
-  ): Promise<TDocumentDefinitions | undefined> {
-    throw new Error("Function not implemented.");
-  },
+  "Lewis's 50mm Fauxwood Venetian": createLewissFauxwoodPDFAsync,
+  "Lewis's 63mm Fauxwood Venetian": createLewissFauxwoodPDFAsync,
   "Lewis's 50mm Phoenixwood Venetian": function (
     worksheet: Worksheet,
   ): Promise<TDocumentDefinitions | undefined> {
