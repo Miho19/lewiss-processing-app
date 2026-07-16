@@ -5,8 +5,9 @@ import {
   getAccessoryPricingScheduleAsync,
   getPricingScheduleAsync,
 } from "../../../../process/pricingScheduleUtility";
+import { getLewissFauxwoodSpacerBlockCost } from "./getLewisFauxwoodSpacerBlockCost";
 import { getLewissFauxwoodFabricCost } from "./getLewissFauxwoodFabricCost";
-import { getLewissFauxwoodFasciaCostAynsc } from "./getLewissFauxwoodFasciaCost";
+import { getLewissFauxwoodFasciaCost } from "./getLewissFauxwoodFasciaCost";
 import { getLewissFauxwoodValanceCost } from "./getLewissFauxwoodValanceCost";
 
 export async function getLewissFauxwoodBlindCostAsync(
@@ -18,7 +19,7 @@ export async function getLewissFauxwoodBlindCostAsync(
   valance: string,
   fascia: string,
   spacerBlock: boolean,
-  cutOut: string,
+  cutOut: boolean,
   palladianShelf: string,
   blindType: BlindType,
 ): Promise<number> {
@@ -48,7 +49,19 @@ export async function getLewissFauxwoodBlindCostAsync(
   );
   if (typeof valanceCost === "undefined") return 0;
 
-  const fasciaCost = getLewissFauxwoodFasciaCostAynsc(fascia, pricingSchedule);
+  const fasciaCost = getLewissFauxwoodFasciaCost(
+    width,
+    fascia,
+    pricingSchedule,
+  );
 
-  return fabricCost + valanceCost;
+  if (typeof fasciaCost === "undefined") return 0;
+
+  const spacerBlockCost = getLewissFauxwoodSpacerBlockCost(
+    spacerBlock,
+    accessoryPricingSchedule,
+  );
+  if (typeof spacerBlockCost === "undefined") return 0;
+
+  return fabricCost + valanceCost + fasciaCost + spacerBlockCost;
 }

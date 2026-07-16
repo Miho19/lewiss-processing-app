@@ -89,7 +89,7 @@ async function getNewEntry(
     valance,
     fascia,
     spec.spacerBlock ?? false,
-    cutOutString,
+    spec.cutout ?? false,
     palladianShelf,
     spec.baseType,
   );
