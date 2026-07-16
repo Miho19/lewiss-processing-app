@@ -4,7 +4,7 @@ export function getLewissFauxwoodValanceCost(
   valance: string,
   pricingSchedule: SantaFeAccessoriesPricingSchedule,
 ) {
-  if (!valance || valance.trim().length === 0) return 0;
+  if (!isValanceValid(valance)) return 0;
   if (!isValidValanceOption(valance, pricingSchedule)) return undefined;
 
   const valanceCost = pricingSchedule.valance.base;
@@ -16,5 +16,10 @@ function isValidValanceOption(
   valance: string,
   pricingSchedule: SantaFeAccessoriesPricingSchedule,
 ): boolean {
+  return true;
+}
+
+function isValanceValid(valance: string): boolean {
+  if (!valance || valance.trim().length === 0) return false;
   return true;
 }
