@@ -1,0 +1,70 @@
+name: Lewis's Processing Application Deployment
+
+on:
+  push:
+    branches: [main]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{github.repository}}
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: type checking
+        run: npx tsc --noEmit
+
+      - name: unit tests
+        run: npx vitest run
+
+      - name: build
+        run: npm run build
+
+  docker-build-deploy-to-azure:
+    needs: test-and-build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Container Registry Login
+        uses: docker/login-action@v4
+        with:
+          registry: ${{env.REGISTRY}}
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Metadata
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{env.REGISTRY}}/${{env.IMAGE_NAME}}
+          tags: |
+            type=raw,value=latest
+            type=sha,format=short
+
+      - name: Build and Push
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: true
+          tags: ${{steps.meta.outputs.tags}}
+          labels: ${{steps.meta.outputs.labels}}
