@@ -1,7 +1,11 @@
 import { isLewissFauxwoodVenetianPricingSchedule } from "../../../../../type/pricing/santaFe/lewissFauxwoodVenetianPricingScheduleType";
+import { isSantaFeAccessoryPricingSchedule } from "../../../../../type/pricing/santaFe/santaFeAccessoriesPricingScheduleType";
 import type { BlindType } from "../../../../../type/process/productType";
-import { getPricingScheduleAsync } from "../../../../process/pricingScheduleUtility";
-import { getLewissFauxwoodFabricCostAsync } from "./getLewissFauxwoodFabricCost";
+import {
+  getAccessoryPricingScheduleAsync,
+  getPricingScheduleAsync,
+} from "../../../../process/pricingScheduleUtility";
+import { getLewissFauxwoodFabricCost } from "./getLewissFauxwoodFabricCost";
 import { getLewissFauxwoodFasciaCostAynsc } from "./getLewissFauxwoodFasciaCost";
 import { getLewissFauxwoodValanceCost } from "./getLewissFauxwoodValanceCost";
 
@@ -22,7 +26,7 @@ export async function getLewissFauxwoodBlindCostAsync(
   if (typeof pricingSchedule === "undefined") return 0;
   if (!isLewissFauxwoodVenetianPricingSchedule(pricingSchedule)) return 0;
 
-  const fabricCost = getLewissFauxwoodFabricCostAsync(
+  const fabricCost = getLewissFauxwoodFabricCost(
     width,
     height,
     slatSize,
@@ -32,10 +36,19 @@ export async function getLewissFauxwoodBlindCostAsync(
   );
   if (typeof fabricCost === "undefined") return 0;
 
-  const valanceCost = getLewissFauxwoodValanceCost(valance, pricingSchedule);
+  const accessoryPricingSchedule =
+    await getAccessoryPricingScheduleAsync(blindType);
+  if (typeof accessoryPricingSchedule === "undefined") return 0;
+
+  if (!isSantaFeAccessoryPricingSchedule(accessoryPricingSchedule)) return 0;
+
+  const valanceCost = getLewissFauxwoodValanceCost(
+    valance,
+    accessoryPricingSchedule,
+  );
   if (typeof valanceCost === "undefined") return 0;
 
   const fasciaCost = getLewissFauxwoodFasciaCostAynsc(fascia, pricingSchedule);
 
-  return 0;
+  return fabricCost + valanceCost;
 }

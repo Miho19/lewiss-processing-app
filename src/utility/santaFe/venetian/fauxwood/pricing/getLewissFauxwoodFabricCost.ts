@@ -1,14 +1,14 @@
 import type { LewissFauxwoodVenetianPricingSchedule } from "../../../../../type/pricing/santaFe/lewissFauxwoodVenetianPricingScheduleType";
 import { roundMeasurementUp } from "../../../../process/measurementUtility";
 
-export async function getLewissFauxwoodFabricCostAsync(
+export function getLewissFauxwoodFabricCost(
   width: number,
   height: number,
   slatSize: number,
   fabricMultiplier: number,
   control: string,
   pricingSchedule: LewissFauxwoodVenetianPricingSchedule,
-): Promise<number | undefined> {
+): number | undefined {
   if (width <= 0 || height <= 0 || fabricMultiplier <= 0 || slatSize <= 0)
     return undefined;
 
