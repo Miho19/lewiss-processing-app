@@ -11,11 +11,21 @@ export function getLewissPhoenixwoodControlString(spec: VenetianSpec) {
 
 export function getLewissPhoenixwoodValanceString(spec: VenetianSpec) {
   const { valanceCatenary, valanceModern, valanceRamp } = spec;
-  if (valanceCatenary != null) return `83 Designer Crown`;
+  if (valanceCatenary != null) return `63 Catenary`;
 
-  if (valanceModern != null) return `63 Modern Curve`;
+  if (valanceModern != null) return `89mm Contempo`;
 
   if (valanceRamp != null) return `63 Ramp`;
 
   return undefined;
 }
+
+/**
+ * valance options
+ * 63.5mm Catenary
+ * 63.5mm Ramp
+ * 89mm Contempo
+ * 76mm Ramp
+ * 76mm Chamfer
+ * need to update the proposal side of things
+ */

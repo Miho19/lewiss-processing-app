@@ -16,7 +16,7 @@ type Control = {
 type ControlBase = {
   cord: ControlCostBase;
   cordless: ControlCostBase;
-  cordloop: ControlBase;
+  cordloop: ControlCostBase;
 };
 
 type ControlCostBase = {

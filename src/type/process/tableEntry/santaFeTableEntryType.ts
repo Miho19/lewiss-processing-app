@@ -31,4 +31,21 @@ export type LewissFauxwoodTableEntry = {
   price: string;
 };
 
-export type LewissPhoenixwoodTableEntry = {};
+export type LewissPhoenixwoodTableEntry = {
+  "blind index": number;
+  location: string;
+  width: number;
+  height: number;
+  fit: string;
+  fabric: string;
+  control: string;
+  "control side": string;
+  "tilt side": string;
+  valance: string;
+  fascia: string;
+  "Spacer Block": string;
+  "cut out": string;
+  "palladian shelf": string;
+  butting: string;
+  price: string;
+};
