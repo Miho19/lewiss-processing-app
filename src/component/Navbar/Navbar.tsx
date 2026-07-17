@@ -5,13 +5,18 @@ function Navbar() {
   return (
     <header className="w-full h-16 fixed top-0 z-40   bg-white/20 backdrop-blur-md">
       <nav className="flex w-full h-full items-center justify-between shadow-md px-6 py-3">
-        <div className="flex flex-1">
-          <img
-            src={lewissLogo}
-            alt="Lewis's Home Fabrics"
-            className="w-24 h-full invert"
-          />
-        </div>
+        <h1 className="flex flex-1">
+          <Link
+            to="/"
+            className="hover:scale-105 transition-all duration-100 ease-in-out"
+          >
+            <img
+              src={lewissLogo}
+              alt="Lewis's Home Fabrics"
+              className="w-24 h-full invert"
+            />
+          </Link>
+        </h1>
         <div className="flex space-x-6">
           <Link
             to="/"
