@@ -18,11 +18,11 @@ export function TreatmentLewissFauxwood(props: Props) {
   const slatSize = getLewissFauxwoodSlatSize(spec);
   const control = getLewissFauxwoodControlString(spec);
 
-  const spacerBlockString = spec.spacerBlock ? "Yes" : "No";
+  const spacerBlock = spec.spacerBlock ? "Yes" : "No";
 
-  const valanceString = getLewissFauxwoodValanceString(spec) ?? `None`;
+  const valance = getLewissFauxwoodValanceString(spec) ?? `None`;
 
-  const cutOutString = spec.cutout ? "Yes" : "No";
+  const cutOut = spec.cutout ? "Yes" : "No";
 
   return (
     <div className="grid grid-cols-[160px_1fr] gap-x-4 gap-y-4 align-middle overflow-hidden">
@@ -36,13 +36,13 @@ export function TreatmentLewissFauxwood(props: Props) {
       <span className="">{control}</span>
 
       <span className="text-sm text-gray-500">Spacer Block</span>
-      <span className="">{spacerBlockString}</span>
+      <span className="">{spacerBlock}</span>
 
       <span className="text-sm text-gray-500">Valance</span>
-      <span className="">{valanceString}</span>
+      <span className="">{valance}</span>
 
       <span className="text-sm text-gray-500">Cut out</span>
-      <span className="">{cutOutString}</span>
+      <span className="">{cutOut}</span>
     </div>
   );
 }
