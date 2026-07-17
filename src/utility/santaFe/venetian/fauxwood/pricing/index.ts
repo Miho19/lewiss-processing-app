@@ -4,3 +4,4 @@ export * from "./getLewissFauxwoodFabricCost";
 export * from "./getLewissFauxwoodFasciaCost";
 export * from "./getLewissFauxwoodValanceCost";
 export * from "./getLewissFauxwoodCutOutCost";
+export * from "./getLewissFauxwoodAdditionalProductList";

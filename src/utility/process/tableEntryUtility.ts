@@ -8,6 +8,8 @@ import { getKineticsCellularAdditionalProductListAsync } from "../kinetics/cellu
 import { getKineticsMikronwoodAdditionalProductListAsync } from "../kinetics/mikronwood/pricing";
 import { getKineticsRollerAdditionalProductListAsync } from "../kinetics/roller/pricing";
 import { getLewissAluminiumAdditionalProductListAsync } from "../santaFe/venetian/aluminium/pricing/getLewissAluminiumAdditionalProductList";
+import { getLewissFauxwoodAdditionalProductListAsync } from "../santaFe/venetian/fauxwood/pricing";
+import { getLewissPhoenixwoodAdditionalProductListAsync } from "../santaFe/venetian/phoenixwood/pricing";
 
 const GST = 0.15;
 
@@ -86,6 +88,18 @@ async function getAdditionalProductArray(
     case "Lewis's 25mm Aluminium Venetian":
     case "Lewis's 50mm Aluminium Venetian":
       return await getLewissAluminiumAdditionalProductListAsync(
+        tableEntryList,
+        blindType,
+      );
+    case "Lewis's 50mm Fauxwood Venetian":
+    case "Lewis's 63mm Fauxwood Venetian":
+      return await getLewissFauxwoodAdditionalProductListAsync(
+        tableEntryList,
+        blindType,
+      );
+    case "Lewis's 50mm Phoenixwood Venetian":
+    case "Lewis's 63mm Phoenixwood Venetian":
+      return await getLewissPhoenixwoodAdditionalProductListAsync(
         tableEntryList,
         blindType,
       );

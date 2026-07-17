@@ -8,7 +8,7 @@ import type { SharePointProjectFile } from "../../../../../type/sharePoint/proje
 import { getWorksheetCostAsync } from "../../../../process/tableEntryUtility";
 import { generateLewissPhoenixwoodTableEntryListAsync } from "./lewissPhoenixwoodTableEntry";
 
-export async function createLewissPhoenixwoodWorksheetAsyncblindType(
+export async function createLewissPhoenixwoodWorksheetAsync(
   blindType: BlindType,
   windowSelectDetailedList: WindowSelectDetailed[],
   projectFile: SharePointProjectFile,

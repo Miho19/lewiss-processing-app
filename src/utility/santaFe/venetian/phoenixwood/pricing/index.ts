@@ -5,3 +5,4 @@ export * from "./getLewissPhoenixwoodFasciaCost";
 export * from "./getLewissPhoenixwoodPalladianCost";
 export * from "./getLewissPhoenixwoodSpacerBlockCost";
 export * from "./getLewissPhoenixwoodValanceCost";
+export * from "./getLewissPhoenixwoodAdditionalProductList";
