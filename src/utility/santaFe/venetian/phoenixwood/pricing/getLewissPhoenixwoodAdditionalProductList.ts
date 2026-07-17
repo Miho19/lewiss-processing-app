@@ -62,7 +62,7 @@ function getPremiumColourSurcharge(
   }
 
   const newAdditionalProduct: AdditionalProduct = {
-    name: name,
+    name: "Premium Colour",
     cost: cost,
     quantity: numberOfPremiumColour,
   };
