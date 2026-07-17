@@ -67,18 +67,18 @@ export async function POSTSharePointHistoryFile({
   }
 }
 
-// currently /joshua april/exampleFileStructure/History/
+// currently root/history/process orders/
 const blindTypeMappedToSharePointConfirmedFolder: BlindTypeMappedToString = {
-  "Kinetics Sunscreen Roller Blind": "01VFVMOADT7SXX4FMGQ5AIUCBIC7TN7DMM",
-  "Kinetics Blockout Roller Blind": "01VFVMOADT7SXX4FMGQ5AIUCBIC7TN7DMM",
-  "Kinetics Light Filtering Roller Blind": "01VFVMOADT7SXX4FMGQ5AIUCBIC7TN7DMM",
-  "Kinetics 10mm Cellular Blind": "01VFVMOADT7SXX4FMGQ5AIUCBIC7TN7DMM",
-  "Kinetics 20mm Cellular Blind": "01VFVMOADT7SXX4FMGQ5AIUCBIC7TN7DMM",
-  "Kinetics Mikronwood 50mm Venetian": "01VFVMOADT7SXX4FMGQ5AIUCBIC7TN7DMM",
-  "Lewis's 25mm Aluminium Venetian": "01VFVMOADT7SXX4FMGQ5AIUCBIC7TN7DMM",
-  "Lewis's 50mm Aluminium Venetian": "01VFVMOADT7SXX4FMGQ5AIUCBIC7TN7DMM",
-  "Lewis's 50mm Fauxwood Venetian": "01VFVMOADT7SXX4FMGQ5AIUCBIC7TN7DMM",
-  "Lewis's 63mm Fauxwood Venetian": "01VFVMOADT7SXX4FMGQ5AIUCBIC7TN7DMM",
-  "Lewis's 50mm Phoenixwood Venetian": "01VFVMOADT7SXX4FMGQ5AIUCBIC7TN7DMM",
-  "Lewis's 63mm Phoenixwood Venetian": "01VFVMOADT7SXX4FMGQ5AIUCBIC7TN7DMM",
+  "Kinetics Sunscreen Roller Blind": "01VFVMOABI7QI3JZ3NQZBZF7PVNERWE6G4",
+  "Kinetics Blockout Roller Blind": "01VFVMOABI7QI3JZ3NQZBZF7PVNERWE6G4",
+  "Kinetics Light Filtering Roller Blind": "01VFVMOABI7QI3JZ3NQZBZF7PVNERWE6G4",
+  "Kinetics 10mm Cellular Blind": "01VFVMOABI7QI3JZ3NQZBZF7PVNERWE6G4",
+  "Kinetics 20mm Cellular Blind": "01VFVMOABI7QI3JZ3NQZBZF7PVNERWE6G4",
+  "Kinetics Mikronwood 50mm Venetian": "01VFVMOABI7QI3JZ3NQZBZF7PVNERWE6G4",
+  "Lewis's 25mm Aluminium Venetian": "01VFVMOABI7QI3JZ3NQZBZF7PVNERWE6G4",
+  "Lewis's 50mm Aluminium Venetian": "01VFVMOABI7QI3JZ3NQZBZF7PVNERWE6G4",
+  "Lewis's 50mm Fauxwood Venetian": "01VFVMOABI7QI3JZ3NQZBZF7PVNERWE6G4",
+  "Lewis's 63mm Fauxwood Venetian": "01VFVMOABI7QI3JZ3NQZBZF7PVNERWE6G4",
+  "Lewis's 50mm Phoenixwood Venetian": "01VFVMOABI7QI3JZ3NQZBZF7PVNERWE6G4",
+  "Lewis's 63mm Phoenixwood Venetian": "01VFVMOABI7QI3JZ3NQZBZF7PVNERWE6G4",
 };

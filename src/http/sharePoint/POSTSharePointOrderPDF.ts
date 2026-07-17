@@ -66,20 +66,23 @@ export async function POSTSharePointOrderPDF({
   }
 }
 
-// currently /joshua april/exampleFileStructure/History/
+/**
+ * root/confirmed orders/
+ */
+
 const blindTypeMappedToSharePointConfirmedFolder: BlindTypeMappedToString = {
-  "Kinetics Sunscreen Roller Blind": "01VFVMOACOU2OWM2TEQ5GJ4WTVPHIWJTLT",
-  "Kinetics Blockout Roller Blind": "01VFVMOACOU2OWM2TEQ5GJ4WTVPHIWJTLT",
-  "Kinetics Light Filtering Roller Blind": "01VFVMOACOU2OWM2TEQ5GJ4WTVPHIWJTLT",
-  "Kinetics 10mm Cellular Blind": "01VFVMOACOU2OWM2TEQ5GJ4WTVPHIWJTLT",
-  "Kinetics 20mm Cellular Blind": "01VFVMOACOU2OWM2TEQ5GJ4WTVPHIWJTLT",
-  "Kinetics Mikronwood 50mm Venetian": "01VFVMOACOU2OWM2TEQ5GJ4WTVPHIWJTLT",
-  "Lewis's 25mm Aluminium Venetian": "01VFVMOAGRRUS4C6EWZRFJBJXQFTAYSTRG",
-  "Lewis's 50mm Aluminium Venetian": "01VFVMOAGRRUS4C6EWZRFJBJXQFTAYSTRG",
-  "Lewis's 50mm Fauxwood Venetian": "01VFVMOAGRRUS4C6EWZRFJBJXQFTAYSTRG",
-  "Lewis's 63mm Fauxwood Venetian": "01VFVMOAGRRUS4C6EWZRFJBJXQFTAYSTRG",
-  "Lewis's 50mm Phoenixwood Venetian": "01VFVMOAGRRUS4C6EWZRFJBJXQFTAYSTRG",
-  "Lewis's 63mm Phoenixwood Venetian": "01VFVMOAGRRUS4C6EWZRFJBJXQFTAYSTRG",
+  "Kinetics Sunscreen Roller Blind": "01VFVMOAEPH2B72PIHJNBYWJDJZL2ZZQIW",
+  "Kinetics Blockout Roller Blind": "01VFVMOAEPH2B72PIHJNBYWJDJZL2ZZQIW",
+  "Kinetics Light Filtering Roller Blind": "01VFVMOAEPH2B72PIHJNBYWJDJZL2ZZQIW",
+  "Kinetics 10mm Cellular Blind": "01VFVMOAEPH2B72PIHJNBYWJDJZL2ZZQIW",
+  "Kinetics 20mm Cellular Blind": "01VFVMOAEPH2B72PIHJNBYWJDJZL2ZZQIW",
+  "Kinetics Mikronwood 50mm Venetian": "01VFVMOAEPH2B72PIHJNBYWJDJZL2ZZQIW",
+  "Lewis's 25mm Aluminium Venetian": "01VFVMOAEPH2B72PIHJNBYWJDJZL2ZZQIW",
+  "Lewis's 50mm Aluminium Venetian": "01VFVMOAEPH2B72PIHJNBYWJDJZL2ZZQIW",
+  "Lewis's 50mm Fauxwood Venetian": "01VFVMOAEPH2B72PIHJNBYWJDJZL2ZZQIW",
+  "Lewis's 63mm Fauxwood Venetian": "01VFVMOAEPH2B72PIHJNBYWJDJZL2ZZQIW",
+  "Lewis's 50mm Phoenixwood Venetian": "01VFVMOAEPH2B72PIHJNBYWJDJZL2ZZQIW",
+  "Lewis's 63mm Phoenixwood Venetian": "01VFVMOAEPH2B72PIHJNBYWJDJZL2ZZQIW",
 };
 
 // 01VFVMOACOU2OWM2TEQ5GJ4WTVPHIWJTLT confirmed/kinetics
