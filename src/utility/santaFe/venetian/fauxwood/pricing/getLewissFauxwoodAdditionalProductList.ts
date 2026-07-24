@@ -3,8 +3,8 @@ import type { TableEntry } from "../../../../../type/process/tableEntry/tableEnt
 import type { AdditionalProduct } from "../../../../../type/process/worksheetType";
 
 export async function getLewissFauxwoodAdditionalProductListAsync(
-  tableEntryList: TableEntry[],
-  blindType: BlindType,
+  _tableEntryList: TableEntry[],
+  _blindType: BlindType,
 ): Promise<AdditionalProduct[]> {
   return [];
 }

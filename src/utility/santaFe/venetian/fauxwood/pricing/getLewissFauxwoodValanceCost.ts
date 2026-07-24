@@ -13,8 +13,8 @@ export function getLewissFauxwoodValanceCost(
 
 // for future development, currently the pricing schedule does not include the valid valance options
 function isValidValanceOption(
-  valance: string,
-  pricingSchedule: SantaFeAccessoriesPricingSchedule,
+  _valance: string,
+  _pricingSchedule: SantaFeAccessoriesPricingSchedule,
 ): boolean {
   return true;
 }

@@ -1,7 +1,5 @@
-import type { KineticsCellularPricingSchedule } from "../pricing/kinetics/kineticsCellularPricingScheduleType";
-import type { KineticsMikronwoodPricingSchedule } from "../pricing/kinetics/kineticsMikronwoodPricingScheduleType";
+import type { KineticsPricingSchedule } from "../pricing/kinetics";
 import type { KineticsAccessoryPricingSchedule } from "../pricing/kinetics/kineticsMotorAccessoryPricingScheduleType";
-import type { KineticsRollerPricingSchedule } from "../pricing/kinetics/kineticsRollerPricingScheduleType";
 import type { LewissAluminiumVenetianPricingSchedule } from "../pricing/santaFe/lewissAluminiumVenetianPricingScheduleType";
 import type { LewissFauxwoodVenetianPricingSchedule } from "../pricing/santaFe/lewissFauxwoodVenetianPricingScheduleType";
 import type { LewissPhoenixwoodVenetianPricingSchedule } from "../pricing/santaFe/lewissPhoenixwoodVenetianPricingScheduleType";
@@ -9,9 +7,7 @@ import type { SantaFeAccessoriesPricingSchedule } from "../pricing/santaFe/santa
 import type { BlindType } from "./productType";
 
 export type PricingSchedule =
-  | KineticsCellularPricingSchedule
-  | KineticsRollerPricingSchedule
-  | KineticsMikronwoodPricingSchedule
+  | KineticsPricingSchedule
   | LewissAluminiumVenetianPricingSchedule
   | LewissFauxwoodVenetianPricingSchedule
   | LewissPhoenixwoodVenetianPricingSchedule;

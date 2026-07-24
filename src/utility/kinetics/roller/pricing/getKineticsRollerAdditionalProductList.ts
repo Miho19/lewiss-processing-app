@@ -1,4 +1,5 @@
 import type { BlindType } from "../../../../type/process/productType";
+import { isKineticsTableEntryList } from "../../../../type/process/tableEntry/kineticsTableEntryType";
 import type { TableEntry } from "../../../../type/process/tableEntry/tableEntryType";
 import type { AdditionalProduct } from "../../../../type/process/worksheetType";
 import { getKineticsAccessoryProductListAsync } from "../../general/getAccessoryProductListAsync";
@@ -8,6 +9,7 @@ export async function getKineticsRollerAdditionalProductListAsync(
   tableEntryList: TableEntry[],
   blindType: BlindType,
 ): Promise<AdditionalProduct[]> {
+  if (!isKineticsTableEntryList(tableEntryList)) return [];
   const motorAdditionalProductList: AdditionalProduct[] =
     await getMotorAdditionalProductListAsync(tableEntryList, blindType);
 

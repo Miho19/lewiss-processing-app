@@ -1,7 +1,4 @@
-import {
-  isKineticsCellularPricingSchedule,
-  type KineticsCellularPricingSchedule,
-} from "../../../../type/pricing/kinetics/kineticsCellularPricingScheduleType";
+import { isKineticsCellularPricingSchedule } from "../../../../type/pricing/kinetics/kineticsCellularPricingScheduleType";
 import type { BlindType } from "../../../../type/process/productType";
 import { getPricingScheduleAsync } from "../../../process/pricingScheduleUtility";
 import {

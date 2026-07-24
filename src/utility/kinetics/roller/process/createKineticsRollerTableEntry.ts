@@ -4,10 +4,7 @@ import type {
   Room,
   SharePointProjectFile,
 } from "../../../../type/sharePoint/project/projectFileType";
-import {
-  isKineticsRollerSpec,
-  type KineticsRollerSpec,
-} from "../../../../type/sharePoint/project/spec/kineticsSpec";
+import { isKineticsRollerSpec } from "../../../../type/sharePoint/project/spec/kineticsSpec";
 import type { WindowMeasurement } from "../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
 import { getCurrentTableEntryIndex } from "../../../process/tableEntryUtility";
 import { getRoomAndWindowMeasurement } from "../../../sharePoint/projectFileUtility";

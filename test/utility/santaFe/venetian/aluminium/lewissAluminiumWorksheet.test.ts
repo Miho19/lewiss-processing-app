@@ -2,9 +2,15 @@ import { describe, expect, it } from "vitest";
 
 import { getWorksheetCostAsync } from "../../../../../src/utility/process/tableEntryUtility";
 import { LewissAluminiumTableEntry } from "../../../../../src/type/process/tableEntry/santaFeTableEntryType";
+import { getWindowSelectDetailedListWithProjectFile } from "../../../util";
 
 describe("Lewis's Aluminium Worksheet", () => {
   describe("getWorksheetCostAsync", () => {
+    const { projectFile, windowSelectDetailedList } =
+      getWindowSelectDetailedListWithProjectFile(
+        "Lewis's 25mm Aluminium Venetian",
+      );
+
     it("should return a worksheet cost object", async () => {
       const entryList: LewissAluminiumTableEntry[] = [
         {
@@ -37,6 +43,7 @@ describe("Lewis's Aluminium Worksheet", () => {
       const worksheetCost = await getWorksheetCostAsync(
         entryList,
         "Lewis's 25mm Aluminium Venetian",
+        projectFile,
       );
 
       expect(worksheetCost).toBeDefined();

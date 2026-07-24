@@ -1,3 +1,4 @@
+import { isKineticsPricingSchedule } from "../../../type/pricing/kinetics";
 import type { BlindType } from "../../../type/process/productType";
 import type { TableEntry } from "../../../type/process/tableEntry/tableEntryType";
 import type { AdditionalProduct } from "../../../type/process/worksheetType";
@@ -11,6 +12,7 @@ export async function getMotorAdditionalProductListAsync(
 
   const pricingSchedule = await getPricingScheduleAsync(blindType);
   if (typeof pricingSchedule === "undefined") return [];
+  if (!isKineticsPricingSchedule(pricingSchedule)) return [];
 
   const motorisationObject = pricingSchedule.control.motorisation;
 

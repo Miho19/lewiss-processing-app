@@ -1,14 +1,9 @@
 import type { BlindType, ProductId } from "./productType";
 import type { WindowSelectDetailed } from "./windowSelectType";
 import type { SharePointProjectFile } from "../sharePoint/project/projectFileType";
-import type {
-  CustomerInformation,
-  Worksheet,
-  WorksheetCost,
-} from "./worksheetType";
+import type { Worksheet } from "./worksheetType";
 import type { KineticsRollerBlind } from "./product/kineticsType";
 import type { TDocumentDefinitions } from "pdfmake/interfaces";
-import type { TableEntry } from "./tableEntry/tableEntryType";
 
 export type BlindTypeMappedToWindowSelectDetailed = Record<
   BlindType,

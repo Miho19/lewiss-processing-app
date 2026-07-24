@@ -118,27 +118,27 @@ export type OutsideLayer = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-type FaceFabricType = {
-  d: string;
-  s: string;
-  sd: string;
-  w: number;
-  r: number;
-  hr: number;
-  p: number;
-  of: string;
-  cn: string | null;
-  co: string;
-  fi: string | null;
-  or: string;
-  cl: string;
-  c: string;
-  st: string | null;
-  lb: string;
-  lr: string;
-  et: string;
-  cf: number;
-  ro: string;
-  wa: string | null;
-  bw: string;
-};
+// type FaceFabricType = {
+//   d: string;
+//   s: string;
+//   sd: string;
+//   w: number;
+//   r: number;
+//   hr: number;
+//   p: number;
+//   of: string;
+//   cn: string | null;
+//   co: string;
+//   fi: string | null;
+//   or: string;
+//   cl: string;
+//   c: string;
+//   st: string | null;
+//   lb: string;
+//   lr: string;
+//   et: string;
+//   cf: number;
+//   ro: string;
+//   wa: string | null;
+//   bw: string;
+// };

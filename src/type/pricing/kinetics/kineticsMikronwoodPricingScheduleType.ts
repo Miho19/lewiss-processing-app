@@ -31,7 +31,7 @@ type FabricCost = {
   data: number[][];
 };
 
-export function isKineiicsMikronwoodPricingSchedule(
+export function isKineticsMikronwoodPricingSchedule(
   pricingSchedule: PricingSchedule,
 ): pricingSchedule is KineticsMikronwoodPricingSchedule {
   if (typeof pricingSchedule === "undefined") return false;

@@ -1,4 +1,4 @@
-import { isKineiicsMikronwoodPricingSchedule } from "../../../../type/pricing/kinetics/kineticsMikronwoodPricingScheduleType";
+import { isKineticsMikronwoodPricingSchedule } from "../../../../type/pricing/kinetics/kineticsMikronwoodPricingScheduleType";
 import type { BlindType } from "../../../../type/process/productType";
 import { getPricingScheduleAsync } from "../../../process/pricingScheduleUtility";
 import {
@@ -21,7 +21,7 @@ export async function getKineticsMikronwoodBlindCostAsync(
   const pricingSchedule = await getPricingScheduleAsync(blindType);
 
   if (typeof pricingSchedule === "undefined") return 0;
-  if (!isKineiicsMikronwoodPricingSchedule(pricingSchedule)) return 0;
+  if (!isKineticsMikronwoodPricingSchedule(pricingSchedule)) return 0;
 
   const fabricCost = getKineticsMikronwoodFabricCost(
     width,

@@ -1,5 +1,26 @@
 import type { TableEntry } from "./tableEntryType";
 
+export type KineticsTableEntry =
+  | KineticsRollerTableEntry
+  | KineticsCellularTableEntry
+  | KineticsMikronwoodTableEntry;
+
+export function isKineticsTableEntryList(
+  tableEntryList: TableEntry[],
+): tableEntryList is KineticsTableEntry[] {
+  return tableEntryList.every((e) => isKineticsTableEntry(e));
+}
+
+export function isKineticsTableEntry(
+  tableEntry: TableEntry,
+): tableEntry is KineticsTableEntry {
+  return (
+    isKineticsCellularTableEntry(tableEntry) ||
+    isKineticsRollerTableEntry(tableEntry) ||
+    isKineticsMikronwoodTableEntry(tableEntry)
+  );
+}
+
 export type RemoteChannel = {
   remote: number;
   channel: number;

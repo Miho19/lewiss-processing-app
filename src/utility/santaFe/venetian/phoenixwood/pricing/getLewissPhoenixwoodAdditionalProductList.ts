@@ -50,14 +50,11 @@ function getPremiumColourSurcharge(
 
   const { over10, under10 } = pricingSchedule.phoenixwoodColourSurcharge;
 
-  let name = "";
   let cost = 0;
 
   if (numberOfPremiumColour >= 10) {
-    name = over10.name;
     cost = over10.base;
   } else {
-    name = under10.name;
     cost = under10.base;
   }
 
