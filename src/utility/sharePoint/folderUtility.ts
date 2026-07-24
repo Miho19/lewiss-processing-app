@@ -1,6 +1,35 @@
 import type { SharePointFolderListItem } from "../../type/sharePoint/folder/folderType";
 import type { SharePointProjectFileName } from "../../type/sharePoint/project/projectFileType";
 
+type SortByLastModifiedOptions = {
+  ascending?: boolean;
+};
+
+const SortByLastModifiedOptionsDefault: Required<SortByLastModifiedOptions> = {
+  ascending: false,
+};
+
+export function sortByLastModified(
+  folderItemList: SharePointFolderListItem[],
+  options?: SortByLastModifiedOptions,
+) {
+  const finalOptions = { ...SortByLastModifiedOptionsDefault, options };
+
+  const sortedArray = folderItemList.toSorted((a, b) => {
+    if (finalOptions.ascending) {
+      return (
+        new Date(a.lastModified).getTime() - new Date(b.lastModified).getTime()
+      );
+    }
+
+    return (
+      new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime()
+    );
+  });
+
+  return sortedArray;
+}
+
 export function filterFolderItemList(
   folderItemList: SharePointFolderListItem[],
 ): SharePointFolderListItem[] {

@@ -1,6 +1,9 @@
 import useSharePointFolderQuery from "../../hook/useSharePointFolderQuery";
 import type { ConsultantFolder } from "../../type/sharePoint/consultant/consultantType";
-import { filterFolderItemList } from "../../utility/sharePoint/folderUtility";
+import {
+  filterFolderItemList,
+  sortByLastModified,
+} from "../../utility/sharePoint/folderUtility";
 import Loading from "../Loading/Loading";
 import ConsultantCardFileListElement from "./ConsultantCardFileListElement";
 
@@ -37,9 +40,10 @@ function ConsultantCardFileList(props: Props) {
       </div>
     );
 
-  const filteredForJSONProjectFilesList = filterFolderItemList(fileList);
+  const filteredFiles = filterFolderItemList(fileList);
+  const sortedFiles = sortByLastModified(filteredFiles);
 
-  const fileListElements = filteredForJSONProjectFilesList.map((file) => (
+  const fileListElements = sortedFiles.map((file) => (
     <ConsultantCardFileListElement file={file} key={file.id} />
   ));
 
