@@ -1,7 +1,4 @@
-import {
-  isKineticsCellularSpec,
-  type KineticsCellularSpec,
-} from "../../../../../../type/sharePoint/project/spec/kineticsSpec";
+import { isKineticsCellularSpec } from "../../../../../../type/sharePoint/project/spec/kineticsSpec";
 import type { Spec } from "../../../../../../type/sharePoint/project/spec/spec";
 import {
   getKineticsCellularControlString,

@@ -12,6 +12,7 @@ import {
   type KineticsCellularSpec,
 } from "../../../../type/sharePoint/project/spec/kineticsSpec";
 import type { WindowMeasurement } from "../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
+import { capitalisedString } from "../../../general/Capitalised";
 import { getCurrentTableEntryIndex } from "../../../process/tableEntryUtility";
 import { getRoomAndWindowMeasurement } from "../../../sharePoint/projectFileUtility";
 import { getRemoteAndChannel } from "../../general/motorAccessoryUtility";
@@ -49,26 +50,22 @@ async function getNewEntryKineticsCellularBlindAsync(
   const width = windowSelectDetailed.width[0];
   const height = windowSelectDetailed.height;
 
-  const fit =
-    windowSelectDetailed.fit.charAt(0).toUpperCase() +
-    windowSelectDetailed.fit.slice(1);
+  const fit = windowSelectDetailed.fit;
+
+  const fitAdjusted = capitalisedString(fit) || "Error";
 
   const combSize = getCombSize(windowSelectDetailed);
 
   const fabric = windowSelectDetailed.treatment.spec.fabric?.name ?? "";
 
-  const control = getKineticsCellularControlString(
-    windowSelectDetailed.treatment.spec as KineticsCellularSpec,
-  );
+  const control = getKineticsCellularControlString(spec);
 
-  const controlSide = projectWindow.controlSide;
+  const controlSide = projectWindow.controlSide || spec.controlSide;
 
   // hardcoded until we fix headrail colour issues from pricing
   const headrailColour = "White";
 
-  const sideChannelColour = getKineticsCellularSideChannelColour(
-    windowSelectDetailed.treatment.spec as KineticsCellularSpec,
-  );
+  const sideChannelColour = getKineticsCellularSideChannelColour(spec);
 
   const { remote, channel } = getRemoteAndChannel(location, control, entries);
 
@@ -78,9 +75,7 @@ async function getNewEntryKineticsCellularBlindAsync(
     "LHS",
   );
 
-  const opacity = getKineticsCellularFabricOpacity(
-    windowSelectDetailed.treatment.spec as KineticsCellularSpec,
-  );
+  const opacity = getKineticsCellularFabricOpacity(spec);
 
   const blindType = spec.blindType;
 
@@ -100,7 +95,7 @@ async function getNewEntryKineticsCellularBlindAsync(
     location: location,
     width: width,
     height: height,
-    fit: fit,
+    fit: fitAdjusted,
     "comb size": combSize,
     fabric: fabric,
     control: control,

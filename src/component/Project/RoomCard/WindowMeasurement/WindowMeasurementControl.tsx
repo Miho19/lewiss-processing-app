@@ -6,6 +6,9 @@ type Props = {
 
 function WindowMeasurementControl(props: Props) {
   const { windowMeasurement } = props;
+
+  if (windowMeasurement.controlSide.length === 0) return <></>;
+
   return (
     <>
       <p className="text-gray-500 text-xs">Control</p>

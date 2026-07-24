@@ -16,7 +16,7 @@ import RoomCardList from "../component/Project/RoomCard/RoomCardList";
 
 import { getWindowSelectList } from "../utility/sharePoint/projectFileUtility";
 import { getWorksheetPDFAsync } from "../utility/process/pdfUtility";
-import SubmitButton from "../component/Project/form/SubmitButton";
+import SubmitButton from "../component/Project/Form/SubmitButton";
 
 export type CheckboxFormData = {
   windowId: string;
@@ -96,7 +96,7 @@ function ProjectPage() {
     }
   }
 
-  function onChangeHandlerCheckBox(formData: CheckboxFormData) {
+  function onChangeHandlerCheckBoxWindow(formData: CheckboxFormData) {
     setFormData((prev) =>
       prev.map((window) => {
         if (
@@ -125,7 +125,7 @@ function ProjectPage() {
 
         <RoomCardList
           roomList={sharePointProjectFile.project.rooms}
-          onChangeHandlerCheckBox={onChangeHandlerCheckBox}
+          onChangeHandlerCheckBox={onChangeHandlerCheckBoxWindow}
           formData={formData}
         />
       </form>
