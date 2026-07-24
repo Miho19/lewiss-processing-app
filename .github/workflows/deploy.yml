@@ -26,7 +26,7 @@ jobs:
         run: npm ci
 
       - name: type checking
-        run: npx tsc -p tsconfig.app.json --noEmit
+        run: npx tsc  --noEmit
 
       - name: unit tests
         run: npx vitest run
