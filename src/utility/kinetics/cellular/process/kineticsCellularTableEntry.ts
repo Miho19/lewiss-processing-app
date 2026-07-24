@@ -7,10 +7,7 @@ import type {
   Room,
   SharePointProjectFile,
 } from "../../../../type/sharePoint/project/projectFileType";
-import {
-  isKineticsCellularSpec,
-  type KineticsCellularSpec,
-} from "../../../../type/sharePoint/project/spec/kineticsSpec";
+import { isKineticsCellularSpec } from "../../../../type/sharePoint/project/spec/kineticsSpec";
 import type { WindowMeasurement } from "../../../../type/sharePoint/project/windowMeasurement/windowMeasurementType";
 import { capitalisedString } from "../../../general/Capitalised";
 import { getCurrentTableEntryIndex } from "../../../process/tableEntryUtility";
@@ -59,6 +56,9 @@ async function getNewEntryKineticsCellularBlindAsync(
   const fabric = windowSelectDetailed.treatment.spec.fabric?.name ?? "";
 
   const control = getKineticsCellularControlString(spec);
+  const controlLength = control.toLowerCase().includes("cord")
+    ? `${projectWindow.controlLength}mm`
+    : "";
 
   const controlSide = projectWindow.controlSide || spec.controlSide;
 
@@ -98,7 +98,7 @@ async function getNewEntryKineticsCellularBlindAsync(
     fit: fitAdjusted,
     "comb size": combSize,
     fabric: fabric,
-    control: control,
+    control: `${control} ${controlLength}`,
     "control side": controlSide,
     "headrail colour": headrailColour,
     "side channel colour": sideChannelColour,
